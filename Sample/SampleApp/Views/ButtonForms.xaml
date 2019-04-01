@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:valid="clr-namespace:SampleApp.Behaviors"
+             xmlns:controls="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             x:Class="SampleApp.Views.ButtonForms">
+    <ContentPage.Content>
+        <!-- xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" -->
+        <ScrollView BackgroundColor="LightBlue">
+            <StackLayout
+                x:Name="_stack"
+                Spacing="10"
+                Padding="0,10,0,10"
+                VerticalOptions="Center"
+                HorizontalOptions="CenterAndExpand">
+
+                <!--RadioGroup with CheckTemplate & ItemsSource surrounded by a FrameInfo-->
+                <controls:FrameInfo>
+
+                    <controls:RadioGroup
+                        x:Name="_radioGender"
+                        ItemsSource="{Binding Genders}"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal"
+                        DefaultIndex="0">
+                        <controls:RadioGroup.CheckTemplate>
+                            <ControlTemplate>
+                                <controls:CheckButton HeightRequest="40" WidthRequest="150" CornerRadius="20"
+                                                      HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                                      Margin="10" />
+                            </ControlTemplate>
+                        </controls:RadioGroup.CheckTemplate>
+                    </controls:RadioGroup>
+
+                    <controls:FrameInfo.Behaviors>
+                        <valid:RadioGroupValidatorBehavior />
+                    </controls:FrameInfo.Behaviors>
+                </controls:FrameInfo>
+
+                <Label Text="RadioGroup with CheckTemplate &amp; ItemsSource surrounded by a FrameInfo"
+                       FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+                <!--CheckGroup with CheckTemplate & ItemsSource surrounded by a FrameInfo-->
+                <controls:FrameInfo>
+
+                    <controls:CheckGroup
+                        ItemsSource="{Binding Languages}"
+                        HorizontalOptions="Center">
+                        <controls:CheckGroup.CheckTemplate>
+                            <ControlTemplate>
+                                <controls:CheckButton HeightRequest="40" WidthRequest="150" CornerRadius="20"
+                                                      HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                            </ControlTemplate>
+                        </controls:CheckGroup.CheckTemplate>
+                    </controls:CheckGroup>
+
+                    <controls:FrameInfo.Behaviors>
+                        <valid:CheckGroupValidatorBehavior />
+                    </controls:FrameInfo.Behaviors>
+                </controls:FrameInfo>
+
+                <Label Text="RadioGroup with CheckTemplate &amp; ItemsSource surrounded by a FrameInfo"
+                       FontSize="Default" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+
+                <!--CheckGroup with custom CheckButtons-->
+                <controls:CheckGroup Grid.Column="0"
+                                     HorizontalOptions="Center"
+                                     x:Name="_checkGroup">
+
+                    <controls:CheckButton Checked="true" Key="2" Value="English"
+                                          HeightRequest="40"
+                                          CornerRadius="20"
+                                          WidthRequest="200"
+                                          TextColor="White"
+                                          BackgroundColor="Silver"
+                                          CheckedTextColor="White"
+                                          CheckedBackgroundColor="Gray" />
+
+                    <controls:CheckButton Checked="true" Key="3" Value="Spanish"
+                                          HeightRequest="40"
+                                          CornerRadius="20"
+                                          WidthRequest="150"
+                                          TextColor="White"
+                                          BackgroundColor="Purple"
+                                          CheckedTextColor="White"
+                                          CheckedBackgroundColor="Maroon" />
+
+                    <controls:CheckButton Checked="true" Key="4" Value="Russian"
+                                          HeightRequest="40"
+                                          CornerRadius="20"
+                                          WidthRequest="100"
+                                          TextColor="White"
+                                          BackgroundColor="Olive"
+                                          CheckedTextColor="White"
+                                          CheckedBackgroundColor="Green" />
+                </controls:CheckGroup>
+
+                <Label Text="CheckGroup with custom CheckButtons" FontSize="Default" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+                <StackLayout VerticalOptions="FillAndExpand" HeightRequest="100">
+                    <!--
+                    <lottie:AnimationView 
+                    x:Name="AnimationView"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    Animation="loader"
+                    Loop="True"
+                    AutoPlay="True"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand" />
+                    -->
+
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

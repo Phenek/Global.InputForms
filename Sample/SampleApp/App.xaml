@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             x:Class="SampleApp.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="IconCheck">
+                <controls:CheckBox CheckType="Check"
+                                   BackgroundColor="Transparent"
+                                   BorderColor="Gray"
+                                   CheckedBackgroundColor="Transparent"
+                                   CheckedBorderColor="Blue"
+                                   CheckedColor="Blue" />
+            </ControlTemplate>
+            <ControlTemplate x:Key="RightIconCheck">
+                <controls:CheckBox CheckType="Check"
+                                   IconPosition="Right"
+                                   BackgroundColor="Transparent"
+                                   BorderColor="Gray"
+                                   CheckedBackgroundColor="Transparent"
+                                   CheckedBorderColor="Blue"
+                                   CheckedColor="Blue" />
+            </ControlTemplate>
+            <ControlTemplate x:Key="IconRadio">
+                <controls:CheckBox CheckType="Fill" IconSize="20" CornerRadius="10"
+                                   BackgroundColor="Transparent"
+                                   BorderColor="Gray"
+                                   CheckedBackgroundColor="Transparent"
+                                   CheckedBorderColor="Blue"
+                                   CheckedColor="Blue" />
+            </ControlTemplate>
+            <ControlTemplate x:Key="IconRateImage">
+                <controls:CheckBox CheckType="Image" ImageChecked="StarChecked" ImageUnchecked="StarUnchecked"
+                                   IconSize="20" Padding="5,0,5,0" />
+            </ControlTemplate>
+            <ControlTemplate x:Key="IconRadioImage">
+                <controls:CheckBox CheckType="Image" ImageChecked="RadioButtonChecked"
+                                   ImageUnchecked="RadioButtonUnchecked" />
+            </ControlTemplate>
+            <ControlTemplate x:Key="IconCheckImage">
+                <controls:CheckBox CheckType="Image" ImageChecked="BoxChecked" ImageUnchecked="BoxUnchecked" />
+            </ControlTemplate>
+            <ControlTemplate x:Key="IconCustomRate">
+                <controls:CheckBox CheckType="Custom" CheckedLabel="★" UncheckedLabel="☆"
+                                   CheckLabelFontSize="30"
+                                   IconSize="30"
+                                   LabelIsVisible="false"
+                                   Color="LightGray"
+                                   BorderColor="Transparent"
+                                   BackgroundColor="Transparent"
+                                   CheckedColor="#FFD700"
+                                   CheckedBorderColor="Transparent"
+                                   CheckedBackgroundColor="Transparent"
+                                   CheckLabelFontAttributes="None">
+                    <controls:CheckBox.CheckLabelMargin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0" />
+                            <On Platform="Android, WinPhone, Windows" Value="0,-10,0,0" />
+                        </OnPlatform>
+                    </controls:CheckBox.CheckLabelMargin>
+                </controls:CheckBox>
+            </ControlTemplate>
+            <Color x:Key="Primary">#335D83</Color>
+            <Color x:Key="PrimaryDark">#1976D2</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+            <Color x:Key="LightBackgroundColor">#AED9E4</Color>
+            <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+            <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+
+            <Color x:Key="BleuButtonBackground">#335D83</Color>
+            <Color x:Key="BleuButtonHighlightBackground">#4b85b9</Color>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
