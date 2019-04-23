@@ -178,7 +178,7 @@ namespace Global.InputForms
                 VerticalOptions = LayoutOptions.Center
             };
 
-            //_button.SetBinding(button.PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.TwoWay });
+            //_button.SetBinding(button.PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
 
             _button.Pressed += Button_Pressed;
             _button.Released += Button_Released;

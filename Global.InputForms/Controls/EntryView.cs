@@ -274,27 +274,27 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             _entry.SetBinding(Entry.FontAttributesProperty,
-                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
-                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontSizeProperty,
-                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.PlaceholderProperty,
-                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.PlaceholderColorProperty,
-                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.TextColorProperty,
-                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsPasswordProperty,
-                new Binding(nameof(IsPassword)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(IsPassword)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.KeyboardProperty,
-                new Binding(nameof(Keyboard)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(Keyboard)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.IsSpellCheckEnabledProperty,
-                new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
-                new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.TextProperty,
                 new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.TwoWay});
 
@@ -307,9 +307,9 @@ namespace Global.InputForms
                 Content = _entry
             };
             _frameEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
-                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
 
             _entry.TextChanged += Entry_Changed;
             _entry.Focused += Entry_Focused;
@@ -752,13 +752,13 @@ namespace Global.InputForms
             if (string.IsNullOrEmpty(entryView.Mask))
             {
                 entryView._entry.SetBinding(Entry.TextProperty,
-                    new Binding(nameof(EntryText)) {Source = entryView, Mode = BindingMode.TwoWay});
+                    new Binding(nameof(EntryText)) {Source = entryView, Mode = BindingMode.OneWay});
                 entryView._positions = null;
                 return;
             }
 
             entryView._entry.SetBinding(Entry.TextProperty,
-                new Binding(nameof(EntryMaskChanged)) {Source = entryView, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryMaskChanged)) {Source = entryView, Mode = BindingMode.OneWay});
 
             var list = new Dictionary<int, char>();
             for (var i = 0; i < entryView.Mask.Length; i++)
@@ -834,24 +834,24 @@ namespace Global.InputForms
             };
 
             entryView._label.SetBinding(Label.FontAttributesProperty, new Binding(nameof(LabelFontAttributes))
-                {Source = entryView, Mode = BindingMode.TwoWay});
+                {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView._label.SetBinding(Label.FontFamilyProperty, new Binding(nameof(LabelFontFamily))
-                {Source = entryView, Mode = BindingMode.TwoWay});
+                {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView._label.SetBinding(Label.FontSizeProperty, new Binding(nameof(LabelFontSize))
-                {Source = entryView, Mode = BindingMode.TwoWay});
+                {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView._label.SetBinding(Label.HorizontalTextAlignmentProperty,
                 new Binding(nameof(LabelHorizontalTextAlignment))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView._label.SetBinding(Label.VerticalTextAlignmentProperty,
                 new Binding(nameof(LabelVerticalTextAlignment))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView._label.SetBinding(Label.TextProperty, new Binding(nameof(LabelText))
-                {Source = entryView, Mode = BindingMode.TwoWay});
+                {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView.SetCornerPaddingLayout();
             entryView.Children.Insert(0, entryView._label);
@@ -947,27 +947,27 @@ namespace Global.InputForms
                 entryView._infoLabel = new Label();
                 entryView._infoLabel.SetBinding(Label.FontAttributesProperty,
                     new Binding(nameof(InfoLabelFontAttributes))
-                        {Source = entryView, Mode = BindingMode.TwoWay});
+                        {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(InfoLabelFontFamily))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoLabelFontSize))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty,
                     new Binding(nameof(InfoLabelHorizontalTextAlignment))
-                        {Source = entryView, Mode = BindingMode.TwoWay});
+                        {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty,
                     new Binding(nameof(InfoLabelVerticalTextAlignment))
-                        {Source = entryView, Mode = BindingMode.TwoWay});
+                        {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(InfoColor))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLine = new BoxView
                 {
@@ -976,7 +976,7 @@ namespace Global.InputForms
                     IsVisible = entryView.InfoViewType == InfoViewType.Line
                 };
                 entryView._infoLine.SetBinding(BackgroundColorProperty, new Binding(nameof(InfoColor))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView._infoLayout = new StackLayout
                 {
@@ -984,7 +984,7 @@ namespace Global.InputForms
                     Orientation = StackOrientation.Vertical
                 };
                 entryView._infoLayout.SetBinding(IsVisibleProperty, new Binding(nameof(Info))
-                    {Source = entryView, Mode = BindingMode.TwoWay});
+                    {Source = entryView, Mode = BindingMode.OneWay});
 
                 entryView.SetCornerPaddingLayout();
 

@@ -178,27 +178,27 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             _entry.SetBinding(Entry.FontAttributesProperty,
-                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
-                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontSizeProperty,
-                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.PlaceholderProperty,
-                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.PlaceholderColorProperty,
-                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.TextColorProperty,
-                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.KeyboardProperty,
-                new Binding(nameof(Keyboard)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(Keyboard)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.IsSpellCheckEnabledProperty,
-                new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
-                new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.TextProperty,
-                new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.TwoWay });
 
             _frameEntry = new Frame
             {
@@ -209,7 +209,7 @@ namespace Global.InputForms
                 Content = _entry
             };
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
-                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
 
             _lstSuggestions = new ListView
             {

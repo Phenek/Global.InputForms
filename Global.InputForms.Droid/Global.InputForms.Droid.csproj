@@ -19,6 +19,7 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Global.InputForms\Global.InputForms.csproj">
-      <Project>{DD698C34-ABA4-4B3D-94A3-90D6983A31E2}</Project>
+      <Project>{F817965A-B1A8-4AD2-A54D-0C219F94F0F7}</Project>
       <Name>Global.InputForms</Name>
     </ProjectReference>
   </ItemGroup>

@@ -267,28 +267,28 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             _datePicker.SetBinding(DatePicker.FontAttributesProperty,
-                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.FontFamilyProperty,
-                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.FontSizeProperty,
-                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderProperty,
-                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderColorProperty,
-                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.TextColorProperty,
-                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.TwoWay});
-
-            _datePicker.SetBinding(DatePicker.DateProperty,
-                new Binding(nameof(Date)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
+                
             _datePicker.SetBinding(DatePicker.FormatProperty,
-                new Binding(nameof(Format)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.MinimumDateProperty,
-                new Binding(nameof(MinimumDate)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(MinimumDate)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.MaximumDateProperty,
-                new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.OneWay});
+            _datePicker.SetBinding(DatePicker.DateProperty,
+                new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
 
             _frameEntry = new Frame
             {
@@ -302,9 +302,9 @@ namespace Global.InputForms
                 Content = _datePicker
             };
             _frameEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
-                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
 
             _datePicker.Focused += Date_Focused;
             _datePicker.Unfocused += Date_Unfocused;
@@ -709,24 +709,24 @@ namespace Global.InputForms
 
             datePickerView._label.SetBinding(Label.FontAttributesProperty,
                 new Binding(nameof(LabelFontAttributes))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView._label.SetBinding(Label.FontFamilyProperty, new Binding(nameof(LabelFontFamily))
-                {Source = datePickerView, Mode = BindingMode.TwoWay});
+                {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView._label.SetBinding(Label.FontSizeProperty, new Binding(nameof(LabelFontSize))
-                {Source = datePickerView, Mode = BindingMode.TwoWay});
+                {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView._label.SetBinding(Label.HorizontalTextAlignmentProperty,
                 new Binding(nameof(LabelHorizontalTextAlignment))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView._label.SetBinding(Label.VerticalTextAlignmentProperty,
                 new Binding(nameof(LabelVerticalTextAlignment))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView._label.SetBinding(Label.TextProperty, new Binding(nameof(LabelText))
-                {Source = datePickerView, Mode = BindingMode.TwoWay});
+                {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView.SetCornerPaddingLayout();
             datePickerView.Children.Insert(0, datePickerView._label);
@@ -928,28 +928,28 @@ namespace Global.InputForms
                 datePickerView._infoLabel = new Label();
                 datePickerView._infoLabel.SetBinding(Label.FontAttributesProperty,
                     new Binding(nameof(InfoLabelFontAttributes))
-                        {Source = datePickerView, Mode = BindingMode.TwoWay});
+                        {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLabel.SetBinding(Label.FontFamilyProperty,
                     new Binding(nameof(InfoLabelFontFamily))
-                        {Source = datePickerView, Mode = BindingMode.TwoWay});
+                        {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoLabelFontSize))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty,
                     new Binding(nameof(InfoLabelHorizontalTextAlignment))
-                        {Source = datePickerView, Mode = BindingMode.TwoWay});
+                        {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty,
                     new Binding(nameof(InfoLabelVerticalTextAlignment))
-                        {Source = datePickerView, Mode = BindingMode.TwoWay});
+                        {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(InfoColor))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLine = new BoxView
                 {
@@ -958,7 +958,7 @@ namespace Global.InputForms
                     IsVisible = datePickerView.InfoViewType == InfoViewType.Line
                 };
                 datePickerView._infoLine.SetBinding(BackgroundColorProperty, new Binding(nameof(InfoColor))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView._infoLayout = new StackLayout
                 {
@@ -966,7 +966,7 @@ namespace Global.InputForms
                     Orientation = StackOrientation.Vertical
                 };
                 datePickerView._infoLayout.SetBinding(IsVisibleProperty, new Binding(nameof(Info))
-                    {Source = datePickerView, Mode = BindingMode.TwoWay});
+                    {Source = datePickerView, Mode = BindingMode.OneWay});
 
                 datePickerView.SetCornerPaddingLayout();
 
