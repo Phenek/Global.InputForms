@@ -9,6 +9,7 @@ namespace Global.InputForms.Interfaces
         BindableProperty CheckedProperty { get; }
         BindableProperty ItemProperty { get; }
 
+        bool DisableCheckOnClick { get; set; }
         int Index { get; set; }
         bool Checked { get; set; }
         KeyValuePair<string, string> Item { get; set; }

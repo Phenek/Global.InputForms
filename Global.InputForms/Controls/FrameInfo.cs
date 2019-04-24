@@ -3,9 +3,10 @@ using Xamarin.Forms;
 
 namespace Global.InputForms
 {
-    public class FrameInfo : ContentView
+    [ContentProperty(nameof(Content))]
+    public class FrameInfo : StackLayout
     {
-        public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content),
+        public static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content),
             typeof(View), typeof(ContentView), null, propertyChanged: OnContentChanged);
 
         /// <summary>
@@ -13,35 +14,34 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty InfoLabelFontAttributesProperty =
             BindableProperty.Create(nameof(InfoLabelFontAttributes), typeof(FontAttributes), typeof(FrameInfo),
-                FontAttributes.Bold, propertyChanged: InfoLabelFontAttributesChanged);
+                FontAttributes.Bold);
 
         /// <summary>
         ///     The Info Label Font Family property.
         /// </summary>
         public static readonly BindableProperty InfoLabelFontFamilyProperty =
-            BindableProperty.Create(nameof(InfoLabelFontFamily), typeof(string), typeof(FrameInfo), string.Empty,
-                propertyChanged: InfoLabelFontFamilyChanged);
+            BindableProperty.Create(nameof(InfoLabelFontFamily), typeof(string), typeof(FrameInfo), string.Empty);
 
         /// <summary>
         ///     The Info Label Font Size property.
         /// </summary>
         public static readonly BindableProperty InfoLabelFontSizeProperty =
             BindableProperty.Create(nameof(InfoLabelFontSize), typeof(double), typeof(FrameInfo),
-                Device.GetNamedSize(NamedSize.Micro, typeof(Label)), propertyChanged: InfoLabelFontSizeChanged);
+                Device.GetNamedSize(NamedSize.Micro, typeof(Label)));
 
         /// <summary>
         ///     The Info Label Horizontal TextAlignment property.
         /// </summary>
         public static readonly BindableProperty InfoLabelHorizontalTextAlignmentProperty =
             BindableProperty.Create(nameof(InfoLabelHorizontalTextAlignment), typeof(TextAlignment), typeof(FrameInfo),
-                TextAlignment.Start, propertyChanged: InfoLabelHorizontalTextAlignmentChanged);
+                TextAlignment.Start);
 
         /// <summary>
         ///     The Info Label Vertical Text Alignment property.
         /// </summary>
         public static readonly BindableProperty InfoLabelVerticalTextAlignmentProperty =
             BindableProperty.Create(nameof(InfoLabelVerticalTextAlignment), typeof(TextAlignment), typeof(FrameInfo),
-                TextAlignment.Start, propertyChanged: InfoLabelVerticalTextAlignmentChanged);
+                TextAlignment.Start);
 
         /// <summary>
         ///     The Label Text Color property.
@@ -72,7 +72,6 @@ namespace Global.InputForms
 
         private readonly Frame _frameLayout;
 
-        private readonly StackLayout _stackInfo;
         private Label _infoLabel;
 
 
@@ -80,17 +79,13 @@ namespace Global.InputForms
 
         public FrameInfo()
         {
-            _stackInfo = new StackLayout
-            {
-                Spacing = 0,
-                Orientation = StackOrientation.Vertical
-            };
+            Spacing = 0;
+            Orientation = StackOrientation.Vertical;
 
             _frameLayout = new Frame
             {
                 Padding = 10,
                 BackgroundColor = Color.Transparent,
-                Content = Content,
                 CornerRadius = 5,
                 BorderColor = Info ? InfoColor : Color.Transparent,
                 HasShadow = false,
@@ -98,15 +93,12 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.Center
             };
 
-
-            _stackInfo.Children.Add(_frameLayout);
-
-            base.Content = _stackInfo;
+            Children.Add(_frameLayout);
         }
 
-        public new View Content
+        public View Content
         {
-            get => (View) GetValue(ContentProperty);
+            get => (View)GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
 
@@ -205,11 +197,12 @@ namespace Global.InputForms
             set => SetValue(InfoProperty, value);
         }
 
+
         private static void OnContentChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is FrameInfo frameInfo)
             {
-                frameInfo._frameLayout.Content = (View) newValue;
+                frameInfo._frameLayout.Content = (View)newValue;
                 frameInfo._frameLayout.Content.Parent = frameInfo;
             }
         }
@@ -284,30 +277,31 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void InfoLabelTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is FrameInfo frameInfo)
+            if (!(bindable is FrameInfo frameInfo) || frameInfo._infoLabel != null) return;
+            
+            frameInfo._infoLabel = new Label
             {
-                if (frameInfo._infoLabel is Label label)
-                {
-                    label.Text = (string) newValue;
-                }
-                else
-                {
-                    frameInfo._infoLabel = new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                        FontAttributes = frameInfo.InfoLabelFontAttributes,
-                        FontFamily = frameInfo.InfoLabelFontFamily,
-                        FontSize = frameInfo.InfoLabelFontSize,
-                        HorizontalTextAlignment = frameInfo.InfoLabelHorizontalTextAlignment,
-                        VerticalTextAlignment = frameInfo.InfoLabelVerticalTextAlignment,
-                        Text = frameInfo.InfoLabelText,
-                        TextColor = frameInfo.InfoColor,
-                        IsVisible = frameInfo.Info
-                    };
-                    frameInfo._stackInfo.Children.Add(frameInfo._infoLabel);
-                }
-            }
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            };
+            frameInfo._infoLabel.SetBinding(Label.FontAttributesProperty, new Binding(nameof(InfoLabelFontAttributes))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(InfoLabelFontFamily))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoLabelFontSize))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty, new Binding(nameof(InfoLabelHorizontalTextAlignment))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty, new Binding(nameof(InfoLabelVerticalTextAlignment))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(InfoColor))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(IsVisibleProperty, new Binding(nameof(InfoIsVisible))
+                {Source = frameInfo, Mode = BindingMode.OneWay});
+                    
+            frameInfo.Children.Add(frameInfo._infoLabel);
         }
 
         /// <summary>

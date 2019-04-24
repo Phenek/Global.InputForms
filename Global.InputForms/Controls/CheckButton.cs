@@ -150,6 +150,7 @@ namespace Global.InputForms
         /// </summary>
         BindableProperty ICheckable.ItemProperty => ItemProperty;
 
+        public bool DisableCheckOnClick { get; set; }
         public int Index { get; set; }
 
         event EventHandler<bool> ICheckable.CheckedChanged
@@ -243,7 +244,8 @@ namespace Global.InputForms
 
         private void OnChecked(object sender, EventArgs e)
         {
-            Checked = !Checked;
+            if (!DisableCheckOnClick)
+                Checked = !Checked;
             Clicked?.Invoke(this, Checked);
         }
 

@@ -314,7 +314,7 @@ namespace Global.InputForms
 
             Children.Add(_frameEntry);
         }
-
+        
         public DateTime Date
         {
             get => (DateTime) GetValue(DateProperty);
@@ -631,66 +631,6 @@ namespace Global.InputForms
         public new event EventHandler<FocusEventArgs> Focused;
         public new event EventHandler<FocusEventArgs> Unfocused;
 
-        /// <summary>
-        ///     The Label Font Attributes property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelFontAttributesChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView && datePickerView._label is Label)
-                datePickerView._label.FontAttributes = (FontAttributes) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Font Family property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelFontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView && datePickerView._label is Label)
-                datePickerView._label.FontFamily = (string) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Font Size property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelFontSizeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView && datePickerView._label is Label)
-                datePickerView._label.FontSize = (double) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Horizontal TextAlignment property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelHorizontalTextAlignmentChanged(BindableObject bindable, object oldValue,
-            object newValue)
-        {
-            if (bindable is DatePickerView datePickerView && datePickerView._label is Label)
-                datePickerView._label.HorizontalTextAlignment = (TextAlignment) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Vertical Text Alignment property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelVerticalTextAlignmentChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView && datePickerView._label is Label)
-                datePickerView._label.VerticalTextAlignment = (TextAlignment) newValue;
-        }
 
         /// <summary>
         ///     The Label Text property changed.
@@ -793,102 +733,6 @@ namespace Global.InputForms
         {
             if (bindable is DatePickerView datePickerView)
                 datePickerView._frameEntry.BackgroundColor = (Color) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Font Attributes property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryFontAttributesChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.FontAttributes = (FontAttributes) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Font Family property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryFontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.FontFamily = (string) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Font Size property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryFontSizeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.FontSize = (double) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Horizontal Text Alignment property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryHorizontalTextAlignmentChanged(BindableObject bindable, object oldValue,
-            object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.HorizontalTextAlignment = (TextAlignment) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Placeholder property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryPlaceholderChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.Placeholder = (string) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Placeholder Color property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryPlaceholderColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.PlaceholderColor = (Color) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Text Color property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryTextColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView)
-                datePickerView._datePicker.TextColor = (Color) newValue;
-        }
-
-        /// <summary>
-        ///     The Entry Text property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryTextChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is DatePickerView datePickerView) datePickerView._datePicker.Text = (string) newValue;
         }
 
         private static void EntryIsEnabledChanged(BindableObject bindable, object oldValue, object newValue)

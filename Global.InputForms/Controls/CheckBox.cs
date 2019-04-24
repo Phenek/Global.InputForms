@@ -101,8 +101,6 @@ namespace Global.InputForms
             tap.Tapped += OnChecked;
             GestureRecognizers.Add(tap);
 
-            Clicked += Animation;
-
             Children.Add(_icon);
 
             if (Checked)
@@ -239,8 +237,8 @@ namespace Global.InputForms
         /// </summary>
         BindableProperty ICheckable.ItemProperty => ItemProperty;
 
+        public bool DisableCheckOnClick { get; set; }
         public int Index { get; set; }
-
 
         event EventHandler<bool> ICheckable.CheckedChanged
         {
@@ -490,7 +488,8 @@ namespace Global.InputForms
 
         private void OnChecked(object sender, EventArgs e)
         {
-            Checked = !Checked;
+            if (!DisableCheckOnClick)
+                Checked = !Checked;
             Clicked?.Invoke(this, Checked);
         }
 
@@ -1094,6 +1093,7 @@ namespace Global.InputForms
 
         public void SetCheckedColorsStyles()
         {
+            Animation(this, Checked);
             if (Checked)
                 SetIconChecked();
             else

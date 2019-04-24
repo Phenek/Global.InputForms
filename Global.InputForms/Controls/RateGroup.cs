@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using Global.InputForms.Interfaces;
 using Global.InputForms.Models;
 using Xamarin.Forms;
@@ -105,8 +106,8 @@ namespace Global.InputForms
             typeof(bool), typeof(RateGroup), true, propertyChanged: LabelIsVisibleChanged);
 
         private readonly Label _rateLabel;
-
         private readonly StackLayout _rateLayout;
+        private bool _isBusy;
 
         /// <summary>
         ///     The items
@@ -151,6 +152,12 @@ namespace Global.InputForms
 
             _rateLayout.ChildAdded += ChildCheckAdded;
             _rateLayout.ChildRemoved += ChildCheckRemoved;
+
+            /*
+            var panGesture = new PanGestureRecognizer();
+            panGesture.PanUpdated += OnPanUpdated;
+            GestureRecognizers.Add(panGesture);
+            */           
         }
 
         public new IList<View> Children => _rateLayout.Children;
@@ -182,7 +189,10 @@ namespace Global.InputForms
         public int SelectedIndex
         {
             get => (int) GetValue(SelectedIndexProperty);
-            set => SetValue(SelectedIndexProperty, value);
+            set 
+            {
+                if (!_isBusy) SetValue(SelectedIndexProperty, value);
+            }
         }
 
         /// <summary>
@@ -348,6 +358,7 @@ namespace Global.InputForms
             {
                 if (!string.IsNullOrEmpty(checkable.Key) && CheckList.All(c => c.Key != checkable.Key))
                 {
+                    checkable.DisableCheckOnClick = true;
                     checkable.Clicked += OnItemClicked;
                     checkable.Index = CheckList.Count;
                     CheckList.Add(checkable);
@@ -427,21 +438,34 @@ namespace Global.InputForms
         /// <param name="bindable">The object.</param>
         /// <param name="oldValue">The old value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void OnSelectedIndexChanged(BindableObject bindable, object oldValue, object newValue)
+        private static async void OnSelectedIndexChanged(BindableObject bindable, object oldValue, object newValue)
         {
+
             if (!(bindable is RateGroup rateGroup)) return;
-            
+
+            rateGroup._isBusy = true;
+            int animationDuration = 200 / (rateGroup.CheckList.Count() + 1);
+
             rateGroup.SelectedIndexChanged?.Invoke(rateGroup, (int) newValue);
             if (rateGroup.SelectedIndex >= 0 && rateGroup.CheckList.Any())
                 rateGroup._rateLabel.Text = rateGroup.CheckList[rateGroup.SelectedIndex].Item.Value;
             else
                 rateGroup._rateLabel.Text = "-";
 
-            foreach (var item in rateGroup.CheckList)
-                if (item.Index <= rateGroup.SelectedIndex)
-                    item.Checked = true;
-                else
-                    item.Checked = false;
+            var index = 0;
+            var list = ((int)oldValue < (int)newValue) ? rateGroup.CheckList : rateGroup.CheckList.Reverse();
+            foreach (var item in list)
+            {
+                if (index < rateGroup.CheckList.Count() && item.Checked != item.Index <= rateGroup.SelectedIndex)
+                {
+                    await Task.Delay(animationDuration);
+                    item.Checked = item.Index <= rateGroup.SelectedIndex;
+                }
+
+                ++index;
+            }
+
+            rateGroup._isBusy = false;
         }
 
         /// <summary>

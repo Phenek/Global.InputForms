@@ -169,13 +169,19 @@
                         Clicked="_SubmitClicked"
                         IsBusy="{Binding IsBusy, Mode=OneWay}"
                         Text="{i18N:Translate Form.Button}"
-                        BorderWidth="2"
+                        BorderWidth="10"
                         CornerRadius="25"
                         HeightRequest="50"
                         HighlightImageColor="White"
                         BackgroundColor="{StaticResource BleuButtonBackground}"
                         HighlightBackgroundColor="{StaticResource BleuButtonHighlightBackground}"
-                        BorderColor="#49516F" />
+                        BorderColor="#49516F" >
+                        <StackLayout BackgroundColor="Aqua" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Label Text="TestTestTestTest"></Label>
+                        </StackLayout>
+                        
+                        
+                    </controls:ButtonContent>
                 </StackLayout>
             </Grid>
         </ScrollView>

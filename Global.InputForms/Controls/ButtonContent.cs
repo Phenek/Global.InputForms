@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 using static Xamarin.Forms.Button;
@@ -9,20 +10,19 @@ namespace Global.InputForms
     public class ButtonContent : Grid
     {
         public static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View),
-            typeof(ButtonContent), null, propertyChanged: OnContentChanged);
+            typeof(ButtonContent), null);
 
         /// <summary>
         ///     The command property.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command),
-            typeof(ICommand), typeof(ButtonContent), null, propertyChanged: CommandChanged);
+            typeof(ICommand), typeof(ButtonContent), null);
 
         /// <summary>
         ///     The command parameter property.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ButtonContent), null,
-                propertyChanged: CommandParameterChanged);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ButtonContent), null);
 
         /// <summary>
         ///     The content layout property.
@@ -42,47 +42,45 @@ namespace Global.InputForms
         ///     The border width property.
         /// </summary>
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth),
-            typeof(double), typeof(ButtonContent), -1d, propertyChanged: BorderWidthChanged);
+            typeof(double), typeof(ButtonContent), 0d, propertyChanged: PaddingChanged);
 
         /// <summary>
         ///     The corner radius property.
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
-            typeof(int), typeof(ButtonContent), -1, propertyChanged: CornerRadiusChanged);
+            typeof(int), typeof(ButtonContent), 0, propertyChanged: CornerRadiusChanged);
 
         /// <summary>
         ///     The image property.
         /// </summary>
         public static readonly BindableProperty ImageProperty = BindableProperty.Create(nameof(Image),
-            typeof(FileImageSource), typeof(ButtonContent), default(FileImageSource), propertyChanged: ImageChanged);
+            typeof(FileImageSource), typeof(ButtonContent), default(FileImageSource));
 
         /// <summary>
         ///     The Font Attributes property.
         /// </summary>
         public static readonly BindableProperty FontAttributesProperty =
             BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(ButtonContent),
-                FontAttributes.Bold, propertyChanged: FontAttributesChanged);
+                FontAttributes.Bold);
 
         /// <summary>
         ///     The Font Family property.
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(ButtonContent), string.Empty,
-                propertyChanged: FontFamilyChanged);
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(ButtonContent), string.Empty);
 
         /// <summary>
         ///     The Font Size property.
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
             BindableProperty.Create(nameof(FontSize), typeof(double), typeof(ButtonContent),
-                Device.GetNamedSize(NamedSize.Small, typeof(Button)), propertyChanged: FontSizeChanged);
+                Device.GetNamedSize(NamedSize.Small, typeof(Button)));
 
         /// <summary>
         ///     The Text property.
         /// </summary>
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(ButtonContent), string.Empty,
-                propertyChanged: TextChanged);
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(ButtonContent), string.Empty);
 
         /// <summary>
         ///     The is busy property.
@@ -94,7 +92,7 @@ namespace Global.InputForms
         ///     The loader color property.
         /// </summary>
         public static readonly BindableProperty LoaderColorProperty = BindableProperty.Create(nameof(LoaderColor),
-            typeof(Color), typeof(ButtonContent), Color.White, propertyChanged: LoaderColorChanged);
+            typeof(Color), typeof(ButtonContent), Color.White);
 
         /// <summary>
         ///     The Background Color Property.
@@ -141,42 +139,63 @@ namespace Global.InputForms
         public static readonly BindableProperty HighlightImageColorProperty =
             BindableProperty.Create(nameof(HighlightImageColor), typeof(Color), typeof(ButtonContent),
                 Color.WhiteSmoke);
-
+        
         private readonly BlankButton _button;
         private readonly ActivityIndicator _loader;
+        private readonly Frame _frame;
 
         public ButtonContent()
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand;
-            VerticalOptions = LayoutOptions.FillAndExpand;
-
+            _frame = new Frame()
+            {
+                Padding = 0,
+                CornerRadius = CornerRadius,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                BackgroundColor = Color.Transparent,
+                InputTransparent = true,
+                IsEnabled = false,
+            };
+            _frame.SetBinding(Frame.ContentProperty,
+                new Binding(nameof(Content)) {Source = this, Mode = BindingMode.OneWay});
+            
             _button = new BlankButton
             {
-                Command = Command,
-                CommandParameter = CommandParameter,
-                ContentLayout = ContentLayout,
-                BorderWidth = BorderWidth,
-                CornerRadius = CornerRadius,
-                Image = Image,
-                FontFamily = FontFamily,
-                FontAttributes = FontAttributes,
-                FontSize = FontSize,
-                Text = Text,
                 BackgroundColor = BackgroundColor,
                 TextColor = TextColor,
                 BorderColor = BorderColor
             };
+            
+            _button.SetBinding(Button.CommandProperty,
+                new Binding(nameof(Command)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.CommandParameterProperty,
+                new Binding(nameof(CommandParameter)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.BorderWidthProperty,
+                new Binding(nameof(BorderWidth)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.ImageProperty,
+                new Binding(nameof(Image)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.FontFamilyProperty,
+                new Binding(nameof(FontFamily)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.FontAttributesProperty,
+                new Binding(nameof(FontAttributes)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.FontSizeProperty,
+                new Binding(nameof(FontSize)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.TextProperty,
+                new Binding(nameof(Text)) {Source = this, Mode = BindingMode.OneWay});
+            _button.SetBinding(Button.FontAttributesProperty,
+                new Binding(nameof(FontAttributes)) {Source = this, Mode = BindingMode.OneWay});
 
             _loader = new ActivityIndicator
             {
                 Margin = 0,
                 IsRunning = true,
                 IsVisible = false,
-                Color = LoaderColor,
                 InputTransparent = true,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center
             };
+            _loader.SetBinding(ActivityIndicator.ColorProperty,
+                new Binding(nameof(LoaderColor)) {Source = this, Mode = BindingMode.OneWay});
 
             //_button.SetBinding(button.PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
 
@@ -188,6 +207,7 @@ namespace Global.InputForms
             _button.Pressed += (sender, e) => { Pressed?.Invoke(this, new EventArgs()); };
 
             Children.Add(_button, 0, 0);
+            Children.Add(_frame, 0, 0);
             Children.Add(_loader, 0, 0);
         }
 
@@ -251,7 +271,7 @@ namespace Global.InputForms
         /// <summary>
         ///     Gets or sets the Corner Radius.
         /// </summary>
-        /// <value>The Border Width.</value>
+        /// <value>The Corner Radius.</value>
         public int CornerRadius
         {
             get => (int) GetValue(CornerRadiusProperty);
@@ -404,15 +424,6 @@ namespace Global.InputForms
         public event EventHandler Pressed;
         public event EventHandler Released;
 
-        private static void OnContentChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (!(bindable is ButtonContent button) || !(newValue is View view)) return;
-            
-            view.IsEnabled = false;
-            view.InputTransparent = true;
-            button.Children.Insert(1, view);
-        }
-
         /// <summary>
         ///     The Command property changed.
         /// </summary>
@@ -449,18 +460,14 @@ namespace Global.InputForms
 
         private static void PaddingChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is ButtonContent button) button._button.Padding = (Thickness) newValue;
-        }
+            if (!(bindable is ButtonContent button)) return;
+            button._frame.Margin = new Thickness(button.BorderWidth);
 
-        /// <summary>
-        ///     The Border Width property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void BorderWidthChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button) button._button.BorderWidth = (double) newValue;
+            var frameCorner = (float)(button.CornerRadius - button.BorderWidth);
+            if (frameCorner > 0)
+                button._frame.CornerRadius = frameCorner;
+            button._button.Padding = button.Padding;
+
         }
 
         /// <summary>
@@ -471,66 +478,13 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is ButtonContent button) button._button.CornerRadius = (int) newValue;
-        }
+            if (!(bindable is ButtonContent button)) return;
+            var value = (int)newValue;
+            button._button.CornerRadius = value;
 
-        /// <summary>
-        ///     The Image property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void ImageChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button) button._button.Image = (FileImageSource) newValue;
-        }
-
-        /// <summary>
-        ///     The  Font Attributes property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void FontAttributesChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button)
-                button._button.FontAttributes = (FontAttributes) newValue;
-        }
-
-        /// <summary>
-        ///     The  Font Family property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void FontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button)
-                button._button.FontFamily = (string) newValue;
-        }
-
-        /// <summary>
-        ///     The  Font Size property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void FontSizeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button)
-                button._button.FontSize = (double) newValue;
-        }
-
-        /// <summary>
-        ///     The Text property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TextChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button)
-                button._button.Text = (string) newValue;
+            var frameCorner = (float)(button.CornerRadius - button.BorderWidth);
+            if (frameCorner > 0)
+                button._frame.CornerRadius = frameCorner;
         }
 
         /// <summary>
@@ -555,17 +509,6 @@ namespace Global.InputForms
                 button._button.Text = button.Text;
                 button._button.Image = button.Image;
             }
-        }
-
-        /// <summary>
-        ///     The Loader Color changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LoaderColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button) button._loader.Color = (Color) newValue;
         }
 
         /// <summary>
