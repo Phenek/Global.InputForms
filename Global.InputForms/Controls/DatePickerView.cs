@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace Global.InputForms
 {
+    [ContentProperty(nameof(Children))]
     public class DatePickerView : StackLayout
     {
         /// <summary>
@@ -248,6 +250,7 @@ namespace Global.InputForms
 
         private readonly BlankDatePicker _datePicker;
         private readonly Frame _frameEntry;
+        private readonly Grid _gridEntry;
 
         private Label _infoLabel;
         private StackLayout _infoLayout;
@@ -255,6 +258,9 @@ namespace Global.InputForms
         private Label _label;
         public EventHandler<DateChangedEventArgs> DateSelected;
         public EventHandler<EventArgs> Validators;
+
+        public IList<View> StackChildren => base.Children;
+        public new IList<View> Children => _gridEntry.Children;
 
         public DatePickerView()
         {
@@ -299,12 +305,27 @@ namespace Global.InputForms
                 CornerRadius = EntryCornerRadius,
                 BorderColor = EntryBorderColor,
                 HasShadow = false,
-                Content = _datePicker
             };
-            _frameEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
+
+            _gridEntry = new Grid
+            {
+                ColumnSpacing = 1,
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)}
+                }
+            };
+            _gridEntry.SetBinding(IsEnabledProperty,
+                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay });
+
+            _gridEntry.Children.Add(_frameEntry, 1, 4, 0, 1);
+            _gridEntry.Children.Add(_datePicker, 2, 0);
 
             _datePicker.Focused += Date_Focused;
             _datePicker.Unfocused += Date_Unfocused;
@@ -312,7 +333,7 @@ namespace Global.InputForms
 
             Unfocused += (sender, e) => Validate();
 
-            Children.Add(_frameEntry);
+            StackChildren.Add(_gridEntry);
         }
         
         public DateTime Date
@@ -669,7 +690,7 @@ namespace Global.InputForms
                 {Source = datePickerView, Mode = BindingMode.OneWay});
 
             datePickerView.SetCornerPaddingLayout();
-            datePickerView.Children.Insert(0, datePickerView._label);
+            datePickerView.StackChildren.Insert(0, datePickerView._label);
         }
 
         /// <summary>
@@ -816,7 +837,7 @@ namespace Global.InputForms
 
                 datePickerView._infoLayout.Children.Add(datePickerView._infoLine);
                 datePickerView._infoLayout.Children.Add(datePickerView._infoLabel);
-                datePickerView.Children.Add(datePickerView._infoLayout);
+                datePickerView.StackChildren.Add(datePickerView._infoLayout);
             }
         }
 

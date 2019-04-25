@@ -5,6 +5,7 @@ using Xamarin.Forms;
 
 namespace Global.InputForms
 {
+    [ContentProperty(nameof(Children))]
     public class EntryView : StackLayout
     {
         /// <summary>
@@ -174,7 +175,7 @@ namespace Global.InputForms
         /// <summary>
         ///     The Keyboard property.
         /// </summary>
-        public static BindableProperty KeyboardProperty =
+        public static readonly BindableProperty KeyboardProperty =
             BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(EntryView), Keyboard.Default);
 
         /// <summary>
@@ -253,6 +254,7 @@ namespace Global.InputForms
 
         private readonly BlankEntry _entry;
         private readonly Frame _frameEntry;
+        private readonly Grid _gridEntry;
         private Label _infoLabel;
         private StackLayout _infoLayout;
         private BoxView _infoLine;
@@ -262,11 +264,13 @@ namespace Global.InputForms
         public EventHandler<TextChangedEventArgs> TextChanged;
         public EventHandler<EventArgs> Validators;
 
+        public IList<View> StackChildren => base.Children;
+        public new IList<View> Children => _gridEntry.Children;
+
         public EntryView()
         {
             Orientation = StackOrientation.Vertical;
             Spacing = 0;
-
             _entry = new BlankEntry
             {
                 HeightRequest = 40,
@@ -304,10 +308,7 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
                 HasShadow = false,
-                Content = _entry
             };
-            _frameEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
 
@@ -323,7 +324,32 @@ namespace Global.InputForms
 
             Unfocused += (sender, e) => Validate();
 
-            Children.Add(_frameEntry);
+            _gridEntry = new Grid
+            {
+                ColumnSpacing = 1, ColumnDefinitions =
+                {
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                    new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)}
+                },
+                RowSpacing = 0, RowDefinitions =
+                {
+                    new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)},
+                    new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)},
+                    new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)},
+
+                }
+            };
+            _gridEntry.SetBinding(IsEnabledProperty,
+                new Binding(nameof(EntryIsEnabled)) {Source = this, Mode = BindingMode.OneWay});
+            
+            
+            _gridEntry.Children.Add (_frameEntry, 1, 4, 0, 1);
+            _gridEntry.Children.Add (_entry, 2, 0);
+            
+            StackChildren.Add(_gridEntry);
         }
 
         public bool EntryIsEnabled
@@ -435,7 +461,7 @@ namespace Global.InputForms
         /// <summary>
         ///     Gets or sets the entry corner radius.
         /// </summary>
-        /// <value>The entry background color.</value>
+        /// <value>The entry Corner Radius.</value>
         public float EntryCornerRadius
         {
             get => (float) GetValue(EntryCornerRadiusProperty);
@@ -445,7 +471,7 @@ namespace Global.InputForms
         /// <summary>
         ///     Gets or sets the entry border color.
         /// </summary>
-        /// <value>The entry background color.</value>
+        /// <value>The entry Border color.</value>
         public Color EntryBorderColor
         {
             get => (Color) GetValue(EntryBorderColorProperty);
@@ -854,7 +880,7 @@ namespace Global.InputForms
                 {Source = entryView, Mode = BindingMode.OneWay});
 
             entryView.SetCornerPaddingLayout();
-            entryView.Children.Insert(0, entryView._label);
+            entryView.StackChildren.Insert(0, entryView._label);
         }
 
         /// <summary>
@@ -990,7 +1016,7 @@ namespace Global.InputForms
 
                 entryView._infoLayout.Children.Add(entryView._infoLine);
                 entryView._infoLayout.Children.Add(entryView._infoLabel);
-                entryView.Children.Add(entryView._infoLayout);
+                entryView._gridEntry.Children.Add(entryView._infoLayout, 1, 4, 2, 3);
             }
         }
 

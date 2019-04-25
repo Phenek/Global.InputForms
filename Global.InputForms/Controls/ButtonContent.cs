@@ -36,13 +36,13 @@ namespace Global.InputForms
         ///     The padding button property.
         /// </summary>
         public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding),
-            typeof(Thickness), typeof(ButtonContent), new Thickness(0, 0, 0, 0), propertyChanged: PaddingChanged);
+            typeof(Thickness), typeof(ButtonContent), new Thickness(0, 0, 0, 0), propertyChanged: BorderChanged);
 
         /// <summary>
         ///     The border width property.
         /// </summary>
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth),
-            typeof(double), typeof(ButtonContent), 0d, propertyChanged: PaddingChanged);
+            typeof(double), typeof(ButtonContent), 0d, propertyChanged: BorderChanged);
 
         /// <summary>
         ///     The corner radius property.
@@ -425,28 +425,6 @@ namespace Global.InputForms
         public event EventHandler Released;
 
         /// <summary>
-        ///     The Command property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void CommandChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button) button._button.Command = (ICommand) newValue;
-        }
-
-        /// <summary>
-        ///     The Command Parameter property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void CommandParameterChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is ButtonContent button) button._button.CommandParameter = newValue;
-        }
-
-        /// <summary>
         ///     The Content Layout property changed.
         /// </summary>
         /// <param name="bindable">The object.</param>
@@ -458,7 +436,7 @@ namespace Global.InputForms
         }
 
 
-        private static void PaddingChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void BorderChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is ButtonContent button)) return;
             button._frame.Margin = new Thickness(button.BorderWidth);
