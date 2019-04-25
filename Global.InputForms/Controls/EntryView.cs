@@ -305,6 +305,7 @@ namespace Global.InputForms
             _frameEntry = new Frame
             {
                 Padding = 0,
+                HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
                 HasShadow = false,
@@ -1100,13 +1101,13 @@ namespace Global.InputForms
             {
                 var thick = 0.0;
                 if (BorderRelative) thick = Convert.ToDouble(EntryCornerRadius);
-                _frameEntry.Padding = new Thickness(thick, 0, thick, 0);
+                _entry.Margin = new Thickness(thick, 0, thick, 0);
                 if (_infoLayout != null) _infoLayout.Padding = new Thickness(thick, 0, thick, 0);
                 if (_label != null) _label.Margin = new Thickness(thick / 2, 0, thick / 2, 0);
             }
             else
             {
-                _frameEntry.Padding = 0;
+                _entry.Margin = 0;
                 if (_infoLayout != null) _infoLayout.Padding = 0;
                 if (_label != null) _label.Margin = 0;
             }
