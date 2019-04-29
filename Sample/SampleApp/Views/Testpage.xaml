@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SampleApp.Views.TestPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             x:Class="SampleApp.Views.TestPage">
     <ContentPage.Content>
         <StackLayout>
         <Grid HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White">
@@ -9,6 +12,9 @@
             <Button BackgroundColor="Silver"/>
             <Label Text="TEST"/>
         </Grid>
+        <controls:ButtonContent>
+                <Label Text="TEST"/>
+       </controls:ButtonContent>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
