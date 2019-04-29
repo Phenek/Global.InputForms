@@ -53,6 +53,9 @@ namespace SampleApp
             var toFormsBtn = new Button {Text = "Buttons"};
             toFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonForms()); };
 
+            var toTestBtn = new Button { Text = "Test" };
+            toTestBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TestPage()); };
+
             Content = new ScrollView
             {
                 Content = new StackLayout
@@ -62,7 +65,8 @@ namespace SampleApp
                         toSimpleFormsBtn,
                         toEntriesBtn,
                         toCheckBoxsBtnBtn,
-                        toFormsBtn
+                        toFormsBtn,
+                        toTestBtn
                     }
                 }
             };

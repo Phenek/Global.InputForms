@@ -149,6 +149,7 @@ namespace Global.InputForms
             _frame = new Frame()
             {
                 Padding = 0,
+                HasShadow = false,
                 CornerRadius = CornerRadius,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
@@ -156,7 +157,7 @@ namespace Global.InputForms
                 InputTransparent = true,
                 IsEnabled = false,
             };
-            _frame.SetBinding(Frame.ContentProperty,
+            _frame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(Content)) {Source = this, Mode = BindingMode.OneWay});
             
             _button = new BlankButton

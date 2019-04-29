@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SampleApp.Views.TestPage">
+    <ContentPage.Content>
+        <StackLayout>
+        <Grid HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White">
+            <Label Text="TEST"/>
+        </Grid>
+        <Grid HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White">
+            <Button BackgroundColor="Silver"/>
+            <Label Text="TEST"/>
+        </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
