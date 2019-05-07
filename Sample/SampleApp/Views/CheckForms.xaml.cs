@@ -13,8 +13,6 @@ namespace SampleApp.Views
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
-
-            _checkStore.Validate();
         }
 
         private void _CheckStore_CheckedCollectionChanged(object sender, Dictionary<string, string> e)

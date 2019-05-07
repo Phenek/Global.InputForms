@@ -395,8 +395,8 @@ namespace Global.InputForms
             {
                 checkBox._label = new Label
                 {
-                    //VerticalOptions = LayoutOptions.CenterAndExpand,
-                    //HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    //VerticalOptions = LayoutOptions.FillAndExpand,
+                    //HorizontalOptions = LayoutOptions.FillAndExpand,
                     FontAttributes = checkBox.FontAttributes,
                     FontFamily = checkBox.FontFamily,
                     FontSize = checkBox.FontSize,

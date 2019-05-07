@@ -41,17 +41,26 @@ namespace SampleApp
     {
         public StartPage()
         {
+            var toCheckFormsBtn = new Button { Text = "Check Forms" };
+            toCheckFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new CheckForms()); };
+
+            var toCheckGroupBtn = new Button { Text = "Check Group" };
+            toCheckGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new CheckGroupPage()); };
+
+            var toRadioGroupBtn = new Button { Text = "Radio Group" };
+            toRadioGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new RadioGroupPage()); };
+
+            var toRateGroupBtn = new Button { Text = "Rate Group" };
+            toRateGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new RateGroupPage()); };
+
             var toSimpleFormsBtn = new Button {Text = "Simple Forms"};
             toSimpleFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SimpleForms()); };
 
             var toEntriesBtn = new Button {Text = "Entries"};
             toEntriesBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryForms()); };
 
-            var toCheckBoxsBtnBtn = new Button {Text = "Check Boxs"};
-            toCheckBoxsBtnBtn.Clicked += (sender, e) => { Navigation.PushAsync(new CheckForms()); };
-
-            var toFormsBtn = new Button {Text = "Buttons"};
-            toFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonForms()); };
+            var toButtonContentBtn = new Button {Text = "Buttons"};
+            toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonForms()); };
 
             var toTestBtn = new Button { Text = "Test" };
             toTestBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TestPage()); };
@@ -62,11 +71,14 @@ namespace SampleApp
                 {
                     Children =
                     {
+                        toCheckFormsBtn,
+                        toCheckGroupBtn,
+                        toRadioGroupBtn,
+                        toRateGroupBtn,
                         toSimpleFormsBtn,
                         toEntriesBtn,
-                        toCheckBoxsBtnBtn,
-                        toFormsBtn,
-                        toTestBtn
+                        toButtonContentBtn,
+                        //toTestBtn
                     }
                 }
             };

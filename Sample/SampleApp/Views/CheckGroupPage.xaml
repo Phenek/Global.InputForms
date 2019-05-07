@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             xmlns:valid="clr-namespace:SampleApp.Behaviors"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SampleApp.Views.CheckGroupPage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="LightBlue">
+        <StackLayout
+            Spacing="10"
+            Padding="0,10,0,10"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+            
+            <!-- Lefted CheckGroup & Righted CheckGroup -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                <!-- Lefted CheckGroup -->
+                <global:FrameInfo>
+                    <global:CheckGroup x:Name="_checkStore"
+                                         Spacing="20"
+                                         HorizontalOptions="End"
+                                         ItemsSource="{Binding Languages}"
+                                         CheckTemplate="{StaticResource RightIconCheck}" />
+                    <global:FrameInfo.Behaviors>
+                        <valid:CheckGroupValidatorBehavior />
+                    </global:FrameInfo.Behaviors>
+                </global:FrameInfo>
+
+                <!--Righted CheckGroup -->
+                <global:CheckGroup Spacing="20" Margin="10"
+                                     HorizontalOptions="Start"
+                                     ItemsSource="{Binding Languages}"
+                                     CheckTemplate="{StaticResource IconCheck}" />
+            </StackLayout>
+
+            <Label Text="Righted CheckGroup &amp; lefted CheckGroup" FontSize="Small" TextColor="Gray"
+                   HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+            
+            <StackLayout Spacing="12" Padding="30,0">
+                <!--CheckGroup with custom CheckButtons-->
+                <global:CheckGroup Grid.Column="0"
+                                     HorizontalOptions="Center"
+                                     x:Name="_checkGroup">
+
+                    <global:CheckButton Key="2" Value="English"
+                                   WidthRequest="100" HeightRequest="40" CornerRadius="20" FontSize="14"
+                                   BackgroundColor="White"
+                                   BorderColor="White"
+                                   TextColor="Navy"
+                                   CheckedBackgroundColor="Navy"
+                                   CheckedBorderColor="White"
+                                   CheckedTextColor="White" />
+
+                    <global:CheckButton Key="3" Value="Spanish"
+                                   WidthRequest="100" HeightRequest="40" CornerRadius="20" FontSize="14"
+                                   BackgroundColor="White"
+                                   BorderColor="Maroon"
+                                   TextColor="Maroon"
+                                   CheckedBackgroundColor="Maroon"
+                                   CheckedBorderColor="Maroon"
+                                   CheckedTextColor="White" />
+
+                    <global:CheckButton Key="4" Value="Russian"
+                                   WidthRequest="100" HeightRequest="40" CornerRadius="20" FontSize="14"
+                                   BackgroundColor="White"
+                                   BorderColor="Teal"
+                                   TextColor="Teal"
+                                   CheckedBackgroundColor="Teal"
+                                   CheckedBorderColor="Teal"
+                                   CheckedTextColor="White"/>
+                </global:CheckGroup>
+                    
+                <Label Text="CheckGroup with custom CheckButtons" FontSize="Small" TextColor="Gray"
+                   HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+        </StackLayout>
+
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

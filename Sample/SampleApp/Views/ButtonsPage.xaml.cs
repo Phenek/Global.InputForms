@@ -18,12 +18,14 @@ namespace SampleApp.Views
                 Text = "test"
             };
             _stack.Children.Add(button);
-
-            button.Clicked += Button_Clicked;
         }
 
+        private void SubmitClicked(object sender, EventArgs e)
+        {
+            _viewModel.OnSubmit();
+        }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void ParameterClicked(object sender, EventArgs e)
         {
             /*
             _RadioGender.ItemsSource.Add("Spanish", "3eme type");
@@ -35,11 +37,11 @@ namespace SampleApp.Views
             //_RadioGender.ItemsSource.Remove("Spanish");
             //_RadioGender.Children.RemoveAt(0);
 
-            var checkeds = _checkGroup.GetCheckedDictionary().Values;
-            var uncheckeds = _checkGroup.GetUnCheckedDictionary().Values;
-            Console.WriteLine($"radio: {_radioGender.SelectedItem}");
-            Console.WriteLine($"CheckGroup Checked: {checkeds}");
-            Console.WriteLine($"CheckGroup Unchecked: {uncheckeds}");
+            //var checkeds = _checkGroup.GetCheckedDictionary().Values;
+            //var uncheckeds = _checkGroup.GetUnCheckedDictionary().Values;
+            //Console.WriteLine($"radio: {_radioGender.SelectedItem}");
+            //Console.WriteLine($"CheckGroup Checked: {checkeds}");
+            //Console.WriteLine($"CheckGroup Unchecked: {uncheckeds}");
         }
     }
 }

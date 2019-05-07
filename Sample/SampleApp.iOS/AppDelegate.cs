@@ -29,7 +29,7 @@ namespace SampleApp.iOS
         {
             Forms.Init();
 
-            //GlobeForm Init
+            //Global Init
             InputForms.Init();
 
             //Init I18n

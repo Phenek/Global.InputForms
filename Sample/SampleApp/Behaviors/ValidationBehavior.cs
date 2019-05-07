@@ -69,6 +69,35 @@ namespace SampleApp.Behaviors
         }
     }
 
+    public class RateGroupValidatorBehavior : Behavior<FrameInfo>
+    {
+        protected override void OnAttachedTo(FrameInfo bindable)
+        {
+            if (bindable is FrameInfo frameInfo)
+            {
+                bindable.Validators += Validation;
+                base.OnAttachedTo(bindable);
+            }
+        }
+
+        protected void Validation(object sender, EventArgs e)
+        {
+            var i18N = DependencyService.Get<IDependencyGetter>().Get<ILocalizedResourceProvider>();
+
+            if (sender is RateGroup rateGroup && rateGroup.Parent is FrameInfo frameInfo && !frameInfo.Info)
+            {
+                var isValid = rateGroup.SelectedIndex != -1;
+                frameInfo.ShowInfo(!isValid, i18N.GetText("Error.Check"));
+            }
+        }
+
+        protected override void OnDetachingFrom(FrameInfo bindable)
+        {
+            bindable.Validators -= Validation;
+            base.OnDetachingFrom(bindable);
+        }
+    }
+
     public class EmptyValidatorBehavior : Behavior<EntryView>
     {
         protected override void OnAttachedTo(EntryView bindable)

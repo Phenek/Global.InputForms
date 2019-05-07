@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:valid="clr-namespace:SampleApp.Behaviors"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             x:Class="SampleApp.Views.ButtonForms">
+    <ContentPage.Content>
+        <!-- xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" -->
+        <ScrollView BackgroundColor="LightBlue">
+            <StackLayout
+                x:Name="_stack"
+                Spacing="10"
+                Padding="0,30,0,30"
+                VerticalOptions="Center"
+                HorizontalOptions="CenterAndExpand">
+                
+                <!-- Simple Button without content -->
+                 <global:ButtonContent
+                    Clicked="SubmitClicked"
+                    IsBusy="{Binding IsBusy, Mode=OneWay}"
+                    Text="Sign In"
+                    BorderWidth="2"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    WidthRequest="250"
+                    BackgroundColor="Teal"
+                    BorderColor="White"
+                    TextColor="White"
+                    HighlightBackgroundColor="White"
+                    HighlightBorderColor="White"
+                    HighlightTextColor="Teal"/>
+                
+                  <global:ButtonContent
+                    Clicked="SubmitClicked"
+                    IsBusy="{Binding IsBusy, Mode=OneWay}"
+                    Text="Sign In"
+                    BorderWidth="2"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    WidthRequest="250"
+                    BackgroundColor="Maroon"
+                    BorderColor="White"
+                    TextColor="White"
+                    HighlightBackgroundColor="White"
+                    HighlightBorderColor="Maroon"
+                    HighlightTextColor="Maroon"/>
+                
+                   <global:ButtonContent
+                    Clicked="SubmitClicked"
+                    IsBusy="{Binding IsBusy, Mode=OneWay}"
+                    Text="Sign In"
+                    BorderWidth="2"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    WidthRequest="250"
+                    BackgroundColor="Navy"
+                    BorderColor="Navy"
+                    TextColor="White"
+                    HighlightBackgroundColor="White"
+                    HighlightBorderColor="Navy"
+                    HighlightTextColor="Navy"/>
+
+                <Label Text="Simple Buttons without content"
+                       FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+            <!-- Simple Button with content -->
+               <global:ButtonContent VerticalOptions="Start"
+                                     Clicked="ParameterClicked" BackgroundColor="White"
+                                     HighlightBackgroundColor="LightGray">
+                    <StackLayout Orientation="Horizontal" Margin="10">
+                         <Frame Padding="0" HasShadow="false"
+                                BackgroundColor="Maroon"
+                                CornerRadius="25"
+                                HeightRequest="50"
+                                WidthRequest="50" VerticalOptions="Center">
+                         </Frame>
+                         <Label Text="Parameters"
+                                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                                FontSize="Medium" FontFamily="Bold"
+                                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                         <Label Margin="25,0,0,0" Text=">" ScaleY="1.5" TextColor="Navy" FontSize="40"
+                                HorizontalOptions="End"
+                                VerticalOptions="FillAndExpand" />
+                     </StackLayout>
+                </global:ButtonContent>
+                
+                <global:ButtonContent VerticalOptions="Start" CornerRadius="30" HeightRequest="60"
+                                      BorderWidth="10" BorderColor="Silver"
+                                     Clicked="ParameterClicked" BackgroundColor="White"
+                                     HighlightBackgroundColor="LightGray">
+                    <StackLayout Orientation="Horizontal">
+                         <Frame Padding="0" HasShadow="false"
+                                BackgroundColor="Maroon"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                WidthRequest="40" VerticalOptions="Center">
+                         </Frame>
+                         <Label Text="Parameters"
+                                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                                FontSize="Medium" FontFamily="Bold"
+                                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                         <Frame Padding="0" HasShadow="false" CornerRadius="0"
+                                BackgroundColor="Blue"
+                                HeightRequest="40"
+                                WidthRequest="40" VerticalOptions="Center">
+                         </Frame>
+                     </StackLayout>
+                </global:ButtonContent>
+                    
+                    
+                <Label Text="Simple Button with content" FontSize="Default" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+                <StackLayout VerticalOptions="FillAndExpand" HeightRequest="100">
+                    <!--
+                    <lottie:AnimationView 
+                    x:Name="AnimationView"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    Animation="loader"
+                    Loop="True"
+                    AutoPlay="True"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand" />
+                    -->
+
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

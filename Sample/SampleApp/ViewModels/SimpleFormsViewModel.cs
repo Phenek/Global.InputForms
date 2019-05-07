@@ -16,7 +16,6 @@ namespace SampleApp.ViewModels
 
         public SimpleFormsViewModel()
         {
-            Title = "SignUp";
 
             Rates = new ObservableDictionary<string, string>
             {

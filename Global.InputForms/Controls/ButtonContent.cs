@@ -156,6 +156,7 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 InputTransparent = true,
                 IsEnabled = false,
+                IsClippedToBounds = true,
             };
             _frame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(Content)) {Source = this, Mode = BindingMode.OneWay});
