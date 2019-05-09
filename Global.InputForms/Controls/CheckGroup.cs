@@ -48,9 +48,6 @@ namespace Global.InputForms
         {
             CheckList = new ObservableCollection<ICheckable>();
             ItemsSource = new ObservableDictionary<string, string>();
-
-            ChildAdded += ChildCheckAdded;
-            ChildRemoved += ChildCheckRemoved;
         }
 
         /// <summary>
@@ -86,9 +83,11 @@ namespace Global.InputForms
             if (Parent is FrameInfo frameInfo) CheckedChanged += (sender, e) => frameInfo.Validate();
         }
 
-        private void ChildCheckAdded(object sender, ElementEventArgs e)
+        protected override void OnChildAdded(Element child)
         {
-            if (e.Element is ICheckable checkable)
+            base.OnChildAdded(child);
+
+            if (child is ICheckable checkable)
             {
                 if (!string.IsNullOrEmpty(checkable.Key) && CheckList.All(c => c.Key != checkable.Key))
                 {
@@ -121,9 +120,10 @@ namespace Global.InputForms
             }
         }
 
-        private void ChildCheckRemoved(object sender, ElementEventArgs e)
+        protected override void OnChildRemoved(Element child)
         {
-            if (!(e.Element is ICheckable checkable)) return;
+            base.OnChildRemoved(child);
+            if (!(child is ICheckable checkable)) return;
             checkable.Clicked -= OnCheckedChanged;
             CheckList.Remove(checkable);
             ItemsSource.Remove(checkable.Key);
