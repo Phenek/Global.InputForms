@@ -60,7 +60,7 @@ namespace SampleApp
             toEntriesBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryForms()); };
 
             var toButtonContentBtn = new Button {Text = "Buttons"};
-            toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonForms()); };
+            toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonsPage()); };
 
             var toTestBtn = new Button { Text = "Test" };
             toTestBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TestPage()); };

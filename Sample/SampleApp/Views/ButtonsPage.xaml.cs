@@ -4,11 +4,11 @@ using Xamarin.Forms;
 
 namespace SampleApp.Views
 {
-    public partial class ButtonForms : ContentPage
+    public partial class ButtonsPage : ContentPage
     {
         private SimpleFormsViewModel _viewModel;
 
-        public ButtonForms()
+        public ButtonsPage()
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();

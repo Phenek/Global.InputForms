@@ -97,6 +97,7 @@
     <Compile Include="Renderers\BlankPickerDateRenderer.cs" />
     <Compile Include="Renderers\ButtonRenderer.cs" />
     <Compile Include="InputForms.cs" />
+    <Compile Include="Renderers\BlankPickerRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

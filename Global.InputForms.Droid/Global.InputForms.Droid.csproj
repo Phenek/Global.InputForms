@@ -61,6 +61,7 @@
     <Compile Include="Renderers\BlankPickerDateRenderer.cs" />
     <Compile Include="Renderers\BlankEntryRenderer.cs" />
     <Compile Include="InputForms.cs" />
+    <Compile Include="Renderers\BlankPickerRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

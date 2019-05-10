@@ -17,6 +17,7 @@
                 <!-- Standart Entry with Surrounded Info -->
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
                                     InfoViewType="Surrounded"
+                                    Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />

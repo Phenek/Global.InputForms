@@ -28,6 +28,7 @@
     <Folder Include="Models\" />
     <Folder Include="Controls\Blank\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="InputForms.cs" />

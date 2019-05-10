@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.ButtonForms">
+             x:Class="SampleApp.Views.ButtonsPage">
     <ContentPage.Content>
         <!-- xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" -->
         <ScrollView BackgroundColor="LightBlue">
