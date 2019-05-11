@@ -188,7 +188,7 @@ namespace Global.InputForms
             }
             else
             {
-                var masked = entryView.AddMask((string)newValue);
+                var masked = entryView.AddMask((string)newValue, false);
                 entryView.MaskedEntryText = masked;
                 if (entryView._entry.Text != masked)
                 {
@@ -222,16 +222,16 @@ namespace Global.InputForms
             */
         }
 
-        private string AddMask(string str)
+        private string AddMask(string str, bool isAddition = true)
         {
             if (string.IsNullOrEmpty(str)) return null;
-            
+
             var sb = new StringBuilder(str);
 
             var nbX = 0;
             for (var i = 0; i < Mask.Length; ++i)
                 if (Mask[i] != 'X' && nbX < str.Length && Mask[i] != str[nbX] 
-                    || nbX == str.Length && Mask[i] != 'X')
+                    || isAddition && nbX == str.Length && Mask[i] != 'X')
                     sb.Insert(i, Mask[i]);
                 else
                     ++nbX;
@@ -258,7 +258,7 @@ namespace Global.InputForms
         private void OnEntryTextChanged(object sender, TextChangedEventArgs args)
         {
             if (!(sender is Entry entry)) return;
-
+            var isAddition = true;
             if (!string.IsNullOrEmpty(Mask))
             {
                 if (entry.Text == MaskedEntryText)
@@ -291,6 +291,7 @@ namespace Global.InputForms
                 }
                 else if (nbDiff < 0 && cursor < Mask.Count()) // Deletion
                 {
+                    isAddition = false;
                     //var i = 0;
                     //var a = 0;
                     //for (i = cursor - Math.Abs(nbDiff); i > 0 && Mask[i] != 'X'; i--) 
@@ -300,8 +301,17 @@ namespace Global.InputForms
                     //}
                     //_cursorPosition = (i > 0) ? i : 0;
                     _cursorPosition = cursor - Math.Abs(nbDiff);
-                    maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));//_cursorPosition, Math.Abs(nbDiff )+ a);
+                    //maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));//_cursorPosition, Math.Abs(nbDiff )+ a);
                     //newText = newText.Remove(_cursorPosition, Math.Min(Math.Abs(nbDiff) + a, newText.Count() - _cursorPosition));
+
+                    if (Device.RuntimePlatform == Device.iOS && Math.Abs(nbDiff) > 1) //iOS
+                    {
+                        maskTmp = Mask.Remove(cursor, Math.Abs(nbDiff));
+                    }
+                    else
+                    {
+                        maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));
+                    }
                 }
                 var newLightText = RemoveMask(newText, maskTmp);
                 var oldLightText = RemoveMask(oldText);
@@ -310,7 +320,7 @@ namespace Global.InputForms
 
                 if (EntryText == newLightText)
                 {
-                    var masked = AddMask(newLightText);
+                    var masked = AddMask(newLightText, isAddition);
                     MaskedEntryText = masked;
                     entry.Text = masked;
                 }
