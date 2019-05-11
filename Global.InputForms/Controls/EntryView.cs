@@ -299,7 +299,7 @@ namespace Global.InputForms
                     //    ++a; 
                     //}
                     //_cursorPosition = (i > 0) ? i : 0;
-                    _cursorPosition = cursor - Math.Abs(nbDiff);
+                    _cursorPosition = (Device.RuntimePlatform == Device.iOS) ? cursor : cursor - Math.Abs(nbDiff);
                     maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));//_cursorPosition, Math.Abs(nbDiff )+ a);
                     //newText = newText.Remove(_cursorPosition, Math.Min(Math.Abs(nbDiff) + a, newText.Count() - _cursorPosition));
                 }
