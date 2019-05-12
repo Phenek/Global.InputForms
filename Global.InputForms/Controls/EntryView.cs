@@ -63,7 +63,8 @@ namespace Global.InputForms
             {
                 HeightRequest = 40,
                 BackgroundColor = Color.Transparent,
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center
             };
             _entry.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
@@ -87,20 +88,9 @@ namespace Global.InputForms
                 new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
                 new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
+            _entry.SetBinding(InputView.IsReadOnlyProperty,
+               new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
 
-            var fEntry = new Frame
-            {
-                Padding = 0,
-                HeightRequest = 40,
-                HasShadow = false,
-                BackgroundColor = Color.Transparent,
-                Content = _entry
-            };
-            fEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay });
-            fEntry.SetBinding(InputTransparentProperty,
-                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-                
             _entry.Focused += FocusEntry;
             _entry.Unfocused += UnfocusEntry;
             _entry.TextChanged += OnEntryTextChanged;
@@ -113,7 +103,7 @@ namespace Global.InputForms
             Unfocused += (sender, e) => Validate();
             
 
-            Children.Add (fEntry, 2, 3, 1, 2);
+            Children.Add (_entry, 2, 3, 1, 2);
         }
 
         /// <summary>
@@ -307,6 +297,7 @@ namespace Global.InputForms
                     if (Device.RuntimePlatform == Device.iOS && Math.Abs(nbDiff) > 1) //iOS
                     {
                         maskTmp = Mask.Remove(cursor, Math.Abs(nbDiff));
+                        _cursorPosition = cursor;
                     }
                     else
                     {

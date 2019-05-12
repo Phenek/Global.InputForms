@@ -128,10 +128,10 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(EntryTextColor), typeof(Color), typeof(DatePickerView), Color.Black);
 
         /// <summary>
-        ///     The IsEnabled property.
+        ///     The Is Read Only property.
         /// </summary>
-        public static readonly BindableProperty EntryIsEnabledProperty =
-            BindableProperty.Create(nameof(EntryIsEnabled), typeof(bool), typeof(EntryView), true);
+        public static readonly BindableProperty IsReadOnlyProperty =
+            BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(EntryView), false);
 
         /// <summary>
         ///     The Info View Type property.
@@ -434,10 +434,10 @@ namespace Global.InputForms
             set => SetValue(EntryTextColorProperty, value);
         }
 
-        public bool EntryIsEnabled
+        public bool IsReadOnly
         {
-            get => (bool)GetValue(EntryIsEnabledProperty);
-            set => SetValue(EntryIsEnabledProperty, value);
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
         }
 
         /// <summary>

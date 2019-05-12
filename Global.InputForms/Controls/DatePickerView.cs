@@ -78,9 +78,9 @@ namespace Global.InputForms
                 Content = _datePicker
             };
             fEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
             fEntry.SetBinding(InputTransparentProperty,
-                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
 
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;
@@ -114,12 +114,6 @@ namespace Global.InputForms
         {
             get => (DateTime) GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
-        }
-
-        private static void EntryIsEnabledChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            //Hack for Android Input Text
-            if (bindable is DatePickerView datePickerView) datePickerView.InputTransparent = !(bool) newValue;
         }
 
         public new void Focus()

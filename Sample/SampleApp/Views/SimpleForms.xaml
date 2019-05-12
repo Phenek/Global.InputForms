@@ -35,7 +35,7 @@
                 <global:EntryView Grid.Column="1" Grid.Row="0"
                                     EntryBackgroundColor="#88FFFFFF"
                                     EntryCornerRadius="15"
-                                    EntryIsEnabled="false"
+                                    IsReadOnly="true"
                                     EntryPlaceholder="test"
                                     EntryBorderColor="Red"
                                     EntryTextColor="Red"

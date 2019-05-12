@@ -76,7 +76,7 @@ namespace Global.InputForms
                 new Binding(nameof(Title)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(Picker.TitleColorProperty,
                 new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
-
+            
             var fEntry = new Frame
             {
                 Padding = 0,
@@ -86,9 +86,9 @@ namespace Global.InputForms
                 Content = _picker
             };
             fEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
             fEntry.SetBinding(InputTransparentProperty,
-                new Binding(nameof(EntryIsEnabled)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
 
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
