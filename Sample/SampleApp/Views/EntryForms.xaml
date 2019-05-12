@@ -18,6 +18,8 @@
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
                                     InfoViewType="Surrounded"
                                     Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
+                                    EntryText="PPPPPPPPPPPPPPPP"
+                                    IsClipBoardMenuVisible="false"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
@@ -64,6 +66,8 @@
                 <!-- Standart Entry with Background Info -->
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
                                     InfoViewType="Background"
+                                    Mask="+(XX) XX.XX.XX.XX --(HELP)-- XXXX"
+                                    IsClipBoardMenuVisible="false"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />

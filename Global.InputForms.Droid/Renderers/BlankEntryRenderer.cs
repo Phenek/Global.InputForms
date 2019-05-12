@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Android.Content;
+using Android.Views;
 using Global.InputForms;
 using Global.InputForms.Droid.Renderers;
 using Xamarin.Forms;
@@ -10,8 +11,10 @@ using Color = Android.Graphics.Color;
 
 namespace Global.InputForms.Droid.Renderers
 {
-    public class BlankEntryRenderer : EntryRenderer
+    public class BlankEntryRenderer : EntryRenderer, ActionMode.ICallback
     {
+        new BlankEntry Element => (BlankEntry)base.Element;
+
         public BlankEntryRenderer(Context context) : base(context)
         {
         }
@@ -19,6 +22,11 @@ namespace Global.InputForms.Droid.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
+
+            if (Control != null)
+            {
+                Control.CustomSelectionActionModeCallback = this;
+            }
 
             SetAttributes();
         }
@@ -28,6 +36,11 @@ namespace Global.InputForms.Droid.Renderers
             base.OnElementPropertyChanged(sender, e);
 
             if (e.PropertyName == nameof(Entry.IsEnabled)) SetAttributes();
+
+            if (e.PropertyName == nameof(BlankEntry.IsClipBoardMenuVisible))
+            {
+                Control.LongClickable = Element.IsClipBoardMenuVisible;
+            }
         }
 
         private void SetAttributes()
@@ -41,6 +54,25 @@ namespace Global.InputForms.Droid.Renderers
                 Control.SetTextColor(((BlankEntry)Element).TextColor.ToAndroid());
             }
             */
+        }
+
+        public bool OnActionItemClicked(ActionMode mode, IMenuItem item)
+        {
+            return Element.IsClipBoardMenuVisible;
+        }
+
+        public bool OnCreateActionMode(ActionMode mode, IMenu menu)
+        {
+            return Element.IsClipBoardMenuVisible;
+        }
+
+        public void OnDestroyActionMode(ActionMode mode)
+        {
+        }
+
+        public bool OnPrepareActionMode(ActionMode mode, IMenu menu)
+        {
+            return Element.IsClipBoardMenuVisible;
         }
     }
 }

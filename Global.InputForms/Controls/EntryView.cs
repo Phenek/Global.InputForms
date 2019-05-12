@@ -51,6 +51,12 @@ namespace Global.InputForms
         public static readonly BindableProperty KeyboardProperty =
             BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(EntryView), Keyboard.Default);
 
+        /// <summary>
+        ///     The Clip Board Menu property.
+        /// </summary>
+        public static readonly BindableProperty IsClipBoardMenuVisibleProperty =
+            BindableProperty.Create(nameof(IsClipBoardMenuVisible), typeof(bool), typeof(BlankEntry), true);
+
         private readonly BlankEntry _entry;
 
         public EventHandler<TextChangedEventArgs> TextChanged;
@@ -87,6 +93,8 @@ namespace Global.InputForms
                 new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
                 new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
+            _entry.SetBinding(BlankEntry.IsClipBoardMenuVisibleProperty,
+                new Binding(nameof(IsClipBoardMenuVisible)) { Source = this, Mode = BindingMode.OneWay });
 
             var fEntry = new Frame
             {
@@ -178,6 +186,16 @@ namespace Global.InputForms
             set => SetValue(KeyboardProperty, value);
         }
 
+        /// <summary>
+        ///  Gets or sets the clip board menu visibility text.
+        /// </summary>
+        /// <value>The entry text.</value>
+        public bool IsClipBoardMenuVisible
+        {
+            get => (bool)GetValue(IsClipBoardMenuVisibleProperty);
+            set => SetValue(IsClipBoardMenuVisibleProperty, value);
+        }
+
         private static void EntryTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is EntryView entryView)) return;
@@ -188,11 +206,12 @@ namespace Global.InputForms
             }
             else
             {
-                var masked = entryView.AddMask((string)newValue);
+                var masked = entryView.AddMask((string)newValue, false);
                 entryView.MaskedEntryText = masked;
                 if (entryView._entry.Text != masked)
                 {
-                    //entryView._entry.TextChanged += entryView.EntryCursorChanged;
+                    if (entryView._entry.IsFocused) 
+                        entryView._entry.TextChanged += entryView.EntryCursorChanged;
                     entryView._entry.Text = masked;
                }
             }
@@ -222,7 +241,7 @@ namespace Global.InputForms
             */
         }
 
-        private string AddMask(string str)
+        private string AddMask(string str, bool addition = true)
         {
             if (string.IsNullOrEmpty(str)) return null;
             
@@ -231,7 +250,7 @@ namespace Global.InputForms
             var nbX = 0;
             for (var i = 0; i < Mask.Length; ++i)
                 if (Mask[i] != 'X' && nbX < str.Length && Mask[i] != str[nbX] 
-                    || nbX == str.Length && Mask[i] != 'X')
+                    || addition && nbX == str.Length && Mask[i] != 'X')
                     sb.Insert(i, Mask[i]);
                 else
                     ++nbX;
@@ -253,6 +272,8 @@ namespace Global.InputForms
         private static void EntryMaskChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is EntryView entryView)) return;
+
+            //entryView._entry.IsReadOnly = true;
         }
 
         private void OnEntryTextChanged(object sender, TextChangedEventArgs args)
@@ -261,13 +282,13 @@ namespace Global.InputForms
 
             if (!string.IsNullOrEmpty(Mask))
             {
-                if (entry.Text == MaskedEntryText)
+                var oldText = args.OldTextValue;
+                var newText = args.NewTextValue;
+
+                if (entry.Text == MaskedEntryText || newText == oldText)
                 { 
                     return; 
                 }
-
-                var oldText = args.OldTextValue;
-                var newText = args.NewTextValue;
 
                 if (string.IsNullOrEmpty(newText) || string.IsNullOrEmpty(oldText))
                 {
@@ -277,31 +298,38 @@ namespace Global.InputForms
 
                 var cursor = entry.CursorPosition;
                 var nbDiff = newText.Count() - oldText.Count();
+                var isAddition = true;
 
                 var maskTmp = Mask;
                 if (nbDiff > 0 && cursor < Mask.Count() && cursor - nbDiff < Mask.Count()) // Addition
                 {
-                    //var a = 0;
-                    //for (var i = cursor + nbDiff; i < Mask.Count() && Mask[i] != 'X'; i++)
-                    //{ ++a; }
+                    var a = (Mask[cursor] != 'X') ? 1 : 0;
+                    for (var i = cursor + nbDiff; i < Mask.Count() && Mask[i] != 'X'; i++)
+                    { ++a; }
 
                     var str = new string('X', nbDiff);
                     maskTmp = Mask.Insert(cursor, str);
-                    //_cursorPosition = cursor + nbDiff + a;
+                    _cursorPosition = cursor + nbDiff + a;
                 }
                 else if (nbDiff < 0 && cursor < Mask.Count()) // Deletion
                 {
-                    //var i = 0;
-                    //var a = 0;
-                    //for (i = cursor - Math.Abs(nbDiff); i > 0 && Mask[i] != 'X'; i--) 
-                    //{
-                    //    var maski = Mask[i];
-                    //    ++a; 
-                    //}
-                    //_cursorPosition = (i > 0) ? i : 0;
-                    _cursorPosition = (Device.RuntimePlatform == Device.iOS) ? cursor : cursor - Math.Abs(nbDiff);
-                    maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));//_cursorPosition, Math.Abs(nbDiff )+ a);
-                    //newText = newText.Remove(_cursorPosition, Math.Min(Math.Abs(nbDiff) + a, newText.Count() - _cursorPosition));
+                    isAddition = false;
+                    var i = 0;
+                    var a = 0;
+                    for (i = cursor - Math.Abs(nbDiff); i > 0 && Mask[i] != 'X'; i--) 
+                    {
+                        var maski = Mask[i];
+                        ++a; 
+                    }
+                    // Math.Abs(nbDiff) > 2 occured when there is an Entry Selection.
+                    //_cursorPosition = (Device.RuntimePlatform == Device.iOS) ? cursor : cursor - Math.Abs(nbDiff);
+
+                    _cursorPosition = cursor - Math.Abs(nbDiff);
+
+                    maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff) + a); // +a;
+
+                    if (Math.Abs(nbDiff) < 2 && _cursorPosition < newText.Count() && _cursorPosition + a < newText.Count())
+                        newText = newText.Remove(_cursorPosition, Math.Min(a, newText.Count() -1));
                 }
                 var newLightText = RemoveMask(newText, maskTmp);
                 var oldLightText = RemoveMask(oldText);
@@ -310,7 +338,7 @@ namespace Global.InputForms
 
                 if (EntryText == newLightText)
                 {
-                    var masked = AddMask(newLightText);
+                    var masked = AddMask(newLightText, isAddition);
                     MaskedEntryText = masked;
                     entry.Text = masked;
                 }
