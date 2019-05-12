@@ -57,8 +57,6 @@ namespace Global.InputForms
                 new Binding(nameof(EntryFontFamily)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(Picker.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) { Source = this, Mode = BindingMode.OneWay });
-            _picker.SetBinding(BlankPicker.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(BlankPicker.PlaceholderProperty,
                 new Binding(nameof(EntryPlaceholder)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(BlankPicker.PlaceholderColorProperty,

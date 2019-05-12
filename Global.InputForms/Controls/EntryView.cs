@@ -18,6 +18,13 @@ namespace Global.InputForms
                 propertyChanged: EntryTextChanged);
 
         /// <summary>
+        ///     The Entry Horizontal Text Alignment property.
+        /// </summary>
+        public static readonly BindableProperty EntryHorizontalTextAlignmentProperty =
+            BindableProperty.Create(nameof(EntryHorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
+                TextAlignment.Start);
+
+        /// <summary>
         ///     The Masked Entry Text property.
         /// </summary>
         public static readonly BindableProperty MaskedEntryTextProperty =
@@ -114,6 +121,16 @@ namespace Global.InputForms
         {
             get => (string) GetValue(EntryTextProperty);
             set => SetValue(EntryTextProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the entry horizontal text alignment.
+        /// </summary>
+        /// <value>The entry horizontal text alignment.</value>
+        public TextAlignment EntryHorizontalTextAlignment
+        {
+            get => (TextAlignment)GetValue(EntryHorizontalTextAlignmentProperty);
+            set => SetValue(EntryHorizontalTextAlignmentProperty, value);
         }
 
         /// <summary>

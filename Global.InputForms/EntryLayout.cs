@@ -101,14 +101,7 @@ namespace Global.InputForms
         public static readonly BindableProperty EntryFontSizeProperty =
             BindableProperty.Create(nameof(EntryFontSize), typeof(double), typeof(DatePickerView),
                 Device.GetNamedSize(NamedSize.Medium, typeof(Entry)));
-
-        /// <summary>
-        ///     The Entry Horizontal Text Alignment property.
-        /// </summary>
-        public static readonly BindableProperty EntryHorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(EntryHorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
-                TextAlignment.Start);
-
+                
         /// <summary>
         ///     The Entry Placeholder property.
         /// </summary>
@@ -392,16 +385,6 @@ namespace Global.InputForms
         {
             get => (double)GetValue(EntryFontSizeProperty);
             set => SetValue(EntryFontSizeProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the entry horizontal text alignment.
-        /// </summary>
-        /// <value>The entry horizontal text alignment.</value>
-        public TextAlignment EntryHorizontalTextAlignment
-        {
-            get => (TextAlignment)GetValue(EntryHorizontalTextAlignmentProperty);
-            set => SetValue(EntryHorizontalTextAlignmentProperty, value);
         }
 
         /// <summary>

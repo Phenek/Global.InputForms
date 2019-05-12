@@ -51,8 +51,6 @@ namespace Global.InputForms
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(BlankDatePicker.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderProperty,
                 new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderColorProperty,
@@ -128,9 +126,6 @@ namespace Global.InputForms
 
         private void Date_Selected(object sender, DateChangedEventArgs e)
         {
-            if (!(sender is DatePicker datePicker)) return;
-            
-            Date = datePicker.Date;
             DateSelected?.Invoke(this, e);
         }
 
