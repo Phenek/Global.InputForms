@@ -84,16 +84,16 @@ namespace Global.InputForms
                 Content = _picker
             };
             fEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
-            fEntry.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+            fEntry.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay});
 
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
-
             _picker.SelectedIndexChanged += IndexChanged;
 
-            Unfocused += (sender, e) => Validate();
+            ParentUnfocused = new Command(() => Unfocus());
+            ParentFocused = new Command(() => Focus());
 
             Children.Add(fEntry, 2, 3, 1, 2);
         }
@@ -124,12 +124,12 @@ namespace Global.InputForms
             set => SetValue(TitleColorProperty, value);
         }
 
-        public new void Focus()
+        public override void Focus()
         {
             _picker.Focus();
         }
 
-        public new void Unfocus()
+        public override void Unfocus()
         {
             _picker.Unfocus();
         }

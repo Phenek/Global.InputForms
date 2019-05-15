@@ -76,16 +76,16 @@ namespace Global.InputForms
                 Content = _datePicker
             };
             fEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
-            fEntry.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+            fEntry.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
 
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;
-
             _datePicker.DateSelected += Date_Selected;
 
-            Unfocused += (sender, e) => Validate();
+            ParentUnfocused = new Command(() => Unfocus());
+            ParentFocused = new Command(() => Focus());
 
             Children.Add(fEntry, 2, 3, 1, 2);
         }
@@ -114,12 +114,12 @@ namespace Global.InputForms
             set => SetValue(MinimumDateProperty, value);
         }
 
-        public new void Focus()
+        public override void Focus()
         {
             _datePicker.Focus();
         }
 
-        public new void Unfocus()
+        public override void Unfocus()
         {
             _datePicker.Unfocus();
         }

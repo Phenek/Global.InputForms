@@ -15,7 +15,7 @@
                 HorizontalOptions="CenterAndExpand">
 
                 <!-- Standart Entry with Surrounded Info -->
-                <controls:EntryView EntryBackgroundColor="#88FFFFFF"
+                <controls:EntryView EntryBackgroundColor="#88FFFFFF" x:Name="_entry"
                                     InfoViewType="Line"
                                     Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
                                     EntryLineColor="Purple"

@@ -107,8 +107,8 @@ namespace Global.InputForms
                     Validate();
             };
 
-            Unfocused += (sender, e) => Validate();
-            
+            ParentUnfocused = new Command(() => Unfocus());
+            ParentFocused = new Command(() => Focus());
 
             Children.Add (_entry, 2, 3, 1, 2);
         }
@@ -339,12 +339,12 @@ namespace Global.InputForms
             }
         }
 
-        public new void Focus()
+        public override void Focus()
         {
             _entry.Focus();
         }
 
-        public new void Unfocus()
+        public override void Unfocus()
         {
             _entry.Unfocus();
         }

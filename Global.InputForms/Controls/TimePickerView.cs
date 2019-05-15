@@ -55,14 +55,12 @@ namespace Global.InputForms
                 Content = _timePicker
             };
             fEntry.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
-            fEntry.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+            fEntry.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay});
 
             _timePicker.Focused += FocusEntry;
             _timePicker.Unfocused += UnfocusEntry;
-
-            Unfocused += (sender, e) => Validate();
 
             Children.Add(fEntry, 2, 3, 1, 2);
         }
@@ -77,6 +75,16 @@ namespace Global.InputForms
         {
             get => (string)GetValue(TimePicker.FormatProperty);
             set => SetValue(TimePicker.FormatProperty, value);
+        }
+
+        public override void Focus()
+        {
+            _timePicker.Focus();
+        }
+
+        public override void Unfocus()
+        {
+            _timePicker.Unfocus();
         }
     }
 }

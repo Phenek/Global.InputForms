@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace Global.InputForms
 {
-    public class EntryLayout : Grid
+    public abstract class EntryLayout : Grid
     {
         /// <summary>
         ///     The Label Font Attributes property.
@@ -80,7 +80,6 @@ namespace Global.InputForms
         public static readonly BindableProperty EntryBackgroundColorProperty =
             BindableProperty.Create(nameof(EntryBackgroundColor), typeof(Color), typeof(EntryLayout), Color.Transparent,
                 propertyChanged: ColorChanged);
-
 
         /// <summary>
         ///     The Entry Font Attributes property.
@@ -216,6 +215,9 @@ namespace Global.InputForms
         public new bool IsFocused { get; set; }
         public new event EventHandler<FocusEventArgs> Focused;
         public new event EventHandler<FocusEventArgs> Unfocused;
+
+        public Command ParentFocused;
+        public Command ParentUnfocused;
 
         public EntryLayout()
         {
@@ -730,6 +732,9 @@ namespace Global.InputForms
             InfoIsVisible = isVisible;
             Info = isVisible;
         }
+
+        public new abstract void Focus();
+        public new abstract void Unfocus();
 
         public void FocusEntry(object sender, FocusEventArgs e)
         {
