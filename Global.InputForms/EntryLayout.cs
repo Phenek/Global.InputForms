@@ -9,202 +9,207 @@ namespace Global.InputForms
         ///     The Label Font Attributes property.
         /// </summary>
         public static readonly BindableProperty LabelFontAttributesProperty =
-            BindableProperty.Create(nameof(LabelFontAttributes), typeof(FontAttributes), typeof(EntryView),
+            BindableProperty.Create(nameof(LabelFontAttributes), typeof(FontAttributes), typeof(EntryLayout),
                 FontAttributes.Bold);
 
         /// <summary>
         ///     The Label Font Family property.
         /// </summary>
         public static readonly BindableProperty LabelFontFamilyProperty =
-            BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(EntryView), string.Empty);
+            BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(EntryLayout), string.Empty);
 
         /// <summary>
         ///     The Label Font Size property.
         /// </summary>
         public static readonly BindableProperty LabelFontSizeProperty =
-            BindableProperty.Create(nameof(LabelFontSize), typeof(double), typeof(EntryView),
+            BindableProperty.Create(nameof(LabelFontSize), typeof(double), typeof(EntryLayout),
                 Device.GetNamedSize(NamedSize.Small, typeof(Label)));
 
         /// <summary>
         ///     The Label Horizontal TextAlignment property.
         /// </summary>
         public static readonly BindableProperty LabelHorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(LabelHorizontalTextAlignment), typeof(TextAlignment), typeof(EntryView),
+            BindableProperty.Create(nameof(LabelHorizontalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
                 TextAlignment.Start);
 
         /// <summary>
         ///     The Label Vertical Text Alignment property.
         /// </summary>
         public static readonly BindableProperty LabelVerticalTextAlignmentProperty =
-            BindableProperty.Create(nameof(LabelVerticalTextAlignment), typeof(TextAlignment), typeof(EntryView),
+            BindableProperty.Create(nameof(LabelVerticalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
                 TextAlignment.Start);
 
         /// <summary>
         ///     The Label Text property.
         /// </summary>
         public static readonly BindableProperty LabelTextProperty =
-            BindableProperty.Create(nameof(LabelText), typeof(string), typeof(EntryView), string.Empty,
+            BindableProperty.Create(nameof(LabelText), typeof(string), typeof(EntryLayout), string.Empty,
                 propertyChanged: LabelTextChanged);
 
         /// <summary>
         ///     The Label Highlighted Color property.
         /// </summary>
         public static readonly BindableProperty LabelHighlightedColorProperty =
-            BindableProperty.Create(nameof(LabelHighlightedColor), typeof(Color), typeof(EntryView), Color.Gray,
-                propertyChanged: LabelHighlightedColorChanged);
+            BindableProperty.Create(nameof(LabelHighlightedColor), typeof(Color), typeof(EntryLayout), Color.Gray,
+                propertyChanged: ColorChanged);
 
         /// <summary>
         ///     The Label Text Color property.
         /// </summary>
         public static readonly BindableProperty LabelTextColorProperty =
-            BindableProperty.Create(nameof(LabelTextColor), typeof(Color), typeof(EntryView), Color.Black,
-                propertyChanged: LabelTextColorChanged);
+            BindableProperty.Create(nameof(LabelTextColor), typeof(Color), typeof(EntryLayout), Color.Black,
+                propertyChanged: ColorChanged);
 
         /// <summary>
         ///     The Entry Corner Radius property.
         /// </summary>
         public static readonly BindableProperty EntryCornerRadiusProperty =
-            BindableProperty.Create(nameof(EntryCornerRadius), typeof(float), typeof(EntryView), 0f,
+            BindableProperty.Create(nameof(EntryCornerRadius), typeof(float), typeof(EntryLayout), 0f,
                 propertyChanged: EntryCornerRadiusChanged);
 
         /// <summary>
         ///     The Entry Border Color property.
         /// </summary>
         public static readonly BindableProperty EntryBorderColorProperty =
-            BindableProperty.Create(nameof(EntryBorderColor), typeof(Color), typeof(EntryView), Color.Transparent,
-                propertyChanged: EntryBorderColorChanged);
+            BindableProperty.Create(nameof(EntryBorderColor), typeof(Color), typeof(EntryLayout), Color.Transparent,
+                propertyChanged: ColorChanged);
 
         /// <summary>
         ///     The Entry Background Color property.
         /// </summary>
         public static readonly BindableProperty EntryBackgroundColorProperty =
-            BindableProperty.Create(nameof(EntryBackgroundColor), typeof(Color), typeof(EntryView), Color.Transparent,
-                propertyChanged: EntryBackgroundColorChanged);
+            BindableProperty.Create(nameof(EntryBackgroundColor), typeof(Color), typeof(EntryLayout), Color.Transparent,
+                propertyChanged: ColorChanged);
 
 
         /// <summary>
         ///     The Entry Font Attributes property.
         /// </summary>
         public static readonly BindableProperty EntryFontAttributesProperty =
-            BindableProperty.Create(nameof(EntryFontAttributes), typeof(FontAttributes), typeof(DatePickerView),
+            BindableProperty.Create(nameof(EntryFontAttributes), typeof(FontAttributes), typeof(EntryLayout),
                 FontAttributes.None);
 
         /// <summary>
         ///     The Entry Font Family property.
         /// </summary>
         public static readonly BindableProperty EntryFontFamilyProperty =
-            BindableProperty.Create(nameof(EntryFontFamily), typeof(string), typeof(DatePickerView), string.Empty);
+            BindableProperty.Create(nameof(EntryFontFamily), typeof(string), typeof(EntryLayout), string.Empty);
 
         /// <summary>
         ///     The Entry Font Size property.
         /// </summary>
         public static readonly BindableProperty EntryFontSizeProperty =
-            BindableProperty.Create(nameof(EntryFontSize), typeof(double), typeof(DatePickerView),
+            BindableProperty.Create(nameof(EntryFontSize), typeof(double), typeof(EntryLayout),
                 Device.GetNamedSize(NamedSize.Medium, typeof(Entry)));
                 
         /// <summary>
         ///     The Entry Placeholder property.
         /// </summary>
         public static readonly BindableProperty EntryPlaceholderProperty =
-            BindableProperty.Create(nameof(EntryPlaceholder), typeof(string), typeof(DatePickerView), string.Empty);
+            BindableProperty.Create(nameof(EntryPlaceholder), typeof(string), typeof(EntryLayout), string.Empty);
 
         /// <summary>
         ///     The Entry Placeholder Color property.
         /// </summary>
         public static readonly BindableProperty EntryPlaceholderColorProperty =
-            BindableProperty.Create(nameof(EntryPlaceholderColor), typeof(Color), typeof(DatePickerView), Color.Black);
+            BindableProperty.Create(nameof(EntryPlaceholderColor), typeof(Color), typeof(EntryLayout), Color.Black);
 
         /// <summary>
         ///     The Entry Text Color property.
         /// </summary>
         public static readonly BindableProperty EntryTextColorProperty =
-            BindableProperty.Create(nameof(EntryTextColor), typeof(Color), typeof(DatePickerView), Color.Black);
+            BindableProperty.Create(nameof(EntryTextColor), typeof(Color), typeof(EntryLayout), Color.Black);
+
+        /// <summary>
+        ///     The Entry Line Color property.
+        /// </summary>
+        public static readonly BindableProperty EntryLineColorProperty =
+            BindableProperty.Create(nameof(EntryLineColor), typeof(Color), typeof(EntryLayout), Color.Transparent, propertyChanged: ColorChanged);
 
         /// <summary>
         ///     The Is Read Only property.
         /// </summary>
         public static readonly BindableProperty IsReadOnlyProperty =
-            BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(EntryView), false);
+            BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(EntryLayout), false);
 
         /// <summary>
         ///     The Info View Type property.
         /// </summary>
         public static readonly BindableProperty InfoViewTypeProperty =
-            BindableProperty.Create(nameof(InfoViewType), typeof(InfoViewType), typeof(EntryView), InfoViewType.Line,
+            BindableProperty.Create(nameof(InfoViewType), typeof(InfoViewType), typeof(EntryLayout), InfoViewType.Line,
                 propertyChanged: InfoViewTypeChanged);
 
         /// <summary>
         ///     The Info Label Font Attributes property.
         /// </summary>
         public static readonly BindableProperty InfoLabelFontAttributesProperty =
-            BindableProperty.Create(nameof(InfoLabelFontAttributes), typeof(FontAttributes), typeof(EntryView),
+            BindableProperty.Create(nameof(InfoLabelFontAttributes), typeof(FontAttributes), typeof(EntryLayout),
                 FontAttributes.Bold);
 
         /// <summary>
         ///     The Info Label Font Family property.
         /// </summary>
         public static readonly BindableProperty InfoLabelFontFamilyProperty =
-            BindableProperty.Create(nameof(InfoLabelFontFamily), typeof(string), typeof(EntryView), string.Empty);
+            BindableProperty.Create(nameof(InfoLabelFontFamily), typeof(string), typeof(EntryLayout), string.Empty);
 
         /// <summary>
         ///     The Info Label Font Size property.
         /// </summary>
         public static readonly BindableProperty InfoLabelFontSizeProperty =
-            BindableProperty.Create(nameof(InfoLabelFontSize), typeof(double), typeof(EntryView),
+            BindableProperty.Create(nameof(InfoLabelFontSize), typeof(double), typeof(EntryLayout),
                 Device.GetNamedSize(NamedSize.Micro, typeof(Label)));
 
         /// <summary>
         ///     The Info Label Horizontal TextAlignment property.
         /// </summary>
         public static readonly BindableProperty InfoLabelHorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(InfoLabelHorizontalTextAlignment), typeof(TextAlignment), typeof(EntryView),
+            BindableProperty.Create(nameof(InfoLabelHorizontalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
                 TextAlignment.Start);
 
         /// <summary>
         ///     The Info Label Vertical Text Alignment property.
         /// </summary>
         public static readonly BindableProperty InfoLabelVerticalTextAlignmentProperty =
-            BindableProperty.Create(nameof(InfoLabelVerticalTextAlignment), typeof(TextAlignment), typeof(EntryView),
+            BindableProperty.Create(nameof(InfoLabelVerticalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
                 TextAlignment.Start);
 
         /// <summary>
         ///     The Label Text Color property.
         /// </summary>
         public static readonly BindableProperty InfoColorProperty =
-            BindableProperty.Create(nameof(InfoColor), typeof(Color), typeof(EntryView), Color.Red);
+            BindableProperty.Create(nameof(InfoColor), typeof(Color), typeof(EntryLayout), Color.Red);
 
         /// <summary>
         ///     The Info Label Text property.
         /// </summary>
         public static readonly BindableProperty InfoLabelTextProperty =
-            BindableProperty.Create(nameof(InfoLabelText), typeof(string), typeof(EntryView), string.Empty,
+            BindableProperty.Create(nameof(InfoLabelText), typeof(string), typeof(EntryLayout), string.Empty,
                 propertyChanged: InfoLabelTextChanged);
 
         /// <summary>
         ///     The Info is visible property.
         /// </summary>
         public static readonly BindableProperty InfoIsVisibleProperty =
-            BindableProperty.Create(nameof(InfoIsVisible), typeof(bool), typeof(EntryView), false,
+            BindableProperty.Create(nameof(InfoIsVisible), typeof(bool), typeof(EntryLayout), false,
                 propertyChanged: InfoIsVisibleChanged);
 
         /// <summary>
         ///     The Info property.
         /// </summary>
         public static readonly BindableProperty InfoProperty =
-            BindableProperty.Create(nameof(Info), typeof(bool), typeof(EntryView), false);
+            BindableProperty.Create(nameof(Info), typeof(bool), typeof(EntryLayout), false);
 
 
         /// <summary>
         ///     Border Relative To Corner Radius Property.
         /// </summary>
         public static readonly BindableProperty BorderRelativeProperty =
-            BindableProperty.Create(nameof(BorderRelative), typeof(bool), typeof(EntryView), true,
+            BindableProperty.Create(nameof(BorderRelative), typeof(bool), typeof(EntryLayout), true,
                 propertyChanged: BorderRelativeChanged);
 
         private readonly Frame _frameEntry;
         private Label _infoLabel;
-        private StackLayout _infoLayout;
-        private BoxView _infoLine;
+        private BoxView _entryLine;
         private Label _label;
 
         public EventHandler<EventArgs> Validators;
@@ -225,6 +230,7 @@ namespace Global.InputForms
             RowDefinitions = new RowDefinitionCollection {
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
+                    new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) }};
 
             _frameEntry = new Frame
@@ -236,13 +242,19 @@ namespace Global.InputForms
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(EntryCornerRadius)) { Source = this, Mode = BindingMode.OneWay });
 
+            _entryLine = new BoxView
+            {
+                HeightRequest = 1,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+            };
             Children.Add(_frameEntry, 1, 4, 1, 2);
+            Children.Add(_entryLine, 1, 4, 2, 3);
         }
 
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
-            if (child != _label && child != _infoLayout)
+            if (child != _label && child != _infoLabel && child != _entryLine)
                 SetRow(child, 1);
         }
 
@@ -417,6 +429,16 @@ namespace Global.InputForms
             set => SetValue(EntryTextColorProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the entry line color.
+        /// </summary>
+        /// <value>The entry line color.</value>
+        public Color EntryLineColor
+        {
+            get => (Color)GetValue(EntryLineColorProperty);
+            set => SetValue(EntryLineColorProperty, value);
+        }
+
         public bool IsReadOnly
         {
             get => (bool)GetValue(IsReadOnlyProperty);
@@ -569,30 +591,6 @@ namespace Global.InputForms
         }
 
         /// <summary>
-        ///     The Label Text Color property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelHighlightedColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is EntryLayout entryLayout && entryLayout._label is Label && entryLayout.IsFocused)
-                entryLayout._label.TextColor = (Color)newValue;
-        }
-
-        /// <summary>
-        ///     The Label Text Color property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelTextColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is EntryLayout entryLayout && entryLayout._label is Label && !entryLayout.IsFocused)
-                entryLayout._label.TextColor = (Color)newValue;
-        }
-
-        /// <summary>
         ///     The entry corner radius property changed.
         /// </summary>
         /// <param name="bindable">The object.</param>
@@ -604,27 +602,22 @@ namespace Global.InputForms
         }
 
         /// <summary>
-        ///     The entry border color property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void EntryBorderColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is EntryLayout entryLayout)
-                entryLayout._frameEntry.BorderColor = (Color)newValue;
-        }
-
-        /// <summary>
         ///     The Entry Background Color property changed.
         /// </summary>
         /// <param name="bindable">The object.</param>
         /// <param name="oldValue">The old value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void EntryBackgroundColorChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is EntryLayout entryLayout)
-                entryLayout._frameEntry.BackgroundColor = (Color)newValue;
+            {
+                if (entryLayout._label is Label)
+                    entryLayout._label.TextColor = (entryLayout.IsFocused) ? entryLayout.LabelTextColor : entryLayout.LabelHighlightedColor;
+
+                entryLayout._frameEntry.BackgroundColor = entryLayout.EntryBackgroundColor;
+                entryLayout._frameEntry.BorderColor = entryLayout.EntryBorderColor;
+                entryLayout._entryLine.BackgroundColor = entryLayout.EntryLineColor;
+            }
         }
 
         /// <summary>
@@ -635,8 +628,12 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void InfoViewTypeChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is EntryLayout entryLayout && entryLayout._infoLine is BoxView)
-                entryLayout._infoLine.IsVisible = (InfoViewType)newValue == InfoViewType.Line;
+            if (bindable is EntryLayout entryLayout)
+            {
+                ColorChanged(bindable, oldValue, newValue);
+                if (entryLayout.Info)
+                    InfoIsVisibleChanged(bindable, false, true);
+            }
         }
 
         /// <summary>
@@ -680,28 +677,8 @@ namespace Global.InputForms
                 entryLayout._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
-                entryLayout._infoLine = new BoxView
-                {
-                    HeightRequest = 1,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    IsVisible = entryLayout.InfoViewType == InfoViewType.Line
-                };
-                entryLayout._infoLine.SetBinding(BackgroundColorProperty, new Binding(nameof(InfoColor))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
-
-                entryLayout._infoLayout = new StackLayout
-                {
-                    Spacing = 0,
-                    Orientation = StackOrientation.Vertical
-                };
-                entryLayout._infoLayout.SetBinding(IsVisibleProperty, new Binding(nameof(Info))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
-
                 entryLayout.SetCornerPaddingLayout();
-
-                entryLayout._infoLayout.Children.Add(entryLayout._infoLine);
-                entryLayout._infoLayout.Children.Add(entryLayout._infoLabel);
-                entryLayout.Children.Add(entryLayout._infoLayout, 1, 4, 2, 3);
+                entryLayout.Children.Add(entryLayout._infoLabel, 1, 4, 3, 4);
             }
         }
 
@@ -713,9 +690,9 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void InfoIsVisibleChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is EntryLayout entryLayout) || !(entryLayout._infoLayout != null)) return;
+            if (!(bindable is EntryLayout entryLayout)) return;
 
-            entryLayout._infoLayout.IsVisible = (bool)newValue;
+            entryLayout._infoLabel.IsVisible = (bool)newValue;
             switch (entryLayout.InfoViewType)
             {
                 case InfoViewType.Surrounded:
@@ -727,6 +704,8 @@ namespace Global.InputForms
                         (bool)newValue ? entryLayout.InfoColor : entryLayout.EntryBackgroundColor;
                     break;
                 case InfoViewType.Line:
+                    entryLayout._entryLine.BackgroundColor =
+                        (bool)newValue ? entryLayout.InfoColor : entryLayout.EntryLineColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -777,12 +756,14 @@ namespace Global.InputForms
             {
                 var thick = 0.0;
                 if (BorderRelative) thick = Convert.ToDouble(EntryCornerRadius);
-                if (_infoLayout != null) _infoLayout.Padding = new Thickness(thick, 0, thick, 0);
+                if (_entryLine != null) _entryLine.Margin = new Thickness(thick, 0, thick, 0);
+                if (_infoLabel != null) _infoLabel.Margin = new Thickness(thick, 0, thick, 0);
                 if (_label != null) _label.Margin = new Thickness(thick / 2, 0, thick / 2, 0);
             }
             else
             {
-                if (_infoLayout != null) _infoLayout.Padding = 0;
+                if (_entryLine != null) _entryLine.Margin = 0;
+                if (_infoLabel != null) _infoLabel.Margin = 0;
                 if (_label != null) _label.Margin = 0;
             }
         }
