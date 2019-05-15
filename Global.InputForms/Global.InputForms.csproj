@@ -15,9 +15,14 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\Debug</OutputPath>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <OutputPath>bin\Release</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
     <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />

@@ -677,6 +677,9 @@ namespace Global.InputForms
                 entryLayout._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
+                entryLayout._infoLabel.SetBinding(IsVisibleProperty, new Binding(nameof(InfoIsVisible))
+                { Source = entryLayout, Mode = BindingMode.OneWay });
+
                 entryLayout.SetCornerPaddingLayout();
                 entryLayout.Children.Add(entryLayout._infoLabel, 1, 4, 3, 4);
             }
@@ -692,7 +695,6 @@ namespace Global.InputForms
         {
             if (!(bindable is EntryLayout entryLayout)) return;
 
-            entryLayout._infoLabel.IsVisible = (bool)newValue;
             switch (entryLayout.InfoViewType)
             {
                 case InfoViewType.Surrounded:
