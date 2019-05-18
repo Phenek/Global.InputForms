@@ -39,17 +39,16 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor),
             typeof(Color), typeof(PickerView), Color.Black);
-
+            
         private readonly BlankPicker _picker;
+        private readonly Frame _pFrame;
         public EventHandler SelectedIndexChanged;
 
         public PickerView()
         {
             _picker = new BlankPicker
             {
-                HeightRequest = 40,
                 BackgroundColor = Color.Transparent,
-                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             _picker.SetBinding(Picker.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) { Source = this, Mode = BindingMode.OneWay });
@@ -63,6 +62,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(Picker.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
+            _picker.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
             _picker.SetBinding(Picker.ItemsSourceProperty,
                 new Binding(nameof(ItemsSource)) { Source = this, Mode = BindingMode.OneWay });
@@ -74,28 +75,27 @@ namespace Global.InputForms
                 new Binding(nameof(Title)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(Picker.TitleColorProperty,
                 new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
-            
-            var fEntry = new Frame
+                
+            _pFrame = new Frame
             {
-                Padding = 0,
-                HeightRequest = 40,
                 HasShadow = false,
                 BackgroundColor = Color.Transparent,
                 Content = _picker
             };
-            fEntry.SetBinding(IsEnabledProperty,
+            _pFrame.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-            fEntry.SetBinding(InputTransparentProperty,
+            _pFrame.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay});
+            _pFrame.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+
+            TextAlignmentCommand = new Command(() => TextAlignmentChanged());
 
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
             _picker.SelectedIndexChanged += IndexChanged;
 
-            ParentUnfocused = new Command(() => Unfocus());
-            ParentFocused = new Command(() => Focus());
-
-            Children.Add(fEntry, 2, 3, 1, 2);
+            Children.Add(_pFrame, 2, 3, 1, 2);
         }
 
         public IList ItemsSource 
@@ -103,6 +103,7 @@ namespace Global.InputForms
             get => (IList)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
+
         public int SelectedIndex
         {
             get => (int)GetValue(SelectedIndexProperty);
@@ -122,6 +123,22 @@ namespace Global.InputForms
         {
             get => (Color)GetValue(TitleColorProperty);
             set => SetValue(TitleColorProperty, value);
+        }
+
+        private void TextAlignmentChanged()
+        {
+            switch (EntryHorizontalTextAlignment)
+            {
+                case TextAlignment.Center:
+                    _pFrame.HorizontalOptions = LayoutOptions.Center;
+                    break;
+                case TextAlignment.End:
+                    _pFrame.HorizontalOptions = LayoutOptions.End;
+                    break;
+                case TextAlignment.Start:
+                    _pFrame.HorizontalOptions = LayoutOptions.Start;
+                    break;
+            }
         }
 
         public override void Focus()

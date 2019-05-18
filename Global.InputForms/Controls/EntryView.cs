@@ -18,13 +18,6 @@ namespace Global.InputForms
                 propertyChanged: EntryTextChanged);
 
         /// <summary>
-        ///     The Entry Horizontal Text Alignment property.
-        /// </summary>
-        public static readonly BindableProperty EntryHorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(EntryHorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
-                TextAlignment.Start);
-
-        /// <summary>
         ///     The Masked Entry Text property.
         /// </summary>
         public static readonly BindableProperty MaskedEntryTextProperty =
@@ -68,7 +61,6 @@ namespace Global.InputForms
         {
             _entry = new BlankEntry
             {
-                HeightRequest = 40,
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Center
@@ -77,6 +69,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
+            _entry.SetBinding(HeightProperty,
+                 new Binding(nameof(EntryFontFamily)) { Source = this, Mode = BindingMode.OneWay });
             _entry.SetBinding(Entry.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.HorizontalTextAlignmentProperty,
@@ -87,6 +81,9 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
+            _entry.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+
             _entry.SetBinding(Entry.IsPasswordProperty,
                 new Binding(nameof(IsPassword)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.KeyboardProperty,
@@ -98,6 +95,7 @@ namespace Global.InputForms
             _entry.SetBinding(InputView.IsReadOnlyProperty,
                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
 
+
             _entry.Focused += FocusEntry;
             _entry.Unfocused += UnfocusEntry;
             _entry.TextChanged += OnEntryTextChanged;
@@ -106,9 +104,6 @@ namespace Global.InputForms
                 if (InfoIsVisible)
                     Validate();
             };
-
-            ParentUnfocused = new Command(() => Unfocus());
-            ParentFocused = new Command(() => Focus());
 
             Children.Add (_entry, 2, 3, 1, 2);
         }
@@ -121,16 +116,6 @@ namespace Global.InputForms
         {
             get => (string) GetValue(EntryTextProperty);
             set => SetValue(EntryTextProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the entry horizontal text alignment.
-        /// </summary>
-        /// <value>The entry horizontal text alignment.</value>
-        public TextAlignment EntryHorizontalTextAlignment
-        {
-            get => (TextAlignment)GetValue(EntryHorizontalTextAlignmentProperty);
-            set => SetValue(EntryHorizontalTextAlignmentProperty, value);
         }
 
         /// <summary>
@@ -195,7 +180,7 @@ namespace Global.InputForms
             }
             else
             {
-                var masked = entryView.AddMask((string)newValue, false);
+                var masked = entryView.AddMask((string)newValue, !string.IsNullOrEmpty((string)oldValue));
                 entryView.MaskedEntryText = masked;
                 if (entryView._entry.Text != masked)
                 {
@@ -342,6 +327,7 @@ namespace Global.InputForms
         public override void Focus()
         {
             _entry.Focus();
+            _entry.CursorPosition = (string.IsNullOrEmpty(_entry.Text)) ? 0 : _entry.Text.Count();
         }
 
         public override void Unfocus()

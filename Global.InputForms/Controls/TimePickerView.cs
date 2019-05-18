@@ -19,12 +19,12 @@ namespace Global.InputForms
             typeof(TimePickerView), string.Empty);
 
         private readonly BlankTimePicker _timePicker;
+        private readonly Frame _pFrame;
 
         public TimePickerView()
         {
             _timePicker = new BlankTimePicker
             {
-                HeightRequest = 40,
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
@@ -40,29 +40,34 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
             _timePicker.SetBinding(TimePicker.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
+            _timePicker.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
             _timePicker.SetBinding(TimePicker.FormatProperty,
                 new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
             _timePicker.SetBinding(TimePicker.TimeProperty,
                 new Binding(nameof(Time)) { Source = this, Mode = BindingMode.TwoWay });
 
-            var fEntry = new Frame
+            _pFrame = new Frame
             {
                 Padding = 0,
-                HeightRequest = 40,
                 HasShadow = false,
                 BackgroundColor = Color.Transparent,
                 Content = _timePicker
             };
-            fEntry.SetBinding(IsEnabledProperty,
+            _pFrame.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-            fEntry.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay});
+            _pFrame.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _pFrame.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+
+            TextAlignmentCommand = new Command(() => TextAlignmentChanged());
 
             _timePicker.Focused += FocusEntry;
             _timePicker.Unfocused += UnfocusEntry;
 
-            Children.Add(fEntry, 2, 3, 1, 2);
+            Children.Add(_pFrame, 2, 3, 1, 2);
         }
 
         public TimeSpan Time
@@ -75,6 +80,22 @@ namespace Global.InputForms
         {
             get => (string)GetValue(TimePicker.FormatProperty);
             set => SetValue(TimePicker.FormatProperty, value);
+        }
+
+        private void TextAlignmentChanged()
+        {
+            switch (EntryHorizontalTextAlignment)
+            {
+                case TextAlignment.Center:
+                    _pFrame.HorizontalOptions = LayoutOptions.Center;
+                    break;
+                case TextAlignment.End:
+                    _pFrame.HorizontalOptions = LayoutOptions.End;
+                    break;
+                case TextAlignment.Start:
+                    _pFrame.HorizontalOptions = LayoutOptions.Start;
+                    break;
+            }
         }
 
         public override void Focus()

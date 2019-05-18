@@ -68,6 +68,19 @@ namespace Global.InputForms
                 propertyChanged: EntryCornerRadiusChanged);
 
         /// <summary>
+        ///     The Entry Horizontal Text Alignment property.
+        /// </summary>
+        public static readonly BindableProperty EntryHorizontalTextAlignmentProperty =
+            BindableProperty.Create(nameof(EntryHorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
+                TextAlignment.Start, propertyChanged: TextAlignmentChanged);
+
+        /// <summary>
+        ///     The Entry Height property.
+        /// </summary>
+        public static readonly BindableProperty EntryHeightRequestProperty =
+            BindableProperty.Create(nameof(EntryHeightRequest), typeof(double), typeof(EntryLayout), 40.0);
+
+        /// <summary>
         ///     The Entry Border Color property.
         /// </summary>
         public static readonly BindableProperty EntryBorderColorProperty =
@@ -215,9 +228,7 @@ namespace Global.InputForms
         public new bool IsFocused { get; set; }
         public new event EventHandler<FocusEventArgs> Focused;
         public new event EventHandler<FocusEventArgs> Unfocused;
-
-        public Command ParentFocused;
-        public Command ParentUnfocused;
+        public Command TextAlignmentCommand;
 
         public EntryLayout()
         {
@@ -238,11 +249,12 @@ namespace Global.InputForms
             _frameEntry = new Frame
             {
                 Padding = 0,
-                HeightRequest = 40,
                 HasShadow = false,
             };
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(EntryCornerRadius)) { Source = this, Mode = BindingMode.OneWay });
+            _frameEntry.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
             _entryLine = new BoxView
             {
@@ -351,6 +363,16 @@ namespace Global.InputForms
         }
 
         /// <summary>
+        ///     Gets or sets the entry height.
+        /// </summary>
+        /// <value>The entry Corner Radius.</value>
+        public double EntryHeightRequest
+        {
+            get => (double)GetValue(EntryHeightRequestProperty);
+            set => SetValue(EntryHeightRequestProperty, value);
+        }
+
+        /// <summary>
         ///     Gets or sets the entry border color.
         /// </summary>
         /// <value>The entry Border color.</value>
@@ -358,6 +380,16 @@ namespace Global.InputForms
         {
             get => (Color)GetValue(EntryBorderColorProperty);
             set => SetValue(EntryBorderColorProperty, value);
+        }
+
+                /// <summary>
+        ///     Gets or sets the entry horizontal text alignment.
+        /// </summary>
+        /// <value>The entry horizontal text alignment.</value>
+        public TextAlignment EntryHorizontalTextAlignment
+        {
+            get => (TextAlignment)GetValue(EntryHorizontalTextAlignmentProperty);
+            set => SetValue(EntryHorizontalTextAlignmentProperty, value);
         }
 
         /// <summary>
@@ -601,6 +633,14 @@ namespace Global.InputForms
         private static void EntryCornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is EntryLayout entryLayout) entryLayout.SetCornerPaddingLayout();
+        }
+
+        public static void TextAlignmentChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is EntryLayout entryLayout
+                && entryLayout.TextAlignmentCommand != null
+                && entryLayout.TextAlignmentCommand.CanExecute(null))
+                entryLayout.TextAlignmentCommand.Execute(null);
         }
 
         /// <summary>

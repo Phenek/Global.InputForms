@@ -18,6 +18,7 @@
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF" x:Name="_entry"
                                     InfoViewType="Line"
                                     Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
+                                    EntryText="BlaaBlaaBlaa"
                                     EntryLineColor="Purple"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>

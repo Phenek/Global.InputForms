@@ -26,7 +26,6 @@ namespace Global.InputForms
         public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(nameof(MinimumDate),
             typeof(DateTime), typeof(DatePickerView), new DateTime(1900, 1, 1));
 
-
         /// <summary>
         ///     The Maximum Date property.
         /// </summary>
@@ -34,6 +33,7 @@ namespace Global.InputForms
             typeof(DateTime), typeof(DatePickerView), new DateTime(2100, 12, 31));
 
         private readonly BlankDatePicker _datePicker;
+        private readonly Frame _pFrame;
 
         public EventHandler<DateChangedEventArgs> DateSelected;
 
@@ -41,7 +41,6 @@ namespace Global.InputForms
         {
             _datePicker = new BlankDatePicker
             {
-                HeightRequest = 40,
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
@@ -57,7 +56,9 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
-                
+            _datePicker.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+
             _datePicker.SetBinding(DatePicker.FormatProperty,
                 new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.MinimumDateProperty,
@@ -67,27 +68,27 @@ namespace Global.InputForms
             _datePicker.SetBinding(DatePicker.DateProperty,
                 new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
 
-            var fEntry = new Frame
+            _pFrame = new Frame
             {
                 Padding = 0,
-                HeightRequest = 40,
                 HasShadow = false,
                 BackgroundColor = Color.Transparent,
                 Content = _datePicker
             };
-            fEntry.SetBinding(IsEnabledProperty,
+            _pFrame.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-            fEntry.SetBinding(InputTransparentProperty,
+            _pFrame.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _pFrame.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+
+            TextAlignmentCommand = new Command(() => TextAlignmentChanged());
 
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;
             _datePicker.DateSelected += Date_Selected;
 
-            ParentUnfocused = new Command(() => Unfocus());
-            ParentFocused = new Command(() => Focus());
-
-            Children.Add(fEntry, 2, 3, 1, 2);
+            Children.Add(_pFrame, 2, 3, 1, 2);
         }
         
         public DateTime Date
@@ -112,6 +113,22 @@ namespace Global.InputForms
         {
             get => (DateTime) GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
+        }
+
+        private void TextAlignmentChanged()
+        {
+            switch (EntryHorizontalTextAlignment)
+            {
+                case TextAlignment.Center:
+                    _pFrame.HorizontalOptions = LayoutOptions.Center;
+                    break;
+                case TextAlignment.End:
+                    _pFrame.HorizontalOptions = LayoutOptions.End;
+                    break;
+                case TextAlignment.Start:
+                    _pFrame.HorizontalOptions = LayoutOptions.Start;
+                    break;
+            }
         }
 
         public override void Focus()
