@@ -56,14 +56,13 @@ namespace Global.InputForms
         public EventHandler<TextChangedEventArgs> TextChanged;
         public int _cursorPosition;
         public bool _blockNextChanged;
+        private bool _isAdditon;
 
         public EntryView()
         {
             _entry = new BlankEntry
             {
-                BackgroundColor = Color.Transparent,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.Center
+                BackgroundColor = Color.Transparent
             };
             _entry.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
@@ -180,13 +179,11 @@ namespace Global.InputForms
             }
             else
             {
-                var masked = entryView.AddMask((string)newValue, !string.IsNullOrEmpty((string)oldValue));
-                entryView.MaskedEntryText = masked;
-                if (entryView._entry.Text != masked)
+                var masked = entryView.AddMask((string)newValue, entryView._isAdditon);
+                if (entryView.MaskedEntryText != masked)
                 {
-                    //entryView._entry.TextChanged += entryView.EntryCursorChanged;
-                    entryView._entry.Text = masked;
-               }
+                    entryView.MaskedEntryText = masked;
+                }
             }
             entryView.TextChanged?.Invoke(entryView, new TextChangedEventArgs((string)oldValue, (string)newValue));
         }
@@ -198,35 +195,36 @@ namespace Global.InputForms
             entry.TextChanged -= EntryCursorChanged;
         }
 
-
         private static void MaskEntryTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            /*
-            //To Do
             if (!(bindable is EntryView entryView)) return;
-            
-            if (!string.IsNullOrEmpty(entryView.Mask))
+
+            if (!string.IsNullOrEmpty(entryView.Mask) && entryView._entry.Text != (string)newValue)
             {
-                    EntryView._entry.TextChanged -= EntryView.OnEntryTextChanged;
-                    EntryView._entry.Text = EntryView.AddMask((string)newValue);
-                    EntryView._entry.TextChanged -= EntryView.OnEntryTextChanged;
+                //entryView._entry.TextChanged += entryView.EntryCursorChanged;
+                entryView._entry.Text = (string)newValue;
+                var light = entryView.RemoveMask((string)newValue);
+                if (entryView.EntryText != light)
+                {
+                    entryView.EntryText = light;
+                }
             }
-            */
         }
 
         private string AddMask(string str, bool isAddition = true)
         {
-            if (string.IsNullOrEmpty(str)) return null;
+            if (string.IsNullOrEmpty(str)) return string.Empty;
 
             var sb = new StringBuilder(str);
 
             var nbX = 0;
             for (var i = 0; i < Mask.Length; ++i)
-                if (Mask[i] != 'X' && nbX < str.Length && Mask[i] != str[nbX] 
+                if (Mask[i] != 'X' && nbX < str.Length // && Mask[i] != str[nbX]
                     || isAddition && nbX == str.Length && Mask[i] != 'X')
                     sb.Insert(i, Mask[i]);
                 else
                     ++nbX;
+            var s = sb.ToString();
             return sb.ToString();
         }
 
@@ -250,10 +248,10 @@ namespace Global.InputForms
         private void OnEntryTextChanged(object sender, TextChangedEventArgs args)
         {
             if (!(sender is Entry entry)) return;
-            var isAddition = true;
             if (!string.IsNullOrEmpty(Mask))
             {
-                if (entry.Text == MaskedEntryText)
+                _cursorPosition = entry.CursorPosition;
+                if (entry.Text == MaskedEntryText || args.NewTextValue == null)
                 { 
                     return; 
                 }
@@ -261,65 +259,91 @@ namespace Global.InputForms
                 var oldText = args.OldTextValue;
                 var newText = args.NewTextValue;
 
-                if (string.IsNullOrEmpty(newText) || string.IsNullOrEmpty(oldText))
+                if (string.IsNullOrEmpty(oldText))
                 {
-                    EntryText = newText;
+                    var m = AddMask(newText, true);
+                    MaskedEntryText = m;
                     return;
                 }
 
+                int startIndex = oldText.Zip(newText, (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
+                int endIndex = oldText.Substring(startIndex).Reverse().Zip(newText.Substring(startIndex).Reverse(), (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
+
+                var oldCount = oldText.Count();
+                var newCount = newText.Count();
+
+                var oldMiddleString = oldText.Substring(startIndex, oldText.Count() - startIndex - endIndex);
+                var newMiddleString = newText.Substring(startIndex, newText.Count() - startIndex - endIndex);
+
+                var diff = Math.Abs(oldText.Count() - newText.Count());
+
+                if (startIndex == entry.CursorPosition)
+                    Console.WriteLine("startIndex OK");
+                else if (Device.RuntimePlatform == Device.Android && entry.CursorPosition == oldText.Count() - endIndex)
+                    Console.WriteLine("Android End selection");
+                /*
+                else if (diff > 1 && entry.CursorPosition < startIndex)
+                {
+                    Console.WriteLine("Wrong startIndex start from cursor");
+                    startIndex = entry.CursorPosition;
+                    endIndex = oldText.Substring(startIndex).Reverse().Zip(newText.Substring(startIndex).Reverse(), (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
+
+                    oldCount = oldText.Count();
+                    newCount = newText.Count();
+
+                    oldMiddleString = oldText.Substring(startIndex, oldText.Count() - startIndex - endIndex);
+                    newMiddleString = newText.Substring(startIndex, newText.Count() - startIndex - endIndex);
+
+                    Console.WriteLine("StartIndex Fixe");
+                }
+                */
+                else
+                {
+                    Console.WriteLine("startIndex Diff vs cursor");
+                    Console.WriteLine($"Cursor : {entry.CursorPosition}");
+                    Console.WriteLine($"oldMiddleString : {oldMiddleString}");
+                    Console.WriteLine($"newMiddleString : {newMiddleString}");
+                }
+
                 var cursor = entry.CursorPosition;
-                var nbDiff = newText.Count() - oldText.Count();
+                _isAdditon = newText.Count() - oldText.Count() > 0;
 
-                var maskTmp = Mask;
-                if (nbDiff > 0 && cursor < Mask.Count() && cursor - nbDiff < Mask.Count()) // Addition
+
+                var endLightStr = "";
+                var startLightStr = RemoveMask(newText.Substring(0, startIndex));
+                if (startIndex + oldMiddleString.Count() < Mask.Count() )
                 {
-                    //var a = 0;
-                    //for (var i = cursor + nbDiff; i < Mask.Count() && Mask[i] != 'X'; i++)
-                    //{ ++a; }
-
-                    var str = new string('X', nbDiff);
-                    maskTmp = Mask.Insert(cursor, str);
-                    //_cursorPosition = cursor + nbDiff + a;
+                    var endMaskedText = newText.Substring(newText.Count() - endIndex, endIndex);
+                    var maskTmp = Mask.Substring(startIndex + oldMiddleString.Count());
+                    endLightStr = RemoveMask(endMaskedText, maskTmp);
                 }
-                else if (nbDiff < 0 && cursor < Mask.Count()) // Deletion
-                {
-                    isAddition = false;
-                    //var i = 0;
-                    //var a = 0;
-                    //for (i = cursor - Math.Abs(nbDiff); i > 0 && Mask[i] != 'X'; i--) 
-                    //{
-                    //    var maski = Mask[i];
-                    //    ++a; 
-                    //}
-                    //_cursorPosition = (i > 0) ? i : 0;
-                    _cursorPosition = cursor - Math.Abs(nbDiff);
-                    //maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));//_cursorPosition, Math.Abs(nbDiff )+ a);
-                    //newText = newText.Remove(_cursorPosition, Math.Min(Math.Abs(nbDiff) + a, newText.Count() - _cursorPosition));
 
-                    if (Device.RuntimePlatform == Device.iOS && Math.Abs(nbDiff) > 1) //iOS
-                    {
-                        maskTmp = Mask.Remove(cursor, Math.Abs(nbDiff));
-                        _cursorPosition = cursor;
-                    }
-                    else
-                    {
-                        maskTmp = Mask.Remove(_cursorPosition, Math.Abs(nbDiff));
-                    }
-                }
-                var newLightText = RemoveMask(newText, maskTmp);
+                var newLightText = startLightStr + newMiddleString + endLightStr;
                 var oldLightText = RemoveMask(oldText);
 
-                EntryText = newLightText;
+                _cursorPosition = startIndex + newMiddleString.Count();
 
-                if (EntryText == newLightText)
-                {
-                    var masked = AddMask(newLightText, isAddition);
-                    MaskedEntryText = masked;
-                    entry.Text = masked;
-                }
+
+                //EntryText = newLightText;
+
+
+                var masked = AddMask(newLightText, _isAdditon);
+                MaskedEntryText = masked;
+
+                /*
+                // this order no more
+                var masked = AddMask(EntryText, isAddition);
+                entry.TextChanged += EntryCursorChanged;
+                MaskedEntryText = masked;
+                entry.Text = masked;
+                EntryText = newLightText;
+                */
+
             }
             else
             {
+                if (entry.Text == EntryText)
+                    return;
                 MaskedEntryText = EntryText = args.NewTextValue;
             }
         }

@@ -76,6 +76,7 @@ namespace Global.InputForms
             _picker.SetBinding(Picker.TitleColorProperty,
                 new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
                 
+
             _pFrame = new Frame
             {
                 HasShadow = false,
