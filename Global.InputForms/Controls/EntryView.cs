@@ -252,19 +252,19 @@ namespace Global.InputForms
             {
                 _cursorPosition = entry.CursorPosition;
                 if (entry.Text == MaskedEntryText || args.NewTextValue == null)
-                { 
-                    return; 
-                }
+                    return;
 
                 var oldText = args.OldTextValue;
                 var newText = args.NewTextValue;
-
                 if (string.IsNullOrEmpty(oldText))
                 {
+                    _isAdditon = true;
                     var m = AddMask(newText, true);
                     MaskedEntryText = m;
                     return;
                 }
+                var cursor = entry.CursorPosition;
+                _isAdditon = newText.Count() - oldText.Count() > 0;
 
                 int startIndex = oldText.Zip(newText, (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
                 int endIndex = oldText.Substring(startIndex).Reverse().Zip(newText.Substring(startIndex).Reverse(), (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
@@ -277,11 +277,12 @@ namespace Global.InputForms
 
                 var diff = Math.Abs(oldText.Count() - newText.Count());
 
+                /*
                 if (startIndex == entry.CursorPosition)
                     Console.WriteLine("startIndex OK");
                 else if (Device.RuntimePlatform == Device.Android && entry.CursorPosition == oldText.Count() - endIndex)
                     Console.WriteLine("Android End selection");
-                /*
+               
                 else if (diff > 1 && entry.CursorPosition < startIndex)
                 {
                     Console.WriteLine("Wrong startIndex start from cursor");
@@ -296,7 +297,6 @@ namespace Global.InputForms
 
                     Console.WriteLine("StartIndex Fixe");
                 }
-                */
                 else
                 {
                     Console.WriteLine("startIndex Diff vs cursor");
@@ -304,10 +304,7 @@ namespace Global.InputForms
                     Console.WriteLine($"oldMiddleString : {oldMiddleString}");
                     Console.WriteLine($"newMiddleString : {newMiddleString}");
                 }
-
-                var cursor = entry.CursorPosition;
-                _isAdditon = newText.Count() - oldText.Count() > 0;
-
+                */
 
                 var endLightStr = "";
                 var startLightStr = RemoveMask(newText.Substring(0, startIndex));

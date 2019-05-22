@@ -32,10 +32,18 @@ namespace Global.InputForms
         public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(nameof(MaximumDate),
             typeof(DateTime), typeof(DatePickerView), new DateTime(2100, 12, 31));
 
+        public static readonly BindableProperty DoneButtonTextProperty =
+            BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(DatePickerView), "Ok");
+
+        public static readonly BindableProperty CancelButtonTextProperty =
+            BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DatePickerView), "Cancel");
+
         private readonly BlankDatePicker _datePicker;
         private readonly Frame _pFrame;
 
         public EventHandler<DateChangedEventArgs> DateSelected;
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         public DatePickerView()
         {
@@ -54,6 +62,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderColorProperty,
                 new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
+            _datePicker.SetBinding(BlankDatePicker.HorizontalTextAlignmentProperty,
+                new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(HeightRequestProperty,
@@ -67,6 +77,11 @@ namespace Global.InputForms
                 new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.DateProperty,
                 new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
+
+            _datePicker.SetBinding(BlankDatePicker.DoneButtonTextProperty,
+                new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });
+            _datePicker.SetBinding(BlankDatePicker.CancelButtonTextProperty,
+                new Binding(nameof(CancelButtonText)) { Source = this, Mode = BindingMode.OneWay });
 
             _pFrame = new Frame
             {
@@ -87,6 +102,9 @@ namespace Global.InputForms
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;
             _datePicker.DateSelected += Date_Selected;
+
+            _datePicker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
+            _datePicker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
 
             Children.Add(_pFrame, 2, 3, 1, 2);
         }
@@ -115,18 +133,30 @@ namespace Global.InputForms
             set => SetValue(MinimumDateProperty, value);
         }
 
+        public string DoneButtonText
+        {
+            get => (string)GetValue(DoneButtonTextProperty);
+            set => SetValue(DoneButtonTextProperty, value);
+        }
+
+        public string CancelButtonText
+        {
+            get => (string)GetValue(CancelButtonTextProperty);
+            set => SetValue(CancelButtonTextProperty, value);
+        }
+
         private void TextAlignmentChanged()
         {
             switch (EntryHorizontalTextAlignment)
             {
                 case TextAlignment.Center:
-                    _pFrame.HorizontalOptions = LayoutOptions.Center;
+                    _pFrame.HorizontalOptions = LayoutOptions.CenterAndExpand;
                     break;
                 case TextAlignment.End:
-                    _pFrame.HorizontalOptions = LayoutOptions.End;
+                    _pFrame.HorizontalOptions = LayoutOptions.EndAndExpand;
                     break;
                 case TextAlignment.Start:
-                    _pFrame.HorizontalOptions = LayoutOptions.Start;
+                    _pFrame.HorizontalOptions = LayoutOptions.StartAndExpand;
                     break;
             }
         }
