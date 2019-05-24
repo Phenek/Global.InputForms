@@ -32,6 +32,7 @@ namespace Global.InputForms.Droid.Renderers
         {
             Control.SetBackgroundColor(Color.Transparent);
             Control.SetPadding(0, 7, 0, 3);
+            Control.Gravity = Android.Views.GravityFlags.Fill;
             /*
             if (Control.Enabled == false)
             {

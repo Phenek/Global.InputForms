@@ -48,6 +48,7 @@ namespace Global.InputForms.Droid.Renderers
             SetPlaceholder();
             SetAlignment();
             Control.SetPadding(0, 7, 0, 3);
+            Control.Gravity = Android.Views.GravityFlags.Fill;
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
