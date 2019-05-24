@@ -93,6 +93,8 @@ namespace Global.InputForms
                 new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.IsReadOnlyProperty,
                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _entry.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
 
 
             _entry.Focused += FocusEntry;
