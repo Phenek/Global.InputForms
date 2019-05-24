@@ -238,7 +238,7 @@ namespace Global.InputForms
 
         public EntryLayout()
         {
-            ColumnSpacing = 1;
+            ColumnSpacing = 0;
             ColumnDefinitions = new ColumnDefinitionCollection {
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
@@ -247,7 +247,6 @@ namespace Global.InputForms
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) }};
             RowSpacing = 0;
             RowDefinitions = new RowDefinitionCollection {
-                    new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) }};
@@ -266,16 +265,17 @@ namespace Global.InputForms
             {
                 HeightRequest = 2,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.End,
                 BackgroundColor = LineColor,
             };
             Children.Add(_frameEntry, 1, 4, 1, 2);
-            Children.Add(_line, 1, 4, 2, 3);
+            Children.Add(_line, 1, 4, 1, 2);
         }
 
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
-            if (child != _label && child != _infoLabel && child != _line)
+            if (child != _label && child != _infoLabel)
                 SetRow(child, 1);
         }
 
@@ -740,7 +740,7 @@ namespace Global.InputForms
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
                 entryLayout.SetCornerPaddingLayout();
-                entryLayout.Children.Add(entryLayout._infoLabel, 1, 4, 3, 4);
+                entryLayout.Children.Add(entryLayout._infoLabel, 1, 4, 2, 3);
             }
         }
 

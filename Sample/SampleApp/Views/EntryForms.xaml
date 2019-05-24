@@ -19,7 +19,7 @@
                                     InfoViewType="Line"
                                     Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
                                     EntryText="BlaaBlaaBlaa"
-                                    EntryLineColor="Purple"
+                                    LineColor="Purple"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />

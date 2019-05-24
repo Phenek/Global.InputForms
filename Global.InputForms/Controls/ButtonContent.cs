@@ -160,7 +160,8 @@ namespace Global.InputForms
             };
             _frame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(Content)) {Source = this, Mode = BindingMode.OneWay});
-            
+            _frame.SetBinding(PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
+
             _button = new BlankButton
             {
                 BackgroundColor = BackgroundColor,
@@ -199,7 +200,7 @@ namespace Global.InputForms
             _loader.SetBinding(ActivityIndicator.ColorProperty,
                 new Binding(nameof(LoaderColor)) {Source = this, Mode = BindingMode.OneWay});
 
-            //_button.SetBinding(button.PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
+            _button.SetBinding(Button.PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
 
             _button.Pressed += Button_Pressed;
             _button.Released += Button_Released;

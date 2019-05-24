@@ -109,14 +109,14 @@ namespace Global.InputForms
             _lstSuggestions.ItemsSource = _availableSuggestions;
 
             RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Children.Add(_frameList, 1, 4, 4, 5);
+            Children.Add(_frameList, 1, 4, 3, 4);
         }
 
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
             if (child == _frameList)
-                SetRow(child, 4);
+                SetRow(child, 3);
         }
 
         /// <summary>

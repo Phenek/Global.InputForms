@@ -56,6 +56,7 @@ namespace Global.InputForms
 
         public CheckButton()
         {
+            Padding = new Thickness(0, 0, 0, 0);
             Text = Item.Value;
             SetButtonUnchecked();
             base.Clicked += OnChecked;

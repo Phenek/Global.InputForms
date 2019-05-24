@@ -26,14 +26,12 @@ namespace Global.InputForms.Droid.Renderers
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == nameof(Entry.IsEnabled)) SetAttributes();
         }
 
         private void SetAttributes()
         {
             Control.SetBackgroundColor(Color.Transparent);
-
+            Control.SetPadding(0, 7, 0, 3);
             /*
             if (Control.Enabled == false)
             {

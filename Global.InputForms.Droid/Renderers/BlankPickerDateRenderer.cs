@@ -47,6 +47,7 @@ namespace Global.InputForms.Droid.Renderers
             }
             SetPlaceholder();
             SetAlignment();
+            Control.SetPadding(0, 7, 0, 3);
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
