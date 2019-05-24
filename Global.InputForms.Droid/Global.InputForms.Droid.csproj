@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Global.InputForms\Global.InputForms.csproj">
-      <Project>{DD698C34-ABA4-4B3D-94A3-90D6983A31E2}</Project>
+      <Project>{CD267730-BD64-4E2E-AF88-1BD3CCBD8961}</Project>
       <Name>Global.InputForms</Name>
     </ProjectReference>
   </ItemGroup>

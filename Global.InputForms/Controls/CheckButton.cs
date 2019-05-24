@@ -18,40 +18,40 @@ namespace Global.InputForms
         ///     The Label Text Color property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(CheckButton), Color.SkyBlue,
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(CheckButton), Color.White,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Label Text Color property.
         /// </summary>
         public new static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor),
-            typeof(Color), typeof(CheckButton), Color.White, propertyChanged: ColorsChanged);
+            typeof(Color), typeof(CheckButton), Color.RoyalBlue, propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Border Color Property.
         /// </summary>
         public new static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor),
-            typeof(Color), typeof(CheckButton), Color.Gray, propertyChanged: ColorsChanged);
+            typeof(Color), typeof(CheckButton), Color.LightGray, propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Checked Background Color property.
         /// </summary>
         public static readonly BindableProperty CheckedBackgroundColorProperty =
-            BindableProperty.Create(nameof(CheckedBackgroundColor), typeof(Color), typeof(CheckButton), Color.RoyalBlue,
+            BindableProperty.Create(nameof(CheckedBackgroundColor), typeof(Color), typeof(CheckButton), Color.Gray,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Checked Label Text Color property.
         /// </summary>
         public static readonly BindableProperty CheckedTextColorProperty =
-            BindableProperty.Create(nameof(CheckedTextColor), typeof(Color), typeof(CheckButton), Color.Gray,
+            BindableProperty.Create(nameof(CheckedTextColor), typeof(Color), typeof(CheckButton), Color.White,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Checked Border Color Property.
         /// </summary>
         public static readonly BindableProperty CheckedBorderColorProperty =
-            BindableProperty.Create(nameof(CheckedBorderColor), typeof(Color), typeof(CheckButton), Color.Accent,
+            BindableProperty.Create(nameof(CheckedBorderColor), typeof(Color), typeof(CheckButton), Color.Gray,
                 propertyChanged: ColorsChanged);
 
         public CheckButton()

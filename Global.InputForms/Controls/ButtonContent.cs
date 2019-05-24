@@ -98,47 +98,47 @@ namespace Global.InputForms
         ///     The Background Color Property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(ButtonContent), Color.DarkBlue,
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(ButtonContent), Color.White,
                 propertyChanged: BackgroundColorChanged);
 
         /// <summary>
         ///     The Text Color Property.
         /// </summary>
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor),
-            typeof(Color), typeof(ButtonContent), Color.White, propertyChanged: TextColorChanged);
+            typeof(Color), typeof(ButtonContent), Color.RoyalBlue, propertyChanged: TextColorChanged);
 
         /// <summary>
         ///     The Border Color Property.
         /// </summary>
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor),
-            typeof(Color), typeof(ButtonContent), Color.CadetBlue, propertyChanged: BorderColorChanged);
+            typeof(Color), typeof(ButtonContent), Color.LightGray, propertyChanged: BorderColorChanged);
 
         /// <summary>
         ///     The Highlight Background Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightBackgroundColorProperty =
             BindableProperty.Create(nameof(HighlightBackgroundColor), typeof(Color), typeof(ButtonContent),
-                Color.LightBlue);
+                Color.LightGray);
 
         /// <summary>
         ///     The Highlight Border Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightBorderColorProperty =
             BindableProperty.Create(nameof(HighlightBorderColor), typeof(Color), typeof(ButtonContent),
-                Color.AliceBlue);
+                Color.LightGray);
 
         /// <summary>
         ///     The Highlight Text Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightTextColorProperty =
-            BindableProperty.Create(nameof(HighlightTextColor), typeof(Color), typeof(ButtonContent), Color.Gray);
+            BindableProperty.Create(nameof(HighlightTextColor), typeof(Color), typeof(ButtonContent), Color.White);
 
         /// <summary>
         ///     The Highlight Image Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightImageColorProperty =
             BindableProperty.Create(nameof(HighlightImageColor), typeof(Color), typeof(ButtonContent),
-                Color.WhiteSmoke);
+                null);
         
         private readonly BlankButton _button;
         private readonly ActivityIndicator _loader;

@@ -78,7 +78,7 @@ namespace Global.InputForms
         ///     The Entry Height property.
         /// </summary>
         public static readonly BindableProperty EntryHeightRequestProperty =
-            BindableProperty.Create(nameof(EntryHeightRequest), typeof(double), typeof(EntryLayout), 40.0);
+            BindableProperty.Create(nameof(EntryHeightRequest), typeof(double), typeof(EntryLayout), 30.0);
 
         /// <summary>
         ///     The Entry Border Color property.
@@ -135,8 +135,14 @@ namespace Global.InputForms
         /// <summary>
         ///     The Entry Line Color property.
         /// </summary>
-        public static readonly BindableProperty EntryLineColorProperty =
-            BindableProperty.Create(nameof(EntryLineColor), typeof(Color), typeof(EntryLayout), Color.Transparent, propertyChanged: ColorChanged);
+        public static readonly BindableProperty LineColorProperty =
+            BindableProperty.Create(nameof(LineColor), typeof(Color), typeof(EntryLayout), Color.Transparent, propertyChanged: ColorChanged);
+
+        /// <summary>
+        ///     The Entry Line Color property.
+        /// </summary>
+        public static readonly BindableProperty HighlightedLineColorProperty =
+            BindableProperty.Create(nameof(HighlightedLineColor), typeof(Color), typeof(EntryLayout), Color.Transparent);
 
         /// <summary>
         ///     The Is Read Only property.
@@ -221,7 +227,7 @@ namespace Global.InputForms
 
         private readonly Frame _frameEntry;
         private Label _infoLabel;
-        private BoxView _entryLine;
+        private BoxView _line;
         private Label _label;
 
         public EventHandler<EventArgs> Validators;
@@ -256,19 +262,20 @@ namespace Global.InputForms
             _frameEntry.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
-            _entryLine = new BoxView
+            _line = new BoxView
             {
-                HeightRequest = 1,
+                HeightRequest = 2,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                BackgroundColor = LineColor,
             };
             Children.Add(_frameEntry, 1, 4, 1, 2);
-            Children.Add(_entryLine, 1, 4, 2, 3);
+            Children.Add(_line, 1, 4, 2, 3);
         }
 
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
-            if (child != _label && child != _infoLabel && child != _entryLine)
+            if (child != _label && child != _infoLabel && child != _line)
                 SetRow(child, 1);
         }
 
@@ -467,10 +474,20 @@ namespace Global.InputForms
         ///     Gets or sets the entry line color.
         /// </summary>
         /// <value>The entry line color.</value>
-        public Color EntryLineColor
+        public Color LineColor
         {
-            get => (Color)GetValue(EntryLineColorProperty);
-            set => SetValue(EntryLineColorProperty, value);
+            get => (Color)GetValue(LineColorProperty);
+            set => SetValue(LineColorProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the entry highlighted line color.
+        /// </summary>
+        /// <value>The entry line color.</value>
+        public Color HighlightedLineColor
+        {
+            get => (Color)GetValue(HighlightedLineColorProperty);
+            set => SetValue(HighlightedLineColorProperty, value);
         }
 
         public bool IsReadOnly
@@ -654,11 +671,11 @@ namespace Global.InputForms
             if (bindable is EntryLayout entryLayout)
             {
                 if (entryLayout._label is Label)
-                    entryLayout._label.TextColor = (entryLayout.IsFocused) ? entryLayout.LabelTextColor : entryLayout.LabelHighlightedColor;
+                    entryLayout._label.TextColor = (entryLayout.IsFocused) ? entryLayout.LabelHighlightedColor : entryLayout.LabelTextColor;
 
                 entryLayout._frameEntry.BackgroundColor = entryLayout.EntryBackgroundColor;
                 entryLayout._frameEntry.BorderColor = entryLayout.EntryBorderColor;
-                entryLayout._entryLine.BackgroundColor = entryLayout.EntryLineColor;
+                entryLayout._line.BackgroundColor = (entryLayout.IsFocused) ? entryLayout.HighlightedLineColor : entryLayout.LineColor ;
             }
         }
 
@@ -748,8 +765,8 @@ namespace Global.InputForms
                         (bool)newValue ? entryLayout.InfoColor : entryLayout.EntryBackgroundColor;
                     break;
                 case InfoViewType.Line:
-                    entryLayout._entryLine.BackgroundColor =
-                        (bool)newValue ? entryLayout.InfoColor : entryLayout.EntryLineColor;
+                    entryLayout._line.BackgroundColor =
+                        (bool)newValue ? entryLayout.InfoColor : (entryLayout.IsFocused) ? entryLayout.HighlightedLineColor : entryLayout.LineColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -781,6 +798,7 @@ namespace Global.InputForms
             IsFocused = true;
             Focused?.Invoke(this, new FocusEventArgs(this, true));
             if (_label != null) _label.TextColor = LabelHighlightedColor;
+            _line.BackgroundColor = (InfoViewType == InfoViewType.Line && Info) ? InfoColor : LineColor;
         }
 
         public void UnfocusEntry(object sender, FocusEventArgs e)
@@ -788,6 +806,7 @@ namespace Global.InputForms
             IsFocused = false;
             Unfocused?.Invoke(this, new FocusEventArgs(this, false));
             if (_label != null) _label.TextColor = LabelTextColor;
+            _line.BackgroundColor = (InfoViewType == InfoViewType.Line && Info) ? InfoColor : LineColor;
         }
 
         public bool Validate()
@@ -803,13 +822,13 @@ namespace Global.InputForms
             {
                 var thick = 0.0;
                 if (BorderRelative) thick = Convert.ToDouble(EntryCornerRadius);
-                if (_entryLine != null) _entryLine.Margin = new Thickness(thick, 0, thick, 0);
+                if (_line != null) _line.Margin = new Thickness(thick, 0, thick, 0);
                 if (_infoLabel != null) _infoLabel.Margin = new Thickness(thick, 0, thick, 0);
                 if (_label != null) _label.Margin = new Thickness(thick / 2, 0, thick / 2, 0);
             }
             else
             {
-                if (_entryLine != null) _entryLine.Margin = 0;
+                if (_line != null) _line.Margin = 0;
                 if (_infoLabel != null) _infoLabel.Margin = 0;
                 if (_label != null) _label.Margin = 0;
             }

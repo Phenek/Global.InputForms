@@ -38,6 +38,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholder)) { Source = this, Mode = BindingMode.OneWay });
             _timePicker.SetBinding(BlankTimePicker.PlaceholderColorProperty,
                 new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
+            _timePicker.SetBinding(BlankTimePicker.HorizontalTextAlignmentProperty,
+                new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
             _timePicker.SetBinding(TimePicker.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
             _timePicker.SetBinding(HeightRequestProperty,
@@ -87,13 +89,13 @@ namespace Global.InputForms
             switch (EntryHorizontalTextAlignment)
             {
                 case TextAlignment.Center:
-                    _pFrame.HorizontalOptions = LayoutOptions.Center;
+                    _pFrame.HorizontalOptions = LayoutOptions.CenterAndExpand;
                     break;
                 case TextAlignment.End:
-                    _pFrame.HorizontalOptions = LayoutOptions.End;
+                    _pFrame.HorizontalOptions = LayoutOptions.EndAndExpand;
                     break;
                 case TextAlignment.Start:
-                    _pFrame.HorizontalOptions = LayoutOptions.Start;
+                    _pFrame.HorizontalOptions = LayoutOptions.StartAndExpand;
                     break;
             }
         }

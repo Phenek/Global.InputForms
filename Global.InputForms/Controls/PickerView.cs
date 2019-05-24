@@ -39,10 +39,19 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor),
             typeof(Color), typeof(PickerView), Color.Black);
-            
+
+        public static readonly BindableProperty DoneButtonTextProperty =
+            BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(PickerView), "Ok");
+
+        public static readonly BindableProperty CancelButtonTextProperty =
+            BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(PickerView), "Cancel");
+
         private readonly BlankPicker _picker;
         private readonly Frame _pFrame;
         public EventHandler SelectedIndexChanged;
+
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         public PickerView()
         {
@@ -60,6 +69,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryPlaceholder)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(BlankPicker.PlaceholderColorProperty,
                 new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
+            _picker.SetBinding(BlankPicker.HorizontalTextAlignmentProperty,
+                new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(Picker.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(HeightRequestProperty,
@@ -75,9 +86,15 @@ namespace Global.InputForms
                 new Binding(nameof(Title)) { Source = this, Mode = BindingMode.OneWay });
             _picker.SetBinding(Picker.TitleColorProperty,
                 new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
-                
+
+            _picker.SetBinding(BlankPicker.DoneButtonTextProperty,
+                new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });
+            _picker.SetBinding(BlankPicker.CancelButtonTextProperty,
+                new Binding(nameof(CancelButtonText)) { Source = this, Mode = BindingMode.OneWay });
+
             _pFrame = new Frame
             {
+                Padding = 0,
                 HasShadow = false,
                 BackgroundColor = Color.Transparent,
                 Content = _picker
@@ -94,6 +111,9 @@ namespace Global.InputForms
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
             _picker.SelectedIndexChanged += IndexChanged;
+
+            _picker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
+            _picker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
 
             Children.Add(_pFrame, 2, 3, 1, 2);
         }
@@ -125,18 +145,30 @@ namespace Global.InputForms
             set => SetValue(TitleColorProperty, value);
         }
 
+        public string DoneButtonText
+        {
+            get => (string)GetValue(DoneButtonTextProperty);
+            set => SetValue(DoneButtonTextProperty, value);
+        }
+
+        public string CancelButtonText
+        {
+            get => (string)GetValue(CancelButtonTextProperty);
+            set => SetValue(CancelButtonTextProperty, value);
+        }
+
         private void TextAlignmentChanged()
         {
             switch (EntryHorizontalTextAlignment)
             {
                 case TextAlignment.Center:
-                    _pFrame.HorizontalOptions = LayoutOptions.Center;
+                    _picker.HorizontalOptions = LayoutOptions.Center;
                     break;
                 case TextAlignment.End:
-                    _pFrame.HorizontalOptions = LayoutOptions.End;
+                    _picker.HorizontalOptions = LayoutOptions.End;
                     break;
                 case TextAlignment.Start:
-                    _pFrame.HorizontalOptions = LayoutOptions.Start;
+                    _picker.HorizontalOptions = LayoutOptions.Start;
                     break;
             }
         }

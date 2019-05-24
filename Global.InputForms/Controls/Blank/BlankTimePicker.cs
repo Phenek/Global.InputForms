@@ -5,6 +5,12 @@ namespace Global.InputForms
 {
     public class BlankTimePicker : TimePicker
     {
+        public static readonly BindableProperty DoneButtonTextProperty =
+            BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankTimePicker), "Ok");
+
+        public static readonly BindableProperty CancelButtonTextProperty =
+            BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankTimePicker), "Cancel");
+
         /// <summary>
         ///     The Entry Placeholder property.
         /// </summary>
@@ -16,6 +22,25 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty PlaceholderColorProperty =
             BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(BlankTimePicker), Color.Black);
+
+        public static readonly BindableProperty HorizontalTextAlignmentProperty =
+        BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
+        TextAlignment.Start);
+
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
+
+        public string DoneButtonText
+        {
+            get => (string)GetValue(DoneButtonTextProperty);
+            set => SetValue(DoneButtonTextProperty, value);
+        }
+
+        public string CancelButtonText
+        {
+            get => (string)GetValue(CancelButtonTextProperty);
+            set => SetValue(CancelButtonTextProperty, value);
+        }
 
         /// <summary>
         ///     Gets or sets the entry placeholder.
@@ -37,9 +62,25 @@ namespace Global.InputForms
             set => SetValue(PlaceholderColorProperty, value);
         }
 
+        public TextAlignment HorizontalTextAlignment
+        {
+            get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+            set => SetValue(HorizontalTextAlignmentProperty, value);
+        }
+
         public BlankTimePicker()
         {
 
+        }
+
+        public void SendDoneClicked()
+        {
+            DoneClicked?.Invoke(this, new EventArgs());
+        }
+
+        public void SendCancelClicked()
+        {
+            CancelClicked?.Invoke(this, new EventArgs());
         }
     }
 }
