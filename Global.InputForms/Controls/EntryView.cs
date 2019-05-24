@@ -62,7 +62,7 @@ namespace Global.InputForms
         {
             _entry = new BlankEntry
             {
-                BackgroundColor = Color.Transparent
+                BackgroundColor = Color.Transparent,
             };
             _entry.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
@@ -102,6 +102,10 @@ namespace Global.InputForms
             {
                 if (InfoIsVisible)
                     Validate();
+            };
+            Unfocused += (sender, e) =>
+            {
+                Validate();
             };
 
             Children.Add (_entry, 2, 3, 1, 2);
@@ -199,10 +203,11 @@ namespace Global.InputForms
         {
             if (!(bindable is EntryView entryView)) return;
 
-            if (!string.IsNullOrEmpty(entryView.Mask) && entryView._entry.Text != (string)newValue)
+            if (!string.IsNullOrEmpty(entryView.Mask))
             {
                 //entryView._entry.TextChanged += entryView.EntryCursorChanged;
-                entryView._entry.Text = (string)newValue;
+                if (entryView._entry.Text != (string)newValue)
+                    entryView._entry.Text = (string)newValue;
                 var light = entryView.RemoveMask((string)newValue);
                 if (entryView.EntryText != light)
                 {
