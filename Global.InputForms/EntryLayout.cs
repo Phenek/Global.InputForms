@@ -133,6 +133,12 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(EntryTextColor), typeof(Color), typeof(EntryLayout), Color.Black);
 
         /// <summary>
+        ///     The Is Read Only property.
+        /// </summary>
+        public static readonly BindableProperty IsReadOnlyProperty =
+            BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(EntryLayout), false);
+
+        /// <summary>
         ///     The Entry Line Color property.
         /// </summary>
         public static readonly BindableProperty LineColorProperty =
@@ -141,14 +147,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The Entry Line Color property.
         /// </summary>
-        public static readonly BindableProperty HighlightedLineColorProperty =
-            BindableProperty.Create(nameof(HighlightedLineColor), typeof(Color), typeof(EntryLayout), Color.Transparent);
-
-        /// <summary>
-        ///     The Is Read Only property.
-        /// </summary>
-        public static readonly BindableProperty IsReadOnlyProperty =
-            BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(EntryLayout), false);
+        public static readonly BindableProperty LineHighlightedColorProperty =
+            BindableProperty.Create(nameof(LineHighlightedColor), typeof(Color), typeof(EntryLayout), Color.Transparent);
 
         /// <summary>
         ///     The Info View Type property.
@@ -160,35 +160,35 @@ namespace Global.InputForms
         /// <summary>
         ///     The Info Label Font Attributes property.
         /// </summary>
-        public static readonly BindableProperty InfoLabelFontAttributesProperty =
-            BindableProperty.Create(nameof(InfoLabelFontAttributes), typeof(FontAttributes), typeof(EntryLayout),
+        public static readonly BindableProperty InfoFontAttributesProperty =
+            BindableProperty.Create(nameof(InfoFontAttributes), typeof(FontAttributes), typeof(EntryLayout),
                 FontAttributes.Bold);
 
         /// <summary>
         ///     The Info Label Font Family property.
         /// </summary>
-        public static readonly BindableProperty InfoLabelFontFamilyProperty =
-            BindableProperty.Create(nameof(InfoLabelFontFamily), typeof(string), typeof(EntryLayout), string.Empty);
+        public static readonly BindableProperty InfoFontFamilyProperty =
+            BindableProperty.Create(nameof(InfoFontFamily), typeof(string), typeof(EntryLayout), string.Empty);
 
         /// <summary>
         ///     The Info Label Font Size property.
         /// </summary>
-        public static readonly BindableProperty InfoLabelFontSizeProperty =
-            BindableProperty.Create(nameof(InfoLabelFontSize), typeof(double), typeof(EntryLayout),
+        public static readonly BindableProperty InfoFontSizeProperty =
+            BindableProperty.Create(nameof(InfoFontSize), typeof(double), typeof(EntryLayout),
                 Device.GetNamedSize(NamedSize.Micro, typeof(Label)));
 
         /// <summary>
         ///     The Info Label Horizontal TextAlignment property.
         /// </summary>
-        public static readonly BindableProperty InfoLabelHorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(InfoLabelHorizontalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
+        public static readonly BindableProperty InfoHorizontalTextAlignmentProperty =
+            BindableProperty.Create(nameof(InfoHorizontalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
                 TextAlignment.Start);
 
         /// <summary>
         ///     The Info Label Vertical Text Alignment property.
         /// </summary>
-        public static readonly BindableProperty InfoLabelVerticalTextAlignmentProperty =
-            BindableProperty.Create(nameof(InfoLabelVerticalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
+        public static readonly BindableProperty InfoVerticalTextAlignmentProperty =
+            BindableProperty.Create(nameof(InfoVerticalTextAlignment), typeof(TextAlignment), typeof(EntryLayout),
                 TextAlignment.Start);
 
         /// <summary>
@@ -200,9 +200,9 @@ namespace Global.InputForms
         /// <summary>
         ///     The Info Label Text property.
         /// </summary>
-        public static readonly BindableProperty InfoLabelTextProperty =
-            BindableProperty.Create(nameof(InfoLabelText), typeof(string), typeof(EntryLayout), string.Empty,
-                propertyChanged: InfoLabelTextChanged);
+        public static readonly BindableProperty InfoTextProperty =
+            BindableProperty.Create(nameof(InfoText), typeof(string), typeof(EntryLayout), string.Empty,
+                propertyChanged: InfoTextChanged);
 
         /// <summary>
         ///     The Info is visible property.
@@ -226,8 +226,8 @@ namespace Global.InputForms
                 propertyChanged: BorderRelativeChanged);
 
         private readonly Frame _frameEntry;
+        private readonly BoxView _line;
         private Label _infoLabel;
-        private BoxView _line;
         private Label _label;
 
         public EventHandler<EventArgs> Validators;
@@ -484,10 +484,10 @@ namespace Global.InputForms
         ///     Gets or sets the entry highlighted line color.
         /// </summary>
         /// <value>The entry line color.</value>
-        public Color HighlightedLineColor
+        public Color LineHighlightedColor
         {
-            get => (Color)GetValue(HighlightedLineColorProperty);
-            set => SetValue(HighlightedLineColorProperty, value);
+            get => (Color)GetValue(LineHighlightedColorProperty);
+            set => SetValue(LineHighlightedColorProperty, value);
         }
 
         public bool IsReadOnly
@@ -510,60 +510,60 @@ namespace Global.InputForms
         ///     Gets or sets the info label font attributes.
         /// </summary>
         /// <value>The info label font attributes.</value>
-        public FontAttributes InfoLabelFontAttributes
+        public FontAttributes InfoFontAttributes
         {
-            get => (FontAttributes)GetValue(InfoLabelFontAttributesProperty);
-            set => SetValue(InfoLabelFontAttributesProperty, value);
+            get => (FontAttributes)GetValue(InfoFontAttributesProperty);
+            set => SetValue(InfoFontAttributesProperty, value);
         }
 
         /// <summary>
         ///     Gets or sets the info label font family.
         /// </summary>
         /// <value>The info label font family.</value>
-        public string InfoLabelFontFamily
+        public string InfoFontFamily
         {
-            get => (string)GetValue(InfoLabelFontFamilyProperty);
-            set => SetValue(InfoLabelFontFamilyProperty, value);
+            get => (string)GetValue(InfoFontFamilyProperty);
+            set => SetValue(InfoFontFamilyProperty, value);
         }
 
         /// <summary>
         ///     Gets or sets the info label font size.
         /// </summary>
         /// <value>The info label font size.</value>
-        public double InfoLabelFontSize
+        public double InfoFontSize
         {
-            get => (double)GetValue(InfoLabelFontSizeProperty);
-            set => SetValue(InfoLabelFontSizeProperty, value);
+            get => (double)GetValue(InfoFontSizeProperty);
+            set => SetValue(InfoFontSizeProperty, value);
         }
 
         /// <summary>
         ///     Gets or sets the info label horizontal text alignment.
         /// </summary>
         /// <value>The info label horizontal text alignment.</value>
-        public TextAlignment InfoLabelHorizontalTextAlignment
+        public TextAlignment InfoHorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(InfoLabelHorizontalTextAlignmentProperty);
-            set => SetValue(InfoLabelHorizontalTextAlignmentProperty, value);
+            get => (TextAlignment)GetValue(InfoHorizontalTextAlignmentProperty);
+            set => SetValue(InfoHorizontalTextAlignmentProperty, value);
         }
 
         /// <summary>
         ///     Gets or sets the info label vertical text alignment.
         /// </summary>
         /// <value>The info label vertical text alignment.</value>
-        public TextAlignment InfoLabelVerticalTextAlignment
+        public TextAlignment InfoVerticalTextAlignment
         {
-            get => (TextAlignment)GetValue(InfoLabelVerticalTextAlignmentProperty);
-            set => SetValue(InfoLabelVerticalTextAlignmentProperty, value);
+            get => (TextAlignment)GetValue(InfoVerticalTextAlignmentProperty);
+            set => SetValue(InfoVerticalTextAlignmentProperty, value);
         }
 
         /// <summary>
         ///     Gets or sets the info label text.
         /// </summary>
         /// <value>The info label text.</value>
-        public string InfoLabelText
+        public string InfoText
         {
-            get => (string)GetValue(InfoLabelTextProperty);
-            set => SetValue(InfoLabelTextProperty, value);
+            get => (string)GetValue(InfoTextProperty);
+            set => SetValue(InfoTextProperty, value);
         }
 
         /// <summary>
@@ -675,7 +675,7 @@ namespace Global.InputForms
 
                 entryLayout._frameEntry.BackgroundColor = entryLayout.EntryBackgroundColor;
                 entryLayout._frameEntry.BorderColor = entryLayout.EntryBorderColor;
-                entryLayout._line.BackgroundColor = (entryLayout.IsFocused) ? entryLayout.HighlightedLineColor : entryLayout.LineColor ;
+                entryLayout._line.BackgroundColor = (entryLayout.IsFocused) ? entryLayout.LineHighlightedColor : entryLayout.LineColor ;
             }
         }
 
@@ -701,7 +701,7 @@ namespace Global.InputForms
         /// <param name="bindable">The object.</param>
         /// <param name="oldValue">The old value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void InfoLabelTextChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void InfoTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is EntryLayout entryLayout)) return;
 
@@ -713,27 +713,27 @@ namespace Global.InputForms
             {
                 entryLayout._infoLabel = new Label();
                 entryLayout._infoLabel.SetBinding(Label.FontAttributesProperty,
-                    new Binding(nameof(InfoLabelFontAttributes))
+                    new Binding(nameof(InfoFontAttributes))
                     { Source = entryLayout, Mode = BindingMode.OneWay });
 
-                entryLayout._infoLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(InfoLabelFontFamily))
+                entryLayout._infoLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(InfoFontFamily))
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
-                entryLayout._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoLabelFontSize))
+                entryLayout._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoFontSize))
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
                 entryLayout._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty,
-                    new Binding(nameof(InfoLabelHorizontalTextAlignment))
+                    new Binding(nameof(InfoHorizontalTextAlignment))
                     { Source = entryLayout, Mode = BindingMode.OneWay });
 
                 entryLayout._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty,
-                    new Binding(nameof(InfoLabelVerticalTextAlignment))
+                    new Binding(nameof(InfoVerticalTextAlignment))
                     { Source = entryLayout, Mode = BindingMode.OneWay });
 
                 entryLayout._infoLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(InfoColor))
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
-                entryLayout._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
+                entryLayout._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoText))
                 { Source = entryLayout, Mode = BindingMode.OneWay });
 
                 entryLayout._infoLabel.SetBinding(IsVisibleProperty, new Binding(nameof(InfoIsVisible))
@@ -766,7 +766,7 @@ namespace Global.InputForms
                     break;
                 case InfoViewType.Line:
                     entryLayout._line.BackgroundColor =
-                        (bool)newValue ? entryLayout.InfoColor : (entryLayout.IsFocused) ? entryLayout.HighlightedLineColor : entryLayout.LineColor;
+                        (bool)newValue ? entryLayout.InfoColor : (entryLayout.IsFocused) ? entryLayout.LineHighlightedColor : entryLayout.LineColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -779,13 +779,13 @@ namespace Global.InputForms
         }
 
         /// <summary>
-        ///     The Show Info Function.
+        ///  The show info method.
         /// </summary>
         /// <param name="info">The info boolean.</param>
         /// <param name="info">The information string.</param>
         public void ShowInfo(bool isVisible, string info)
         {
-            InfoLabelText = info;
+            InfoText = info;
             InfoIsVisible = isVisible;
             Info = isVisible;
         }
