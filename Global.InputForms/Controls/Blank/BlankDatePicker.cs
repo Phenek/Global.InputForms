@@ -13,7 +13,7 @@ namespace Global.InputForms
 
         public static readonly BindableProperty PlaceholderProperty =
             BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(BlankDatePicker), string.Empty);
-            
+
         public static readonly BindableProperty PlaceholderColorProperty =
             BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(BlankDatePicker), Color.Black);
 
@@ -42,7 +42,7 @@ namespace Global.InputForms
         /// <value>The entry placeholdeer.</value>
         public string Placeholder
         {
-            get => (string) GetValue(PlaceholderProperty);
+            get => (string)GetValue(PlaceholderProperty);
             set => SetValue(PlaceholderProperty, value);
         }
 
@@ -52,7 +52,7 @@ namespace Global.InputForms
         /// <value>The entry placeholder color.</value>
         public Color PlaceholderColor
         {
-            get => (Color) GetValue(PlaceholderColorProperty);
+            get => (Color)GetValue(PlaceholderColorProperty);
             set => SetValue(PlaceholderColorProperty, value);
         }
         public TextAlignment HorizontalTextAlignment

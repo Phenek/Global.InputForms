@@ -53,28 +53,28 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             _datePicker.SetBinding(DatePicker.FontAttributesProperty,
-                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(EntryFontAttributes)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.FontFamilyProperty,
-                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(EntryFontFamily)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.FontSizeProperty,
-                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(EntryFontSize)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(BlankDatePicker.PlaceholderProperty,
-                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(EntryPlaceholder)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(BlankDatePicker.PlaceholderColorProperty,
-                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(BlankDatePicker.HorizontalTextAlignmentProperty,
                 new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.TextColorProperty,
-                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
             _datePicker.SetBinding(DatePicker.FormatProperty,
-                new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.MinimumDateProperty,
-                new Binding(nameof(MinimumDate)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(MinimumDate)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.MaximumDateProperty,
-                new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(MaximumDate)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(DatePicker.DateProperty,
                 new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
 
@@ -108,28 +108,28 @@ namespace Global.InputForms
 
             Children.Add(_pFrame, 2, 3, 1, 2);
         }
-        
+
         public DateTime Date
         {
-            get => (DateTime) GetValue(DateProperty);
+            get => (DateTime)GetValue(DateProperty);
             set => SetValue(DateProperty, value);
         }
 
         public string Format
         {
-            get => (string) GetValue(DatePicker.FormatProperty);
+            get => (string)GetValue(DatePicker.FormatProperty);
             set => SetValue(DatePicker.FormatProperty, value);
         }
 
         public DateTime MaximumDate
         {
-            get => (DateTime) GetValue(MaximumDateProperty);
+            get => (DateTime)GetValue(MaximumDateProperty);
             set => SetValue(MaximumDateProperty, value);
         }
 
         public DateTime MinimumDate
         {
-            get => (DateTime) GetValue(MinimumDateProperty);
+            get => (DateTime)GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
         }
 

@@ -15,8 +15,7 @@ namespace Global.InputForms
         ///     The Items Source property.
         /// </summary>
         public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(ObservableDictionary<string, string>), typeof(CheckGroup),
-            new ObservableDictionary<string, string>(), propertyChanged: OnItemsSourceChanged);
+            typeof(IDictionary<string, string>), typeof(CheckGroup), null, propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -47,16 +46,16 @@ namespace Global.InputForms
         public CheckGroup()
         {
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new ObservableDictionary<string, string>();
+            ItemsSource = new Dictionary<string, string>();
         }
 
         /// <summary>
         ///     Gets or sets the Check group Items Source.
         /// </summary>
         /// <value>The Check group Items Source.</value>
-        public ObservableDictionary<string, string> ItemsSource
+        public IDictionary<string, string> ItemsSource
         {
-            get => (ObservableDictionary<string, string>) GetValue(ItemsSourceProperty);
+            get => (IDictionary<string, string>) GetValue(ItemsSourceProperty);
             set
             {
                 if (value != null) SetValue(ItemsSourceProperty, value);
@@ -190,12 +189,12 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is CheckGroup checkGroup)) return;
-            
-            if (oldValue is ObservableDictionary<string, string> oldSource)
+            if (!(bindable is CheckGroup checkGroup) || checkGroup.ItemsSource == null) return;
+
+            if (oldValue is INotifyCollectionChanged oldSource)
                 oldSource.CollectionChanged -= checkGroup.ItemSource_CollectionChanged;
             checkGroup.GenerateChekableList();
-            if (newValue is ObservableDictionary<string, string> newSource)
+            if (newValue is INotifyCollectionChanged newSource)
                 newSource.CollectionChanged += checkGroup.ItemSource_CollectionChanged;
         }
 

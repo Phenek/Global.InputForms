@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Resources;
+using SampleApp.Styles;
 using SampleApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +16,9 @@ namespace SampleApp
         public App()
         {
             InitializeComponent();
+
+            Resources.MergedDictionaries.Add(new EntryStyles());
+
             MainPage = new NavigationPage(new StartPage());
         }
 
@@ -59,6 +63,18 @@ namespace SampleApp
             var toEntriesBtn = new Button {Text = "Entries"};
             toEntriesBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryForms()); };
 
+            var toEntryViewBtn = new Button { Text = "EntryView" };
+            toEntryViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryViewPage()); };
+
+            var toPickerViewBtn = new Button { Text = "PickerView" };
+            toPickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new PickerViewPage()); };
+
+            var toDatePickerViewBtn = new Button { Text = "DatePickerView" };
+            toDatePickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new DatePickerViewPage()); };
+
+            var toTimePickerViewBtn = new Button { Text = "TimePickerView" };
+            toTimePickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TimePickerViewPage()); };
+
             var toButtonContentBtn = new Button {Text = "Buttons"};
             toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonsPage()); };
 
@@ -77,6 +93,10 @@ namespace SampleApp
                         toRateGroupBtn,
                         toSimpleFormsBtn,
                         toEntriesBtn,
+                        toEntryViewBtn,
+                        toPickerViewBtn,
+                        toDatePickerViewBtn,
+                        toTimePickerViewBtn,
                         toButtonContentBtn,
                         //toTestBtn
                     }

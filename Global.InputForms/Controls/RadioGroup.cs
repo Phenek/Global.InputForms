@@ -15,8 +15,7 @@ namespace Global.InputForms
         ///     The Items Source property.
         /// </summary>
         public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(ObservableDictionary<string, string>), typeof(RadioGroup),
-            new ObservableDictionary<string, string>(), propertyChanged: OnItemsSourceChanged);
+            typeof(IDictionary<string, string>), typeof(RadioGroup), null, propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -60,16 +59,16 @@ namespace Global.InputForms
         public RadioGroup()
         {
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new ObservableDictionary<string, string>();
+            ItemsSource = new Dictionary<string, string>();
         }
 
         /// <summary>
         ///     Gets or sets the radio group Items Source.
         /// </summary>
         /// <value>The radio group Items Source.</value>
-        public ObservableDictionary<string, string> ItemsSource
+        public IDictionary<string, string> ItemsSource
         {
-            get => (ObservableDictionary<string, string>) GetValue(ItemsSourceProperty);
+            get => (IDictionary<string, string>) GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -236,11 +235,11 @@ namespace Global.InputForms
         private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is RadioGroup radioGroup) || radioGroup.ItemsSource == null) return;
-            
-            if (oldValue is ObservableDictionary<string, string> oldSource)
+
+            if (oldValue is INotifyCollectionChanged oldSource)
                 oldSource.CollectionChanged -= radioGroup.ItemSource_CollectionChanged;
             radioGroup.GenerateChekableList();
-            if (newValue is ObservableDictionary<string, string> newSource)
+            if (newValue is INotifyCollectionChanged newSource)
                 newSource.CollectionChanged += radioGroup.ItemSource_CollectionChanged;
         }
 

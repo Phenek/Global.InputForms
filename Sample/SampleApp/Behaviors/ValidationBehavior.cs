@@ -212,9 +212,12 @@ namespace SampleApp.Behaviors
 
             if (sender is DatePickerView datePickerView)
             {
-                var majorAge = datePickerView.Date.AddYears(18);
-                var isMajor = majorAge <= DateTime.Today;
-                datePickerView.ShowInfo(!isMajor, i18N.GetText("Error.MajorAge"));
+                if (datePickerView.Date is DateTime date)
+                {
+                    var majorAge = date.AddYears(18);
+                    var isMajor = majorAge <= DateTime.Today;
+                    datePickerView.ShowInfo(!isMajor, i18N.GetText("Error.MajorAge"));
+                }
             }
         }
 

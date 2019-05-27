@@ -17,8 +17,7 @@ namespace Global.InputForms
         ///     The Items Source property.
         /// </summary>
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(ObservableDictionary<string, string>), typeof(RateGroup), default(IEnumerable),
-            propertyChanged: OnItemsSourceChanged);
+            typeof(IDictionary<string, string>), typeof(RateGroup), null, propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -148,7 +147,7 @@ namespace Global.InputForms
             base.Children.Add(_rateLayout);
 
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new ObservableDictionary<string, string>();
+            ItemsSource = new Dictionary<string, string>();
 
             _rateLayout.ChildAdded += ChildCheckAdded;
             _rateLayout.ChildRemoved += ChildCheckRemoved;
@@ -166,9 +165,9 @@ namespace Global.InputForms
         ///     Gets or sets the Rate group Items Source.
         /// </summary>
         /// <value>The Rate group Items Source.</value>
-        public ObservableDictionary<string, string> ItemsSource
+        public IDictionary<string, string> ItemsSource
         {
-            get => (ObservableDictionary<string, string>) GetValue(ItemsSourceProperty);
+            get => (IDictionary<string, string>) GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -424,7 +423,13 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is RateGroup rateGroup && rateGroup.ItemsSource != null) rateGroup.GenerateChekableList();
+            if (!(bindable is RateGroup rateGroup) || rateGroup.ItemsSource == null) return;
+
+            if (oldValue is INotifyCollectionChanged oldSource)
+                oldSource.CollectionChanged -= rateGroup.ItemSource_CollectionChanged;
+            rateGroup.GenerateChekableList();
+            if (newValue is INotifyCollectionChanged newSource)
+                newSource.CollectionChanged += rateGroup.ItemSource_CollectionChanged;
         }
 
         private static void CheckTemplateChanged(BindableObject bindable, object oldValue, object newValue)
