@@ -84,8 +84,9 @@ namespace Global.InputForms
                 new Binding(nameof(SelectedItem)) { Source = this, Mode = BindingMode.TwoWay });
             _picker.SetBinding(Picker.TitleProperty,
                 new Binding(nameof(Title)) { Source = this, Mode = BindingMode.OneWay });
-            _picker.SetBinding(Picker.TitleColorProperty,
-                new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
+            //Todo For Xamarin.Forms 4.0
+            //_picker.SetBinding(Picker.TitleColorProperty,
+                //new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
 
             _picker.SetBinding(BlankPicker.DoneButtonTextProperty,
                 new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });

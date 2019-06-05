@@ -52,6 +52,7 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(EntryView), Keyboard.Default);
 
         private readonly BlankEntry _entry;
+        private readonly Frame _pFrame;
 
         public EventHandler<TextChangedEventArgs> TextChanged;
         public int _cursorPosition;
@@ -91,10 +92,25 @@ namespace Global.InputForms
                 new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
                 new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
-            _entry.SetBinding(InputView.IsReadOnlyProperty,
-               new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            //Todo For Xamarin.Forms 4.0
+            //_entry.SetBinding(InputView.IsReadOnlyProperty,
+            //new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
             _entry.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+
+            _pFrame = new Frame
+            {
+                Padding = 0,
+                HasShadow = false,
+                BackgroundColor = Color.Transparent,
+                Content = _entry
+            };
+            _pFrame.SetBinding(IsEnabledProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+            _pFrame.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _pFrame.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
 
             _entry.Focused += FocusEntry;
@@ -110,7 +126,7 @@ namespace Global.InputForms
                 Validate();
             };
 
-            Children.Add (_entry, 2, 3, 1, 2);
+            Children.Add (_pFrame, 2, 3, 1, 2);
         }
 
         /// <summary>

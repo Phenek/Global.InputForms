@@ -19,7 +19,6 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
+    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1039999" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.1" />
@@ -73,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Global.InputForms\Global.InputForms.csproj">
-      <Project>{CD267730-BD64-4E2E-AF88-1BD3CCBD8961}</Project>
+      <Project>{DD698C34-ABA4-4B3D-94A3-90D6983A31E2}</Project>
       <Name>Global.InputForms</Name>
     </ProjectReference>
   </ItemGroup>

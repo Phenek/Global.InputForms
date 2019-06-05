@@ -151,7 +151,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
+    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1039999" />
     <PackageReference Include="Naxam.I18n">
       <Version>1.0.1</Version>
     </PackageReference>
