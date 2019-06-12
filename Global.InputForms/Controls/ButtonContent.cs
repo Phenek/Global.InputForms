@@ -151,8 +151,6 @@ namespace Global.InputForms
                 Padding = 0,
                 HasShadow = false,
                 CornerRadius = CornerRadius,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
                 BackgroundColor = Color.Transparent,
                 InputTransparent = true,
                 IsEnabled = false,
@@ -164,11 +162,12 @@ namespace Global.InputForms
 
             _button = new BlankButton
             {
+                HeightRequest = 0,
                 BackgroundColor = BackgroundColor,
                 TextColor = TextColor,
-                BorderColor = BorderColor
+                BorderColor = BorderColor,
             };
-            
+
             _button.SetBinding(Button.CommandProperty,
                 new Binding(nameof(Command)) {Source = this, Mode = BindingMode.OneWay});
             _button.SetBinding(Button.CommandParameterProperty,
@@ -212,6 +211,7 @@ namespace Global.InputForms
             Children.Add(_button, 0, 0);
             Children.Add(_frame, 0, 0);
             Children.Add(_loader, 0, 0);
+
         }
 
         public View Content
