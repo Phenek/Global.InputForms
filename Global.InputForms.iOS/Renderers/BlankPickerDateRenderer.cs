@@ -18,7 +18,7 @@ namespace Global.InputForms.iOS.Renderers
         {
             base.OnElementChanged(e);
 
-            if (!(Element is BlankDatePicker bPicker)) return;
+            if (!(e.NewElement is BlankDatePicker bPicker)) return;
             blankPicker = bPicker;
 
             Control.ShouldEndEditing += textField =>
