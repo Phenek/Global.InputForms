@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -50,6 +51,27 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty KeyboardProperty =
             BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(EntryView), Keyboard.Default);
+       
+        /// <summary>
+        ///     The ReturnType property.
+        /// </summary>
+        public static readonly BindableProperty ReturnTypeProperty = 
+            BindableProperty.Create(nameof(ReturnType), typeof(ReturnType), typeof(Entry), ReturnType.Default);
+
+        /// <summary>
+        ///     The ReturnCommand property.
+        /// </summary>
+
+        public static readonly BindableProperty ReturnCommandProperty = 
+            BindableProperty.Create(nameof(ReturnCommand), typeof(ICommand), typeof(Entry), default(ICommand));
+
+        /// <summary>
+        ///     The ReturnCommandParameter property.
+        /// </summary>
+
+        public static readonly BindableProperty ReturnCommandParameterProperty = 
+            BindableProperty.Create(nameof(ReturnCommandParameter), typeof(object), typeof(Entry), default(object));
+
 
         private readonly BlankEntry _entry;
         private readonly Frame _pFrame;
@@ -88,6 +110,13 @@ namespace Global.InputForms
                 new Binding(nameof(IsPassword)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.KeyboardProperty,
                 new Binding(nameof(Keyboard)) {Source = this, Mode = BindingMode.OneWay});
+            _entry.SetBinding(Entry.ReturnTypeProperty,
+                new Binding(nameof(ReturnType)) { Source = this, Mode = BindingMode.OneWay });
+            _entry.SetBinding(Entry.ReturnCommandProperty,
+                new Binding(nameof(ReturnCommand)) { Source = this, Mode = BindingMode.OneWay });
+            _entry.SetBinding(Entry.ReturnCommandParameterProperty,
+                new Binding(nameof(ReturnCommandParameter)) { Source = this, Mode = BindingMode.OneWay });
+
             _entry.SetBinding(InputView.IsSpellCheckEnabledProperty,
                 new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
@@ -190,6 +219,40 @@ namespace Global.InputForms
             get => (Keyboard) GetValue(KeyboardProperty);
             set => SetValue(KeyboardProperty, value);
         }
+
+        /// <summary>
+        ///     Gets or sets the ReturnType value.
+        /// </summary>
+        /// <value>the ReturnType value.</value>
+
+        public ReturnType ReturnType
+        {
+            get => (ReturnType)GetValue(ReturnTypeProperty);
+            set => SetValue(ReturnTypeProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the ReturnCommand value.
+        /// </summary>
+        /// <value>the ReturnCommand value.</value>
+
+        public ICommand ReturnCommand
+        {
+            get => (ICommand)GetValue(ReturnCommandProperty);
+            set => SetValue(ReturnCommandProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the ReturnCommandParameter value.
+        /// </summary>
+        /// <value>the ReturnCommandParameter value.</value>
+
+        public object ReturnCommandParameter
+        {
+            get => GetValue(ReturnCommandParameterProperty);
+            set => SetValue(ReturnCommandParameterProperty, value);
+        }
+
 
         private static void EntryTextChanged(BindableObject bindable, object oldValue, object newValue)
         {

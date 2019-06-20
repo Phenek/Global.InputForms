@@ -52,9 +52,12 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchEnableBitcode></MtouchEnableBitcode>
-    <MtouchEnableSGenConc></MtouchEnableSGenConc>
-    <MtouchI18n></MtouchI18n>
+    <MtouchEnableBitcode>
+    </MtouchEnableBitcode>
+    <MtouchEnableSGenConc>
+    </MtouchEnableSGenConc>
+    <MtouchI18n>
+    </MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -171,6 +174,8 @@
     <ProjectReference Include="..\..\Global.InputForms.iOS\Global.InputForms.iOS.csproj">
       <Project>{CB53C8DB-6CC9-4C3D-BAA9-9C49A603C074}</Project>
       <Name>Global.InputForms.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
