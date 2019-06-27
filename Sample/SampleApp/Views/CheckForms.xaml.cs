@@ -21,11 +21,11 @@ namespace SampleApp.Views
 
         private void _CheckStoreChanged(object sender, bool e)
         {
-            if (!(sender is CheckBox checkBox)) return;
+            if (!(sender is CheckLabel CheckLabel)) return;
             
-            var storeName = checkBox.Text;
+            var storeName = CheckLabel.Text;
             var store = ((SimpleFormsViewModel) BindingContext).Form.GetType().GetProperty(storeName);
-            store.SetValue(((SimpleFormsViewModel) BindingContext).Form, checkBox.Checked, null);
+            store.SetValue(((SimpleFormsViewModel) BindingContext).Form, CheckLabel.Checked, null);
 
             switch (storeName)
             {

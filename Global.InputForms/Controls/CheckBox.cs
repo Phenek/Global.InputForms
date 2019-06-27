@@ -11,73 +11,20 @@ namespace Global.InputForms
             typeof(CheckBox), false, propertyChanged: OnCheckedPropertyChanged);
 
         public static readonly BindableProperty ItemProperty = BindableProperty.Create(nameof(Item),
-            typeof(KeyValuePair<string, string>), typeof(CheckButton), new KeyValuePair<string, string>(),
+            typeof(KeyValuePair<string, object>), typeof(CheckButton), new KeyValuePair<string, object>(),
             propertyChanged: OnItemPropertyChanged);
 
         /// <summary>
-        ///     The Image position property.
+        ///     The Icon position property.
         /// </summary>
         public static readonly BindableProperty IconPositionProperty = BindableProperty.Create(nameof(IconPosition),
-            typeof(CheckPosition), typeof(CheckBox), CheckPosition.Left, propertyChanged: IconPositionChanged);
+            typeof(IconPosition), typeof(CheckBox), IconPosition.Start, propertyChanged: IconPositionChanged);
 
         /// <summary>
         ///     The Icon Size property.
         /// </summary>
         public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize),
             typeof(double), typeof(CheckBox), 20.0, propertyChanged: IconSizeChanged);
-
-        /// <summary>
-        ///     The Label Font Attributes property.
-        /// </summary>
-        public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes),
-            typeof(FontAttributes), typeof(CheckBox), FontAttributes.Bold, propertyChanged: FontAttributesChanged);
-
-        /// <summary>
-        ///     The Label Font Family property.
-        /// </summary>
-        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily),
-            typeof(string), typeof(CheckBox), string.Empty, propertyChanged: FontFamilyChanged);
-
-        /// <summary>
-        ///     The Label Font Size property.
-        /// </summary>
-        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize),
-            typeof(double), typeof(CheckBox), Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-            propertyChanged: FontSizeChanged);
-
-        /// <summary>
-        ///     The Label Horizontal Text Alignment property.
-        /// </summary>
-        public static readonly BindableProperty HorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(CheckBox),
-                TextAlignment.Start, propertyChanged: HorizontalTextAlignmentChanged);
-
-        /// <summary>
-        ///     The Label Vertical Text Alignment property.
-        /// </summary>
-        public static readonly BindableProperty VerticalTextAlignmentProperty =
-            BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(CheckBox),
-                TextAlignment.Center, propertyChanged: VerticalTextAlignmentChanged);
-
-        /// <summary>
-        ///     The Label Text property.
-        /// </summary>
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string),
-            typeof(CheckBox), string.Empty, propertyChanged: TextChanged);
-
-        /// <summary>
-        ///     The Label Text Color property.
-        /// </summary>
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor),
-            typeof(Color), typeof(CheckBox), Color.Black, propertyChanged: TextColorChanged);
-
-        /// <summary>
-        ///     The Label is Visible property.
-        /// </summary>
-        public static readonly BindableProperty LabelIsVisibleProperty = BindableProperty.Create(nameof(LabelIsVisible),
-            typeof(bool), typeof(CheckBox), true, propertyChanged: LabelIsVisibleChanged);
-
-        private Label _label;
 
         public CheckBox()
         {
@@ -114,107 +61,19 @@ namespace Global.InputForms
             get => Item.Key ?? string.Empty;
             set
             {
-                if (value != null) Item = new KeyValuePair<string, string>(value, Item.Value);
+                if (value == null) return;
+                Item = new KeyValuePair<string, object>(value, Item.Value);
             }
         }
 
-        public string Value
+        public object Value
         {
             get => Item.Value;
             set
             {
-                if (value != null) Item = new KeyValuePair<string, string>(Item.Key, value);
+                if (value == null) return;
+                Item = new KeyValuePair<string, object>(Item.Key, value);
             }
-        }
-
-        /// <summary>
-        ///     Gets or sets the label font attributes.
-        /// </summary>
-        /// <value>The label font attributes.</value>
-        public FontAttributes FontAttributes
-        {
-            get => (FontAttributes) GetValue(FontAttributesProperty);
-            set => SetValue(FontAttributesProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label font family.
-        /// </summary>
-        /// <value>The label font family.</value>
-        public string FontFamily
-        {
-            get => (string) GetValue(FontFamilyProperty);
-            set => SetValue(FontFamilyProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label font size.
-        /// </summary>
-        /// <value>The label font size.</value>
-        public double FontSize
-        {
-            get => (double) GetValue(FontSizeProperty);
-            set => SetValue(FontSizeProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label horizontal text alignment.
-        /// </summary>
-        /// <value>The label horizontal text alignment.</value>
-        public TextAlignment HorizontalTextAlignment
-        {
-            get => (TextAlignment) GetValue(HorizontalTextAlignmentProperty);
-            set => SetValue(HorizontalTextAlignmentProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label vertical text alignment.
-        /// </summary>
-        /// <value>The label vertical text alignment.</value>
-        public TextAlignment VerticalTextAlignment
-        {
-            get => (TextAlignment) GetValue(VerticalTextAlignmentProperty);
-            set => SetValue(VerticalTextAlignmentProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label text.
-        /// </summary>
-        /// <value>The label text.</value>
-        public string Text
-        {
-            get => (string) GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label text color.
-        /// </summary>
-        /// <value>The label text color.</value>
-        public Color TextColor
-        {
-            get => (Color) GetValue(TextColorProperty);
-            set => SetValue(TextColorProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the label is Visible property.
-        /// </summary>
-        /// <value>The label is Visible.</value>
-        public bool LabelIsVisible
-        {
-            get => (bool) GetValue(LabelIsVisibleProperty);
-            set => SetValue(LabelIsVisibleProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the iamge position.
-        /// </summary>
-        /// <value>The label text color.</value>
-        public CheckPosition IconPosition
-        {
-            get => (CheckPosition) GetValue(IconPositionProperty);
-            set => SetValue(IconPositionProperty, value);
         }
 
         /// <summary>
@@ -261,14 +120,9 @@ namespace Global.InputForms
             }
         }
 
-        void ICheckable.OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        public KeyValuePair<string, object> Item
         {
-            OnCheckedPropertyChanged(bindable, oldValue, newValue);
-        }
-
-        public KeyValuePair<string, string> Item
-        {
-            get => (KeyValuePair<string, string>) GetValue(ItemProperty);
+            get => (KeyValuePair<string, object>) GetValue(ItemProperty);
             set => SetValue(ItemProperty, value);
         }
 
@@ -278,26 +132,32 @@ namespace Global.InputForms
             set => Key = value;
         }
 
-        string ICheckable.Value
+        object ICheckable.Value
         {
             get => Value;
             set => Value = value;
         }
 
-        void ICheckable.OnItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            OnItemPropertyChanged(bindable, oldValue, newValue);
-        }
-
-        void ICheckable.OnChecked(object sender, EventArgs e)
-        {
-            OnChecked(sender, e);
-        }
-
+        public event EventHandler<KeyValuePair<string, object>> ItemChanged;
         public event EventHandler<bool> CheckedChanged;
         public event EventHandler<bool> Clicked;
 
-        protected override void OnSizeAllocated(double width, double height)
+		protected override void OnChildAdded(Element child)
+		{
+			base.OnChildAdded(child);
+            if (IconPosition == IconPosition.End && (Children[Children.Count - 1] != _icon))
+            {
+                Children.Remove(_icon);
+                Children.Add(_icon);
+            }
+            else if (IconPosition == IconPosition.Start && (Children[0] != _icon))
+            {
+                Children.Remove(_icon);
+                Children.Insert(0,_icon);
+            }
+		}
+
+		protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
             if (height > 0 && _fill is Frame fill && fill.Height > 0)
@@ -314,154 +174,8 @@ namespace Global.InputForms
 
         private static void OnItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox) checkBox.Text = checkBox.Item.Value;
-        }
-
-        /// <summary>
-        ///     The Label Font Attributes property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void FontAttributesChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.FontAttributes = (FontAttributes) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Font Family property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void FontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.FontFamily = (string) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Font Size property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void FontSizeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.FontSize = (double) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Horizontal TextAlignment property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void HorizontalTextAlignmentChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.HorizontalTextAlignment = (TextAlignment) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Vertical Text Alignment property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void VerticalTextAlignmentChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.VerticalTextAlignment = (TextAlignment) newValue;
-        }
-
-        /// <summary>
-        ///     The Label Text property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TextChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (!(bindable is CheckBox checkBox)) return;
-            
-            if (checkBox._label is Label label)
-            {
-                label.Text = (string) newValue;
-            }
-            else
-            {
-                checkBox._label = new Label
-                {
-                    //VerticalOptions = LayoutOptions.FillAndExpand,
-                    //HorizontalOptions = LayoutOptions.FillAndExpand,
-                    FontAttributes = checkBox.FontAttributes,
-                    FontFamily = checkBox.FontFamily,
-                    FontSize = checkBox.FontSize,
-                    HorizontalTextAlignment = checkBox.HorizontalTextAlignment,
-                    VerticalTextAlignment = checkBox.VerticalTextAlignment,
-                    Text = checkBox.Text,
-                    TextColor = checkBox.TextColor,
-                    IsVisible = checkBox.LabelIsVisible
-                };
-                // image left or right Check here!
-                if (checkBox.IconPosition == CheckPosition.Right)
-                    checkBox.Children.Insert(0, checkBox._label);
-                else
-                    checkBox.Children.Add(checkBox._label);
-            }
-        }
-
-        /// <summary>
-        ///     The Label Text Color property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void TextColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.TextColor = (Color) newValue;
-        }
-
-        /// <summary>
-        ///     The Label is Visible property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void LabelIsVisibleChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is CheckBox checkBox && checkBox._label is Label label)
-                label.IsVisible = (bool) newValue;
-        }
-
-        /// <summary>
-        ///     The image position property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void IconPositionChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (!(bindable is CheckBox checkBox) || checkBox._label == null) return;
-            
-            checkBox.Children.Clear();
-            switch (checkBox.IconPosition)
-            {
-                case CheckPosition.Right:
-                    checkBox.Children.Add(checkBox._label);
-                    checkBox.Children.Add(checkBox._icon);
-                    break;
-                case CheckPosition.Left:
-                {
-                    checkBox.Children.Add(checkBox._icon);
-                    checkBox.Children.Add(checkBox._label);
-                    break;
-                }
-            }
+            if (bindable is CheckBox CheckBox)
+                CheckBox.ItemChanged?.Invoke(CheckBox, CheckBox.Item);
         }
 
         /// <summary>
@@ -628,6 +342,34 @@ namespace Global.InputForms
         #endregion
 
         #region CheckIcon Getter/Setter & Changed
+
+        /// <summary>
+        ///     Gets or sets the iamge position.
+        /// </summary>
+        /// <value>The label text color.</value>
+        public IconPosition IconPosition
+        {
+            get => (IconPosition)GetValue(IconPositionProperty);
+            set => SetValue(IconPositionProperty, value);
+        }
+
+        /// <summary>
+        ///     The image position property changed.
+        /// </summary>
+        /// <param name="bindable">The object.</param>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        private static void IconPositionChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is CheckBox CheckBox) || CheckBox._icon == null) return;
+
+            CheckBox.Children.Remove(CheckBox._icon);
+
+            if (CheckBox.IconPosition == IconPosition.End)
+				CheckBox.Children.Add(CheckBox._icon);
+            else
+				CheckBox.Children.Insert(0, CheckBox._icon);
+		}
 
         /// <summary>
         ///     Gets or sets the label font attributes.

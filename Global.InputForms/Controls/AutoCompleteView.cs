@@ -74,6 +74,7 @@ namespace Global.InputForms
         private CancellationTokenSource _cts;
         private readonly ListView _lstSuggestions;
         private readonly TapGestureRecognizer _backgroundTap;
+        public event EventHandler<ItemTappedEventArgs> ItemTapped;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AutoCompleteView" /> class.
@@ -114,12 +115,18 @@ namespace Global.InputForms
                 ShowHideListbox(false);
                 OnSelectedItemChanged(e.SelectedItem);
             };
+            _lstSuggestions.ItemTapped += _lstSuggestions_ItemTapped;
 
             ShowHideListbox(false);
             _lstSuggestions.ItemsSource = new List<object>();
 
             RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             Children.Add(_frameList, 1, 4, 3, 4);
+        }
+
+        private void _lstSuggestions_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ItemTapped?.Invoke(this, e);
         }
 
         protected override void OnChildAdded(Element child)

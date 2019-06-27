@@ -12,16 +12,13 @@ namespace Global.InputForms.Interfaces
         bool DisableCheckOnClick { get; set; }
         int Index { get; set; }
         bool Checked { get; set; }
-        KeyValuePair<string, string> Item { get; set; }
+        KeyValuePair<string, object> Item { get; set; }
         string Key { get; set; }
-        string Value { get; set; }
+        object Value { get; set; }
 
         event EventHandler<bool> CheckedChanged;
         event EventHandler<bool> Clicked;
 
         void SetCheckedColorsStyles();
-        void OnChecked(object sender, EventArgs e);
-        void OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue);
-        void OnItemPropertyChanged(BindableObject bindable, object oldValue, object newValue);
     }
 }

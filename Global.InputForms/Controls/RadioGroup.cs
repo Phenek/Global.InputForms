@@ -15,7 +15,7 @@ namespace Global.InputForms
         ///     The Items Source property.
         /// </summary>
         public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(IDictionary<string, string>), typeof(RadioGroup), null, propertyChanged: OnItemsSourceChanged);
+            typeof(IDictionary<string, object>), typeof(RadioGroup), null, propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -45,7 +45,7 @@ namespace Global.InputForms
         ///     The Selected Item property.
         /// </summary>
         public static BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem),
-            typeof(KeyValuePair<string, string>), typeof(RadioGroup), new KeyValuePair<string, string>(null, null),
+            typeof(KeyValuePair<string, object>), typeof(RadioGroup), new KeyValuePair<string, object>(null, null),
             propertyChanged: OnSelectedItemChanged);
 
         /// <summary>
@@ -59,16 +59,16 @@ namespace Global.InputForms
         public RadioGroup()
         {
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new Dictionary<string, string>();
+            ItemsSource = new Dictionary<string, object>();
         }
 
         /// <summary>
         ///     Gets or sets the radio group Items Source.
         /// </summary>
         /// <value>The radio group Items Source.</value>
-        public IDictionary<string, string> ItemsSource
+        public IDictionary<string, object> ItemsSource
         {
-            get => (IDictionary<string, string>) GetValue(ItemsSourceProperty);
+            get => (IDictionary<string, object>) GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -116,14 +116,14 @@ namespace Global.InputForms
         ///     Gets or sets the radio group selected index.
         /// </summary>
         /// <value>The radio group selected index.</value>
-        public KeyValuePair<string, string> SelectedItem
+        public KeyValuePair<string, object> SelectedItem
         {
-            get => (KeyValuePair<string, string>) GetValue(SelectedItemProperty);
+            get => (KeyValuePair<string, object>) GetValue(SelectedItemProperty);
             private set => SetValue(SelectedItemProperty, value);
         }
 
         public event EventHandler<int> SelectedIndexChanged;
-        public event EventHandler<KeyValuePair<string, string>> SelectedItemChanged;
+        public event EventHandler<KeyValuePair<string, object>> SelectedItemChanged;
 
         protected override void OnParentSet()
         {
@@ -204,11 +204,11 @@ namespace Global.InputForms
         private void ItemSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-                foreach (KeyValuePair<string, string> item in e.NewItems)
+                foreach (KeyValuePair<string, object> item in e.NewItems)
                     if (CheckList.All(c => c.Key != item.Key))
                         AddItemToView(item);
             if (e.OldItems != null)
-                foreach (KeyValuePair<string, string> item in e.OldItems)
+                foreach (KeyValuePair<string, object> item in e.OldItems)
                 {
                     var view = default(ICheckable);
                     foreach (var checkable in CheckList)
@@ -218,7 +218,7 @@ namespace Global.InputForms
                 }
         }
 
-        private void AddItemToView(KeyValuePair<string, string> item)
+        private void AddItemToView(KeyValuePair<string, object> item)
         {
             if (!(GenerateCheckableView(null) is View view)) return;
             
@@ -278,7 +278,7 @@ namespace Global.InputForms
             if ((int) newValue < 0)
             {
                 foreach (var button in radioGroup.CheckList) button.Checked = false;
-                radioGroup.SelectedItem = new KeyValuePair<string, string>(null, null);
+                radioGroup.SelectedItem = new KeyValuePair<string, object>(null, null);
                 return;
             }
 
@@ -303,7 +303,7 @@ namespace Global.InputForms
         private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RadioGroup radioGroup)
-                radioGroup.SelectedItemChanged?.Invoke(radioGroup, (KeyValuePair<string, string>) newValue);
+                radioGroup.SelectedItemChanged?.Invoke(radioGroup, (KeyValuePair<string, object>) newValue);
         }
 
         private void OnItemClicked(object sender, bool check)
@@ -314,7 +314,7 @@ namespace Global.InputForms
             {
                 if (IsDeselectable)
                 {
-                    SelectedItem = new KeyValuePair<string, string>(null, null);
+                    SelectedItem = new KeyValuePair<string, object>(null, null);
                     SelectedIndex = -1;
                 }
                 else
