@@ -798,7 +798,7 @@ namespace Global.InputForms
             IsFocused = true;
             Focused?.Invoke(this, new FocusEventArgs(this, true));
             if (_label != null) _label.TextColor = LabelHighlightedColor;
-            _line.BackgroundColor = (InfoViewType == InfoViewType.Line && Info) ? InfoColor : LineColor;
+            _line.BackgroundColor = (InfoViewType == InfoViewType.Line && Info) ? InfoColor : LineHighlightedColor;
         }
 
         public void UnfocusEntry(object sender, FocusEventArgs e)

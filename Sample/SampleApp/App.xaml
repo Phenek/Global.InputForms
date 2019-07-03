@@ -17,7 +17,7 @@
             <ControlTemplate x:Key="RightIconCheck">
                 <global:CheckLabel CheckType="Check"
                                    HorizontalOptions="End"
-                                   IconPosition="Right"
+                                   IconPosition="Start"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"

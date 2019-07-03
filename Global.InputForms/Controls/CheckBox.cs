@@ -34,15 +34,16 @@ namespace Global.InputForms
             {
                 Padding = 0,
                 HasShadow = false,
-                MinimumHeightRequest = IconSize,
-                MinimumWidthRequest = IconSize,
-                HeightRequest = IconSize,
-                WidthRequest = IconSize,
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
                 IsClippedToBounds = false
             };
             UpdateContent(CheckType);
+
+            _icon.SetBinding(HeightRequestProperty,
+                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
+            _icon.SetBinding(WidthRequestProperty,
+                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
 
             var tap = new TapGestureRecognizer();
             tap.Tapped += OnChecked;
