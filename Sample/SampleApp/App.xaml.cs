@@ -78,6 +78,9 @@ namespace SampleApp
             var toButtonContentBtn = new Button {Text = "Buttons"};
             toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonsPage()); };
 
+            var toSwitchBtn = new Button { Text = "Switch" };
+            toSwitchBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SwitchPage()); };
+
             var toTestBtn = new Button { Text = "Test" };
             toTestBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TestPage()); };
 
@@ -98,6 +101,7 @@ namespace SampleApp
                         toDatePickerViewBtn,
                         toTimePickerViewBtn,
                         toButtonContentBtn,
+                        toSwitchBtn,
                         //toTestBtn
                     }
                 }

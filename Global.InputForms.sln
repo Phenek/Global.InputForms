@@ -1,17 +1,17 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global.InputForms", "Global.InputForms", "{173B837F-9A35-4336-B632-B770A4B3212D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{668069D4-D406-419B-B7A0-89B6B92FF6F1}"
 	ProjectSection(SolutionItems) = preProject
-		build.sh = build.sh
 		build.cake = build.cake
 		build.ps1 = build.ps1
+		build.sh = build.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Global.InputForms", "Global.InputForms\Global.InputForms.csproj", "{DD698C34-ABA4-4B3D-94A3-90D6983A31E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Global.InputForms", "Global.InputForms\Global.InputForms.csproj", "{DD698C34-ABA4-4B3D-94A3-90D6983A31E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Global.InputForms.Droid", "Global.InputForms.Droid\Global.InputForms.Droid.csproj", "{1EF8FB0E-5EBA-44A2-A12C-FB1D87AA32BF}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Global.InputForms.iOS", "Gl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{E0057515-F954-4797-8636-D35204FBA29F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "Sample\SampleApp\SampleApp.csproj", "{0FC4C227-8CC8-4059-946A-669845695006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "Sample\SampleApp\SampleApp.csproj", "{0FC4C227-8CC8-4059-946A-669845695006}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.Droid", "Sample\SampleApp.Droid\SampleApp.Droid.csproj", "{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}"
 EndProject
@@ -151,6 +151,7 @@ Global
 		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{D3711F4F-17CD-4F46-BDFA-8032CB95FD30}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU

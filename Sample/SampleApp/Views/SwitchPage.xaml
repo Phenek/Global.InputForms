@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             mc:Ignorable="d"
+             x:Class="SampleApp.Views.SwitchPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+
+            <global:Switch x:Name="switchTest" 
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           BackgroundHeightRequest="75"
+                           BackgroundWidthRequest="150"
+                           SwitchHeightRequest="110"
+                           SwitchWidthRequest="150"
+                           Toggled="ToggledEvent" BackgroundColor="Beige" 
+                           
+                           />
+
+            <Image Source="SwitchCalendarBlue" />
+
+            <global:Switch x:Name="switchTest2" 
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           BackgroundHeightRequest="40"
+                           BackgroundWidthRequest="100"
+                           SwitchHeightRequest="40"
+                           SwitchWidthRequest="50"
+                           />
+
+           
+            
+            <global:Switch x:Name="switchTest3" 
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           BackgroundHeightRequest="120"
+                           BackgroundWidthRequest="200"
+                           SwitchHeightRequest="75"
+                           SwitchWidthRequest="75"
+                           Toggled="ToggledEvent3" 
+                    />
+
+            <global:Switch x:Name="switchTest4" 
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           BackgroundHeightRequest="100"
+                           BackgroundWidthRequest="220"
+                           SwitchHeightRequest="80"
+                           SwitchWidthRequest="100"
+                           Toggled="ToggledEvent"
+                    />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
