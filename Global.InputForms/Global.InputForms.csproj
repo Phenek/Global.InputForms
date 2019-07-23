@@ -29,7 +29,6 @@
     <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Models\" />
     <Folder Include="Controls\Blank\" />
     <Folder Include="Interfaces\" />
