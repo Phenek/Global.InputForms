@@ -11,6 +11,7 @@
     <Owners>Vice</Owners>
     <PackageProjectUrl>https://github.com/Phenek/Global.InputForms/</PackageProjectUrl>
     <PackageTags>map portable pcl android ios xamarin monoandroid monodroid xamarin.forms</PackageTags>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,7 +29,6 @@
     <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Models\" />
     <Folder Include="Controls\Blank\" />
     <Folder Include="Interfaces\" />

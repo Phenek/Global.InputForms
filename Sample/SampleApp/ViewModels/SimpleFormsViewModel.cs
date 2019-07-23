@@ -17,7 +17,7 @@ namespace SampleApp.ViewModels
         public SimpleFormsViewModel()
         {
 
-            Rates = new ObservableDictionary<string, string>
+            Rates = new ObservableDictionary<string, object>
             {
                 {"0", "none"},
                 {"1", "Less than 1 year"},
@@ -25,14 +25,14 @@ namespace SampleApp.ViewModels
                 {"3", "More than 2 years"}
             };
 
-            Genders = new ObservableDictionary<string, string>
+            Genders = new ObservableDictionary<string, object>
             {
                 {"1", _i18N.GetText("Form.Man")},
                 {"2", _i18N.GetText("Form.Woman")}
             };
 
 
-            Languages = new ObservableDictionary<string, string>
+            Languages = new ObservableDictionary<string, object>
             {
                 {"English", _i18N.GetText("Form.English")},
                 {"Spanish", _i18N.GetText("Form.Spanish")},
@@ -50,9 +50,9 @@ namespace SampleApp.ViewModels
             }
         }
 
-        public ObservableDictionary<string, string> Rates { get; set; }
-        public ObservableDictionary<string, string> Genders { get; set; }
-        public ObservableDictionary<string, string> Languages { get; set; }
+        public ObservableDictionary<string, object> Rates { get; set; }
+        public ObservableDictionary<string, object> Genders { get; set; }
+        public ObservableDictionary<string, object> Languages { get; set; }
 
         public async void OnSubmit()
         {

@@ -14,6 +14,23 @@ namespace Global.InputForms
     public class AutoCompleteView : EntryView
     {
         /// <summary>
+        ///     The default sorting algorithm.
+        /// </summary>
+        private static readonly Func<string, IEnumerable<object>, IEnumerable<object>> _defaultAlgo =
+            (text, values) => values
+                                .Where(x => x.ToString().IndexOf(text, StringComparison.CurrentCultureIgnoreCase) > -1)
+                                .OrderByDescending(x => x.ToString().ToLowerInvariant().StartsWith(text, StringComparison.CurrentCultureIgnoreCase))
+                                .ThenBy(x => x.ToString(), new NaturalSortComparer<string>())
+                                .Take(40).ToList();
+
+        /// <summary>
+        ///     The sorting algorithm click property.
+        /// </summary>
+        public static readonly BindableProperty SortingAlgorithmProperty = BindableProperty.Create(nameof(SortingAlgorithm),
+            typeof(Func<string, IEnumerable<object>, IEnumerable<object>>),
+            typeof(AutoCompleteView), _defaultAlgo);
+
+        /// <summary>
         ///     The execute on suggestion click property.
         /// </summary>
         public static readonly BindableProperty ExecuteOnItemClickProperty =
@@ -54,19 +71,16 @@ namespace Global.InputForms
                 
         private readonly Frame _frameList;
 
-        private ObservableCollection<object> _availableSuggestions;
-
         private CancellationTokenSource _cts;
         private readonly ListView _lstSuggestions;
         private readonly TapGestureRecognizer _backgroundTap;
+        public event EventHandler<ItemTappedEventArgs> ItemTapped;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AutoCompleteView" /> class.
         /// </summary>
         public AutoCompleteView()
         {
-            _availableSuggestions = new ObservableCollection<object>();
-
             _lstSuggestions = new ListView
             {
                 HorizontalOptions = LayoutOptions.Center,
@@ -98,18 +112,21 @@ namespace Global.InputForms
             _lstSuggestions.ItemSelected += (s, e) =>
             {
                 EntryText = e.SelectedItem.ToString();
-
-                _availableSuggestions.Clear();
-                _lstSuggestions.ItemsSource = _availableSuggestions;
                 ShowHideListbox(false);
                 OnSelectedItemChanged(e.SelectedItem);
             };
+            _lstSuggestions.ItemTapped += _lstSuggestions_ItemTapped;
 
             ShowHideListbox(false);
-            _lstSuggestions.ItemsSource = _availableSuggestions;
+            _lstSuggestions.ItemsSource = new List<object>();
 
             RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             Children.Add(_frameList, 1, 4, 3, 4);
+        }
+
+        private void _lstSuggestions_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ItemTapped?.Invoke(this, e);
         }
 
         protected override void OnChildAdded(Element child)
@@ -119,11 +136,11 @@ namespace Global.InputForms
                 SetRow(child, 3);
         }
 
-        /// <summary>
-        ///     Gets the available Suggestions.
-        /// </summary>
-        /// <value>The available Suggestions.</value>
-        public IEnumerable AvailableSuggestions => _availableSuggestions;
+        public Func<string, IEnumerable<object>, IEnumerable<object>> SortingAlgorithm
+        {
+            get { return (Func<string, IEnumerable<object>, IEnumerable<object>>)GetValue(SortingAlgorithmProperty); }
+            set { SetValue(SortingAlgorithmProperty, value); }
+        }
 
         /// <summary>
         ///     Gets or sets a value indicating whether [execute on sugestion click].
@@ -210,18 +227,6 @@ namespace Global.InputForms
         }
 
         /// <summary>
-        ///     Suggestions the height changed.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SuggestionHeightRequestChanged(BindableObject obj, object oldValue, object newValue)
-        {
-            if (obj is AutoCompleteView autoCompleteView)
-                autoCompleteView._lstSuggestions.HeightRequest = (double) newValue;
-        }
-
-        /// <summary>
         ///     Suggestions the item data template changed.
         /// </summary>
         /// <param name="obj">The object.</param>
@@ -246,7 +251,7 @@ namespace Global.InputForms
                 autoCompleteView.ItemsSource = (IEnumerable) newValue;
         }
 
-        private async void TextChangedHandler(string text) // async void only for event handlers
+        private async Task TextChangedHandler(string text) // async void only for event handlers
         {
             try
             {
@@ -261,55 +266,40 @@ namespace Global.InputForms
                 try
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(333), _cts.Token); // buffer
-                    var cleanedNewPlaceHolderValue =
-                        Regex.Replace((text ?? string.Empty).ToLowerInvariant(), @"\s+", string.Empty);
-                    if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) && ItemsSource != null)
+                    await Task.Run(() =>
                     {
-                        List<object> filteredSuggestions = null;
-                        await Task.Run(() =>
+                        var filteredSuggestions = new List<object>();
+                        if (!string.IsNullOrEmpty(text) && ItemsSource != null)
                         {
-                            filteredSuggestions = ItemsSource.Cast<object>()
-                                .Where(x => Regex.Replace(x.ToString().ToLowerInvariant(), @"\s+", string.Empty)
-                                    .Contains(cleanedNewPlaceHolderValue))
-                                .OrderByDescending(x => Regex.Replace(x.ToString()
-                                        .ToLowerInvariant(), @"\s+", string.Empty)
-                                    .StartsWith(cleanedNewPlaceHolderValue, StringComparison.CurrentCulture)).ToList();
-                        });
-                        _availableSuggestions = new ObservableCollection<object>();
-                        if (filteredSuggestions != null && filteredSuggestions.Count > 0)
-                        {
-                            foreach (var suggestion in filteredSuggestions) _availableSuggestions.Add(suggestion);
-                            ShowHideListbox(true);
+                            filteredSuggestions = SortingAlgorithm(text, ItemsSource.Cast<object>()).ToList();
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                _lstSuggestions.ItemsSource = filteredSuggestions;
+
+                                ShowHideListbox(filteredSuggestions.Any());
+
+                                if (filteredSuggestions.Any() && _frameList.GestureRecognizers.Contains(_backgroundTap))
+                                {
+                                    _backgroundTap.Tapped -= BackGroundTapped;
+                                    _frameList.GestureRecognizers.Remove(_backgroundTap);
+                                }
+                                else if (!filteredSuggestions.Any() && !_frameList.GestureRecognizers.Contains(_backgroundTap))
+                                {
+                                    _backgroundTap.Tapped += BackGroundTapped;
+                                    _frameList.GestureRecognizers.Add(_backgroundTap);
+                                }
+                            });
                         }
                         else
-                        {
-                            ShowHideListbox(false);
-                        }
-                    }
-                    else
-                    {
-                        if (_availableSuggestions.Count > 0)
-                        {
-                            _availableSuggestions = new ObservableCollection<object>();
-                            ShowHideListbox(false);
-                        }
-                    }
-
-                    _lstSuggestions.ItemsSource = _availableSuggestions;
-
-                    if (_availableSuggestions.Any() && _frameList.GestureRecognizers.Contains(_backgroundTap))
-                    {
-                        _backgroundTap.Tapped -= BackGroundTapped;
-                        _frameList.GestureRecognizers.Remove(_backgroundTap);
-                    }
-                    else if (!_availableSuggestions.Any() && !_frameList.GestureRecognizers.Contains(_backgroundTap))
-                    {
-                        _backgroundTap.Tapped += BackGroundTapped;
-                        _frameList.GestureRecognizers.Add(_backgroundTap);
-                    }
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                _lstSuggestions.ItemsSource = filteredSuggestions;
+                            });
+                    }, _cts.Token);
                 }
                 catch (TaskCanceledException) // if the operation is cancelled, do nothing
                 {
+
                 }
             }
         }
@@ -335,6 +325,95 @@ namespace Global.InputForms
         private void ShowHideListbox(bool show)
         {
             _lstSuggestions.IsVisible = show;
+        }
+    }
+
+    public class NaturalSortComparer<T> : IComparer<string>, IDisposable
+    {
+        private bool isAscending;
+
+        public NaturalSortComparer(bool inAscendingOrder = true)
+        {
+            this.isAscending = inAscendingOrder;
+        }
+
+        #region IComparer<string> Members
+
+        public int Compare(string x, string y)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IComparer<string> Members
+
+        int IComparer<string>.Compare(string x, string y)
+        {
+            if (x == y)
+                return 0;
+
+            string[] x1, y1;
+
+            if (!table.TryGetValue(x, out x1))
+            {
+                x1 = Regex.Split(x.Replace(" ", ""), "([0-9]+)");
+                table.Add(x, x1);
+            }
+
+            if (!table.TryGetValue(y, out y1))
+            {
+                y1 = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
+                table.Add(y, y1);
+            }
+
+            int returnVal;
+
+            for (int i = 0; i < x1.Length && i < y1.Length; i++)
+            {
+                if (x1[i] != y1[i])
+                {
+                    returnVal = PartCompare(x1[i], y1[i]);
+                    return isAscending ? returnVal : -returnVal;
+                }
+            }
+
+            if (y1.Length > x1.Length)
+            {
+                returnVal = 1;
+            }
+            else if (x1.Length > y1.Length)
+            {
+                returnVal = -1;
+            }
+            else
+            {
+                returnVal = 0;
+            }
+
+            return isAscending ? returnVal : -returnVal;
+        }
+
+        private static int PartCompare(string left, string right)
+        {
+            int x, y;
+            if (!int.TryParse(left, out x))
+                return left.CompareTo(right);
+
+            if (!int.TryParse(right, out y))
+                return left.CompareTo(right);
+
+            return x.CompareTo(y);
+        }
+
+        #endregion
+
+        private Dictionary<string, string[]> table = new Dictionary<string, string[]>();
+
+        public void Dispose()
+        {
+            table.Clear();
+            table = null;
         }
     }
 }

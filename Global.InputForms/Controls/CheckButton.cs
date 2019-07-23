@@ -11,7 +11,7 @@ namespace Global.InputForms
             typeof(CheckButton), false, propertyChanged: OnCheckedPropertyChanged);
 
         public static readonly BindableProperty ItemProperty = BindableProperty.Create(nameof(Item),
-            typeof(KeyValuePair<string, string>), typeof(CheckButton), new KeyValuePair<string, string>(),
+            typeof(KeyValuePair<string, object>), typeof(CheckButton), new KeyValuePair<string, object>(),
             propertyChanged: OnItemPropertyChanged);
 
         /// <summary>
@@ -57,28 +57,31 @@ namespace Global.InputForms
         public CheckButton()
         {
             Padding = new Thickness(0, 0, 0, 0);
-            Text = Item.Value;
+
+            if (Item.Value is string str)
+                Text = str;
+
             SetButtonUnchecked();
             base.Clicked += OnChecked;
             base.Clicked += Animation;
         }
 
-        public KeyValuePair<string, string> Item
+        public KeyValuePair<string, object> Item
         {
-            get => (KeyValuePair<string, string>) GetValue(ItemProperty);
+            get => (KeyValuePair<string, object>) GetValue(ItemProperty);
             set => SetValue(ItemProperty, value);
         }
 
         public string Key
         {
             get => Item.Key;
-            set => Item = new KeyValuePair<string, string>(value, Item.Value);
+            set => Item = new KeyValuePair<string, object>(value, Item.Value);
         }
 
-        public string Value
+        public object Value
         {
             get => Item.Value;
-            set => Item = new KeyValuePair<string, string>(Item.Key, value);
+            set => Item = new KeyValuePair<string, object>(Item.Key, value);
         }
 
         /// <summary>
@@ -175,12 +178,7 @@ namespace Global.InputForms
             }
         }
 
-        void ICheckable.OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            OnCheckedPropertyChanged(bindable, oldValue, newValue);
-        }
-
-        KeyValuePair<string, string> ICheckable.Item
+        KeyValuePair<string, object> ICheckable.Item
         {
             get => Item;
             set => Item = value;
@@ -192,20 +190,10 @@ namespace Global.InputForms
             set => Key = value;
         }
 
-        string ICheckable.Value
+        object ICheckable.Value
         {
             get => Value;
             set => Value = value;
-        }
-
-        void ICheckable.OnItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            OnItemPropertyChanged(bindable, oldValue, newValue);
-        }
-
-        void ICheckable.OnChecked(object sender, EventArgs e)
-        {
-            OnChecked(sender, e);
         }
 
         public void SetCheckedColorsStyles()
@@ -229,7 +217,8 @@ namespace Global.InputForms
 
         private static void OnItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckButton checkButton) checkButton.Text = checkButton.Item.Value;
+            if (bindable is CheckButton checkButton && checkButton.Item.Value is string str)
+                checkButton.Text = str;
         }
 
         /// <summary>

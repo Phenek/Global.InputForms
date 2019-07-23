@@ -17,6 +17,7 @@
                                     Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
                                     EntryText="BlaaBlaaBlaa"
                                     LineColor="Purple"
+                                    ReturnType="Send"
                                     LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />

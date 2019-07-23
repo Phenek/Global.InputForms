@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ControlTemplate x:Key="IconCheck">
-                <global:CheckBox CheckType="Check"
+                <global:CheckLabel CheckType="Check"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
@@ -15,9 +15,9 @@
                                    CheckedColor="Blue" />
             </ControlTemplate>
             <ControlTemplate x:Key="RightIconCheck">
-                <global:CheckBox CheckType="Check"
+                <global:CheckLabel CheckType="Check"
                                    HorizontalOptions="End"
-                                   IconPosition="Right"
+                                   IconPosition="Start"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
@@ -25,7 +25,7 @@
                                    CheckedColor="Blue" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRadio">
-                <global:CheckBox CheckType="Fill" IconSize="20" CornerRadius="10"
+                <global:CheckLabel CheckType="Fill" IconSize="20" CornerRadius="10"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
@@ -47,17 +47,16 @@
                                    IconSize="20" Padding="5,0,5,0" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRadioImage">
-                <global:CheckBox CheckType="Image" ImageChecked="RadioButtonChecked"
+                <global:CheckLabel CheckType="Image" ImageChecked="RadioButtonChecked"
                                    ImageUnchecked="RadioButtonUnchecked" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconCheckImage">
-                <global:CheckBox CheckType="Image" ImageChecked="BoxChecked" ImageUnchecked="BoxUnchecked" />
+                <global:CheckLabel CheckType="Image" ImageChecked="BoxChecked" ImageUnchecked="BoxUnchecked" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconCustomRate">
                 <global:CheckBox CheckType="Custom" CheckedLabel="★" UncheckedLabel="☆"
                                    CheckLabelFontSize="30"
                                    IconSize="30"
-                                   LabelIsVisible="false"
                                    Color="LightGray"
                                    BorderColor="Transparent"
                                    BackgroundColor="Transparent"
@@ -65,12 +64,12 @@
                                    CheckedBorderColor="Transparent"
                                    CheckedBackgroundColor="Transparent"
                                    CheckLabelFontAttributes="None">
-                    <global:CheckBox.CheckLabelMargin>
+                    <global:CheckLabel.CheckLabelMargin>
                         <OnPlatform x:TypeArguments="Thickness">
                             <On Platform="iOS" Value="0" />
                             <On Platform="Android, WinPhone, Windows" Value="0,-10,0,0" />
                         </OnPlatform>
-                    </global:CheckBox.CheckLabelMargin>
+                    </global:CheckLabel.CheckLabelMargin>
                 </global:CheckBox>
             </ControlTemplate>
             <Color x:Key="Primary">#335D83</Color>

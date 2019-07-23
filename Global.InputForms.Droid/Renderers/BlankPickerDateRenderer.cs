@@ -45,6 +45,10 @@ namespace Global.InputForms.Droid.Renderers
                     };
                 }
             }
+            if (e.OldElement != null)
+            {
+                this.Control.Click -= OnPickerClick;
+            }
             SetPlaceholder();
             SetAlignment();
             Control.SetPadding(0, 7, 0, 3);

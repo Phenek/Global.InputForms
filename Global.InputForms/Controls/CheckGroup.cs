@@ -15,7 +15,7 @@ namespace Global.InputForms
         ///     The Items Source property.
         /// </summary>
         public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(IDictionary<string, string>), typeof(CheckGroup), null, propertyChanged: OnItemsSourceChanged);
+            typeof(IDictionary<string, object>), typeof(CheckGroup), null, propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -46,16 +46,16 @@ namespace Global.InputForms
         public CheckGroup()
         {
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new Dictionary<string, string>();
+            ItemsSource = new Dictionary<string, object>();
         }
 
         /// <summary>
         ///     Gets or sets the Check group Items Source.
         /// </summary>
         /// <value>The Check group Items Source.</value>
-        public IDictionary<string, string> ItemsSource
+        public IDictionary<string, object> ItemsSource
         {
-            get => (IDictionary<string, string>) GetValue(ItemsSourceProperty);
+            get => (IDictionary<string, object>) GetValue(ItemsSourceProperty);
             set
             {
                 if (value != null) SetValue(ItemsSourceProperty, value);
@@ -73,7 +73,7 @@ namespace Global.InputForms
         }
 
         public event EventHandler<bool> CheckedChanged;
-        public event EventHandler<Dictionary<string, string>> CheckedCollectionChanged;
+        public event EventHandler<Dictionary<string, object>> CheckedCollectionChanged;
 
         protected override void OnParentSet()
         {
@@ -134,11 +134,11 @@ namespace Global.InputForms
         private void ItemSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-                foreach (KeyValuePair<string, string> item in e.NewItems)
+                foreach (KeyValuePair<string, object> item in e.NewItems)
                     if (CheckList.All(c => c.Key != item.Key))
                         AddItemToView(item);
             if (e.OldItems != null)
-                foreach (KeyValuePair<string, string> item in e.OldItems)
+                foreach (KeyValuePair<string, object> item in e.OldItems)
                 {
                     var view = default(ICheckable);
                     foreach (var checkable in CheckList)
@@ -148,7 +148,7 @@ namespace Global.InputForms
                 }
         }
 
-        private void AddItemToView(KeyValuePair<string, string> item)
+        private void AddItemToView(KeyValuePair<string, object> item)
         {
             if (!(GenerateCheckableView(null) is View view)) return;
             
@@ -206,18 +206,18 @@ namespace Global.InputForms
             }
         }
 
-        public Dictionary<string, string> GetCheckedDictionary()
+        public Dictionary<string, object> GetCheckedDictionary()
         {
-            var result = new Dictionary<string, string>();
+            var result = new Dictionary<string, object>();
             for (var i = 0; i < CheckList.Count; ++i)
                 if (CheckList[i].Checked)
                     result.Add(CheckList[i].Key, CheckList[i].Value);
             return result;
         }
 
-        public Dictionary<string, string> GetUnCheckedDictionary()
+        public Dictionary<string, object> GetUnCheckedDictionary()
         {
-            var result = new Dictionary<string, string>();
+            var result = new Dictionary<string, object>();
             for (var i = 0; i < CheckList.Count; ++i)
                 if (!CheckList[i].Checked)
                     result.Add(CheckList[i].Key, CheckList[i].Value);

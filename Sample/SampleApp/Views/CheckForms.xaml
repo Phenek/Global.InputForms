@@ -12,7 +12,7 @@
             HorizontalOptions="FillAndExpand">
             
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Fill" IconSize="20" CornerRadius="10"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -20,7 +20,7 @@
                                    CheckedBorderColor="Teal"
                                    CheckedColor="Teal" />
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Fill" IconSize="20" CornerRadius="10"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -28,7 +28,7 @@
                                    CheckedBorderColor="Maroon"
                                    CheckedColor="Maroon" />
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Fill" IconSize="20" CornerRadius="10"
                                    BackgroundColor="White"
                                    BorderColor="Navy"
@@ -36,7 +36,7 @@
                                    CheckedBorderColor="Gray"
                                    CheckedColor="Purple" />
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Fill" IconSize="20" CornerRadius="10"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -47,7 +47,7 @@
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Check" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -55,7 +55,7 @@
                                    CheckedBorderColor="Teal"
                                    CheckedColor="Teal" />
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Check" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -63,7 +63,7 @@
                                    CheckedBorderColor="Maroon"
                                    CheckedColor="Maroon" />
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Check" IconSize="20"
                                    BackgroundColor="White"
                                    BorderColor="Navy"
@@ -71,7 +71,7 @@
                                    CheckedBorderColor="Gray"
                                    CheckedColor="Purple" />
 
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Check" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -81,28 +81,28 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Cross" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
                                    CheckedBorderColor="Teal"
                                    CheckedColor="Teal" />
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Cross" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
                                    CheckedBorderColor="Maroon"
                                    CheckedColor="Maroon" />
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Cross" IconSize="20"
                                    BackgroundColor="White"
                                    BorderColor="Navy"
                                    CheckedBackgroundColor="White"
                                    CheckedBorderColor="Gray"
                                    CheckedColor="Purple" />
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Cross" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -112,28 +112,28 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Star" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
                                    CheckedBorderColor="Teal"
                                    CheckedColor="Teal" />
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Star" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
                                    CheckedBorderColor="Maroon"
                                    CheckedColor="Maroon" />
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Star" IconSize="20"
                                    BackgroundColor="White"
                                    BorderColor="Navy"
                                    CheckedBackgroundColor="White"
                                    CheckedBorderColor="Gray"
                                    CheckedColor="Purple" />
-                <global:CheckBox Checked="true"
+                <global:CheckLabel Checked="true"
                                    CheckType="Star" IconSize="20"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
@@ -141,8 +141,8 @@
                                    CheckedBorderColor="Olive"
                                    CheckedColor="Olive" />
             </StackLayout>
-            <!-- Simple CheckBox -->
-                <global:CheckBox Checked="true" Text="Check it!"
+            <!-- Simple CheckLabel -->
+                <global:CheckLabel Checked="true" Text="Check it!"
                    CheckType="Check" IconSize="20"
                    BackgroundColor="Transparent"
                    BorderColor="Gray"
@@ -150,7 +150,7 @@
                    CheckedBorderColor="Teal"
                    CheckedColor="Teal" />
             
-            <Label Text="Simple CheckBox" FontSize="Small" TextColor="Gray"
+            <Label Text="Simple CheckLabel" FontSize="Small" TextColor="Gray"
                    HorizontalTextAlignment="Center" HorizontalOptions="Center" />
             <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
             

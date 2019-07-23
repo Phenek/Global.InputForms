@@ -29,44 +29,45 @@ namespace SampleApp.Views
             _checkStore.CheckedChanged += _CheckStoreChanged;
         }
 
-        private void _RadioGenderChanged(object sender, KeyValuePair<string, string> e)
+        private void _RadioGenderChanged(object sender, KeyValuePair<string, object> e)
         {
-            if (sender is RadioGroup radioGroup) _viewModel.Form.Gender = e.Key != null ? e.Value : null;
+            if (sender is RadioGroup)
+                _viewModel.Form.Gender = e.Key != null && e.Value is string str ? str : null;
         }
 
         private void _CheckStoreChanged(object sender, bool e)
         {
-            if (!(sender is CheckBox checkBox)) return;
+            if (!(sender is CheckLabel CheckLabel)) return;
             
-            var storeName = checkBox.Text;
+            var storeName = CheckLabel.Text;
             var store = ((SimpleFormsViewModel) BindingContext).Form.GetType().GetProperty(storeName);
-            if (store != null) store.SetValue(((SimpleFormsViewModel) BindingContext).Form, checkBox.Checked, null);
+            if (store != null) store.SetValue(((SimpleFormsViewModel) BindingContext).Form, CheckLabel.Checked, null);
 
             switch (storeName)
             {
                 case "English":
-                    _rateEnglish.IsVisible = checkBox.Checked;
+                    _rateEnglish.IsVisible = CheckLabel.Checked;
                     break;
                 case "Spanish":
-                    _rateSpanish.IsVisible = checkBox.Checked;
+                    _rateSpanish.IsVisible = CheckLabel.Checked;
                     break;
                 case "Russian":
-                    _rateRussian.IsVisible = checkBox.Checked;
+                    _rateRussian.IsVisible = CheckLabel.Checked;
                     break;
             }
         }
 
-        private void _RateSaleChanged(object sender, KeyValuePair<string, string> e)
+        private void _RateSaleChanged(object sender, KeyValuePair<string, object> e)
         {
             if (sender is RateGroup rateGroup) _viewModel.Form.RateEnglish = Convert.ToInt32(e.Key);
         }
 
-        private void _RateStreetChanged(object sender, KeyValuePair<string, string> e)
+        private void _RateStreetChanged(object sender, KeyValuePair<string, object> e)
         {
             if (sender is RateGroup rateGroup) _viewModel.Form.RateSpanish = Convert.ToInt32(e.Key);
         }
 
-        private void _RateBeautyChanged(object sender, KeyValuePair<string, string> e)
+        private void _RateBeautyChanged(object sender, KeyValuePair<string, object> e)
         {
             if (sender is RateGroup rateGroup) _viewModel.Form.RateRussian = Convert.ToInt32(e.Key);
         }
