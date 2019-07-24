@@ -7,12 +7,6 @@ namespace Global.InputForms
     public class Switch : Grid
     {
         /// <summary>
-        ///     The grid color property.
-        /// </summary>
-        public static readonly BindableProperty GridColorProperty = BindableProperty.Create(nameof(GridColor),
-            typeof(Color), typeof(Switch), null);
-
-        /// <summary>
         ///     The switch height request property.
         /// </summary>
         public static readonly BindableProperty SwitchHightRequestProperty = BindableProperty.Create(nameof(SwitchHeightRequest),
@@ -40,7 +34,7 @@ namespace Global.InputForms
         ///     The background color property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor),
-            typeof(Color), typeof(Switch), null);
+            typeof(Color), typeof(Switch), Color.Yellow);
 
         /// <summary>
         ///     The background content property.
@@ -58,18 +52,14 @@ namespace Global.InputForms
         ///     The isToggled property.
         /// </summary>
         public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled),
-            typeof(bool), typeof(Switch), propertyChanged: IsToggledChanged);
+            typeof(bool), typeof(Switch), true, propertyChanged: IsToggledChanged);
 
-        public enum SwitchHorizontalState
+        public enum SwitchState
         {
-            Right,
             Left,
-        }
-
-        public enum SwitchVerticalState
-        {
-            Top,
-            Bot,
+            Right,
+            //Top,
+            //Bot,
         }
 
         Frame _principalFrame;
@@ -78,33 +68,21 @@ namespace Global.InputForms
         View _leftView;
         double x = 0;
         double _posActuel;
-        bool _isFirstTime;
         double _translation;
         bool isBusy;
         double TmpTotalX;
-        SwitchHorizontalState _state;
-        SwitchVerticalState _stateVertical;
+        SwitchState _state;
 
         public Frame IconSwitch { get => _iconSwitch; set => _leftView = value; }
         public View RightView { get => _rightView; set => _rightView = value; }
         public View LeftView { get => _leftView; set => _leftView = value; }
 
-        public SwitchHorizontalState State { get => _state; set => _state = value; }
-        public SwitchVerticalState StateVertical { get => _stateVertical; set => _stateVertical = value; }
+        public SwitchState State { get => _state; set => _state = value; }
 
         public Switch()
         {
-            _isFirstTime = true;
-            _posActuel = 0;
-            _translation = 0;
-            State = SwitchHorizontalState.Right;
-            StateVertical = SwitchVerticalState.Top;
-
-            this.BackgroundColor = Color.Yellow;
-            this.SetBinding(Grid.BackgroundColorProperty,
-                new Binding(nameof(GridColor)) { Source = this, Mode = BindingMode.OneWay });
-            this.SetBinding(Switch.IsToggledProperty,
-                new Binding(nameof(IsToggled)) { Source = this, Mode = BindingMode.OneWay });
+            State = SwitchState.Right;
+            base.BackgroundColor = Color.Transparent;
 
             _principalFrame = new Frame
             {
@@ -152,18 +130,6 @@ namespace Global.InputForms
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += OnTapLabel;
             this.GestureRecognizers.Add(tapGestureRecognizer);
-
-            IsToggled = true;
-        }
-
-        /// <summary>
-        ///     Gets or sets the Grid Color.
-        /// </summary>
-        /// <value>The Grid Color.</value>
-        public Color GridColor
-        {
-            get => (Color)GetValue(GridColorProperty);
-            set => SetValue(GridColorProperty, value);
         }
 
         /// <summary>
@@ -256,9 +222,6 @@ namespace Global.InputForms
         {
             if (bindable is Switch view)
             {
-                //viewTemplate._iconview.HeightRequest = 10;
-                //view.RightView.HeightRequest = (double)newValue;
-                //view.LeftView.HeightRequest = (double)newValue;
                 view._iconSwitch.HeightRequest = (double)newValue;
                 view._iconSwitch.CornerRadius = (float)view.SwitchHeightRequest / 2;
             }
@@ -346,11 +309,7 @@ namespace Global.InputForms
         {
             if (bindable is Switch view)
             {
-                if (view._isFirstTime)
-                {
-                    view._isFirstTime = false;
-                }
-                else if ((bool)newValue)
+                if ((bool)newValue)
                     view.GoToRight();
                 else
                     view.GoToLeft();
@@ -362,18 +321,16 @@ namespace Global.InputForms
             if (!isBusy)
             {
                 isBusy = true;
-                if (State == SwitchHorizontalState.Right)
+                if (State == SwitchState.Right)
                 {
                     IsToggled = false;
-                    State = SwitchHorizontalState.Left;
-                    StateVertical = SwitchVerticalState.Bot;
+                    State = SwitchState.Left;
                     //  GoToLeft();
                 }
                 else
                 {
                     IsToggled = true;
-                    State = SwitchHorizontalState.Right;
-                    StateVertical = SwitchVerticalState.Top;
+                    State = SwitchState.Right;
                     //  GoToRight();
                 }
             }
@@ -402,20 +359,18 @@ namespace Global.InputForms
                     case GestureStatus.Completed:
                         // Store the translation applied during the pan
                         TmpTotalX = 0;
-                        if (State == SwitchHorizontalState.Right)
+                        if (State == SwitchState.Right)
                         {
                             if (_posActuel < -this.BackgroundWidthRequest / 2 / 2)
                             {
                                 IsToggled = false;
-                                State = SwitchHorizontalState.Left;
-                                StateVertical = SwitchVerticalState.Bot;
+                                State = SwitchState.Left;
                                 // GoToLeft();
                             }
                             else
                             {
                                 IsToggled = true;
-                                State = SwitchHorizontalState.Right;
-                                StateVertical = SwitchVerticalState.Top;
+                                State = SwitchState.Right;
                                 GoToRight();
                             }
                         }
@@ -424,15 +379,13 @@ namespace Global.InputForms
                             if (_posActuel > this.BackgroundWidthRequest / 2 / 2)
                             {
                                 IsToggled = true;
-                                State = SwitchHorizontalState.Right;
-                                StateVertical = SwitchVerticalState.Top;
+                                State = SwitchState.Right;
                                 //   GoToRight();
                             }
                             else
                             {
                                 IsToggled = false;
-                                State = SwitchHorizontalState.Left;
-                                StateVertical = SwitchVerticalState.Bot;
+                                State = SwitchState.Left;
                                 GoToLeft();
                             }
                         }
@@ -448,8 +401,7 @@ namespace Global.InputForms
             _iconSwitch.Content = LeftView;
             _translation = x + this.WidthRequest / 2 + 3;
             _iconSwitch.TranslateTo(-_translation, 0, 100);
-            State = SwitchHorizontalState.Left;
-            StateVertical = SwitchVerticalState.Bot;
+            State = SwitchState.Left;
             this.Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
         }
 
@@ -457,8 +409,7 @@ namespace Global.InputForms
         {
             _iconSwitch.Content = RightView;
             _iconSwitch.TranslateTo(-x, 0, 100);
-            State = SwitchHorizontalState.Right;
-            StateVertical = SwitchVerticalState.Top;
+            State = SwitchState.Right;
             this.Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
         }
 
