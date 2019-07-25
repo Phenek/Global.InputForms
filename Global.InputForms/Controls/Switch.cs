@@ -19,6 +19,12 @@ namespace Global.InputForms
             typeof(double), typeof(Switch), 0d, propertyChanged: SwitchWidthRequestChanged);
 
         /// <summary>
+        ///     The switch background color property.
+        /// </summary>
+        public static readonly BindableProperty SwitchColorProperty = BindableProperty.Create(nameof(SwitchColor),
+            typeof(Color), typeof(Switch), Color.Pink);
+
+        /// <summary>
         ///     The background height request property.
         /// </summary>
         public static readonly BindableProperty BackgroundHeightRequestProperty = BindableProperty.Create(nameof(BackgroundHeightRequest),
@@ -54,6 +60,12 @@ namespace Global.InputForms
         public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled),
             typeof(bool), typeof(Switch), true, propertyChanged: IsToggledChanged);
 
+        /// <summary>
+        ///     The ProgressRate property.
+        /// </summary>
+        //public static readonly BindableProperty ProgressRateProperty = BindableProperty.Create(nameof(ProgressRate),
+        //    typeof(double), typeof(Switch), true, propertyChanged: ProgressRateChanged);
+
         public enum SwitchState
         {
             Left,
@@ -72,12 +84,13 @@ namespace Global.InputForms
         bool isBusy;
         double TmpTotalX;
         SwitchState _state;
+        double _progressRate;
 
         public Frame IconSwitch { get => _iconSwitch; set => _leftView = value; }
         public View RightView { get => _rightView; set => _rightView = value; }
         public View LeftView { get => _leftView; set => _leftView = value; }
-
         public SwitchState State { get => _state; set => _state = value; }
+        public double ProgressRate { get => _progressRate; set => _progressRate = value; }
 
         public Switch()
         {
@@ -115,12 +128,13 @@ namespace Global.InputForms
                 VerticalOptions = LayoutOptions.Center,
                 IsClippedToBounds = true,
                 Padding = 0,
-                BackgroundColor = Color.Gray,
             };
             _iconSwitch.SetBinding(HeightRequestProperty,
                 new Binding(nameof(SwitchHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
             _iconSwitch.SetBinding(Frame.ContentProperty,
-                new Binding(nameof(Content)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(Content)) { Source = this, Mode = BindingMode.TwoWay });
+            _iconSwitch.SetBinding(Frame.BackgroundColorProperty,
+                new Binding(nameof(SwitchColor)) { Source = this, Mode = BindingMode.OneWay });
             this.Children.Add(_iconSwitch, 1, 0);
 
             var panGesture = new PanGestureRecognizer();
@@ -150,6 +164,16 @@ namespace Global.InputForms
         {
             get => (double)GetValue(SwitchWidthRequestProperty);
             set => SetValue(SwitchWidthRequestProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the switch Color.
+        /// </summary>
+        /// <value>The Background Color.</value>
+        public Color SwitchColor
+        {
+            get => (Color)GetValue(SwitchColorProperty);
+            set => SetValue(SwitchColorProperty, value);
         }
 
         /// <summary>
@@ -211,6 +235,16 @@ namespace Global.InputForms
             get => (bool)GetValue(IsToggledProperty);
             set => SetValue(IsToggledProperty, value);
         }
+      
+        /// <summary>
+        ///     Gets ProgressRateProperty.
+        /// </summary>
+        /// <value>The Progress Rate.</value>
+        //public double ProgressRate
+        //{
+        //    get => (double)GetValue(ProgressRateProperty);
+        //    set => SetValue(ProgressRateProperty, value);
+        //}
 
         /// <summary>
         ///     The Switch Height Request property changed.
@@ -316,6 +350,20 @@ namespace Global.InputForms
             }
         }
 
+        /// <summary>
+        ///     The ProgressRate property changed.
+        /// </summary>
+        /// <param name="bindable">The object.</param>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        //private static void ProgressRateChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is Switch view)
+        //    {
+                
+        //    }
+        //}
+
         private async void OnTapLabel(object sender, EventArgs e)
         {
             if (!isBusy)
@@ -354,6 +402,11 @@ namespace Global.InputForms
                         _iconSwitch.TranslationX = Math.Min(0, Math.Max(-this.Width / 2 - 3, _iconSwitch.TranslationX + dragX));
                         _posActuel = e.TotalX;
                         TmpTotalX = e.TotalX;
+                        //ProgressRate = (Math.Min(Math.Max(_posActuel, -this.BackgroundWidthRequest / 4), this.BackgroundWidthRequest / 4) + this.BackgroundWidthRequest / 4) / this.BackgroundWidthRequest / 2;
+                        ProgressRate = -_iconSwitch.TranslationX / (this.Width / 2 + 3);
+                        // ProgressRate = (_posActuel + this.BackgroundWidthRequest / 2 / 2) / 2 * this.BackgroundWidthRequest / 2 / 2;
+                        this.CurrentPanGesture?.Invoke(this, e);
+                        // HERE !!!!!!!!!                    //  RightView.Opacity = (_posActuel + this.BackgroundWidthRequest / 2 / 2) / 2 * this.BackgroundWidthRequest / 2 / 2;
                         break;
 
                     case GestureStatus.Completed:
@@ -365,6 +418,7 @@ namespace Global.InputForms
                             {
                                 IsToggled = false;
                                 State = SwitchState.Left;
+                               
                                 // GoToLeft();
                             }
                             else
@@ -390,6 +444,7 @@ namespace Global.InputForms
                             }
                         }
                         _posActuel = 0;
+                        this.CompletedPanGesture?.Invoke(this, e);
                         break;
                 }
             }
@@ -407,6 +462,8 @@ namespace Global.InputForms
 
         private void GoToRight()
         {
+            var test = _iconSwitch.Content.Opacity;
+            var test2 = RightView.Opacity;
             _iconSwitch.Content = RightView;
             _iconSwitch.TranslateTo(-x, 0, 100);
             State = SwitchState.Right;
@@ -414,5 +471,10 @@ namespace Global.InputForms
         }
 
         public event EventHandler<ToggledEventArgs> Toggled;
+
+        public event EventHandler<PanUpdatedEventArgs> CurrentPanGesture;
+
+        public event EventHandler<PanUpdatedEventArgs> CompletedPanGesture;
+
     }
 }

@@ -11,23 +11,27 @@
 
             <global:Switch x:Name="switchTest" 
                            HorizontalOptions="Center" VerticalOptions="Center"
-                           GridColor="Red"
                            BackgroundHeightRequest="75"
                            BackgroundWidthRequest="150"
                            SwitchHeightRequest="110"
                            SwitchWidthRequest="150"
-                           Toggled="ToggledEvent" BackgroundColor="Beige" />
+                           Toggled="ToggledEvent" BackgroundColor="Beige" 
+                           
+                           />
 
+            <Image Source="SwitchCalendarBlue" />
 
             <global:Switch x:Name="switchTest2" 
                            HorizontalOptions="Center" VerticalOptions="Center"
-                           BackgroundHeightRequest="75"
-                           BackgroundWidthRequest="150"
-                           SwitchHeightRequest="110"
-                           SwitchWidthRequest="150"
+                           BackgroundHeightRequest="40"
+                           BackgroundWidthRequest="100"
+                           SwitchHeightRequest="40"
+                           SwitchWidthRequest="50"
                            Toggled="ToggledEvent2" 
-                    />
+                           />
 
+           
+            
             <global:Switch x:Name="switchTest3" 
                            HorizontalOptions="Center" VerticalOptions="Center"
                            BackgroundHeightRequest="120"
