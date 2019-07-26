@@ -92,8 +92,8 @@ namespace SampleApp.Views
             switchTest.CurrentPanGesture += ProgressRateEvent;
             switchTest.CompletedPanGesture += ReleaseSwitch;
 
-            Image _rightImage = new Image() { Source = "SwitchCalendarBlue", Margin = 5 };
-            Image _leftImage = new Image() { Source = "SwitchListMissionsBlue", Margin = 5 };
+            Image _rightImage = new Image() { Source = "BoxChecked", Margin = 5 };
+            Image _leftImage = new Image() { Source = "RadioButtonChecked", Margin = 5 };
             switchTest2.RightView = _rightImage;
             switchTest2.LeftView = _leftImage;
             switchTest2.SwitchColor = Color.FromHex("#FFFFFF");
@@ -118,15 +118,15 @@ namespace SampleApp.Views
             //_ToggleChangedCatched++;
         }
 
-        private void ToggledEvent2(object sender, ToggledEventArgs e)
+        private void ToggledEvent3(object sender, ToggledEventArgs e)
         {
-            //switchTest2.BackgroundContent = new Label()
-            //{
-            //    Text = _ToggleChangedCatched + " Toggle changed : " + _ToggleChangedCatched,
-            //    VerticalOptions = LayoutOptions.Center,
-            //    HorizontalOptions = LayoutOptions.Center,
-            //    FontSize = 10
-            //};
+            switchTest3.BackgroundContent = new Label()
+            {
+                Text = _ToggleChangedCatched + " Toggle changed : " + _ToggleChangedCatched,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                FontSize = 10
+            };
             _ToggleChangedCatched++;
         }
 

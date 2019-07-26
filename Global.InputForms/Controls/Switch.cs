@@ -60,12 +60,6 @@ namespace Global.InputForms
         public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled),
             typeof(bool), typeof(Switch), true, propertyChanged: IsToggledChanged);
 
-        /// <summary>
-        ///     The ProgressRate property.
-        /// </summary>
-        //public static readonly BindableProperty ProgressRateProperty = BindableProperty.Create(nameof(ProgressRate),
-        //    typeof(double), typeof(Switch), true, propertyChanged: ProgressRateChanged);
-
         public enum SwitchState
         {
             Left,
@@ -235,16 +229,6 @@ namespace Global.InputForms
             get => (bool)GetValue(IsToggledProperty);
             set => SetValue(IsToggledProperty, value);
         }
-      
-        /// <summary>
-        ///     Gets ProgressRateProperty.
-        /// </summary>
-        /// <value>The Progress Rate.</value>
-        //public double ProgressRate
-        //{
-        //    get => (double)GetValue(ProgressRateProperty);
-        //    set => SetValue(ProgressRateProperty, value);
-        //}
 
         /// <summary>
         ///     The Switch Height Request property changed.
@@ -329,7 +313,7 @@ namespace Global.InputForms
                 view.LeftView.WidthRequest = view.SwitchWidthRequest;
                 view.RightView.HeightRequest = view._iconSwitch.HeightRequest;
                 view.LeftView.HeightRequest = view._iconSwitch.HeightRequest;
-                view.Toggled?.Invoke(view, new ToggledEventArgs(view.IsToggled));
+              //  view.Toggled?.Invoke(view, new ToggledEventArgs(view.IsToggled));
             }
         }
 
@@ -349,20 +333,6 @@ namespace Global.InputForms
                     view.GoToLeft();
             }
         }
-
-        /// <summary>
-        ///     The ProgressRate property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        //private static void ProgressRateChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is Switch view)
-        //    {
-                
-        //    }
-        //}
 
         private async void OnTapLabel(object sender, EventArgs e)
         {
@@ -402,12 +372,9 @@ namespace Global.InputForms
                         _iconSwitch.TranslationX = Math.Min(0, Math.Max(-this.Width / 2 - 3, _iconSwitch.TranslationX + dragX));
                         _posActuel = e.TotalX;
                         TmpTotalX = e.TotalX;
-                        //ProgressRate = (Math.Min(Math.Max(_posActuel, -this.BackgroundWidthRequest / 4), this.BackgroundWidthRequest / 4) + this.BackgroundWidthRequest / 4) / this.BackgroundWidthRequest / 2;
                         ProgressRate = -_iconSwitch.TranslationX / (this.Width / 2 + 3);
-                        // ProgressRate = (_posActuel + this.BackgroundWidthRequest / 2 / 2) / 2 * this.BackgroundWidthRequest / 2 / 2;
                         this.CurrentPanGesture?.Invoke(this, e);
-                        // HERE !!!!!!!!!                    //  RightView.Opacity = (_posActuel + this.BackgroundWidthRequest / 2 / 2) / 2 * this.BackgroundWidthRequest / 2 / 2;
-                        break;
+                         break;
 
                     case GestureStatus.Completed:
                         // Store the translation applied during the pan
@@ -418,8 +385,6 @@ namespace Global.InputForms
                             {
                                 IsToggled = false;
                                 State = SwitchState.Left;
-                               
-                                // GoToLeft();
                             }
                             else
                             {
@@ -434,7 +399,6 @@ namespace Global.InputForms
                             {
                                 IsToggled = true;
                                 State = SwitchState.Right;
-                                //   GoToRight();
                             }
                             else
                             {

@@ -27,7 +27,6 @@
                            BackgroundWidthRequest="100"
                            SwitchHeightRequest="40"
                            SwitchWidthRequest="50"
-                           Toggled="ToggledEvent2" 
                            />
 
            
@@ -38,7 +37,7 @@
                            BackgroundWidthRequest="200"
                            SwitchHeightRequest="75"
                            SwitchWidthRequest="75"
-                           Toggled="ToggledEvent" 
+                           Toggled="ToggledEvent3" 
                     />
 
             <global:Switch x:Name="switchTest4" 
