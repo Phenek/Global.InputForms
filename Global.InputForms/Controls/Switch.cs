@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Xamarin.Forms;
 
 namespace Global.InputForms
@@ -9,32 +8,44 @@ namespace Global.InputForms
         /// <summary>
         ///     The switch height request property.
         /// </summary>
-        public static readonly BindableProperty SwitchHightRequestProperty = BindableProperty.Create(nameof(SwitchHeightRequest),
-            typeof(double), typeof(Switch), 0d, propertyChanged: SwitchHeightRequestChanged);
+        public static readonly BindableProperty SwitchHeightRequestProperty = BindableProperty.Create(nameof(SwitchHeightRequest),
+            typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
         ///     The switch width request property.
         /// </summary>
         public static readonly BindableProperty SwitchWidthRequestProperty = BindableProperty.Create(nameof(SwitchWidthRequest),
-            typeof(double), typeof(Switch), 0d, propertyChanged: SwitchWidthRequestChanged);
+            typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
         ///     The switch background color property.
         /// </summary>
         public static readonly BindableProperty SwitchColorProperty = BindableProperty.Create(nameof(SwitchColor),
-            typeof(Color), typeof(Switch), Color.Pink);
+            typeof(Color), typeof(Switch), Color.Navy);
+
+        /// <summary>
+        ///     The corner radius property.
+        /// </summary>
+        public static readonly BindableProperty SwitchCornerRadiusProperty = BindableProperty.Create(nameof(SwitchCornerRadius),
+            typeof(float), typeof(Switch), 0f);
+
+        /// <summary>
+        ///     The icon switch content property.
+        /// </summary>
+        public static readonly BindableProperty SwitchContentProperty = BindableProperty.Create(nameof(SwitchContent),
+            typeof(View), typeof(Switch));
 
         /// <summary>
         ///     The background height request property.
         /// </summary>
-        public static readonly BindableProperty BackgroundHeightRequestProperty = BindableProperty.Create(nameof(BackgroundHeightRequest),
-            typeof(double), typeof(Switch), 0d, propertyChanged: BackgroundHeightRequestChanged);
+        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest),
+            typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
         ///     The background width request property.
         /// </summary>
-        public static readonly BindableProperty BackgroundWidthRequestProperty = BindableProperty.Create(nameof(BackgroundWidthRequest),
-            typeof(double), typeof(Switch), 0d, propertyChanged: BackgroundWidthRequestChanged);
+        public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest),
+            typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
         ///     The background color property.
@@ -43,102 +54,92 @@ namespace Global.InputForms
             typeof(Color), typeof(Switch), Color.Yellow);
 
         /// <summary>
+        ///     The corner radius property.
+        /// </summary>
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
+            typeof(float), typeof(Switch), 0f);
+
+        /// <summary>
         ///     The background content property.
         /// </summary>
         public static readonly BindableProperty BackgroundContentProperty = BindableProperty.Create(nameof(BackgroundContent),
-            typeof(View), typeof(Switch), null);
-
-        /// <summary>
-        ///     The icon switch content property.
-        /// </summary>
-        public static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content),
-            typeof(View), typeof(Switch), propertyChanged: ToggleChanged);
+            typeof(View), typeof(Switch));
 
         /// <summary>
         ///     The isToggled property.
         /// </summary>
         public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled),
-            typeof(bool), typeof(Switch), true, propertyChanged: IsToggledChanged);
+            typeof(bool), typeof(Switch), false, propertyChanged: IsToggledChanged);
 
-        public enum SwitchState
-        {
-            Left,
-            Right,
-            //Top,
-            //Bot,
-        }
+        /// <summary>
+        ///     The isToggled property.
+        /// </summary>
+        public static readonly BindableProperty SwitchLimitProperty = BindableProperty.Create(nameof(SwitchLimit),
+            typeof(SwitchLimit), typeof(Switch), SwitchLimit.Boundary, propertyChanged: SizeRequestChanged);
 
-        Frame _principalFrame;
-        Frame _iconSwitch;
-        View _rightView;
-        View _leftView;
-        double x = 0;
-        double _posActuel;
-        double _translation;
-        bool isBusy;
-        double TmpTotalX;
-        SwitchState _state;
-        double _progressRate;
-
-        public Frame IconSwitch { get => _iconSwitch; set => _leftView = value; }
-        public View RightView { get => _rightView; set => _rightView = value; }
-        public View LeftView { get => _leftView; set => _leftView = value; }
-        public SwitchState State { get => _state; set => _state = value; }
-        public double ProgressRate { get => _progressRate; set => _progressRate = value; }
+        private readonly Frame _backgroundFrame;
+        private readonly Frame _switchFrame;
+        private double _xRef;
+        private double TmpTotalX;
 
         public Switch()
         {
-            State = SwitchState.Right;
+            State = SwitchState.Left;
             base.BackgroundColor = Color.Transparent;
 
-            _principalFrame = new Frame
+            _backgroundFrame = new Frame
             {
                 IsClippedToBounds = true,
                 Padding = 0,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
             };
-            this.Children.Add(_principalFrame, 0, 0);
-            Grid.SetColumnSpan(_principalFrame, 2);
+            Children.Add(_backgroundFrame, 0, 0);
 
-            _principalFrame.SetBinding(Frame.HeightRequestProperty,
-                new Binding(nameof(BackgroundHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
-            _principalFrame.SetBinding(Frame.WidthRequestProperty,
-                new Binding(nameof(BackgroundWidthRequest)) { Source = this, Mode = BindingMode.OneWay });
-            _principalFrame.SetBinding(Frame.BackgroundColorProperty,
-               new Binding(nameof(BackgroundColor)) { Source = this, Mode = BindingMode.OneWay });
-            _principalFrame.SetBinding(Frame.ContentProperty,
-               new Binding(nameof(BackgroundContent)) { Source = this, Mode = BindingMode.OneWay });
+            _backgroundFrame.SetBinding(Frame.CornerRadiusProperty,
+                new Binding(nameof(CornerRadius)) { Source = this, Mode = BindingMode.OneWay });
+            _backgroundFrame.SetBinding(VisualElement.HeightRequestProperty,
+                new Binding(nameof(HeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+            _backgroundFrame.SetBinding(VisualElement.WidthRequestProperty,
+                new Binding(nameof(WidthRequest)) { Source = this, Mode = BindingMode.OneWay });
+            _backgroundFrame.SetBinding(VisualElement.BackgroundColorProperty,
+                new Binding(nameof(BackgroundColor)) { Source = this, Mode = BindingMode.OneWay });
+            _backgroundFrame.SetBinding(ContentView.ContentProperty,
+                new Binding(nameof(BackgroundContent)) { Source = this, Mode = BindingMode.OneWay });
 
-            this.ColumnDefinitions = new ColumnDefinitionCollection
-            {
-              new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-              new ColumnDefinition { Width =  new GridLength (1, GridUnitType.Star)},
-           };
-
-            _iconSwitch = new Frame
+            _switchFrame = new Frame
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 IsClippedToBounds = true,
-                Padding = 0,
+                Padding = 0
             };
-            _iconSwitch.SetBinding(HeightRequestProperty,
+            _switchFrame.SetBinding(Frame.CornerRadiusProperty,
+                new Binding(nameof(SwitchCornerRadius)) { Source = this, Mode = BindingMode.OneWay });
+            _switchFrame.SetBinding(VisualElement.HeightRequestProperty,
                 new Binding(nameof(SwitchHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
-            _iconSwitch.SetBinding(Frame.ContentProperty,
-                new Binding(nameof(Content)) { Source = this, Mode = BindingMode.TwoWay });
-            _iconSwitch.SetBinding(Frame.BackgroundColorProperty,
+            _switchFrame.SetBinding(VisualElement.WidthRequestProperty,
+                new Binding(nameof(SwitchWidthRequest)) { Source = this, Mode = BindingMode.OneWay });
+            _switchFrame.SetBinding(ContentView.ContentProperty,
+                new Binding(nameof(SwitchContent)) { Source = this, Mode = BindingMode.TwoWay });
+            _switchFrame.SetBinding(VisualElement.BackgroundColorProperty,
                 new Binding(nameof(SwitchColor)) { Source = this, Mode = BindingMode.OneWay });
-            this.Children.Add(_iconSwitch, 1, 0);
+
+            Children.Add(_switchFrame, 0, 0);
 
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
-            this.GestureRecognizers.Add(panGesture);
+            GestureRecognizers.Add(panGesture);
 
             var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += OnTapLabel;
-            this.GestureRecognizers.Add(tapGestureRecognizer);
+            tapGestureRecognizer.Tapped += OnTap;
+            GestureRecognizers.Add(tapGestureRecognizer);
         }
+
+        public View RightView { get; set; }
+        public View LeftView { get; set; }
+        public SwitchState State { get; set; }
+        public double ProgressRate { get; set; }
 
         /// <summary>
         ///     Gets or sets the Switch Height Request.
@@ -146,8 +147,8 @@ namespace Global.InputForms
         /// <value>The Switch Height Request.</value>
         public double SwitchHeightRequest
         {
-            get => (double)GetValue(SwitchHightRequestProperty);
-            set => SetValue(SwitchHightRequestProperty, value);
+            get => (double)GetValue(SwitchHeightRequestProperty);
+            set => SetValue(SwitchHeightRequestProperty, value);
         }
 
         /// <summary>
@@ -171,23 +172,43 @@ namespace Global.InputForms
         }
 
         /// <summary>
+        ///     Gets or sets the Corner Radius.
+        /// </summary>
+        /// <value>The Corner Radius.</value>
+        public float SwitchCornerRadius
+        {
+            get => (float)GetValue(SwitchCornerRadiusProperty);
+            set => SetValue(SwitchCornerRadiusProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the Switch Content.
+        /// </summary>
+        /// <value>The Switch Content.</value>
+        public View SwitchContent
+        {
+            get => (View)GetValue(SwitchContentProperty);
+            set => SetValue(SwitchContentProperty, value);
+        }
+
+        /// <summary>
         ///     Gets or sets the Background Height Request.
         /// </summary>
         /// <value>The Background Height Request.</value>
-        public double BackgroundHeightRequest
+        public new double HeightRequest
         {
-            get => (double)GetValue(BackgroundHeightRequestProperty);
-            set => SetValue(BackgroundHeightRequestProperty, value);
+            get => (double)GetValue(HeightRequestProperty);
+            set => SetValue(HeightRequestProperty, value);
         }
 
         /// <summary>
         ///     Gets or sets the Background Width Request.
         /// </summary>
         /// <value>The Background width Request.</value>
-        public double BackgroundWidthRequest
+        public new double WidthRequest
         {
-            get => (double)GetValue(BackgroundWidthRequestProperty);
-            set => SetValue(BackgroundWidthRequestProperty, value);
+            get => (double)GetValue(WidthRequestProperty);
+            set => SetValue(WidthRequestProperty, value);
         }
 
         /// <summary>
@@ -201,6 +222,16 @@ namespace Global.InputForms
         }
 
         /// <summary>
+        ///     Gets or sets the Corner Radius.
+        /// </summary>
+        /// <value>The Corner Radius.</value>
+        public float CornerRadius
+        {
+            get => (float)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
+        }
+
+        /// <summary>
         ///     Gets or sets the Background Content.
         /// </summary>
         /// <value>The Background Content.</value>
@@ -208,16 +239,6 @@ namespace Global.InputForms
         {
             get => (View)GetValue(BackgroundContentProperty);
             set => SetValue(BackgroundContentProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the Switch Content.
-        /// </summary>
-        /// <value>The Switch Content.</value>
-        public View Content
-        {
-            get => (View)GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
         }
 
         /// <summary>
@@ -231,90 +252,77 @@ namespace Global.InputForms
         }
 
         /// <summary>
+        ///     Gets or sets the Switch's Limit.
+        /// </summary>
+        /// <value>The Toggled Position.</value>
+        public SwitchLimit SwitchLimit
+        {
+            get => (SwitchLimit)GetValue(SwitchLimitProperty);
+            set => SetValue(SwitchLimitProperty, value);
+        }
+
+        public event EventHandler<ToggledEventArgs> Toggled;
+        public event EventHandler<SwitchPanUpdatedEventArgs> SwitchPanUpdate;
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            if (width <= 0 && height <= 0) return;
+
+            SizeRequestChanged(this, 0, 0);
+        }
+
+        /// <summary>
         ///     The Switch Height Request property changed.
         /// </summary>
         /// <param name="bindable">The object.</param>
         /// <param name="oldValue">The old value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void SwitchHeightRequestChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void SizeRequestChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is Switch view)
             {
-                view._iconSwitch.HeightRequest = (double)newValue;
-                view._iconSwitch.CornerRadius = (float)view.SwitchHeightRequest / 2;
-            }
-        }
+                //Switch
+                view._switchFrame.WidthRequest = view.SwitchWidthRequest < 0.0 ? view.Width / 2 : view.SwitchWidthRequest;
+                view._switchFrame.HeightRequest = view.SwitchHeightRequest < 0.0 ? view.Height : view.SwitchHeightRequest;
 
-        /// <summary>
-        ///     The Switch Width Request property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void SwitchWidthRequestChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is Switch view)
-            {
-                view.SwitchWidthRequest = (double)newValue;
-                //view.RightView.WidthRequest = (double)newValue;
-                //view.LeftView.WidthRequest = (double)newValue;
+                //Background
+                view._backgroundFrame.WidthRequest = view.WidthRequest < 0.0 ? view.Width : view.WidthRequest;
+                view._backgroundFrame.HeightRequest = view.HeightRequest < 0.0 ? view.Height : view.HeightRequest;
 
-                if (2 * view.SwitchWidthRequest > view.BackgroundWidthRequest)
-                    view.WidthRequest = 2 * view.SwitchWidthRequest;
+                //View
+                view.SetBaseWidthRequest(Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2));
+
+                switch (view.SwitchLimit)
+                {
+                    case SwitchLimit.Boundary:
+                        view._xRef = (view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2;
+                        break;
+                    case SwitchLimit.Centered:
+                        view._xRef = (view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2
+                                     - (view._backgroundFrame.WidthRequest / 2 - view._switchFrame.WidthRequest) / 2;
+                        break;
+                    case SwitchLimit.Max:
+                        view._xRef = Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2) / 4;
+                        break;
+                }
+
+                //Console.WriteLine($"Outside: {Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2) / 4}");
+                //Console.WriteLine($"Inside: {(((view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2) - (((view._backgroundFrame.WidthRequest / 2) - view._switchFrame.WidthRequest) / 2))}");
+                //Console.WriteLine($"Boundary: {(view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2}");
+                //Console.WriteLine("-----------------------------");
+
+                if (view.State == SwitchState.Left)
+                    view._switchFrame.TranslationX = -view._xRef;
                 else
-                    view.WidthRequest = view.BackgroundWidthRequest;
+                    view._switchFrame.TranslationX = view._xRef;
             }
         }
 
-        /// <summary>
-        ///     The Background Height Request property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void BackgroundHeightRequestChanged(BindableObject bindable, object oldValue, object newValue)
+        private void SetBaseWidthRequest(double widthRequest)
         {
-            if (bindable is Switch view)
-            {
-                view.BackgroundHeightRequest = (double)newValue;
-                view._principalFrame.CornerRadius = (float)(view.BackgroundHeightRequest / 2);
-            }
-        }
-
-        /// <summary>
-        ///     The Background Width Request property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void BackgroundWidthRequestChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is Switch view)
-            {
-                view.BackgroundWidthRequest = (double)newValue;
-                if (2 * view.SwitchWidthRequest > view.BackgroundWidthRequest)
-                    view.WidthRequest = 2 * view.SwitchWidthRequest;
-                else
-                    view.WidthRequest = view.BackgroundWidthRequest;
-            }
-        }
-
-        /// <summary>
-        ///     The Content property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void ToggleChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is Switch view)
-            {
-                view.RightView.WidthRequest = view.SwitchWidthRequest;
-                view.LeftView.WidthRequest = view.SwitchWidthRequest;
-                view.RightView.HeightRequest = view._iconSwitch.HeightRequest;
-                view.LeftView.HeightRequest = view._iconSwitch.HeightRequest;
-              //  view.Toggled?.Invoke(view, new ToggledEventArgs(view.IsToggled));
-            }
+            base.WidthRequest = widthRequest;
         }
 
         /// <summary>
@@ -327,118 +335,166 @@ namespace Global.InputForms
         {
             if (bindable is Switch view)
             {
-                if ((bool)newValue)
+                if ((bool)newValue && view.State != SwitchState.Right)
                     view.GoToRight();
-                else
+                else if (!(bool)newValue && view.State != SwitchState.Left)
                     view.GoToLeft();
+
+                view.Toggled?.Invoke(view, new ToggledEventArgs((bool)newValue));
             }
         }
 
-        private async void OnTapLabel(object sender, EventArgs e)
+        private void OnTap(object sender, EventArgs e)
         {
-            if (!isBusy)
+            SendSwitchPanUpdatedEventArgs(PanStatus.Started);
+            if (State == SwitchState.Right)
+                GoToLeft();
+            else
+                GoToRight();
+        }
+
+        private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            this.AbortAnimation("SwitchAnimation");
+            var dragX = e.TotalX - TmpTotalX;
+
+            switch (e.StatusType)
             {
-                isBusy = true;
-                if (State == SwitchState.Right)
+                case GestureStatus.Started:
+                    SendSwitchPanUpdatedEventArgs(PanStatus.Started);
+                    break;
+                case GestureStatus.Running:
+                    _switchFrame.TranslationX = Math.Min(_xRef, Math.Max(-_xRef, _switchFrame.TranslationX + dragX));
+                    TmpTotalX = e.TotalX;
+                    SendSwitchPanUpdatedEventArgs(PanStatus.Running);
+                    break;
+                case GestureStatus.Completed:
+                    var percentage = IsToggled
+                        ? Math.Abs(_switchFrame.TranslationX - _xRef) / (2 * _xRef) * 100
+                        : Math.Abs(_switchFrame.TranslationX + _xRef) / (2 * _xRef) * 100;
+
+                    if (_switchFrame.TranslationX > 0)
+                        GoToRight(percentage);
+                    else
+                        GoToLeft(percentage);
+                    TmpTotalX = 0;
+                    break;
+                case GestureStatus.Canceled:
+                    SendSwitchPanUpdatedEventArgs(PanStatus.Canceled);
+                    break;
+            }
+        }
+
+        private void SendSwitchPanUpdatedEventArgs(PanStatus status)
+        {
+            var ev = new SwitchPanUpdatedEventArgs
+            {
+                xRef = _xRef,
+                IsToggled = IsToggled,
+                TranslateX = _switchFrame.TranslationX,
+                Status = status,
+                Percentage = IsToggled
+                    ? Math.Abs(_switchFrame.TranslationX - _xRef) / (2 * _xRef) * 100
+                    : Math.Abs(_switchFrame.TranslationX + _xRef) / (2 * _xRef) * 100
+            };
+
+            //Console.WriteLine($"IsToggled: {ev.IsToggled}");
+            //Console.WriteLine($"TranslateX: {ev.TranslateX}");
+            //Console.WriteLine($"Percentage: {ev.Percentage}");
+            //Console.WriteLine($"Status: {ev.Status}");
+            //Console.WriteLine("-----------------------------");
+            if (!double.IsNaN(ev.Percentage))
+                SwitchPanUpdate?.Invoke(this, ev);
+        }
+
+        private void GoToLeft(double pourcentage = 0.0)
+        {
+            if (Math.Abs(_switchFrame.TranslationX + _xRef) > 0.0)
+            {
+                var dur = 100;
+                var duration = Convert.ToUInt32(dur - dur * pourcentage / 100);
+                this.AbortAnimation("SwitchAnimation");
+                new Animation
                 {
-                    IsToggled = false;
+                    {0, 1, new Animation(v => _switchFrame.TranslationX = v, _switchFrame.TranslationX, -_xRef)},
+                    {0, 1, new Animation(v => SendSwitchPanUpdatedEventArgs(PanStatus.Running))}
+                }.Commit(this, "SwitchAnimation", 16, duration, null, (d, b) =>
+                {
+                    this.AbortAnimation("SwitchAnimation");
                     State = SwitchState.Left;
-                    //  GoToLeft();
-                }
-                else
-                {
-                    IsToggled = true;
-                    State = SwitchState.Right;
-                    //  GoToRight();
-                }
+                    IsToggled = false;
+                    SendSwitchPanUpdatedEventArgs(PanStatus.Completed);
+                });
             }
-            isBusy = false;
-        }
-
-        void OnPanUpdated(object sender, PanUpdatedEventArgs e)
-        {
-            if (!isBusy)
+            else
             {
-                isBusy = true;
-
-                var dragX = e.TotalX - TmpTotalX;
-
-                switch (e.StatusType)
-                {
-                    case GestureStatus.Running:
-
-                        double _previewDifference = _iconSwitch.TranslationX + e.TotalX;
-
-                        _iconSwitch.TranslationX = Math.Min(0, Math.Max(-this.Width / 2 - 3, _iconSwitch.TranslationX + dragX));
-                        _posActuel = e.TotalX;
-                        TmpTotalX = e.TotalX;
-                        ProgressRate = -_iconSwitch.TranslationX / (this.Width / 2 + 3);
-                        this.CurrentPanGesture?.Invoke(this, e);
-                         break;
-
-                    case GestureStatus.Completed:
-                        // Store the translation applied during the pan
-                        TmpTotalX = 0;
-                        if (State == SwitchState.Right)
-                        {
-                            if (_posActuel < -this.BackgroundWidthRequest / 2 / 2)
-                            {
-                                IsToggled = false;
-                                State = SwitchState.Left;
-                            }
-                            else
-                            {
-                                IsToggled = true;
-                                State = SwitchState.Right;
-                                GoToRight();
-                            }
-                        }
-                        else
-                        {
-                            if (_posActuel > this.BackgroundWidthRequest / 2 / 2)
-                            {
-                                IsToggled = true;
-                                State = SwitchState.Right;
-                            }
-                            else
-                            {
-                                IsToggled = false;
-                                State = SwitchState.Left;
-                                GoToLeft();
-                            }
-                        }
-                        _posActuel = 0;
-                        this.CompletedPanGesture?.Invoke(this, e);
-                        break;
-                }
+                this.AbortAnimation("SwitchAnimation");
+                State = SwitchState.Left;
+                IsToggled = false;
+                SendSwitchPanUpdatedEventArgs(PanStatus.Completed);
             }
-            isBusy = false;
         }
 
-        private void GoToLeft()
+        private void GoToRight(double pourcentage = 0.0)
         {
-            _iconSwitch.Content = LeftView;
-            _translation = x + this.WidthRequest / 2 + 3;
-            _iconSwitch.TranslateTo(-_translation, 0, 100);
-            State = SwitchState.Left;
-            this.Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
+            if (Math.Abs(_switchFrame.TranslationX - _xRef) > 0.0)
+            {
+                var dur = 100;
+                var duration = Convert.ToUInt32(dur - dur * pourcentage / 100);
+                this.AbortAnimation("SwitchAnimation");
+                new Animation
+                {
+                    {0, 1, new Animation(v => _switchFrame.TranslationX = v, _switchFrame.TranslationX, _xRef)},
+                    {0, 1, new Animation(v => SendSwitchPanUpdatedEventArgs(PanStatus.Running))}
+                }.Commit(this, "SwitchAnimation", 16, duration, null, (d, b) =>
+                {
+                    this.AbortAnimation("SwitchAnimation");
+                    State = SwitchState.Right;
+                    IsToggled = true;
+                    SendSwitchPanUpdatedEventArgs(PanStatus.Completed);
+                });
+            }
+            else
+            {
+                this.AbortAnimation("SwitchAnimation");
+                State = SwitchState.Right;
+                IsToggled = true;
+                SendSwitchPanUpdatedEventArgs(PanStatus.Completed);
+            }
         }
+    }
 
-        private void GoToRight()
-        {
-            var test = _iconSwitch.Content.Opacity;
-            var test2 = RightView.Opacity;
-            _iconSwitch.Content = RightView;
-            _iconSwitch.TranslateTo(-x, 0, 100);
-            State = SwitchState.Right;
-            this.Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
-        }
+    public enum SwitchState
+    {
+        None,
+        Left,
 
-        public event EventHandler<ToggledEventArgs> Toggled;
+        Right
+        //Top,
+        //Bot,
+    }
 
-        public event EventHandler<PanUpdatedEventArgs> CurrentPanGesture;
+    public enum PanStatus
+    {
+        Started,
+        Running,
+        Completed,
+        Canceled
+    }
 
-        public event EventHandler<PanUpdatedEventArgs> CompletedPanGesture;
+    public enum SwitchLimit
+    {
+        Boundary,
+        Centered,
+        Max
+    }
 
+    public class SwitchPanUpdatedEventArgs : EventArgs
+    {
+        public double xRef { get; set; }
+        public bool IsToggled { get; set; }
+        public double TranslateX { get; set; }
+        public double Percentage { get; set; }
+        public PanStatus Status { get; set; }
     }
 }
