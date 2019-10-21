@@ -34,17 +34,17 @@
             </ControlTemplate>
             <ControlTemplate x:Key="ButtonRadio">
                 <global:CheckButton Text="Hop!"
-                       WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                       BackgroundColor="White"
-                       BorderColor="White"
-                       TextColor="Navy"
-                       CheckedBackgroundColor="Navy"
-                       CheckedBorderColor="White"
-                       CheckedTextColor="White" />
+                                    WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
+                                    BackgroundColor="White"
+                                    BorderColor="White"
+                                    TextColor="Navy"
+                                    CheckedBackgroundColor="Navy"
+                                    CheckedBorderColor="White"
+                                    CheckedTextColor="White" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRateImage">
                 <global:CheckBox CheckType="Image" ImageChecked="StarChecked" ImageUnchecked="StarUnchecked"
-                                   IconSize="20" Padding="5,0,5,0" />
+                                 IconSize="20" Padding="5,0,5,0" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRadioImage">
                 <global:CheckLabel CheckType="Image" ImageChecked="RadioButtonChecked"
@@ -55,15 +55,15 @@
             </ControlTemplate>
             <ControlTemplate x:Key="IconCustomRate">
                 <global:CheckBox CheckType="Custom" CheckedLabel="★" UncheckedLabel="☆"
-                                   CheckLabelFontSize="30"
-                                   IconSize="30"
-                                   Color="LightGray"
-                                   BorderColor="Transparent"
-                                   BackgroundColor="Transparent"
-                                   CheckedColor="#FFD700"
-                                   CheckedBorderColor="Transparent"
-                                   CheckedBackgroundColor="Transparent"
-                                   CheckLabelFontAttributes="None">
+                                 CheckLabelFontSize="30"
+                                 IconSize="30"
+                                 Color="LightGray"
+                                 BorderColor="Transparent"
+                                 BackgroundColor="Transparent"
+                                 CheckedColor="#FFD700"
+                                 CheckedBorderColor="Transparent"
+                                 CheckedBackgroundColor="Transparent"
+                                 CheckLabelFontAttributes="None">
                     <global:CheckLabel.CheckLabelMargin>
                         <OnPlatform x:TypeArguments="Thickness">
                             <On Platform="iOS" Value="0" />

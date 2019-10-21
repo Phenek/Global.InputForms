@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SampleApp.ViewModels;
+﻿using SampleApp.ViewModels;
 using Xamarin.Forms;
 
 namespace SampleApp.Views
@@ -14,7 +12,6 @@ namespace SampleApp.Views
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
             //_entry.ReturnType = ReturnType.
-
         }
     }
 }

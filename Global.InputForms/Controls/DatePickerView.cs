@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -42,8 +41,6 @@ namespace Global.InputForms
         private readonly Frame _pFrame;
 
         public EventHandler<DateChangedEventArgs> DateSelected;
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
 
         public DatePickerView()
         {
@@ -53,35 +50,35 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             _datePicker.SetBinding(DatePicker.FontAttributesProperty,
-                new Binding(nameof(EntryFontAttributes)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.FontFamilyProperty,
-                new Binding(nameof(EntryFontFamily)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.FontSizeProperty,
-                new Binding(nameof(EntryFontSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderProperty,
-                new Binding(nameof(EntryPlaceholder)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.PlaceholderColorProperty,
-                new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.TextColorProperty,
-                new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             _datePicker.SetBinding(DatePicker.FormatProperty,
-                new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.MinimumDateProperty,
-                new Binding(nameof(MinimumDate)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(MinimumDate)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.MaximumDateProperty,
-                new Binding(nameof(MaximumDate)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.DateProperty,
-                new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
+                new Binding(nameof(Date)) {Source = this, Mode = BindingMode.TwoWay});
 
             _datePicker.SetBinding(BlankDatePicker.DoneButtonTextProperty,
-                new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(DoneButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.CancelButtonTextProperty,
-                new Binding(nameof(CancelButtonText)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
 
             _pFrame = new Frame
             {
@@ -91,11 +88,12 @@ namespace Global.InputForms
                 Content = _datePicker
             };
             _pFrame.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                new Binding(nameof(IsReadOnly))
+                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             TextAlignmentCommand = new Command(() => TextAlignmentChanged());
 
@@ -111,39 +109,42 @@ namespace Global.InputForms
 
         public DateTime Date
         {
-            get => (DateTime)GetValue(DateProperty);
+            get => (DateTime) GetValue(DateProperty);
             set => SetValue(DateProperty, value);
         }
 
         public string Format
         {
-            get => (string)GetValue(DatePicker.FormatProperty);
+            get => (string) GetValue(DatePicker.FormatProperty);
             set => SetValue(DatePicker.FormatProperty, value);
         }
 
         public DateTime MaximumDate
         {
-            get => (DateTime)GetValue(MaximumDateProperty);
+            get => (DateTime) GetValue(MaximumDateProperty);
             set => SetValue(MaximumDateProperty, value);
         }
 
         public DateTime MinimumDate
         {
-            get => (DateTime)GetValue(MinimumDateProperty);
+            get => (DateTime) GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
         }
 
         public string DoneButtonText
         {
-            get => (string)GetValue(DoneButtonTextProperty);
+            get => (string) GetValue(DoneButtonTextProperty);
             set => SetValue(DoneButtonTextProperty, value);
         }
 
         public string CancelButtonText
         {
-            get => (string)GetValue(CancelButtonTextProperty);
+            get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
         }
+
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         private void TextAlignmentChanged()
         {

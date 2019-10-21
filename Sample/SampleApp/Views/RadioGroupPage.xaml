@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SampleApp.Views.RadioGroupPage">
     <ContentPage.Content>
         <ScrollView BackgroundColor="LightBlue">
-        <StackLayout
-            Spacing="10"
-            Padding="0,10,0,10"
-            VerticalOptions="Center"
-            HorizontalOptions="Center">
+            <StackLayout
+                Spacing="10"
+                Padding="0,10,0,10"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
 
-            <!-- Standard RadioGroup with defaultIndex to 0 -->
-            <global:RadioGroup x:Name="_radioGender"
-                                 DefaultIndex="0"
-                                 ItemsSource="{Binding Genders}"
-                                 Orientation="Horizontal"
-                                 Spacing="20"
-                                 HorizontalOptions="Center"
-                                 CheckTemplate="{StaticResource ButtonRadio}" />
+                <!-- Standard RadioGroup with defaultIndex to 0 -->
+                <global:RadioGroup x:Name="_radioGender"
+                                   DefaultIndex="0"
+                                   ItemsSource="{Binding Genders}"
+                                   Orientation="Horizontal"
+                                   Spacing="20"
+                                   HorizontalOptions="Center"
+                                   CheckTemplate="{StaticResource ButtonRadio}" />
 
-            <Label Text="Standard RadioGroup with defaultIndex to 0" FontSize="Small" TextColor="Gray"
-                   HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+                <Label Text="Standard RadioGroup with defaultIndex to 0" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
 
-            <!--Unselectable RadioGroup with Parent FrameInfo and no defaultIndex-->
-            <global:FrameInfo>
-                <global:RadioGroup
-                    x:Name="_radioGroup"
-                    ItemsSource="{Binding Genders}"
-                    IsDeselectable="true"
-                    Orientation="Horizontal"
-                    HorizontalOptions="Center"
-                    CheckTemplate="{StaticResource IconRadio}" />
-                <global:FrameInfo.Behaviors>
-                    <valid:RadioGroupValidatorBehavior />
-                </global:FrameInfo.Behaviors>
-            </global:FrameInfo>
+                <!--Unselectable RadioGroup with Parent FrameInfo and no defaultIndex-->
+                <global:FrameInfo>
+                    <global:RadioGroup
+                        x:Name="_radioGroup"
+                        ItemsSource="{Binding Genders}"
+                        IsDeselectable="true"
+                        Orientation="Horizontal"
+                        HorizontalOptions="Center"
+                        CheckTemplate="{StaticResource IconRadio}" />
+                    <global:FrameInfo.Behaviors>
+                        <valid:RadioGroupValidatorBehavior />
+                    </global:FrameInfo.Behaviors>
+                </global:FrameInfo>
 
-            <Label Text="Deselectable RadioGroup with Parent FrameInfo and no defaultIndex" FontSize="Small"
-                   TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
-            
-                
+                <Label Text="Deselectable RadioGroup with Parent FrameInfo and no defaultIndex" FontSize="Small"
+                       TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+
                 <!-- RadioGroup with custom CheckButtons-->
                 <global:RadioGroup Grid.Column="0"
-                                     Orientation="Horizontal"
-                                     HorizontalOptions="Center"
-                                     x:Name="_checkGroup">
+                                   Orientation="Horizontal"
+                                   HorizontalOptions="Center"
+                                   x:Name="_checkGroup">
 
                     <global:CheckButton Key="0" Value="Male"
-                                   WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                   BackgroundColor="White"
-                                   BorderColor="Maroon"
-                                   TextColor="Maroon"
-                                   CheckedBackgroundColor="Maroon"
-                                   CheckedBorderColor="Maroon"
-                                   CheckedTextColor="White" />
+                                        WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
+                                        BackgroundColor="White"
+                                        BorderColor="Maroon"
+                                        TextColor="Maroon"
+                                        CheckedBackgroundColor="Maroon"
+                                        CheckedBorderColor="Maroon"
+                                        CheckedTextColor="White" />
 
                     <global:CheckButton Key="1" Value="Female"
-                                   WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                   BackgroundColor="White"
-                                   BorderColor="Teal"
-                                   TextColor="Teal"
-                                   CheckedBackgroundColor="Teal"
-                                   CheckedBorderColor="Teal"
-                                   CheckedTextColor="White"/>
+                                        WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
+                                        BackgroundColor="White"
+                                        BorderColor="Teal"
+                                        TextColor="Teal"
+                                        CheckedBackgroundColor="Teal"
+                                        CheckedBorderColor="Teal"
+                                        CheckedTextColor="White" />
 
                 </global:RadioGroup>
-                
+
                 <Label Text="RadioGroup with custom CheckButtons" FontSize="Small" TextColor="Gray"
-                   HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
-        </StackLayout>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

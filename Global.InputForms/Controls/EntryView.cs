@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -39,7 +38,7 @@ namespace Global.InputForms
         public static readonly BindableProperty IsTextPredictionEnabledProperty =
             BindableProperty.Create(nameof(IsTextPredictionEnabled), typeof(bool), typeof(Entry), true,
                 BindingMode.OneTime);
-                
+
         /// <summary>
         ///     The IsPassword property.
         /// </summary>
@@ -51,48 +50,46 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty KeyboardProperty =
             BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(EntryView), Keyboard.Default);
-       
+
         /// <summary>
         ///     The ReturnType property.
         /// </summary>
-        public static readonly BindableProperty ReturnTypeProperty = 
+        public static readonly BindableProperty ReturnTypeProperty =
             BindableProperty.Create(nameof(ReturnType), typeof(ReturnType), typeof(Entry), ReturnType.Default);
 
         /// <summary>
         ///     The ReturnCommand property.
         /// </summary>
-
-        public static readonly BindableProperty ReturnCommandProperty = 
+        public static readonly BindableProperty ReturnCommandProperty =
             BindableProperty.Create(nameof(ReturnCommand), typeof(ICommand), typeof(Entry), default(ICommand));
 
         /// <summary>
         ///     The ReturnCommandParameter property.
         /// </summary>
-
-        public static readonly BindableProperty ReturnCommandParameterProperty = 
-            BindableProperty.Create(nameof(ReturnCommandParameter), typeof(object), typeof(Entry), default(object));
+        public static readonly BindableProperty ReturnCommandParameterProperty =
+            BindableProperty.Create(nameof(ReturnCommandParameter), typeof(object), typeof(Entry));
 
 
         private readonly BlankEntry _entry;
         private readonly Frame _pFrame;
+        public bool _blockNextChanged;
+        public int _cursorPosition;
+        private bool _isAdditon;
 
         public EventHandler<TextChangedEventArgs> TextChanged;
-        public int _cursorPosition;
-        public bool _blockNextChanged;
-        private bool _isAdditon;
 
         public EntryView()
         {
             _entry = new BlankEntry
             {
-                BackgroundColor = Color.Transparent,
+                BackgroundColor = Color.Transparent
             };
             _entry.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(HeightProperty,
-                 new Binding(nameof(EntryFontFamily)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.HorizontalTextAlignmentProperty,
@@ -104,18 +101,18 @@ namespace Global.InputForms
             _entry.SetBinding(Entry.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             _entry.SetBinding(Entry.IsPasswordProperty,
                 new Binding(nameof(IsPassword)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(InputView.KeyboardProperty,
                 new Binding(nameof(Keyboard)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.ReturnTypeProperty,
-                new Binding(nameof(ReturnType)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(ReturnType)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.ReturnCommandProperty,
-                new Binding(nameof(ReturnCommand)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(ReturnCommand)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.ReturnCommandParameterProperty,
-                new Binding(nameof(ReturnCommandParameter)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(ReturnCommandParameter)) {Source = this, Mode = BindingMode.OneWay});
 
             _entry.SetBinding(InputView.IsSpellCheckEnabledProperty,
                 new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
@@ -125,7 +122,7 @@ namespace Global.InputForms
             //_entry.SetBinding(InputView.IsReadOnlyProperty,
             //new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
             _entry.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
 
             _pFrame = new Frame
             {
@@ -135,11 +132,12 @@ namespace Global.InputForms
                 Content = _entry
             };
             _pFrame.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                new Binding(nameof(IsReadOnly))
+                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
 
             _entry.Focused += FocusEntry;
@@ -150,12 +148,9 @@ namespace Global.InputForms
                 if (InfoIsVisible)
                     Validate();
             };
-            Unfocused += (sender, e) =>
-            {
-                Validate();
-            };
+            Unfocused += (sender, e) => { Validate(); };
 
-            Children.Add (_pFrame, 2, 3, 1, 2);
+            Children.Add(_pFrame, 2, 3, 1, 2);
         }
 
         /// <summary>
@@ -227,7 +222,7 @@ namespace Global.InputForms
 
         public ReturnType ReturnType
         {
-            get => (ReturnType)GetValue(ReturnTypeProperty);
+            get => (ReturnType) GetValue(ReturnTypeProperty);
             set => SetValue(ReturnTypeProperty, value);
         }
 
@@ -238,7 +233,7 @@ namespace Global.InputForms
 
         public ICommand ReturnCommand
         {
-            get => (ICommand)GetValue(ReturnCommandProperty);
+            get => (ICommand) GetValue(ReturnCommandProperty);
             set => SetValue(ReturnCommandProperty, value);
         }
 
@@ -258,22 +253,20 @@ namespace Global.InputForms
         {
             if (!(bindable is EntryView entryView)) return;
 
-            if (string.IsNullOrEmpty(entryView.Mask) && entryView._entry.Text != (string)newValue)
+            if (string.IsNullOrEmpty(entryView.Mask) && entryView._entry.Text != (string) newValue)
             {
-                entryView._entry.Text = (string)newValue;
+                entryView._entry.Text = (string) newValue;
             }
             else
             {
-                var masked = entryView.AddMask((string)newValue, entryView._isAdditon);
-                if (entryView.MaskedEntryText != masked)
-                {
-                    entryView.MaskedEntryText = masked;
-                }
+                var masked = entryView.AddMask((string) newValue, entryView._isAdditon);
+                if (entryView.MaskedEntryText != masked) entryView.MaskedEntryText = masked;
             }
-            entryView.TextChanged?.Invoke(entryView, new TextChangedEventArgs((string)oldValue, (string)newValue));
+
+            entryView.TextChanged?.Invoke(entryView, new TextChangedEventArgs((string) oldValue, (string) newValue));
         }
 
-        void EntryCursorChanged(object sender, TextChangedEventArgs e)
+        private void EntryCursorChanged(object sender, TextChangedEventArgs e)
         {
             if (!(sender is Entry entry)) return;
             entry.CursorPosition = _cursorPosition;
@@ -287,13 +280,10 @@ namespace Global.InputForms
             if (!string.IsNullOrEmpty(entryView.Mask))
             {
                 //entryView._entry.TextChanged += entryView.EntryCursorChanged;
-                if (entryView._entry.Text != (string)newValue)
-                    entryView._entry.Text = (string)newValue;
-                var light = entryView.RemoveMask((string)newValue);
-                if (entryView.EntryText != light)
-                {
-                    entryView.EntryText = light;
-                }
+                if (entryView._entry.Text != (string) newValue)
+                    entryView._entry.Text = (string) newValue;
+                var light = entryView.RemoveMask((string) newValue);
+                if (entryView.EntryText != light) entryView.EntryText = light;
             }
         }
 
@@ -345,15 +335,17 @@ namespace Global.InputForms
                 if (string.IsNullOrEmpty(oldText))
                 {
                     _isAdditon = true;
-                    var m = AddMask(newText, true);
+                    var m = AddMask(newText);
                     MaskedEntryText = m;
                     return;
                 }
+
                 var cursor = entry.CursorPosition;
                 _isAdditon = newText.Count() - oldText.Count() > 0;
 
-                int startIndex = oldText.Zip(newText, (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
-                int endIndex = oldText.Substring(startIndex).Reverse().Zip(newText.Substring(startIndex).Reverse(), (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
+                var startIndex = oldText.Zip(newText, (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
+                var endIndex = oldText.Substring(startIndex).Reverse()
+                    .Zip(newText.Substring(startIndex).Reverse(), (c1, c2) => c1 == c2).TakeWhile(b => b).Count();
 
                 var oldCount = oldText.Count();
                 var newCount = newText.Count();
@@ -394,7 +386,7 @@ namespace Global.InputForms
 
                 var endLightStr = "";
                 var startLightStr = RemoveMask(newText.Substring(0, startIndex));
-                if (startIndex + oldMiddleString.Count() < Mask.Count() )
+                if (startIndex + oldMiddleString.Count() < Mask.Count())
                 {
                     var endMaskedText = newText.Substring(newText.Count() - endIndex, endIndex);
                     var maskTmp = Mask.Substring(startIndex + oldMiddleString.Count());
@@ -421,7 +413,6 @@ namespace Global.InputForms
                 entry.Text = masked;
                 EntryText = newLightText;
                 */
-
             }
             else
             {
@@ -434,7 +425,7 @@ namespace Global.InputForms
         public override void Focus()
         {
             _entry.Focus();
-            _entry.CursorPosition = (string.IsNullOrEmpty(_entry.Text)) ? 0 : _entry.Text.Count();
+            _entry.CursorPosition = string.IsNullOrEmpty(_entry.Text) ? 0 : _entry.Text.Count();
         }
 
         public override void Unfocus()

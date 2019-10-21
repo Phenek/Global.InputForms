@@ -210,7 +210,7 @@ namespace Global.InputForms
         private static void OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is CheckButton checkButton)) return;
-            
+
             checkButton.SetCheckedColorsStyles();
             checkButton.CheckedChanged?.Invoke(bindable, (bool) newValue);
         }

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -9,41 +10,40 @@
     <ContentPage.Content>
         <StackLayout Padding="10">
 
-            <global:Switch x:Name="switchTest" 
+            <global:Switch x:Name="switchTest"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            SwitchHeightRequest="80"
                            SwitchWidthRequest="160"
                            CornerRadius="40"
                            SwitchCornerRadius="40"
-                           SwitchColor="Blue" BackgroundColor="Beige"/>
+                           SwitchColor="Blue" BackgroundColor="Beige" />
 
             <Image Source="SwitchCalendarBlue" />
 
-            <global:Switch x:Name="switchTest2" 
+            <global:Switch x:Name="switchTest2"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            SwitchHeightRequest="40"
                            SwitchWidthRequest="50"
                            CornerRadius="20"
                            SwitchCornerRadius="20"
-                           BackgroundColor="Beige" SwitchColor="Blue"/>
+                           BackgroundColor="Beige" SwitchColor="Blue" />
 
-           
-            
-            <global:Switch x:Name="switchTest3" 
+
+            <global:Switch x:Name="switchTest3"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            SwitchHeightRequest="80"
                            SwitchWidthRequest="80"
                            CornerRadius="20"
                            SwitchCornerRadius="20"
-                           BackgroundColor="Beige" SwitchColor="DarkRed"/>
+                           BackgroundColor="Beige" SwitchColor="DarkRed" />
 
-            <global:Switch x:Name="switchTest4" 
+            <global:Switch x:Name="switchTest4"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            SwitchHeightRequest="80"
                            SwitchWidthRequest="100"
                            CornerRadius="30"
                            SwitchCornerRadius="30"
-                           BackgroundColor="Beige"/>
+                           BackgroundColor="Beige" />
 
         </StackLayout>
     </ContentPage.Content>

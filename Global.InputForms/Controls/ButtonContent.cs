@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 using static Xamarin.Forms.Button;
@@ -10,19 +9,19 @@ namespace Global.InputForms
     public class ButtonContent : Grid
     {
         public static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View),
-            typeof(ButtonContent), null);
+            typeof(ButtonContent));
 
         /// <summary>
         ///     The command property.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command),
-            typeof(ICommand), typeof(ButtonContent), null);
+            typeof(ICommand), typeof(ButtonContent));
 
         /// <summary>
         ///     The command parameter property.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ButtonContent), null);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ButtonContent));
 
         /// <summary>
         ///     The content layout property.
@@ -137,16 +136,15 @@ namespace Global.InputForms
         ///     The Highlight Image Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightImageColorProperty =
-            BindableProperty.Create(nameof(HighlightImageColor), typeof(Color), typeof(ButtonContent),
-                null);
-        
+            BindableProperty.Create(nameof(HighlightImageColor), typeof(Color), typeof(ButtonContent));
+
         private readonly BlankButton _button;
-        private readonly ActivityIndicator _loader;
         private readonly Frame _frame;
+        private readonly ActivityIndicator _loader;
 
         public ButtonContent()
         {
-            _frame = new Frame()
+            _frame = new Frame
             {
                 Padding = 0,
                 HasShadow = false,
@@ -154,18 +152,18 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 InputTransparent = true,
                 IsEnabled = false,
-                IsClippedToBounds = true,
+                IsClippedToBounds = true
             };
             _frame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(Content)) {Source = this, Mode = BindingMode.OneWay});
-            _frame.SetBinding(PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
+            _frame.SetBinding(PaddingProperty, new Binding(nameof(Padding)) {Source = this, Mode = BindingMode.OneWay});
 
             _button = new BlankButton
             {
                 HeightRequest = 0,
                 BackgroundColor = BackgroundColor,
                 TextColor = TextColor,
-                BorderColor = BorderColor,
+                BorderColor = BorderColor
             };
 
             _button.SetBinding(Button.CommandProperty,
@@ -199,7 +197,8 @@ namespace Global.InputForms
             _loader.SetBinding(ActivityIndicator.ColorProperty,
                 new Binding(nameof(LoaderColor)) {Source = this, Mode = BindingMode.OneWay});
 
-            _button.SetBinding(Button.PaddingProperty, new Binding(nameof(Padding)) { Source = this, Mode = BindingMode.OneWay });
+            _button.SetBinding(Button.PaddingProperty,
+                new Binding(nameof(Padding)) {Source = this, Mode = BindingMode.OneWay});
 
             _button.Pressed += Button_Pressed;
             _button.Released += Button_Released;
@@ -211,7 +210,6 @@ namespace Global.InputForms
             Children.Add(_button, 0, 0);
             Children.Add(_frame, 0, 0);
             Children.Add(_loader, 0, 0);
-
         }
 
         public View Content
@@ -444,11 +442,10 @@ namespace Global.InputForms
             if (!(bindable is ButtonContent button)) return;
             button._frame.Margin = new Thickness(button.BorderWidth);
 
-            var frameCorner = (float)(button.CornerRadius - button.BorderWidth);
+            var frameCorner = (float) (button.CornerRadius - button.BorderWidth);
             if (frameCorner > 0)
                 button._frame.CornerRadius = frameCorner;
             button._button.Padding = button.Padding;
-
         }
 
         /// <summary>
@@ -460,10 +457,10 @@ namespace Global.InputForms
         private static void CornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is ButtonContent button)) return;
-            var value = (int)newValue;
+            var value = (int) newValue;
             button._button.CornerRadius = value;
 
-            var frameCorner = (float)(button.CornerRadius - button.BorderWidth);
+            var frameCorner = (float) (button.CornerRadius - button.BorderWidth);
             if (frameCorner > 0)
                 button._frame.CornerRadius = frameCorner;
         }
@@ -477,7 +474,7 @@ namespace Global.InputForms
         private static void IsBusyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is ButtonContent button)) return;
-            
+
             if ((bool) newValue)
             {
                 button._loader.IsVisible = true;

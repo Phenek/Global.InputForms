@@ -22,27 +22,27 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <global:EntryView Grid.Column="0" Grid.Row="0"
-                                    EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Surrounded"
-                                    EntryText="{Binding Form.Lastname, Mode=TwoWay}"
-                                    LabelText="{i18N:Translate Form.FirstName}"
-                                    x:Name="_firstname">
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.Lastname, Mode=TwoWay}"
+                                  LabelText="{i18N:Translate Form.FirstName}"
+                                  x:Name="_firstname">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
                 </global:EntryView>
                 <global:EntryView Grid.Column="1" Grid.Row="0"
-                                    EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    IsReadOnly="true"
-                                    EntryPlaceholder="test"
-                                    EntryBorderColor="Red"
-                                    EntryTextColor="Red"
-                                    InfoViewType="Surrounded"
-                                    EntryText="{Binding Form.Lastname, Mode=TwoWay}"
-                                    LabelText="{i18N:Translate Form.LastName}"
-                                    x:Name="_lastname">
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  EntryCornerRadius="15"
+                                  IsReadOnly="true"
+                                  EntryPlaceholder="test"
+                                  EntryBorderColor="Red"
+                                  EntryTextColor="Red"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.Lastname, Mode=TwoWay}"
+                                  LabelText="{i18N:Translate Form.LastName}"
+                                  x:Name="_lastname">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
@@ -50,24 +50,24 @@
 
                 <global:FrameInfo Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
                     <global:RadioGroup x:Name="_radioGender"
-                                         ItemsSource="{Binding Genders}"
-                                         Orientation="Horizontal"
-                                         Spacing="40"
-                                         HorizontalOptions="Center"
-                                         VerticalOptions="CenterAndExpand"
-                                         SelectedItem="{Binding ItemSelected}"
-                                         CheckTemplate="{StaticResource IconRadioImage}" />
+                                       ItemsSource="{Binding Genders}"
+                                       Orientation="Horizontal"
+                                       Spacing="40"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="CenterAndExpand"
+                                       SelectedItem="{Binding ItemSelected}"
+                                       CheckTemplate="{StaticResource IconRadioImage}" />
                     <global:FrameInfo.Behaviors>
                         <valid:RadioGroupValidatorBehavior />
                     </global:FrameInfo.Behaviors>
                 </global:FrameInfo>
 
                 <global:EntryView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
-                                    EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Surrounded"
-                                    EntryText="{Binding Form.Email, Mode=TwoWay}"
-                                    x:Name="_email" LabelText="{i18N:Translate Form.Email}">
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.Email, Mode=TwoWay}"
+                                  x:Name="_email" LabelText="{i18N:Translate Form.Email}">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                         <valid:EmailValidatorBehavior />
@@ -78,12 +78,12 @@
                 </global:EntryView>
 
                 <global:EntryView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"
-                                    EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Surrounded"
-                                    EntryText="{Binding Form.EmailConfirm, Mode=TwoWay}"
-                                    LabelText="{i18N:Translate Form.EmailConfirm}"
-                                    x:Name="_emailConfirm">
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.EmailConfirm, Mode=TwoWay}"
+                                  LabelText="{i18N:Translate Form.EmailConfirm}"
+                                  x:Name="_emailConfirm">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                         <valid:EmailValidatorBehavior />
@@ -94,12 +94,12 @@
                 </global:EntryView>
 
                 <global:DatePickerView Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
-                                         Date="{Binding Form.BirthDate, Mode=TwoWay}"
-                                         x:Name="_birthDate"
-                                         EntryCornerRadius="15"
-                                         InfoViewType="Surrounded"
-                                         EntryBackgroundColor="#88FFFFFF"
-                                         LabelText="{i18N:Translate Form.BirthDate}">
+                                       Date="{Binding Form.BirthDate, Mode=TwoWay}"
+                                       x:Name="_birthDate"
+                                       EntryCornerRadius="15"
+                                       InfoViewType="Surrounded"
+                                       EntryBackgroundColor="#88FFFFFF"
+                                       LabelText="{i18N:Translate Form.BirthDate}">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -107,13 +107,13 @@
                 </global:DatePickerView>
 
                 <global:EntryView Grid.Column="0" Grid.Row="5"
-                                    EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Surrounded"
-                                    IsPassword="true"
-                                    EntryText="{Binding Form.Password, Mode=TwoWay}"
-                                    LabelText="{i18N:Translate Form.Password}"
-                                    x:Name="_password">
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  IsPassword="true"
+                                  EntryText="{Binding Form.Password, Mode=TwoWay}"
+                                  LabelText="{i18N:Translate Form.Password}"
+                                  x:Name="_password">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                         <valid:EmailCompareValidationBehavior
@@ -123,13 +123,13 @@
                 </global:EntryView>
 
                 <global:EntryView Grid.Column="1" Grid.Row="5"
-                                    EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Surrounded"
-                                    IsPassword="true"
-                                    EntryText="{Binding Form.Password, Mode=TwoWay}"
-                                    LabelText="{i18N:Translate Form.Password}"
-                                    x:Name="_passwordConfirm">
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  IsPassword="true"
+                                  EntryText="{Binding Form.Password, Mode=TwoWay}"
+                                  LabelText="{i18N:Translate Form.Password}"
+                                  x:Name="_passwordConfirm">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                         <valid:EmailCompareValidationBehavior
@@ -140,28 +140,28 @@
 
                 <global:FrameInfo Grid.Column="0" Grid.Row="6" Grid.RowSpan="3">
                     <global:CheckGroup x:Name="_checkStore" Spacing="20"
-                                         ItemsSource="{Binding Languages}"
-                                         CheckTemplate="{StaticResource IconCheckImage}" />
+                                       ItemsSource="{Binding Languages}"
+                                       CheckTemplate="{StaticResource IconCheckImage}" />
                     <global:FrameInfo.Behaviors>
                         <valid:CheckGroupValidatorBehavior />
                     </global:FrameInfo.Behaviors>
                 </global:FrameInfo>
 
                 <global:RateGroup x:Name="_rateEnglish" Grid.Row="6" Grid.Column="1"
-                                    DefaultIndex="0"
-                                    ItemsSource="{Binding Rates}"
-                                    IsVisible="false"
-                                    CheckTemplate="{StaticResource IconRateImage}" />
+                                  DefaultIndex="0"
+                                  ItemsSource="{Binding Rates}"
+                                  IsVisible="false"
+                                  CheckTemplate="{StaticResource IconRateImage}" />
                 <global:RateGroup x:Name="_rateSpanish" Grid.Row="7" Grid.Column="1"
-                                    DefaultIndex="0"
-                                    ItemsSource="{Binding Rates}"
-                                    IsVisible="false"
-                                    CheckTemplate="{StaticResource IconRateImage}" />
+                                  DefaultIndex="0"
+                                  ItemsSource="{Binding Rates}"
+                                  IsVisible="false"
+                                  CheckTemplate="{StaticResource IconRateImage}" />
                 <global:RateGroup x:Name="_rateRussian" Grid.Row="8" Grid.Column="1"
-                                    DefaultIndex="0"
-                                    ItemsSource="{Binding Rates}"
-                                    IsVisible="false"
-                                    CheckTemplate="{StaticResource IconRateImage}" />
+                                  DefaultIndex="0"
+                                  ItemsSource="{Binding Rates}"
+                                  IsVisible="false"
+                                  CheckTemplate="{StaticResource IconRateImage}" />
                 <StackLayout Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="9"
                              Orientation="Vertical"
                              HorizontalOptions="CenterAndExpand">
@@ -179,7 +179,7 @@
                         TextColor="White"
                         HighlightBackgroundColor="White"
                         HighlightBorderColor="White"
-                        HighlightTextColor="Teal"/>
+                        HighlightTextColor="Teal" />
                 </StackLayout>
             </Grid>
         </ScrollView>

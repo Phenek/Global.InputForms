@@ -98,7 +98,7 @@ namespace Global.InputForms
 
         public View Content
         {
-            get => (View)GetValue(ContentProperty);
+            get => (View) GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
 
@@ -202,7 +202,7 @@ namespace Global.InputForms
         {
             if (bindable is FrameInfo frameInfo)
             {
-                frameInfo._frameLayout.Content = (View)newValue;
+                frameInfo._frameLayout.Content = (View) newValue;
                 frameInfo._frameLayout.Content.Parent = frameInfo;
             }
         }
@@ -278,11 +278,11 @@ namespace Global.InputForms
         private static void InfoLabelTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is FrameInfo frameInfo) || frameInfo._infoLabel != null) return;
-            
+
             frameInfo._infoLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
             };
             frameInfo._infoLabel.SetBinding(Label.FontAttributesProperty, new Binding(nameof(InfoLabelFontAttributes))
                 {Source = frameInfo, Mode = BindingMode.OneWay});
@@ -290,17 +290,19 @@ namespace Global.InputForms
                 {Source = frameInfo, Mode = BindingMode.OneWay});
             frameInfo._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoLabelFontSize))
                 {Source = frameInfo, Mode = BindingMode.OneWay});
-            frameInfo._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty, new Binding(nameof(InfoLabelHorizontalTextAlignment))
-                {Source = frameInfo, Mode = BindingMode.OneWay});
-            frameInfo._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty, new Binding(nameof(InfoLabelVerticalTextAlignment))
-                {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty,
+                new Binding(nameof(InfoLabelHorizontalTextAlignment))
+                    {Source = frameInfo, Mode = BindingMode.OneWay});
+            frameInfo._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty,
+                new Binding(nameof(InfoLabelVerticalTextAlignment))
+                    {Source = frameInfo, Mode = BindingMode.OneWay});
             frameInfo._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoLabelText))
                 {Source = frameInfo, Mode = BindingMode.OneWay});
             frameInfo._infoLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(InfoColor))
                 {Source = frameInfo, Mode = BindingMode.OneWay});
             frameInfo._infoLabel.SetBinding(IsVisibleProperty, new Binding(nameof(InfoIsVisible))
                 {Source = frameInfo, Mode = BindingMode.OneWay});
-                    
+
             frameInfo.Children.Add(frameInfo._infoLabel);
         }
 
@@ -325,7 +327,7 @@ namespace Global.InputForms
         private static void InfoIsVisibleChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is FrameInfo frameInfo) || !(frameInfo._infoLabel is Label label)) return;
-            
+
             label.IsVisible = (bool) newValue;
             frameInfo._frameLayout.BorderColor = (bool) newValue ? frameInfo.InfoColor : Color.Transparent;
         }

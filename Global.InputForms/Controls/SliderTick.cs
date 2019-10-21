@@ -22,13 +22,15 @@ namespace Global.InputForms.Controls
         /// <summary>
         ///     The MinimumTrack color property.
         /// </summary>
-        public static readonly BindableProperty MinimumTrackColorProperty = BindableProperty.Create(nameof(MinimumTrackColor),
+        public static readonly BindableProperty MinimumTrackColorProperty = BindableProperty.Create(
+            nameof(MinimumTrackColor),
             typeof(Color), typeof(SliderTick), Color.Blue);
 
         /// <summary>
         ///     The MaximumTrack color property.
         /// </summary>
-        public static readonly BindableProperty MaximumTrackColorProperty = BindableProperty.Create(nameof(MaximumTrackColor),
+        public static readonly BindableProperty MaximumTrackColorProperty = BindableProperty.Create(
+            nameof(MaximumTrackColor),
             typeof(Color), typeof(SliderTick), Color.Gray);
 
         /// <summary>
@@ -90,13 +92,13 @@ namespace Global.InputForms.Controls
             };
 
             _slider.SetBinding(Slider.ThumbColorProperty,
-                new Binding(nameof(ThumbColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(ThumbColor)) {Source = this, Mode = BindingMode.OneWay});
             _slider.SetBinding(Slider.MinimumTrackColorProperty,
-                new Binding(nameof(MinimumTrackColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(MinimumTrackColor)) {Source = this, Mode = BindingMode.OneWay});
             _slider.SetBinding(Slider.MaximumTrackColorProperty,
-                new Binding(nameof(MaximumTrackColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(MaximumTrackColor)) {Source = this, Mode = BindingMode.OneWay});
             _slider.SetBinding(Slider.ThumbImageProperty,
-                new Binding(nameof(ThumbImage)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(ThumbImage)) {Source = this, Mode = BindingMode.OneWay});
 
             _slider.ValueChanged += _slider_ValueChanged;
 
@@ -109,7 +111,7 @@ namespace Global.InputForms.Controls
         /// <value>The Check group Items Source.</value>
         public IDictionary<double, string> ItemsSource
         {
-            get => (IDictionary<double, string>)GetValue(ItemsSourceProperty);
+            get => (IDictionary<double, string>) GetValue(ItemsSourceProperty);
             set
             {
                 if (value != null) SetValue(ItemsSourceProperty, value);
@@ -122,7 +124,7 @@ namespace Global.InputForms.Controls
         /// <value>The Background Color.</value>
         public Color ThumbColor
         {
-            get => (Color)GetValue(ThumbColorProperty);
+            get => (Color) GetValue(ThumbColorProperty);
             set => SetValue(ThumbColorProperty, value);
         }
 
@@ -132,7 +134,7 @@ namespace Global.InputForms.Controls
         /// <value>The Background Color.</value>
         public Color MinimumTrackColor
         {
-            get => (Color)GetValue(MinimumTrackColorProperty);
+            get => (Color) GetValue(MinimumTrackColorProperty);
             set => SetValue(MinimumTrackColorProperty, value);
         }
 
@@ -142,7 +144,7 @@ namespace Global.InputForms.Controls
         /// <value>The Background Color.</value>
         public Color MaximumTrackColor
         {
-            get => (Color)GetValue(MaximumTrackColorProperty);
+            get => (Color) GetValue(MaximumTrackColorProperty);
             set => SetValue(MaximumTrackColorProperty, value);
         }
 
@@ -152,7 +154,7 @@ namespace Global.InputForms.Controls
         /// <value>The Background Color.</value>
         public Color TickColor
         {
-            get => (Color)GetValue(TickColorProperty);
+            get => (Color) GetValue(TickColorProperty);
             set => SetValue(TickColorProperty, value);
         }
 
@@ -162,7 +164,7 @@ namespace Global.InputForms.Controls
         /// <value>The Background Color.</value>
         public Color LabelColor
         {
-            get => (Color)GetValue(LabelColorProperty);
+            get => (Color) GetValue(LabelColorProperty);
             set => SetValue(LabelColorProperty, value);
         }
 
@@ -172,7 +174,7 @@ namespace Global.InputForms.Controls
         /// <value>The label font attributes.</value>
         public FontAttributes FontAttributes
         {
-            get => (FontAttributes)GetValue(FontAttributesProperty);
+            get => (FontAttributes) GetValue(FontAttributesProperty);
             set => SetValue(FontAttributesProperty, value);
         }
 
@@ -182,7 +184,7 @@ namespace Global.InputForms.Controls
         /// <value>The label font family.</value>
         public string FontFamily
         {
-            get => (string)GetValue(FontFamilyProperty);
+            get => (string) GetValue(FontFamilyProperty);
             set => SetValue(FontFamilyProperty, value);
         }
 
@@ -192,7 +194,7 @@ namespace Global.InputForms.Controls
         /// <value>The label font size.</value>
         public double FontSize
         {
-            get => (double)GetValue(FontSizeProperty);
+            get => (double) GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
         }
 
@@ -203,7 +205,7 @@ namespace Global.InputForms.Controls
         [TypeConverter(typeof(ImageSourceConverter))]
         public ImageSource ThumbImage
         {
-            get => (ImageSource)GetValue(ThumbImageProperty);
+            get => (ImageSource) GetValue(ThumbImageProperty);
             set => SetValue(ThumbImageProperty, value);
         }
 
@@ -213,7 +215,7 @@ namespace Global.InputForms.Controls
         /// <value>The label font size.</value>
         public double Value
         {
-            get => (double)GetValue(ValueProperty);
+            get => (double) GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
@@ -253,8 +255,8 @@ namespace Global.InputForms.Controls
             var index = 0;
             foreach (var tick in ItemsSource)
             {
-                ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
+                ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
                 var dash = new BoxView
                 {
                     HeightRequest = 4,
@@ -270,16 +272,16 @@ namespace Global.InputForms.Controls
                 };
 
                 dash.SetBinding(BackgroundColorProperty,
-                    new Binding(nameof(TickColor)) { Source = this, Mode = BindingMode.OneWay });
+                    new Binding(nameof(TickColor)) {Source = this, Mode = BindingMode.OneWay});
 
                 label.SetBinding(Label.TextColorProperty,
-                    new Binding(nameof(LabelColor)) { Source = this, Mode = BindingMode.OneWay });
+                    new Binding(nameof(LabelColor)) {Source = this, Mode = BindingMode.OneWay});
                 label.SetBinding(Label.FontSizeProperty,
-                    new Binding(nameof(FontSize)) { Source = this, Mode = BindingMode.OneWay });
+                    new Binding(nameof(FontSize)) {Source = this, Mode = BindingMode.OneWay});
                 label.SetBinding(Label.FontFamilyProperty,
-                    new Binding(nameof(FontFamily)) { Source = this, Mode = BindingMode.OneWay });
+                    new Binding(nameof(FontFamily)) {Source = this, Mode = BindingMode.OneWay});
                 label.SetBinding(Label.FontAttributesProperty,
-                    new Binding(nameof(FontAttributes)) { Source = this, Mode = BindingMode.OneWay });
+                    new Binding(nameof(FontAttributes)) {Source = this, Mode = BindingMode.OneWay});
 
                 SetRow(dash, 1);
                 SetRow(label, 2);
@@ -315,7 +317,8 @@ namespace Global.InputForms.Controls
         {
             if (bindable is SliderTick sliderTick)
                 if (oldValue != newValue)
-                    sliderTick.ValueChanged?.Invoke(sliderTick, new ValueChangedEventArgs((double)oldValue, (double)newValue));
+                    sliderTick.ValueChanged?.Invoke(sliderTick,
+                        new ValueChangedEventArgs((double) oldValue, (double) newValue));
         }
     }
 }

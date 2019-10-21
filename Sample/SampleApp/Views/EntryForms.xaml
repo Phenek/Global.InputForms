@@ -38,10 +38,10 @@
                     <controls:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </controls:DatePickerView.Behaviors>
-                    <Image Grid.Column="0" Source="StarChecked"/>
-                    <Image Grid.Column="1" Source="StarChecked"/>
-                    <Image Grid.Column="3" Source="StarChecked"/>
-                    <Image Grid.Column="4" Source="StarChecked"/>
+                    <Image Grid.Column="0" Source="StarChecked" />
+                    <Image Grid.Column="1" Source="StarChecked" />
+                    <Image Grid.Column="3" Source="StarChecked" />
+                    <Image Grid.Column="4" Source="StarChecked" />
                 </controls:DatePickerView>
                 <Label Text="Standart Entry with Background Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
@@ -54,10 +54,10 @@
                     <controls:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </controls:EntryView.Behaviors>
-                    <Image Grid.Column="0" Source="StarChecked"/>
-                    <Image Grid.Column="1" Source="StarChecked"/>
-                    <Image Grid.Column="3" Source="StarChecked"/>
-                    <Image Grid.Column="4" Source="StarChecked"/>
+                    <Image Grid.Column="0" Source="StarChecked" />
+                    <Image Grid.Column="1" Source="StarChecked" />
+                    <Image Grid.Column="3" Source="StarChecked" />
+                    <Image Grid.Column="4" Source="StarChecked" />
                 </controls:EntryView>
                 <Label Text="Standart Entry with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />

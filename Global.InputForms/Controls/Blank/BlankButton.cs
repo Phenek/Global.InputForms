@@ -4,8 +4,5 @@ namespace Global.InputForms
 {
     public class BlankButton : Button
     {
-        public BlankButton()
-        {
-        }
     }
 }

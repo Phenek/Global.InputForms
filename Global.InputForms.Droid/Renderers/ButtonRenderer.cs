@@ -23,16 +23,12 @@ namespace Global.InputForms.Droid.Renderers
         {
             base.OnElementChanged(e);
 
-            if (this.Control != null && e.NewElement != null)
+            if (Control != null && e.NewElement != null)
             {
                 if (Build.VERSION.SdkInt > BuildVersionCodes.Lollipop)
-                {
-                    this.Control.StateListAnimator = null;
-                }
+                    Control.StateListAnimator = null;
                 else
-                {
-                    this.Control.Elevation = 0;
-                }
+                    Control.Elevation = 0;
             }
         }
 
@@ -43,19 +39,16 @@ namespace Global.InputForms.Droid.Renderers
             if (e.PropertyName.Equals(VisualElement.BackgroundColorProperty.PropertyName) ||
                 e.PropertyName.Equals(Button.CornerRadiusProperty.PropertyName) ||
                 e.PropertyName.Equals(Button.BorderWidthProperty.PropertyName))
-            {
-                this.UpdateBackground();
-            }
+                UpdateBackground();
         }
 
         private void UpdateBackground()
         {
-            if (this.Element != null)
-            {
+            if (Element != null)
                 using (var background = new GradientDrawable())
                 {
                     background.SetColor(Element.BackgroundColor.ToAndroid());
-                    background.SetStroke((int)Context.ToPixels(Element.BorderWidth), Element.BorderColor.ToAndroid());
+                    background.SetStroke((int) Context.ToPixels(Element.BorderWidth), Element.BorderColor.ToAndroid());
                     background.SetCornerRadius(Context.ToPixels(Element.CornerRadius));
 
                     // customize the button states as necessary
@@ -63,10 +56,9 @@ namespace Global.InputForms.Droid.Renderers
                     {
                         backgroundStates.AddState(new int[] { }, background);
 
-                        this.Control.SetBackground(backgroundStates);
+                        Control.SetBackground(backgroundStates);
                     }
                 }
-            }
         }
 
         public override bool OnTouchEvent(MotionEvent e)

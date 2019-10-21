@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Android.Content;
+using Android.Views;
 using Global.InputForms;
 using Global.InputForms.Droid.Renderers;
 using Xamarin.Forms;
@@ -32,7 +33,7 @@ namespace Global.InputForms.Droid.Renderers
         {
             Control.SetBackgroundColor(Color.Transparent);
             Control.SetPadding(0, 7, 0, 3);
-            Control.Gravity = Android.Views.GravityFlags.Fill;
+            Control.Gravity = GravityFlags.Fill;
             /*
             if (Control.Enabled == false)
             {

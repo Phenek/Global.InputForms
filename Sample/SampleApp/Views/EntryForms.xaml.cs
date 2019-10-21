@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Global.InputForms;
-using Global.InputForms.Models;
+﻿using System.Threading.Tasks;
 using SampleApp.ViewModels;
 using Xamarin.Forms;
 
@@ -21,7 +18,7 @@ namespace SampleApp.Views
         {
             base.OnAppearing();
             await Task.Delay(500);
-            ((EntryLayout)_entry).Focus();
+            _entry.Focus();
         }
     }
 }

@@ -24,21 +24,18 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(BlankTimePicker), Color.Black);
 
         public static readonly BindableProperty HorizontalTextAlignmentProperty =
-        BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
-        TextAlignment.Start);
-
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
+            BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
+                TextAlignment.Start);
 
         public string DoneButtonText
         {
-            get => (string)GetValue(DoneButtonTextProperty);
+            get => (string) GetValue(DoneButtonTextProperty);
             set => SetValue(DoneButtonTextProperty, value);
         }
 
         public string CancelButtonText
         {
-            get => (string)GetValue(CancelButtonTextProperty);
+            get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
         }
 
@@ -48,7 +45,7 @@ namespace Global.InputForms
         /// <value>The entry placeholdeer.</value>
         public string Placeholder
         {
-            get => (string)GetValue(PlaceholderProperty);
+            get => (string) GetValue(PlaceholderProperty);
             set => SetValue(PlaceholderProperty, value);
         }
 
@@ -58,20 +55,18 @@ namespace Global.InputForms
         /// <value>The entry placeholder color.</value>
         public Color PlaceholderColor
         {
-            get => (Color)GetValue(PlaceholderColorProperty);
+            get => (Color) GetValue(PlaceholderColorProperty);
             set => SetValue(PlaceholderColorProperty, value);
         }
 
         public TextAlignment HorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(HorizontalTextAlignmentProperty);
             set => SetValue(HorizontalTextAlignmentProperty, value);
         }
 
-        public BlankTimePicker()
-        {
-
-        }
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         public void SendDoneClicked()
         {

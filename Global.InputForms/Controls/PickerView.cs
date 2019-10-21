@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -13,20 +11,22 @@ namespace Global.InputForms
         /// <summary>
         ///     The Date property.
         /// </summary>
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList),
-            typeof(PickerView), null);
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
+            typeof(IList),
+            typeof(PickerView));
 
         /// <summary>
         ///     The Format property.
         /// </summary>
-        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int),
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex),
+            typeof(int),
             typeof(PickerView), -1);
 
         /// <summary>
         ///     The Minimum Date property.
         /// </summary>
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem),
-            typeof(object), typeof(PickerView), null);
+            typeof(object), typeof(PickerView));
 
         /// <summary>
         ///     The Maximum Date property.
@@ -46,52 +46,50 @@ namespace Global.InputForms
         public static readonly BindableProperty CancelButtonTextProperty =
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(PickerView), "Cancel");
 
-        private readonly BlankPicker _picker;
         private readonly Frame _pFrame;
-        public EventHandler SelectedIndexChanged;
 
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
+        private readonly BlankPicker _picker;
+        public EventHandler SelectedIndexChanged;
 
         public PickerView()
         {
             _picker = new BlankPicker
             {
-                BackgroundColor = Color.Transparent,
+                BackgroundColor = Color.Transparent
             };
             _picker.SetBinding(Picker.FontAttributesProperty,
-                new Binding(nameof(EntryFontAttributes)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(Picker.FontFamilyProperty,
-                new Binding(nameof(EntryFontFamily)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(Picker.FontSizeProperty,
-                new Binding(nameof(EntryFontSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(BlankPicker.PlaceholderProperty,
-                new Binding(nameof(EntryPlaceholder)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(BlankPicker.PlaceholderColorProperty,
-                new Binding(nameof(EntryPlaceholderColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(BlankPicker.HorizontalTextAlignmentProperty,
-                new Binding(nameof(EntryHorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(Picker.TextColorProperty,
-                new Binding(nameof(EntryTextColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             _picker.SetBinding(Picker.ItemsSourceProperty,
-                new Binding(nameof(ItemsSource)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(ItemsSource)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(Picker.SelectedIndexProperty,
-                new Binding(nameof(SelectedIndex)) { Source = this, Mode = BindingMode.TwoWay });
+                new Binding(nameof(SelectedIndex)) {Source = this, Mode = BindingMode.TwoWay});
             _picker.SetBinding(Picker.SelectedItemProperty,
-                new Binding(nameof(SelectedItem)) { Source = this, Mode = BindingMode.TwoWay });
+                new Binding(nameof(SelectedItem)) {Source = this, Mode = BindingMode.TwoWay});
             _picker.SetBinding(Picker.TitleProperty,
-                new Binding(nameof(Title)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(Title)) {Source = this, Mode = BindingMode.OneWay});
             //Todo For Xamarin.Forms 4.0
             //_picker.SetBinding(Picker.TitleColorProperty,
-                //new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
+            //new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
 
             _picker.SetBinding(BlankPicker.DoneButtonTextProperty,
-                new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(DoneButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(BlankPicker.CancelButtonTextProperty,
-                new Binding(nameof(CancelButtonText)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
 
             _pFrame = new Frame
             {
@@ -101,11 +99,12 @@ namespace Global.InputForms
                 Content = _picker
             };
             _pFrame.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                new Binding(nameof(IsReadOnly))
+                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             TextAlignmentCommand = new Command(() => TextAlignmentChanged());
 
@@ -119,44 +118,50 @@ namespace Global.InputForms
             Children.Add(_pFrame, 2, 3, 1, 2);
         }
 
-        public IList ItemsSource 
+        public IList ItemsSource
         {
-            get => (IList)GetValue(ItemsSourceProperty);
+            get => (IList) GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
         public int SelectedIndex
         {
-            get => (int)GetValue(SelectedIndexProperty);
+            get => (int) GetValue(SelectedIndexProperty);
             set => SetValue(SelectedIndexProperty, value);
         }
+
         public object SelectedItem
         {
-            get => (object)GetValue(SelectedItemProperty);
+            get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
         }
+
         public string Title
         {
-            get => (string)GetValue(TitleProperty);
+            get => (string) GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
+
         public Color TitleColor
         {
-            get => (Color)GetValue(TitleColorProperty);
+            get => (Color) GetValue(TitleColorProperty);
             set => SetValue(TitleColorProperty, value);
         }
 
         public string DoneButtonText
         {
-            get => (string)GetValue(DoneButtonTextProperty);
+            get => (string) GetValue(DoneButtonTextProperty);
             set => SetValue(DoneButtonTextProperty, value);
         }
 
         public string CancelButtonText
         {
-            get => (string)GetValue(CancelButtonTextProperty);
+            get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
         }
+
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         private void TextAlignmentChanged()
         {
@@ -184,7 +189,7 @@ namespace Global.InputForms
             _picker.Unfocus();
         }
 
-        void IndexChanged(object sender, EventArgs e)
+        private void IndexChanged(object sender, EventArgs e)
         {
             if (!(sender is BlankPicker picker)) return;
             SelectedIndexChanged?.Invoke(this, e);

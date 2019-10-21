@@ -22,23 +22,20 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty PlaceholderColorProperty =
             BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(BlankPicker), Color.Black);
-            
+
         public static readonly BindableProperty HorizontalTextAlignmentProperty =
             BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
                 TextAlignment.Start);
 
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
-
         public string DoneButtonText
         {
-            get => (string)GetValue(DoneButtonTextProperty);
+            get => (string) GetValue(DoneButtonTextProperty);
             set => SetValue(DoneButtonTextProperty, value);
         }
 
         public string CancelButtonText
         {
-            get => (string)GetValue(CancelButtonTextProperty);
+            get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
         }
 
@@ -64,9 +61,12 @@ namespace Global.InputForms
 
         public TextAlignment HorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(HorizontalTextAlignmentProperty);
             set => SetValue(HorizontalTextAlignmentProperty, value);
         }
+
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         public void SendDoneClicked()
         {

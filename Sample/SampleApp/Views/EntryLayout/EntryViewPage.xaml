@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              x:Class="SampleApp.Views.EntryViewPage">
@@ -13,47 +14,47 @@
 
                 <!-- Standart Entry with Surrounded Info -->
                 <global:EntryView EntryBackgroundColor="#88FFFFFF" x:Name="_entry"
-                                    InfoViewType="Line"
-                                    Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
-                                    EntryText="BlaaBlaaBlaa"
-                                    LineColor="Purple"
-                                    ReturnType="Send"
-                                    LabelText="Entry">
+                                  InfoViewType="Line"
+                                  Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
+                                  EntryText="BlaaBlaaBlaa"
+                                  LineColor="Purple"
+                                  ReturnType="Send"
+                                  LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
                 </global:EntryView>
-                
+
                 <Label Text="Standart Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView InfoViewType="Surrounded"
-                                         EntryBackgroundColor="#88FFFFFF"
-                                         InfoColor="Purple"
-                                         LabelText="Date">
+                                       EntryBackgroundColor="#88FFFFFF"
+                                       InfoColor="Purple"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </global:DatePickerView.Behaviors>
                 </global:DatePickerView>
-                
+
                 <Label Text="Standart Entry with Background Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Standart Entry with Line Info -->
                 <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    InfoViewType="Line"
-                                    LabelText="Entry">
+                                  InfoViewType="Line"
+                                  LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
-                    <Image Grid.Column="0" Source="StarChecked"/>
-                    <Image Grid.Column="1" Source="StarChecked"/>
-                    <Image Grid.Column="3" Source="StarChecked"/>
-                    <Image Grid.Column="4" Source="StarChecked"/>
+                    <Image Grid.Column="0" Source="StarChecked" />
+                    <Image Grid.Column="1" Source="StarChecked" />
+                    <Image Grid.Column="3" Source="StarChecked" />
+                    <Image Grid.Column="4" Source="StarChecked" />
                 </global:EntryView>
                 <Label Text="Standart Entry with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
@@ -61,8 +62,8 @@
 
                 <!-- Standart Entry with Background Info -->
                 <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    InfoViewType="Background"
-                                    LabelText="Entry">
+                                  InfoViewType="Background"
+                                  LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
@@ -73,9 +74,9 @@
 
                 <!-- Rounded Entry with Surrounded Info -->
                 <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Surrounded"
-                                    LabelText="Entry">
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
@@ -86,10 +87,10 @@
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView EntryCornerRadius="15"
-                                         InfoViewType="Surrounded"
-                                         InfoColor="Purple"
-                                         EntryBackgroundColor="#88FFFFFF"
-                                         LabelText="Date">
+                                       InfoViewType="Surrounded"
+                                       InfoColor="Purple"
+                                       EntryBackgroundColor="#88FFFFFF"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -101,9 +102,9 @@
 
                 <!-- Rounded Entry with Line Info -->
                 <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Line"
-                                    LabelText="Entry">
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Line"
+                                  LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
@@ -114,9 +115,9 @@
 
                 <!-- Rounded Entry with Background Info -->
                 <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
-                                    InfoViewType="Background"
-                                    LabelText="Entry">
+                                  EntryCornerRadius="15"
+                                  InfoViewType="Background"
+                                  LabelText="Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>

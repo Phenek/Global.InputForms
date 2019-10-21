@@ -14,9 +14,9 @@
                 Padding="0,30,0,30"
                 VerticalOptions="Center"
                 HorizontalOptions="CenterAndExpand">
-                
+
                 <!-- Simple Button without content -->
-                 <global:ButtonContent
+                <global:ButtonContent
                     Clicked="SubmitClicked"
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
                     Text="Sign In"
@@ -29,9 +29,9 @@
                     TextColor="White"
                     HighlightBackgroundColor="White"
                     HighlightBorderColor="White"
-                    HighlightTextColor="Teal"/>
-                
-                  <global:ButtonContent
+                    HighlightTextColor="Teal" />
+
+                <global:ButtonContent
                     Clicked="SubmitClicked"
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
                     Text="Sign In"
@@ -44,9 +44,9 @@
                     TextColor="White"
                     HighlightBackgroundColor="White"
                     HighlightBorderColor="Maroon"
-                    HighlightTextColor="Maroon"/>
-                
-                   <global:ButtonContent
+                    HighlightTextColor="Maroon" />
+
+                <global:ButtonContent
                     Clicked="SubmitClicked"
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
                     Text="Sign In"
@@ -59,60 +59,57 @@
                     TextColor="White"
                     HighlightBackgroundColor="White"
                     HighlightBorderColor="Navy"
-                    HighlightTextColor="Navy"/>
+                    HighlightTextColor="Navy" />
 
                 <Label Text="Simple Buttons without content"
                        FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
 
-            <!-- Simple Button with content -->
-               <global:ButtonContent VerticalOptions="Start"
-                                     Clicked="ParameterClicked" BackgroundColor="White"
-                                     HighlightBackgroundColor="LightGray">
+                <!-- Simple Button with content -->
+                <global:ButtonContent VerticalOptions="Start"
+                                      Clicked="ParameterClicked" BackgroundColor="White"
+                                      HighlightBackgroundColor="LightGray">
                     <StackLayout Orientation="Horizontal" Margin="10">
-                         <Frame Padding="0" HasShadow="false"
-                                BackgroundColor="Maroon"
-                                CornerRadius="25"
-                                HeightRequest="50"
-                                WidthRequest="50" VerticalOptions="Center">
-                         </Frame>
-                         <Label Text="Parameters"
-                                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-                                FontSize="Medium" FontFamily="Bold"
-                                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                         <Label Margin="25,0,0,0" Text=">" ScaleY="1.5" TextColor="Navy" FontSize="40"
-                                HorizontalOptions="End"
-                                VerticalOptions="FillAndExpand" />
-                     </StackLayout>
+                        <Frame Padding="0" HasShadow="false"
+                               BackgroundColor="Maroon"
+                               CornerRadius="25"
+                               HeightRequest="50"
+                               WidthRequest="50" VerticalOptions="Center" />
+                        <Label Text="Parameters"
+                               VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                               FontSize="Medium" FontFamily="Bold"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        <Label Margin="25,0,0,0" Text=">" ScaleY="1.5" TextColor="Navy" FontSize="40"
+                               HorizontalOptions="End"
+                               VerticalOptions="FillAndExpand" />
+                    </StackLayout>
                 </global:ButtonContent>
-                
+
                 <global:ButtonContent VerticalOptions="Start" CornerRadius="30" HeightRequest="60"
                                       BorderWidth="10" BorderColor="Silver"
-                                     Clicked="ParameterClicked" BackgroundColor="White"
-                                     HighlightBackgroundColor="LightGray">
+                                      Clicked="ParameterClicked" BackgroundColor="White"
+                                      HighlightBackgroundColor="LightGray">
                     <StackLayout Orientation="Horizontal">
-                         <Frame Padding="0" HasShadow="false"
-                                BackgroundColor="Maroon"
-                                CornerRadius="20"
-                                HeightRequest="40"
-                                WidthRequest="40" VerticalOptions="Center">
-                         </Frame>
-                         <Label Text="Parameters"
-                                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-                                FontSize="Medium" FontFamily="Bold"
-                                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                         <Frame Padding="0" HasShadow="false" CornerRadius="0"
-                                BackgroundColor="Blue"
-                                HeightRequest="40"
-                                WidthRequest="40" VerticalOptions="Center">
-                         </Frame>
-                     </StackLayout>
+                        <Frame Padding="0" HasShadow="false"
+                               BackgroundColor="Maroon"
+                               CornerRadius="20"
+                               HeightRequest="40"
+                               WidthRequest="40" VerticalOptions="Center" />
+                        <Label Text="Parameters"
+                               VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                               FontSize="Medium" FontFamily="Bold"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        <Frame Padding="0" HasShadow="false" CornerRadius="0"
+                               BackgroundColor="Blue"
+                               HeightRequest="40"
+                               WidthRequest="40" VerticalOptions="Center" />
+                    </StackLayout>
                 </global:ButtonContent>
-                
+
                 <global:ButtonContent
-                         BackgroundColor="Transparent"
-                         HighlightBackgroundColor="Gray">
-                
+                    BackgroundColor="Transparent"
+                    HighlightBackgroundColor="Gray">
+
                     <StackLayout Orientation="Vertical">
                         <!---
                         <Label x:Name="_descriptionLabel" 
@@ -124,13 +121,13 @@
                         </Label>
                         -->
                         <Label x:Name="_readMoreLabel"
-                            HorizontalOptions="Center"
-                            TextColor="Blue"
-                            FontSize="Default"
-                            Text="Lire plus"/>
+                               HorizontalOptions="Center"
+                               TextColor="Blue"
+                               FontSize="Default"
+                               Text="Lire plus" />
                     </StackLayout>
                 </global:ButtonContent>
-                    
+
                 <Label Text="Simple Button with content" FontSize="Default" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />

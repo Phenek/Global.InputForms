@@ -22,7 +22,7 @@ namespace SampleApp.Views
         private void _CheckStoreChanged(object sender, bool e)
         {
             if (!(sender is CheckLabel CheckLabel)) return;
-            
+
             var storeName = CheckLabel.Text;
             var store = ((SimpleFormsViewModel) BindingContext).Form.GetType().GetProperty(storeName);
             store.SetValue(((SimpleFormsViewModel) BindingContext).Form, CheckLabel.Checked, null);

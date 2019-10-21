@@ -6,7 +6,7 @@ namespace SampleApp.Views
 {
     public partial class ButtonsPage : ContentPage
     {
-        private SimpleFormsViewModel _viewModel;
+        private readonly SimpleFormsViewModel _viewModel;
 
         public ButtonsPage()
         {

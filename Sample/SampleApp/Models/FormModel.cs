@@ -4,24 +4,22 @@ namespace SampleApp.Models
 {
     public class FormModel : BaseModel
     {
-        private string _firstname  = string.Empty;
-        private string _lastname = string.Empty;
-        private string _gender = string.Empty;
+        private DateTime _birthDate = DateTime.Today;
+        private string _city = string.Empty;
         private string _email = string.Empty;
         private string _emailConfirm = string.Empty;
-        private string _password = string.Empty;
-        private string _zipCode = string.Empty;
-        private string _city = string.Empty;
-        private DateTime _birthDate = DateTime.Today;
         private bool _english;
-        private bool _spanish;
-        private bool _russian;
-        private int _rateSpanish;
-        private int _rateRussian;
+        private string _firstname = string.Empty;
+        private string _gender = string.Empty;
+        private string _lastname = string.Empty;
+        private string _password = string.Empty;
 
-        public FormModel()
-        {
-        }
+        private int _rateEnglish;
+        private int _rateRussian;
+        private int _rateSpanish;
+        private bool _russian;
+        private bool _spanish;
+        private string _zipCode = string.Empty;
 
         public string Firstname
         {
@@ -95,7 +93,6 @@ namespace SampleApp.Models
             set => SetProperty(ref _russian, value);
         }
 
-        private int _rateEnglish;
         public int RateEnglish
         {
             get => _rateEnglish;

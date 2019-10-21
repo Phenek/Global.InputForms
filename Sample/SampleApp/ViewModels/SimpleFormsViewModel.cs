@@ -9,14 +9,13 @@ namespace SampleApp.ViewModels
 {
     public class SimpleFormsViewModel : BaseViewModel
     {
-        private FormModel _form = new FormModel();
-
         private readonly ILocalizedResourceProvider _i18N = DependencyService.Get<IDependencyGetter>()
             .Get<ILocalizedResourceProvider>();
 
+        private FormModel _form = new FormModel();
+
         public SimpleFormsViewModel()
         {
-
             Rates = new ObservableDictionary<string, object>
             {
                 {"0", "none"},

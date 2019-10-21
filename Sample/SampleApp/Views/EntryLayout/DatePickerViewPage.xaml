@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
@@ -13,22 +14,22 @@
 
                 <!-- Standart Entry with Surrounded Info -->
                 <global:DatePickerView x:Name="_entry" StyleClass="RoundedEntry"
-                                    InfoViewType="Line"
-                                    EntryPlaceholder="Date"
-                                    LabelText="Date">
+                                       InfoViewType="Line"
+                                       EntryPlaceholder="Date"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </global:DatePickerView.Behaviors>
                 </global:DatePickerView>
-                
+
                 <Label Text="Standart Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView InfoViewType="Surrounded"
-                                         LabelText="Date">
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -40,8 +41,8 @@
 
                 <!-- Standart Entry with Line Info -->
                 <global:DatePickerView StyleClass="Entry"
-                                         InfoViewType="Line"
-                                         LabelText="Date">
+                                       InfoViewType="Line"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -53,8 +54,8 @@
 
                 <!-- Standart Entry with Background Info -->
                 <global:DatePickerView StyleClass="Entry"
-                                         InfoViewType="Background"
-                                         LabelText="Date">
+                                       InfoViewType="Background"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -66,8 +67,8 @@
 
                 <!-- Rounded Entry with Surrounded Info -->
                 <global:DatePickerView StyleClass="Entry"
-                                         InfoViewType="Surrounded"
-                                         LabelText="Date">
+                                       InfoViewType="Surrounded"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -79,42 +80,42 @@
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView StyleClass="Entry"
-                                         InfoViewType="Surrounded"
-                                         LabelText="Date">
+                                       InfoViewType="Surrounded"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </global:DatePickerView.Behaviors>
                 </global:DatePickerView>
-                
+
                 <Label Text="Standart Entry with Background Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Rounded Entry with Line Info -->
                 <global:DatePickerView StyleClass="Entry"
-                                         InfoViewType="Line"
-                                         LabelText="Date">
+                                       InfoViewType="Line"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </global:DatePickerView.Behaviors>
                 </global:DatePickerView>
-                
+
                 <Label Text="Rounded Entry with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Rounded Entry with Background Info -->
                 <global:DatePickerView StyleClass="Entry"
-                                         InfoViewType="Background"
-                                         LabelText="Date">
+                                       InfoViewType="Background"
+                                       LabelText="Date">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </global:DatePickerView.Behaviors>
                 </global:DatePickerView>
-                
+
                 <Label Text="Rounded Entry with Background Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />

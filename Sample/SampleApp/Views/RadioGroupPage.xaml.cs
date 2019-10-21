@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SampleApp.ViewModels;
+﻿using SampleApp.ViewModels;
 using Xamarin.Forms;
 
 namespace SampleApp.Views

@@ -127,7 +127,7 @@ namespace SampleApp.Behaviors
     public class EmailCompareValidationBehavior : Behavior<EntryView>
     {
         public static readonly BindableProperty CompareToEntryProperty = BindableProperty.Create("CompareToEntry",
-            typeof(EntryView), typeof(EmailCompareValidationBehavior), null);
+            typeof(EntryView), typeof(EmailCompareValidationBehavior));
 
         public EntryView CompareToEntry
         {
@@ -211,14 +211,12 @@ namespace SampleApp.Behaviors
             var i18N = DependencyService.Get<IDependencyGetter>().Get<ILocalizedResourceProvider>();
 
             if (sender is DatePickerView datePickerView)
-            {
                 if (datePickerView.Date is DateTime date)
                 {
                     var majorAge = date.AddYears(18);
                     var isMajor = majorAge <= DateTime.Today;
                     datePickerView.ShowInfo(!isMajor, i18N.GetText("Error.MajorAge"));
                 }
-            }
         }
 
         protected override void OnDetachingFrom(DatePickerView bindable)

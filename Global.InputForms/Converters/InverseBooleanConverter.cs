@@ -20,7 +20,7 @@ namespace Global.InputForms.Converters
         /// <returns>Negated boolean value.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return !(bool) value;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Global.InputForms.Converters
         /// <remarks>To be added.</remarks>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return !(bool) value;
         }
     }
 }

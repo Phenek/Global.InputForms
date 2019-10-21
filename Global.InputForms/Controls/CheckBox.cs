@@ -41,9 +41,9 @@ namespace Global.InputForms
             UpdateContent(CheckType);
 
             _icon.SetBinding(HeightRequestProperty,
-                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
             _icon.SetBinding(WidthRequestProperty,
-                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
 
             var tap = new TapGestureRecognizer();
             tap.Tapped += OnChecked;
@@ -143,22 +143,22 @@ namespace Global.InputForms
         public event EventHandler<bool> CheckedChanged;
         public event EventHandler<bool> Clicked;
 
-		protected override void OnChildAdded(Element child)
-		{
-			base.OnChildAdded(child);
-            if (IconPosition == IconPosition.End && (Children[Children.Count - 1] != _icon))
+        protected override void OnChildAdded(Element child)
+        {
+            base.OnChildAdded(child);
+            if (IconPosition == IconPosition.End && Children[Children.Count - 1] != _icon)
             {
                 Children.Remove(_icon);
                 Children.Add(_icon);
             }
-            else if (IconPosition == IconPosition.Start && (Children[0] != _icon))
+            else if (IconPosition == IconPosition.Start && Children[0] != _icon)
             {
                 Children.Remove(_icon);
-                Children.Insert(0,_icon);
+                Children.Insert(0, _icon);
             }
-		}
+        }
 
-		protected override void OnSizeAllocated(double width, double height)
+        protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
             if (height > 0 && _fill is Frame fill && fill.Height > 0)
@@ -168,7 +168,7 @@ namespace Global.InputForms
         private static void OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is CheckBox checkBox) || checkBox._icon == null) return;
-            
+
             checkBox.SetCheckedColorsStyles();
             checkBox.CheckedChanged?.Invoke(bindable, (bool) newValue);
         }
@@ -188,7 +188,7 @@ namespace Global.InputForms
         private static void IconSizeChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is CheckBox checkBox) || checkBox._checkLabel == null) return;
-            
+
             checkBox._icon.HeightRequest = (double) newValue;
             checkBox._icon.WidthRequest = (double) newValue;
         }
@@ -196,7 +196,7 @@ namespace Global.InputForms
         private void Animation(object sender, bool e)
         {
             if (!(_icon is Frame)) return;
-            
+
             _icon.Scale = .8;
             _icon.ScaleTo(1, easing: Easing.SpringOut);
         }
@@ -350,7 +350,7 @@ namespace Global.InputForms
         /// <value>The label text color.</value>
         public IconPosition IconPosition
         {
-            get => (IconPosition)GetValue(IconPositionProperty);
+            get => (IconPosition) GetValue(IconPositionProperty);
             set => SetValue(IconPositionProperty, value);
         }
 
@@ -367,10 +367,10 @@ namespace Global.InputForms
             CheckBox.Children.Remove(CheckBox._icon);
 
             if (CheckBox.IconPosition == IconPosition.End)
-				CheckBox.Children.Add(CheckBox._icon);
+                CheckBox.Children.Add(CheckBox._icon);
             else
-				CheckBox.Children.Insert(0, CheckBox._icon);
-		}
+                CheckBox.Children.Insert(0, CheckBox._icon);
+        }
 
         /// <summary>
         ///     Gets or sets the label font attributes.
@@ -595,7 +595,7 @@ namespace Global.InputForms
         private static void CornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is CheckBox checkBox)) return;
-            
+
             checkBox.CornerRadius = (float) newValue;
             if (checkBox._fill != null && checkBox._fill.Height > 0)
                 checkBox._fill.CornerRadius =

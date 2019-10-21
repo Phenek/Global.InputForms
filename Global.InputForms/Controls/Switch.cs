@@ -8,13 +8,15 @@ namespace Global.InputForms
         /// <summary>
         ///     The switch height request property.
         /// </summary>
-        public static readonly BindableProperty SwitchHeightRequestProperty = BindableProperty.Create(nameof(SwitchHeightRequest),
+        public static readonly BindableProperty SwitchHeightRequestProperty = BindableProperty.Create(
+            nameof(SwitchHeightRequest),
             typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
         ///     The switch width request property.
         /// </summary>
-        public static readonly BindableProperty SwitchWidthRequestProperty = BindableProperty.Create(nameof(SwitchWidthRequest),
+        public static readonly BindableProperty SwitchWidthRequestProperty = BindableProperty.Create(
+            nameof(SwitchWidthRequest),
             typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
@@ -26,7 +28,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The corner radius property.
         /// </summary>
-        public static readonly BindableProperty SwitchCornerRadiusProperty = BindableProperty.Create(nameof(SwitchCornerRadius),
+        public static readonly BindableProperty SwitchCornerRadiusProperty = BindableProperty.Create(
+            nameof(SwitchCornerRadius),
             typeof(float), typeof(Switch), 0f);
 
         /// <summary>
@@ -38,7 +41,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The background height request property.
         /// </summary>
-        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest),
+        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(
+            nameof(HeightRequest),
             typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
 
         /// <summary>
@@ -50,7 +54,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The background color property.
         /// </summary>
-        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor),
+        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
+            nameof(BackgroundColor),
             typeof(Color), typeof(Switch), Color.Yellow);
 
         /// <summary>
@@ -62,7 +67,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The background content property.
         /// </summary>
-        public static readonly BindableProperty BackgroundContentProperty = BindableProperty.Create(nameof(BackgroundContent),
+        public static readonly BindableProperty BackgroundContentProperty = BindableProperty.Create(
+            nameof(BackgroundContent),
             typeof(View), typeof(Switch));
 
         /// <summary>
@@ -97,15 +103,15 @@ namespace Global.InputForms
             Children.Add(_backgroundFrame, 0, 0);
 
             _backgroundFrame.SetBinding(Frame.CornerRadiusProperty,
-                new Binding(nameof(CornerRadius)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(CornerRadius)) {Source = this, Mode = BindingMode.OneWay});
             _backgroundFrame.SetBinding(VisualElement.HeightRequestProperty,
-                new Binding(nameof(HeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(HeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _backgroundFrame.SetBinding(VisualElement.WidthRequestProperty,
-                new Binding(nameof(WidthRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(WidthRequest)) {Source = this, Mode = BindingMode.OneWay});
             _backgroundFrame.SetBinding(VisualElement.BackgroundColorProperty,
-                new Binding(nameof(BackgroundColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(BackgroundColor)) {Source = this, Mode = BindingMode.OneWay});
             _backgroundFrame.SetBinding(ContentView.ContentProperty,
-                new Binding(nameof(BackgroundContent)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(BackgroundContent)) {Source = this, Mode = BindingMode.OneWay});
 
             _switchFrame = new Frame
             {
@@ -115,15 +121,15 @@ namespace Global.InputForms
                 Padding = 0
             };
             _switchFrame.SetBinding(Frame.CornerRadiusProperty,
-                new Binding(nameof(SwitchCornerRadius)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(SwitchCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
             _switchFrame.SetBinding(VisualElement.HeightRequestProperty,
-                new Binding(nameof(SwitchHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(SwitchHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _switchFrame.SetBinding(VisualElement.WidthRequestProperty,
-                new Binding(nameof(SwitchWidthRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(SwitchWidthRequest)) {Source = this, Mode = BindingMode.OneWay});
             _switchFrame.SetBinding(ContentView.ContentProperty,
-                new Binding(nameof(SwitchContent)) { Source = this, Mode = BindingMode.TwoWay });
+                new Binding(nameof(SwitchContent)) {Source = this, Mode = BindingMode.TwoWay});
             _switchFrame.SetBinding(VisualElement.BackgroundColorProperty,
-                new Binding(nameof(SwitchColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(SwitchColor)) {Source = this, Mode = BindingMode.OneWay});
 
             Children.Add(_switchFrame, 0, 0);
 
@@ -147,7 +153,7 @@ namespace Global.InputForms
         /// <value>The Switch Height Request.</value>
         public double SwitchHeightRequest
         {
-            get => (double)GetValue(SwitchHeightRequestProperty);
+            get => (double) GetValue(SwitchHeightRequestProperty);
             set => SetValue(SwitchHeightRequestProperty, value);
         }
 
@@ -157,7 +163,7 @@ namespace Global.InputForms
         /// <value>The Switch Width Request.</value>
         public double SwitchWidthRequest
         {
-            get => (double)GetValue(SwitchWidthRequestProperty);
+            get => (double) GetValue(SwitchWidthRequestProperty);
             set => SetValue(SwitchWidthRequestProperty, value);
         }
 
@@ -167,7 +173,7 @@ namespace Global.InputForms
         /// <value>The Background Color.</value>
         public Color SwitchColor
         {
-            get => (Color)GetValue(SwitchColorProperty);
+            get => (Color) GetValue(SwitchColorProperty);
             set => SetValue(SwitchColorProperty, value);
         }
 
@@ -177,7 +183,7 @@ namespace Global.InputForms
         /// <value>The Corner Radius.</value>
         public float SwitchCornerRadius
         {
-            get => (float)GetValue(SwitchCornerRadiusProperty);
+            get => (float) GetValue(SwitchCornerRadiusProperty);
             set => SetValue(SwitchCornerRadiusProperty, value);
         }
 
@@ -187,7 +193,7 @@ namespace Global.InputForms
         /// <value>The Switch Content.</value>
         public View SwitchContent
         {
-            get => (View)GetValue(SwitchContentProperty);
+            get => (View) GetValue(SwitchContentProperty);
             set => SetValue(SwitchContentProperty, value);
         }
 
@@ -197,7 +203,7 @@ namespace Global.InputForms
         /// <value>The Background Height Request.</value>
         public new double HeightRequest
         {
-            get => (double)GetValue(HeightRequestProperty);
+            get => (double) GetValue(HeightRequestProperty);
             set => SetValue(HeightRequestProperty, value);
         }
 
@@ -207,7 +213,7 @@ namespace Global.InputForms
         /// <value>The Background width Request.</value>
         public new double WidthRequest
         {
-            get => (double)GetValue(WidthRequestProperty);
+            get => (double) GetValue(WidthRequestProperty);
             set => SetValue(WidthRequestProperty, value);
         }
 
@@ -217,7 +223,7 @@ namespace Global.InputForms
         /// <value>The Background Color.</value>
         public new Color BackgroundColor
         {
-            get => (Color)GetValue(BackgroundColorProperty);
+            get => (Color) GetValue(BackgroundColorProperty);
             set => SetValue(BackgroundColorProperty, value);
         }
 
@@ -227,7 +233,7 @@ namespace Global.InputForms
         /// <value>The Corner Radius.</value>
         public float CornerRadius
         {
-            get => (float)GetValue(CornerRadiusProperty);
+            get => (float) GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
 
@@ -237,7 +243,7 @@ namespace Global.InputForms
         /// <value>The Background Content.</value>
         public View BackgroundContent
         {
-            get => (View)GetValue(BackgroundContentProperty);
+            get => (View) GetValue(BackgroundContentProperty);
             set => SetValue(BackgroundContentProperty, value);
         }
 
@@ -247,7 +253,7 @@ namespace Global.InputForms
         /// <value>The Toggled Position.</value>
         public bool IsToggled
         {
-            get => (bool)GetValue(IsToggledProperty);
+            get => (bool) GetValue(IsToggledProperty);
             set => SetValue(IsToggledProperty, value);
         }
 
@@ -257,7 +263,7 @@ namespace Global.InputForms
         /// <value>The Toggled Position.</value>
         public SwitchLimit SwitchLimit
         {
-            get => (SwitchLimit)GetValue(SwitchLimitProperty);
+            get => (SwitchLimit) GetValue(SwitchLimitProperty);
             set => SetValue(SwitchLimitProperty, value);
         }
 
@@ -284,15 +290,18 @@ namespace Global.InputForms
             if (bindable is Switch view)
             {
                 //Switch
-                view._switchFrame.WidthRequest = view.SwitchWidthRequest < 0.0 ? view.Width / 2 : view.SwitchWidthRequest;
-                view._switchFrame.HeightRequest = view.SwitchHeightRequest < 0.0 ? view.Height : view.SwitchHeightRequest;
+                view._switchFrame.WidthRequest =
+                    view.SwitchWidthRequest < 0.0 ? view.Width / 2 : view.SwitchWidthRequest;
+                view._switchFrame.HeightRequest =
+                    view.SwitchHeightRequest < 0.0 ? view.Height : view.SwitchHeightRequest;
 
                 //Background
                 view._backgroundFrame.WidthRequest = view.WidthRequest < 0.0 ? view.Width : view.WidthRequest;
                 view._backgroundFrame.HeightRequest = view.HeightRequest < 0.0 ? view.Height : view.HeightRequest;
 
                 //View
-                view.SetBaseWidthRequest(Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2));
+                view.SetBaseWidthRequest(Math.Max(view._backgroundFrame.WidthRequest,
+                    view._switchFrame.WidthRequest * 2));
 
                 switch (view.SwitchLimit)
                 {
@@ -304,7 +313,8 @@ namespace Global.InputForms
                                      - (view._backgroundFrame.WidthRequest / 2 - view._switchFrame.WidthRequest) / 2;
                         break;
                     case SwitchLimit.Max:
-                        view._xRef = Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2) / 4;
+                        view._xRef = Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2) /
+                                     4;
                         break;
                 }
 
@@ -335,12 +345,12 @@ namespace Global.InputForms
         {
             if (bindable is Switch view)
             {
-                if ((bool)newValue && view.State != SwitchState.Right)
+                if ((bool) newValue && view.State != SwitchState.Right)
                     view.GoToRight();
-                else if (!(bool)newValue && view.State != SwitchState.Left)
+                else if (!(bool) newValue && view.State != SwitchState.Left)
                     view.GoToLeft();
 
-                view.Toggled?.Invoke(view, new ToggledEventArgs((bool)newValue));
+                view.Toggled?.Invoke(view, new ToggledEventArgs((bool) newValue));
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using Android.App;
 using Android.Content;
@@ -11,79 +10,27 @@ using Global.InputForms.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
+using TextAlignment = Android.Views.TextAlignment;
+using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(BlankPicker), typeof(BlankPickerRenderer))]
+
 namespace Global.InputForms.Droid.Renderers
 {
-    public class BlankPickerRenderer : PickerRenderer, Android.Views.View.IOnClickListener
+    public class BlankPickerRenderer : PickerRenderer, View.IOnClickListener
     {
-        AlertDialog _dialog;
-        IElementController EController => Element as IElementController;
-        BlankPicker blankPicker;
+        private AlertDialog _dialog;
+        private BlankPicker blankPicker;
 
         public BlankPickerRenderer(Context context) : base(context)
         {
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
+        private IElementController EController => Element;
+
+        public void OnClick(View v)
         {
-            if (!(e.NewElement is BlankPicker bPicker)) return;
-            blankPicker = bPicker;
-            if (e.NewElement != null)
-            {
-                if (Control == null)
-                {
-                    var textField = CreateNativeControl();
-                    textField.SetOnClickListener(this);
-                    textField.InputType = InputTypes.Null;
-                    SetNativeControl(textField);
-                }
-            }
-            base.OnElementChanged(e);
-
-            SetPlaceholder();
-            SetAlignment();
-            Control.SetPadding(0, 7, 0, 3);
-            Control.Gravity = Android.Views.GravityFlags.Fill;
-        }
-
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
-
-            if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
-        }
-
-
-        private void SetPlaceholder()
-        {
-            Control.SetBackgroundColor(Color.Transparent);
-
-            if (Element is BlankPicker picker && !string.IsNullOrWhiteSpace(picker.Placeholder))
-                Control.Text = picker.Placeholder;
-        }
-
-        private void SetAlignment()
-        {
-            switch (((BlankPicker)Element).HorizontalTextAlignment)
-            {
-                case Xamarin.Forms.TextAlignment.Center:
-                    Control.TextAlignment = Android.Views.TextAlignment.Center;
-                    break;
-                case Xamarin.Forms.TextAlignment.End:
-                    Control.TextAlignment = Android.Views.TextAlignment.ViewEnd;
-                    break;
-                case Xamarin.Forms.TextAlignment.Start:
-                    Control.TextAlignment = Android.Views.TextAlignment.ViewStart;
-                    break;
-            }
-        }
-
-        public void OnClick(Android.Views.View v)
-        {
-            Picker model = Element;
+            var model = Element;
 
             var picker = new NumberPicker(Context);
             if (model.Items != null && model.Items.Any())
@@ -92,11 +39,11 @@ namespace Global.InputForms.Droid.Renderers
                 picker.MinValue = 0;
                 picker.SetDisplayedValues(model.Items.ToArray());
                 picker.WrapSelectorWheel = false;
-                picker.DescendantFocusability = Android.Views.DescendantFocusability.BlockDescendants;
+                picker.DescendantFocusability = DescendantFocusability.BlockDescendants;
                 picker.Value = model.SelectedIndex;
             }
 
-            var layout = new LinearLayout(Context) { Orientation = Orientation.Vertical };
+            var layout = new LinearLayout(Context) {Orientation = Orientation.Vertical};
             layout.AddView(picker);
 
             EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
@@ -123,6 +70,7 @@ namespace Global.InputForms.Droid.Renderers
                         Control.Text = model.Items[Element.SelectedIndex];
                     EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 }
+
                 _dialog = null;
             });
 
@@ -132,6 +80,61 @@ namespace Global.InputForms.Droid.Renderers
                 EController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
             };
             _dialog.Show();
+        }
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
+        {
+            if (!(e.NewElement is BlankPicker bPicker)) return;
+            blankPicker = bPicker;
+            if (e.NewElement != null)
+                if (Control == null)
+                {
+                    var textField = CreateNativeControl();
+                    textField.SetOnClickListener(this);
+                    textField.InputType = InputTypes.Null;
+                    SetNativeControl(textField);
+                }
+
+            base.OnElementChanged(e);
+
+            SetPlaceholder();
+            SetAlignment();
+            Control.SetPadding(0, 7, 0, 3);
+            Control.Gravity = GravityFlags.Fill;
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
+
+            if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
+        }
+
+
+        private void SetPlaceholder()
+        {
+            Control.SetBackgroundColor(Color.Transparent);
+
+            if (Element is BlankPicker picker && !string.IsNullOrWhiteSpace(picker.Placeholder))
+                Control.Text = picker.Placeholder;
+        }
+
+        private void SetAlignment()
+        {
+            switch (((BlankPicker) Element).HorizontalTextAlignment)
+            {
+                case Xamarin.Forms.TextAlignment.Center:
+                    Control.TextAlignment = TextAlignment.Center;
+                    break;
+                case Xamarin.Forms.TextAlignment.End:
+                    Control.TextAlignment = TextAlignment.ViewEnd;
+                    break;
+                case Xamarin.Forms.TextAlignment.Start:
+                    Control.TextAlignment = TextAlignment.ViewStart;
+                    break;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
             Margin="30"
             Spacing="20"
             HorizontalOptions="FillAndExpand">
-            
+
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
                 <global:CheckLabel Checked="true"
                                    CheckType="Fill" IconSize="20" CornerRadius="10"
@@ -142,77 +142,77 @@
                                    CheckedColor="Olive" />
             </StackLayout>
             <!-- Simple CheckLabel -->
-                <global:CheckLabel Checked="true" Text="Check it!"
-                   CheckType="Check" IconSize="20"
-                   BackgroundColor="Transparent"
-                   BorderColor="Gray"
-                   CheckedBackgroundColor="Transparent"
-                   CheckedBorderColor="Teal"
-                   CheckedColor="Teal" />
-            
+            <global:CheckLabel Checked="true" Text="Check it!"
+                               CheckType="Check" IconSize="20"
+                               BackgroundColor="Transparent"
+                               BorderColor="Gray"
+                               CheckedBackgroundColor="Transparent"
+                               CheckedBorderColor="Teal"
+                               CheckedColor="Teal" />
+
             <Label Text="Simple CheckLabel" FontSize="Small" TextColor="Gray"
                    HorizontalTextAlignment="Center" HorizontalOptions="Center" />
             <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
-            
+
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
                 <global:CheckButton Text="Check it!"
-                                   WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                   BackgroundColor="Teal"
-                                   BorderColor="White"
-                                   TextColor="White"
-                                   CheckedBackgroundColor="White"
-                                   CheckedBorderColor="White"
-                                   CheckedTextColor="Teal"/>
+                                    WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
+                                    BackgroundColor="Teal"
+                                    BorderColor="White"
+                                    TextColor="White"
+                                    CheckedBackgroundColor="White"
+                                    CheckedBorderColor="White"
+                                    CheckedTextColor="Teal" />
                 <global:CheckButton Text="Hip!"
-                                   WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                   BackgroundColor="Maroon"
-                                   BorderColor="White"
-                                   TextColor="White"
-                                   CheckedBackgroundColor="White"
-                                   CheckedBorderColor="White"
-                                   CheckedTextColor="Maroon" />
+                                    WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
+                                    BackgroundColor="Maroon"
+                                    BorderColor="White"
+                                    TextColor="White"
+                                    CheckedBackgroundColor="White"
+                                    CheckedBorderColor="White"
+                                    CheckedTextColor="Maroon" />
                 <global:CheckButton Text="Hop!"
-                                   WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                   BackgroundColor="Navy"
-                                   BorderColor="Navy"
-                                   TextColor="White"
-                                   CheckedBackgroundColor="White"
-                                   CheckedBorderColor="Navy"
-                                   CheckedTextColor="Navy" />
+                                    WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
+                                    BackgroundColor="Navy"
+                                    BorderColor="Navy"
+                                    TextColor="White"
+                                    CheckedBackgroundColor="White"
+                                    CheckedBorderColor="Navy"
+                                    CheckedTextColor="Navy" />
             </StackLayout>
-            
+
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="40">
                 <global:CheckButton Text="Check it!"
-                                   WidthRequest="70" HeightRequest="30"
-                                   BackgroundColor="Teal"
-                                   BorderColor="White"
-                                   TextColor="White"
-                                   CheckedBackgroundColor="White"
-                                   CheckedBorderColor="White"
-                                   CheckedTextColor="Teal"/>
+                                    WidthRequest="70" HeightRequest="30"
+                                    BackgroundColor="Teal"
+                                    BorderColor="White"
+                                    TextColor="White"
+                                    CheckedBackgroundColor="White"
+                                    CheckedBorderColor="White"
+                                    CheckedTextColor="Teal" />
                 <global:CheckButton Text="Hip!"
-                                   WidthRequest="70" HeightRequest="30"
-                                   BackgroundColor="Maroon"
-                                   BorderColor="White"
-                                   TextColor="White"
-                                   CheckedBackgroundColor="White"
-                                   CheckedBorderColor="White"
-                                   CheckedTextColor="Maroon" />
+                                    WidthRequest="70" HeightRequest="30"
+                                    BackgroundColor="Maroon"
+                                    BorderColor="White"
+                                    TextColor="White"
+                                    CheckedBackgroundColor="White"
+                                    CheckedBorderColor="White"
+                                    CheckedTextColor="Maroon" />
                 <global:CheckButton Text="Hop!"
-                                   WidthRequest="70" HeightRequest="30"
-                                   BackgroundColor="Navy"
-                                   BorderColor="Navy"
-                                   TextColor="White"
-                                   CheckedBackgroundColor="White"
-                                   CheckedBorderColor="Navy"
-                                   CheckedTextColor="Navy" />
+                                    WidthRequest="70" HeightRequest="30"
+                                    BackgroundColor="Navy"
+                                    BorderColor="Navy"
+                                    TextColor="White"
+                                    CheckedBackgroundColor="White"
+                                    CheckedBorderColor="Navy"
+                                    CheckedTextColor="Navy" />
             </StackLayout>
             <!-- Simple CheckButtons -->
-            
+
             <Label Text="Simple CheckButtons" FontSize="Small" TextColor="Gray"
                    HorizontalTextAlignment="Center" HorizontalOptions="Center" />
             <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
-            
+
         </StackLayout>
     </ScrollView>
 </ContentPage>

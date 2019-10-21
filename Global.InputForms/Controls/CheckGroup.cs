@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Global.InputForms.Interfaces;
-using Global.InputForms.Models;
 using Xamarin.Forms;
 
 namespace Global.InputForms
@@ -151,7 +150,7 @@ namespace Global.InputForms
         private void AddItemToView(KeyValuePair<string, object> item)
         {
             if (!(GenerateCheckableView(null) is View view)) return;
-            
+
             ((ICheckable) view).Item = item;
             Children.Add(view);
         }
@@ -168,7 +167,7 @@ namespace Global.InputForms
         public View GenerateCheckableView(object context)
         {
             if (!(CheckTemplate is ControlTemplate template)) return null;
-            
+
             var temp = template.CreateContent();
             if (temp is View view && view is ICheckable)
             {
@@ -178,7 +177,6 @@ namespace Global.InputForms
 
             Console.WriteLine("{CheckGroup}: CheckTemplate must implement interface ICheckable");
             throw new Exception("{CheckGroup}: CheckTemplate must implement interface ICheckable");
-
         }
 
         /// <summary>
@@ -227,7 +225,7 @@ namespace Global.InputForms
         private void OnCheckedChanged(object sender, bool check)
         {
             if (!(sender is ICheckable checkBox)) return;
-            
+
             CheckedChanged?.Invoke(sender, check);
             CheckedCollectionChanged?.Invoke(this, GetCheckedDictionary());
         }
@@ -235,11 +233,10 @@ namespace Global.InputForms
         public bool Validate()
         {
             if (!(Parent is FrameInfo frameInfo)) return true;
-            
+
             frameInfo.Info = false;
             frameInfo.Validators?.Invoke(this, new EventArgs());
             return !frameInfo.Info;
-
         }
 
         /*

@@ -62,7 +62,7 @@ namespace Global.InputForms.Models
         public new void Add(TKey key, TValue value)
         {
             if (ContainsKey(key)) return;
-            
+
             var item = new KeyValuePair<TKey, TValue>(key, value);
             base.Add(key, value);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item,
@@ -73,7 +73,7 @@ namespace Global.InputForms.Models
         public new bool Remove(TKey key)
         {
             if (!TryGetValue(key, out _)) return false;
-            
+
             var item = new KeyValuePair<TKey, TValue>(key, base[key]);
             var result = base.Remove(key);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item,

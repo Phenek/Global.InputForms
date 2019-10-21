@@ -113,7 +113,7 @@ namespace Global.InputForms
         public static readonly BindableProperty EntryFontSizeProperty =
             BindableProperty.Create(nameof(EntryFontSize), typeof(double), typeof(EntryLayout),
                 Device.GetNamedSize(NamedSize.Medium, typeof(Entry)));
-                
+
         /// <summary>
         ///     The Entry Placeholder property.
         /// </summary>
@@ -142,13 +142,15 @@ namespace Global.InputForms
         ///     The Entry Line Color property.
         /// </summary>
         public static readonly BindableProperty LineColorProperty =
-            BindableProperty.Create(nameof(LineColor), typeof(Color), typeof(EntryLayout), Color.Transparent, propertyChanged: ColorChanged);
+            BindableProperty.Create(nameof(LineColor), typeof(Color), typeof(EntryLayout), Color.Transparent,
+                propertyChanged: ColorChanged);
 
         /// <summary>
         ///     The Entry Line Color property.
         /// </summary>
         public static readonly BindableProperty LineHighlightedColorProperty =
-            BindableProperty.Create(nameof(LineHighlightedColor), typeof(Color), typeof(EntryLayout), Color.Transparent);
+            BindableProperty.Create(nameof(LineHighlightedColor), typeof(Color), typeof(EntryLayout),
+                Color.Transparent);
 
         /// <summary>
         ///     The Info View Type property.
@@ -229,55 +231,51 @@ namespace Global.InputForms
         private readonly BoxView _line;
         private Label _infoLabel;
         private Label _label;
+        public Command TextAlignmentCommand;
 
         public EventHandler<EventArgs> Validators;
-        public new bool IsFocused { get; set; }
-        public new event EventHandler<FocusEventArgs> Focused;
-        public new event EventHandler<FocusEventArgs> Unfocused;
-        public Command TextAlignmentCommand;
 
         public EntryLayout()
         {
             ColumnSpacing = 0;
-            ColumnDefinitions = new ColumnDefinitionCollection {
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) }};
+            ColumnDefinitions = new ColumnDefinitionCollection
+            {
+                new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)},
+                new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)},
+                new ColumnDefinition {Width = new GridLength(1, GridUnitType.Auto)}
+            };
             RowSpacing = 0;
-            RowDefinitions = new RowDefinitionCollection {
-                    new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
-                    new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
-                    new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) }};
+            RowDefinitions = new RowDefinitionCollection
+            {
+                new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)},
+                new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)},
+                new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)}
+            };
 
             _frameEntry = new Frame
             {
                 Padding = 0,
-                HasShadow = false,
+                HasShadow = false
             };
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
-                new Binding(nameof(EntryCornerRadius)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             _line = new BoxView
             {
                 HeightRequest = 2,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = LineColor,
+                BackgroundColor = LineColor
             };
             Children.Add(_frameEntry, 1, 4, 1, 2);
             Children.Add(_line, 1, 4, 1, 2);
         }
 
-        protected override void OnChildAdded(Element child)
-        {
-            base.OnChildAdded(child);
-            if (child != _label && child != _infoLabel)
-                SetRow(child, 1);
-        }
+        public new bool IsFocused { get; set; }
 
         /// <summary>
         ///     Gets or sets the label font attributes.
@@ -285,7 +283,7 @@ namespace Global.InputForms
         /// <value>The label font attributes.</value>
         public FontAttributes LabelFontAttributes
         {
-            get => (FontAttributes)GetValue(LabelFontAttributesProperty);
+            get => (FontAttributes) GetValue(LabelFontAttributesProperty);
             set => SetValue(LabelFontAttributesProperty, value);
         }
 
@@ -295,7 +293,7 @@ namespace Global.InputForms
         /// <value>The label font family.</value>
         public string LabelFontFamily
         {
-            get => (string)GetValue(LabelFontFamilyProperty);
+            get => (string) GetValue(LabelFontFamilyProperty);
             set => SetValue(LabelFontFamilyProperty, value);
         }
 
@@ -305,7 +303,7 @@ namespace Global.InputForms
         /// <value>The label font size.</value>
         public double LabelFontSize
         {
-            get => (double)GetValue(LabelFontSizeProperty);
+            get => (double) GetValue(LabelFontSizeProperty);
             set => SetValue(LabelFontSizeProperty, value);
         }
 
@@ -315,7 +313,7 @@ namespace Global.InputForms
         /// <value>The label horizontal text alignment.</value>
         public TextAlignment LabelHorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(LabelHorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(LabelHorizontalTextAlignmentProperty);
             set => SetValue(LabelHorizontalTextAlignmentProperty, value);
         }
 
@@ -325,7 +323,7 @@ namespace Global.InputForms
         /// <value>The label vertical text alignment.</value>
         public TextAlignment LabelVerticalTextAlignment
         {
-            get => (TextAlignment)GetValue(LabelVerticalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(LabelVerticalTextAlignmentProperty);
             set => SetValue(LabelVerticalTextAlignmentProperty, value);
         }
 
@@ -335,7 +333,7 @@ namespace Global.InputForms
         /// <value>The label text.</value>
         public string LabelText
         {
-            get => (string)GetValue(LabelTextProperty);
+            get => (string) GetValue(LabelTextProperty);
             set => SetValue(LabelTextProperty, value);
         }
 
@@ -345,7 +343,7 @@ namespace Global.InputForms
         /// <value>The label text color.</value>
         public Color LabelHighlightedColor
         {
-            get => (Color)GetValue(LabelHighlightedColorProperty);
+            get => (Color) GetValue(LabelHighlightedColorProperty);
             set => SetValue(LabelHighlightedColorProperty, value);
         }
 
@@ -355,7 +353,7 @@ namespace Global.InputForms
         /// <value>The label text color.</value>
         public Color LabelTextColor
         {
-            get => (Color)GetValue(LabelTextColorProperty);
+            get => (Color) GetValue(LabelTextColorProperty);
             set => SetValue(LabelTextColorProperty, value);
         }
 
@@ -365,7 +363,7 @@ namespace Global.InputForms
         /// <value>The entry Corner Radius.</value>
         public float EntryCornerRadius
         {
-            get => (float)GetValue(EntryCornerRadiusProperty);
+            get => (float) GetValue(EntryCornerRadiusProperty);
             set => SetValue(EntryCornerRadiusProperty, value);
         }
 
@@ -375,7 +373,7 @@ namespace Global.InputForms
         /// <value>The entry Corner Radius.</value>
         public double EntryHeightRequest
         {
-            get => (double)GetValue(EntryHeightRequestProperty);
+            get => (double) GetValue(EntryHeightRequestProperty);
             set => SetValue(EntryHeightRequestProperty, value);
         }
 
@@ -385,17 +383,17 @@ namespace Global.InputForms
         /// <value>The entry Border color.</value>
         public Color EntryBorderColor
         {
-            get => (Color)GetValue(EntryBorderColorProperty);
+            get => (Color) GetValue(EntryBorderColorProperty);
             set => SetValue(EntryBorderColorProperty, value);
         }
 
-                /// <summary>
+        /// <summary>
         ///     Gets or sets the entry horizontal text alignment.
         /// </summary>
         /// <value>The entry horizontal text alignment.</value>
         public TextAlignment EntryHorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(EntryHorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(EntryHorizontalTextAlignmentProperty);
             set => SetValue(EntryHorizontalTextAlignmentProperty, value);
         }
 
@@ -405,7 +403,7 @@ namespace Global.InputForms
         /// <value>The entry background color.</value>
         public Color EntryBackgroundColor
         {
-            get => (Color)GetValue(EntryBackgroundColorProperty);
+            get => (Color) GetValue(EntryBackgroundColorProperty);
             set => SetValue(EntryBackgroundColorProperty, value);
         }
 
@@ -415,7 +413,7 @@ namespace Global.InputForms
         /// <value>The entry font attributes.</value>
         public FontAttributes EntryFontAttributes
         {
-            get => (FontAttributes)GetValue(EntryFontAttributesProperty);
+            get => (FontAttributes) GetValue(EntryFontAttributesProperty);
             set => SetValue(EntryFontAttributesProperty, value);
         }
 
@@ -425,7 +423,7 @@ namespace Global.InputForms
         /// <value>The entry font family.</value>
         public string EntryFontFamily
         {
-            get => (string)GetValue(EntryFontFamilyProperty);
+            get => (string) GetValue(EntryFontFamilyProperty);
             set => SetValue(EntryFontFamilyProperty, value);
         }
 
@@ -436,7 +434,7 @@ namespace Global.InputForms
         [TypeConverter(typeof(FontSizeConverter))]
         public double EntryFontSize
         {
-            get => (double)GetValue(EntryFontSizeProperty);
+            get => (double) GetValue(EntryFontSizeProperty);
             set => SetValue(EntryFontSizeProperty, value);
         }
 
@@ -446,7 +444,7 @@ namespace Global.InputForms
         /// <value>The entry placeholdeer.</value>
         public string EntryPlaceholder
         {
-            get => (string)GetValue(EntryPlaceholderProperty);
+            get => (string) GetValue(EntryPlaceholderProperty);
             set => SetValue(EntryPlaceholderProperty, value);
         }
 
@@ -456,7 +454,7 @@ namespace Global.InputForms
         /// <value>The entry placeholder color.</value>
         public Color EntryPlaceholderColor
         {
-            get => (Color)GetValue(EntryPlaceholderColorProperty);
+            get => (Color) GetValue(EntryPlaceholderColorProperty);
             set => SetValue(EntryPlaceholderColorProperty, value);
         }
 
@@ -466,7 +464,7 @@ namespace Global.InputForms
         /// <value>The entry text color.</value>
         public Color EntryTextColor
         {
-            get => (Color)GetValue(EntryTextColorProperty);
+            get => (Color) GetValue(EntryTextColorProperty);
             set => SetValue(EntryTextColorProperty, value);
         }
 
@@ -476,7 +474,7 @@ namespace Global.InputForms
         /// <value>The entry line color.</value>
         public Color LineColor
         {
-            get => (Color)GetValue(LineColorProperty);
+            get => (Color) GetValue(LineColorProperty);
             set => SetValue(LineColorProperty, value);
         }
 
@@ -486,13 +484,13 @@ namespace Global.InputForms
         /// <value>The entry line color.</value>
         public Color LineHighlightedColor
         {
-            get => (Color)GetValue(LineHighlightedColorProperty);
+            get => (Color) GetValue(LineHighlightedColorProperty);
             set => SetValue(LineHighlightedColorProperty, value);
         }
 
         public bool IsReadOnly
         {
-            get => (bool)GetValue(IsReadOnlyProperty);
+            get => (bool) GetValue(IsReadOnlyProperty);
             set => SetValue(IsReadOnlyProperty, value);
         }
 
@@ -502,7 +500,7 @@ namespace Global.InputForms
         /// <value>the Keyboard value.</value>
         public InfoViewType InfoViewType
         {
-            get => (InfoViewType)GetValue(InfoViewTypeProperty);
+            get => (InfoViewType) GetValue(InfoViewTypeProperty);
             set => SetValue(InfoViewTypeProperty, value);
         }
 
@@ -512,7 +510,7 @@ namespace Global.InputForms
         /// <value>The info label font attributes.</value>
         public FontAttributes InfoFontAttributes
         {
-            get => (FontAttributes)GetValue(InfoFontAttributesProperty);
+            get => (FontAttributes) GetValue(InfoFontAttributesProperty);
             set => SetValue(InfoFontAttributesProperty, value);
         }
 
@@ -522,7 +520,7 @@ namespace Global.InputForms
         /// <value>The info label font family.</value>
         public string InfoFontFamily
         {
-            get => (string)GetValue(InfoFontFamilyProperty);
+            get => (string) GetValue(InfoFontFamilyProperty);
             set => SetValue(InfoFontFamilyProperty, value);
         }
 
@@ -532,7 +530,7 @@ namespace Global.InputForms
         /// <value>The info label font size.</value>
         public double InfoFontSize
         {
-            get => (double)GetValue(InfoFontSizeProperty);
+            get => (double) GetValue(InfoFontSizeProperty);
             set => SetValue(InfoFontSizeProperty, value);
         }
 
@@ -542,7 +540,7 @@ namespace Global.InputForms
         /// <value>The info label horizontal text alignment.</value>
         public TextAlignment InfoHorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(InfoHorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(InfoHorizontalTextAlignmentProperty);
             set => SetValue(InfoHorizontalTextAlignmentProperty, value);
         }
 
@@ -552,7 +550,7 @@ namespace Global.InputForms
         /// <value>The info label vertical text alignment.</value>
         public TextAlignment InfoVerticalTextAlignment
         {
-            get => (TextAlignment)GetValue(InfoVerticalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(InfoVerticalTextAlignmentProperty);
             set => SetValue(InfoVerticalTextAlignmentProperty, value);
         }
 
@@ -562,7 +560,7 @@ namespace Global.InputForms
         /// <value>The info label text.</value>
         public string InfoText
         {
-            get => (string)GetValue(InfoTextProperty);
+            get => (string) GetValue(InfoTextProperty);
             set => SetValue(InfoTextProperty, value);
         }
 
@@ -572,7 +570,7 @@ namespace Global.InputForms
         /// <value>The info color.</value>
         public Color InfoColor
         {
-            get => (Color)GetValue(InfoColorProperty);
+            get => (Color) GetValue(InfoColorProperty);
             set => SetValue(InfoColorProperty, value);
         }
 
@@ -582,7 +580,7 @@ namespace Global.InputForms
         /// <value>The info visibility.</value>
         public bool InfoIsVisible
         {
-            get => (bool)GetValue(InfoIsVisibleProperty);
+            get => (bool) GetValue(InfoIsVisibleProperty);
             set => SetValue(InfoIsVisibleProperty, value);
         }
 
@@ -592,14 +590,24 @@ namespace Global.InputForms
         /// <value>The boolean info.</value>
         public bool Info
         {
-            get => (bool)GetValue(InfoProperty);
+            get => (bool) GetValue(InfoProperty);
             set => SetValue(InfoProperty, value);
         }
 
         public bool BorderRelative
         {
-            get => (bool)GetValue(BorderRelativeProperty);
+            get => (bool) GetValue(BorderRelativeProperty);
             set => SetValue(BorderRelativeProperty, value);
+        }
+
+        public new event EventHandler<FocusEventArgs> Focused;
+        public new event EventHandler<FocusEventArgs> Unfocused;
+
+        protected override void OnChildAdded(Element child)
+        {
+            base.OnChildAdded(child);
+            if (child != _label && child != _infoLabel)
+                SetRow(child, 1);
         }
 
         /// <summary>
@@ -618,24 +626,24 @@ namespace Global.InputForms
             };
 
             entryLayout._label.SetBinding(Label.FontAttributesProperty, new Binding(nameof(LabelFontAttributes))
-            { Source = entryLayout, Mode = BindingMode.OneWay });
+                {Source = entryLayout, Mode = BindingMode.OneWay});
 
             entryLayout._label.SetBinding(Label.FontFamilyProperty, new Binding(nameof(LabelFontFamily))
-            { Source = entryLayout, Mode = BindingMode.OneWay });
+                {Source = entryLayout, Mode = BindingMode.OneWay});
 
             entryLayout._label.SetBinding(Label.FontSizeProperty, new Binding(nameof(LabelFontSize))
-            { Source = entryLayout, Mode = BindingMode.OneWay });
+                {Source = entryLayout, Mode = BindingMode.OneWay});
 
             entryLayout._label.SetBinding(Label.HorizontalTextAlignmentProperty,
                 new Binding(nameof(LabelHorizontalTextAlignment))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
             entryLayout._label.SetBinding(Label.VerticalTextAlignmentProperty,
                 new Binding(nameof(LabelVerticalTextAlignment))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
             entryLayout._label.SetBinding(Label.TextProperty, new Binding(nameof(LabelText))
-            { Source = entryLayout, Mode = BindingMode.OneWay });
+                {Source = entryLayout, Mode = BindingMode.OneWay});
 
             entryLayout.SetCornerPaddingLayout();
             entryLayout.Children.Add(entryLayout._label, 1, 4, 0, 1);
@@ -671,11 +679,14 @@ namespace Global.InputForms
             if (bindable is EntryLayout entryLayout)
             {
                 if (entryLayout._label is Label)
-                    entryLayout._label.TextColor = (entryLayout.IsFocused) ? entryLayout.LabelHighlightedColor : entryLayout.LabelTextColor;
+                    entryLayout._label.TextColor = entryLayout.IsFocused
+                        ? entryLayout.LabelHighlightedColor
+                        : entryLayout.LabelTextColor;
 
                 entryLayout._frameEntry.BackgroundColor = entryLayout.EntryBackgroundColor;
                 entryLayout._frameEntry.BorderColor = entryLayout.EntryBorderColor;
-                entryLayout._line.BackgroundColor = (entryLayout.IsFocused) ? entryLayout.LineHighlightedColor : entryLayout.LineColor ;
+                entryLayout._line.BackgroundColor =
+                    entryLayout.IsFocused ? entryLayout.LineHighlightedColor : entryLayout.LineColor;
             }
         }
 
@@ -707,37 +718,37 @@ namespace Global.InputForms
 
             if (entryLayout._infoLabel is Label label)
             {
-                label.Text = (string)newValue;
+                label.Text = (string) newValue;
             }
             else
             {
                 entryLayout._infoLabel = new Label();
                 entryLayout._infoLabel.SetBinding(Label.FontAttributesProperty,
                     new Binding(nameof(InfoFontAttributes))
-                    { Source = entryLayout, Mode = BindingMode.OneWay });
+                        {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(InfoFontFamily))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(InfoFontSize))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(Label.HorizontalTextAlignmentProperty,
                     new Binding(nameof(InfoHorizontalTextAlignment))
-                    { Source = entryLayout, Mode = BindingMode.OneWay });
+                        {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(Label.VerticalTextAlignmentProperty,
                     new Binding(nameof(InfoVerticalTextAlignment))
-                    { Source = entryLayout, Mode = BindingMode.OneWay });
+                        {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(InfoColor))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(Label.TextProperty, new Binding(nameof(InfoText))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout._infoLabel.SetBinding(IsVisibleProperty, new Binding(nameof(InfoIsVisible))
-                { Source = entryLayout, Mode = BindingMode.OneWay });
+                    {Source = entryLayout, Mode = BindingMode.OneWay});
 
                 entryLayout.SetCornerPaddingLayout();
                 entryLayout.Children.Add(entryLayout._infoLabel, 1, 4, 2, 3);
@@ -758,15 +769,16 @@ namespace Global.InputForms
             {
                 case InfoViewType.Surrounded:
                     entryLayout._frameEntry.BorderColor =
-                        (bool)newValue ? entryLayout.InfoColor : entryLayout.EntryBorderColor;
+                        (bool) newValue ? entryLayout.InfoColor : entryLayout.EntryBorderColor;
                     break;
                 case InfoViewType.Background:
                     entryLayout._frameEntry.BackgroundColor =
-                        (bool)newValue ? entryLayout.InfoColor : entryLayout.EntryBackgroundColor;
+                        (bool) newValue ? entryLayout.InfoColor : entryLayout.EntryBackgroundColor;
                     break;
                 case InfoViewType.Line:
                     entryLayout._line.BackgroundColor =
-                        (bool)newValue ? entryLayout.InfoColor : (entryLayout.IsFocused) ? entryLayout.LineHighlightedColor : entryLayout.LineColor;
+                        (bool) newValue ? entryLayout.InfoColor :
+                        entryLayout.IsFocused ? entryLayout.LineHighlightedColor : entryLayout.LineColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -779,7 +791,7 @@ namespace Global.InputForms
         }
 
         /// <summary>
-        ///  The show info method.
+        ///     The show info method.
         /// </summary>
         /// <param name="info">The info boolean.</param>
         /// <param name="info">The information string.</param>
@@ -798,7 +810,7 @@ namespace Global.InputForms
             IsFocused = true;
             Focused?.Invoke(this, new FocusEventArgs(this, true));
             if (_label != null) _label.TextColor = LabelHighlightedColor;
-            _line.BackgroundColor = (InfoViewType == InfoViewType.Line && Info) ? InfoColor : LineHighlightedColor;
+            _line.BackgroundColor = InfoViewType == InfoViewType.Line && Info ? InfoColor : LineHighlightedColor;
         }
 
         public void UnfocusEntry(object sender, FocusEventArgs e)
@@ -806,7 +818,7 @@ namespace Global.InputForms
             IsFocused = false;
             Unfocused?.Invoke(this, new FocusEventArgs(this, false));
             if (_label != null) _label.TextColor = LabelTextColor;
-            _line.BackgroundColor = (InfoViewType == InfoViewType.Line && Info) ? InfoColor : LineColor;
+            _line.BackgroundColor = InfoViewType == InfoViewType.Line && Info ? InfoColor : LineColor;
         }
 
         public bool Validate()

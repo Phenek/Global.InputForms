@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,15 +17,17 @@ namespace Global.InputForms
         /// </summary>
         private static readonly Func<string, IEnumerable<object>, IEnumerable<object>> _defaultAlgo =
             (text, values) => values
-                                .Where(x => x.ToString().IndexOf(text, StringComparison.CurrentCultureIgnoreCase) > -1)
-                                .OrderByDescending(x => x.ToString().ToLowerInvariant().StartsWith(text, StringComparison.CurrentCultureIgnoreCase))
-                                .ThenBy(x => x.ToString(), new NaturalSortComparer<string>())
-                                .Take(40).ToList();
+                .Where(x => x.ToString().IndexOf(text, StringComparison.CurrentCultureIgnoreCase) > -1)
+                .OrderByDescending(x =>
+                    x.ToString().ToLowerInvariant().StartsWith(text, StringComparison.CurrentCultureIgnoreCase))
+                .ThenBy(x => x.ToString(), new NaturalSortComparer<string>())
+                .Take(40).ToList();
 
         /// <summary>
         ///     The sorting algorithm click property.
         /// </summary>
-        public static readonly BindableProperty SortingAlgorithmProperty = BindableProperty.Create(nameof(SortingAlgorithm),
+        public static readonly BindableProperty SortingAlgorithmProperty = BindableProperty.Create(
+            nameof(SortingAlgorithm),
             typeof(Func<string, IEnumerable<object>, IEnumerable<object>>),
             typeof(AutoCompleteView), _defaultAlgo);
 
@@ -40,13 +41,13 @@ namespace Global.InputForms
         ///     The selected command property.
         /// </summary>
         public static readonly BindableProperty SelectedCommandProperty =
-            BindableProperty.Create(nameof(SelectedCommand), typeof(ICommand), typeof(AutoCompleteView), null);
+            BindableProperty.Create(nameof(SelectedCommand), typeof(ICommand), typeof(AutoCompleteView));
 
         /// <summary>
         ///     The selected item property.
         /// </summary>
         public static readonly BindableProperty SelectedItemProperty =
-            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(AutoCompleteView), null);
+            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(AutoCompleteView));
 
         /// <summary>
         ///     The suggestion background color property.
@@ -68,13 +69,13 @@ namespace Global.InputForms
         public static readonly BindableProperty ItemsSourceProperty =
             BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(AutoCompleteView), null,
                 propertyChanged: ItemsSourceChanged);
-                
+
+        private readonly TapGestureRecognizer _backgroundTap;
+
         private readonly Frame _frameList;
+        private readonly ListView _lstSuggestions;
 
         private CancellationTokenSource _cts;
-        private readonly ListView _lstSuggestions;
-        private readonly TapGestureRecognizer _backgroundTap;
-        public event EventHandler<ItemTappedEventArgs> ItemTapped;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AutoCompleteView" /> class.
@@ -104,10 +105,7 @@ namespace Global.InputForms
             _backgroundTap.Tapped += BackGroundTapped;
             _frameList.GestureRecognizers.Add(_backgroundTap);
 
-            TextChanged += (sender, e) =>
-            {
-                TextChangedHandler((string)e.NewTextValue);
-            };
+            TextChanged += (sender, e) => { TextChangedHandler(e.NewTextValue); };
 
             _lstSuggestions.ItemSelected += (s, e) =>
             {
@@ -120,26 +118,14 @@ namespace Global.InputForms
             ShowHideListbox(false);
             _lstSuggestions.ItemsSource = new List<object>();
 
-            RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            RowDefinitions.Add(new RowDefinition {Height = new GridLength(1, GridUnitType.Star)});
             Children.Add(_frameList, 1, 4, 3, 4);
-        }
-
-        private void _lstSuggestions_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            ItemTapped?.Invoke(this, e);
-        }
-
-        protected override void OnChildAdded(Element child)
-        {
-            base.OnChildAdded(child);
-            if (child == _frameList)
-                SetRow(child, 3);
         }
 
         public Func<string, IEnumerable<object>, IEnumerable<object>> SortingAlgorithm
         {
-            get { return (Func<string, IEnumerable<object>, IEnumerable<object>>)GetValue(SortingAlgorithmProperty); }
-            set { SetValue(SortingAlgorithmProperty, value); }
+            get => (Func<string, IEnumerable<object>, IEnumerable<object>>) GetValue(SortingAlgorithmProperty);
+            set => SetValue(SortingAlgorithmProperty, value);
         }
 
         /// <summary>
@@ -200,6 +186,20 @@ namespace Global.InputForms
         {
             get => (IEnumerable) GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
+        }
+
+        public event EventHandler<ItemTappedEventArgs> ItemTapped;
+
+        private void _lstSuggestions_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ItemTapped?.Invoke(this, e);
+        }
+
+        protected override void OnChildAdded(Element child)
+        {
+            base.OnChildAdded(child);
+            if (child == _frameList)
+                SetRow(child, 3);
         }
 
         /// <summary>
@@ -283,7 +283,8 @@ namespace Global.InputForms
                                     _backgroundTap.Tapped -= BackGroundTapped;
                                     _frameList.GestureRecognizers.Remove(_backgroundTap);
                                 }
-                                else if (!filteredSuggestions.Any() && !_frameList.GestureRecognizers.Contains(_backgroundTap))
+                                else if (!filteredSuggestions.Any() &&
+                                         !_frameList.GestureRecognizers.Contains(_backgroundTap))
                                 {
                                     _backgroundTap.Tapped += BackGroundTapped;
                                     _frameList.GestureRecognizers.Add(_backgroundTap);
@@ -291,15 +292,16 @@ namespace Global.InputForms
                             });
                         }
                         else
+                        {
                             Device.BeginInvokeOnMainThread(() =>
                             {
                                 _lstSuggestions.ItemsSource = filteredSuggestions;
                             });
+                        }
                     }, _cts.Token);
                 }
                 catch (TaskCanceledException) // if the operation is cancelled, do nothing
                 {
-
                 }
             }
         }
@@ -330,11 +332,19 @@ namespace Global.InputForms
 
     public class NaturalSortComparer<T> : IComparer<string>, IDisposable
     {
-        private bool isAscending;
+        private readonly bool isAscending;
+
+        private Dictionary<string, string[]> table = new Dictionary<string, string[]>();
 
         public NaturalSortComparer(bool inAscendingOrder = true)
         {
-            this.isAscending = inAscendingOrder;
+            isAscending = inAscendingOrder;
+        }
+
+        public void Dispose()
+        {
+            table.Clear();
+            table = null;
         }
 
         #region IComparer<string> Members
@@ -369,27 +379,19 @@ namespace Global.InputForms
 
             int returnVal;
 
-            for (int i = 0; i < x1.Length && i < y1.Length; i++)
-            {
+            for (var i = 0; i < x1.Length && i < y1.Length; i++)
                 if (x1[i] != y1[i])
                 {
                     returnVal = PartCompare(x1[i], y1[i]);
                     return isAscending ? returnVal : -returnVal;
                 }
-            }
 
             if (y1.Length > x1.Length)
-            {
                 returnVal = 1;
-            }
             else if (x1.Length > y1.Length)
-            {
                 returnVal = -1;
-            }
             else
-            {
                 returnVal = 0;
-            }
 
             return isAscending ? returnVal : -returnVal;
         }
@@ -407,13 +409,5 @@ namespace Global.InputForms
         }
 
         #endregion
-
-        private Dictionary<string, string[]> table = new Dictionary<string, string[]>();
-
-        public void Dispose()
-        {
-            table.Clear();
-            table = null;
-        }
     }
 }

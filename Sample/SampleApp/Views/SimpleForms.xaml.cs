@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Global.InputForms;
-using Global.InputForms.Models;
 using Naxam.I18n;
 using Naxam.I18n.Forms;
 using SampleApp.ViewModels;
@@ -11,10 +10,10 @@ namespace SampleApp.Views
 {
     public partial class SimpleForms : ContentPage
     {
+        private readonly SimpleFormsViewModel _viewModel;
+
         private ILocalizedResourceProvider _i18N = DependencyService.Get<IDependencyGetter>()
             .Get<ILocalizedResourceProvider>();
-
-        private readonly SimpleFormsViewModel _viewModel;
 
         public SimpleForms()
         {
@@ -38,7 +37,7 @@ namespace SampleApp.Views
         private void _CheckStoreChanged(object sender, bool e)
         {
             if (!(sender is CheckLabel CheckLabel)) return;
-            
+
             var storeName = CheckLabel.Text;
             var store = ((SimpleFormsViewModel) BindingContext).Form.GetType().GetProperty(storeName);
             if (store != null) store.SetValue(((SimpleFormsViewModel) BindingContext).Form, CheckLabel.Checked, null);
@@ -80,9 +79,6 @@ namespace SampleApp.Views
         private void _SubmitClicked(object sender, EventArgs e)
         {
             if (IsFormCorrect())
-            {
-            }
-            else
             {
             }
         }

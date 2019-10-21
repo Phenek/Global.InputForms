@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Global.InputForms.Interfaces;
-using Global.InputForms.Models;
 using Xamarin.Forms;
 
 namespace Global.InputForms
@@ -156,7 +154,7 @@ namespace Global.InputForms
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
             GestureRecognizers.Add(panGesture);
-            */           
+            */
         }
 
         public new IList<View> Children => _rateLayout.Children;
@@ -188,7 +186,7 @@ namespace Global.InputForms
         public int SelectedIndex
         {
             get => (int) GetValue(SelectedIndexProperty);
-            set 
+            set
             {
                 if (!_isBusy) SetValue(SelectedIndexProperty, value);
             }
@@ -338,7 +336,7 @@ namespace Global.InputForms
         public View GenerateCheckableView(object context)
         {
             if (!(CheckTemplate is ControlTemplate template)) return null;
-            
+
             var temp = template.CreateContent();
             if (temp is CheckBox view)
             {
@@ -348,7 +346,6 @@ namespace Global.InputForms
 
             Console.WriteLine("{RateGroup}: CheckTemplate must implement interface ICheckable");
             throw new Exception("{RateGroup}: CheckTemplate must implement interface ICheckable");
-
         }
 
         private void ChildCheckAdded(object sender, ElementEventArgs e)
@@ -381,7 +378,7 @@ namespace Global.InputForms
         private void ChildCheckRemoved(object sender, ElementEventArgs e)
         {
             if (!(e.Element is ICheckable checkable)) return;
-            
+
             checkable.Clicked -= OnItemClicked;
             CheckList.Remove(checkable);
             ItemsSource.Remove(checkable.Key);
@@ -410,7 +407,7 @@ namespace Global.InputForms
         private void AddItemToView(KeyValuePair<string, object> item)
         {
             if (!(GenerateCheckableView(null) is View view)) return;
-            
+
             ((ICheckable) view).Item = item;
             Children.Add(view);
         }
@@ -445,20 +442,20 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static async void OnSelectedIndexChanged(BindableObject bindable, object oldValue, object newValue)
         {
-
             if (!(bindable is RateGroup rateGroup)) return;
 
             rateGroup._isBusy = true;
-            int animationDuration = 200 / (rateGroup.CheckList.Count() + 1);
+            var animationDuration = 200 / (rateGroup.CheckList.Count() + 1);
 
             rateGroup.SelectedIndexChanged?.Invoke(rateGroup, (int) newValue);
-            if (rateGroup.SelectedIndex >= 0 && rateGroup.CheckList.Any() && rateGroup.CheckList[rateGroup.SelectedIndex].Item.Value is string str)
+            if (rateGroup.SelectedIndex >= 0 && rateGroup.CheckList.Any() &&
+                rateGroup.CheckList[rateGroup.SelectedIndex].Item.Value is string str)
                 rateGroup._rateLabel.Text = str;
             else
                 rateGroup._rateLabel.Text = "-";
 
             var index = 0;
-            var list = ((int)oldValue < (int)newValue) ? rateGroup.CheckList : rateGroup.CheckList.Reverse();
+            var list = (int) oldValue < (int) newValue ? rateGroup.CheckList : rateGroup.CheckList.Reverse();
             foreach (var item in list)
             {
                 if (index < rateGroup.CheckList.Count() && item.Checked != item.Index <= rateGroup.SelectedIndex)
@@ -518,7 +515,7 @@ namespace Global.InputForms
         private static void SpacingChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is RateGroup rateGroup) || rateGroup._rateLayout == null) return;
-            
+
             rateGroup.Spacing = (double) newValue;
             var index = 0;
             foreach (var item in rateGroup._rateLayout.Children)
@@ -616,7 +613,7 @@ namespace Global.InputForms
         private void OnItemClicked(object sender, bool check)
         {
             if (!(sender is CheckBox selectedCheckBox)) return;
-            
+
             switch (check)
             {
                 case false when selectedCheckBox.Index == SelectedIndex && selectedCheckBox.Index == DefaultIndex:
@@ -651,11 +648,10 @@ namespace Global.InputForms
         public bool Validate()
         {
             if (!(Parent is FrameInfo frameInfo)) return true;
-            
+
             frameInfo.Info = false;
             frameInfo.Validators?.Invoke(this, new EventArgs());
             return !frameInfo.Info;
-
         }
     }
 }

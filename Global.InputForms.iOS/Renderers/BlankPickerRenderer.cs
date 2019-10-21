@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using Foundation;
 using Global.InputForms;
 using Global.InputForms.iOS.Renderers;
 using UIKit;
@@ -9,11 +7,12 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(BlankPicker), typeof(BlankPickerRenderer))]
+
 namespace Global.InputForms.iOS.Renderers
 {
     public class BlankPickerRenderer : PickerRenderer
     {
-        BlankPicker blankPicker;
+        private BlankPicker blankPicker;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
         {
@@ -22,15 +21,13 @@ namespace Global.InputForms.iOS.Renderers
             if (!(e.NewElement is BlankPicker bPicker)) return;
             blankPicker = bPicker;
             if (Control == null)
-            {
                 SetNativeControl(new UITextField
                 {
                     RightViewMode = UITextFieldViewMode.Always,
-                    ClearButtonMode = UITextFieldViewMode.WhileEditing,
+                    ClearButtonMode = UITextFieldViewMode.WhileEditing
                 });
-            }
             SetUIButtons();
-            SetPlaceholder(); 
+            SetPlaceholder();
             SetAlignment();
         }
 
@@ -55,7 +52,7 @@ namespace Global.InputForms.iOS.Renderers
 
         private void SetAlignment()
         {
-            switch (((BlankPicker)Element).HorizontalTextAlignment)
+            switch (((BlankPicker) Element).HorizontalTextAlignment)
             {
                 case TextAlignment.Center:
                     Control.TextAlignment = UITextAlignment.Center;
@@ -76,7 +73,8 @@ namespace Global.InputForms.iOS.Renderers
                 Control.InputAccessoryView = null;
                 return;
             }
-            UIToolbar toolbar = new UIToolbar
+
+            var toolbar = new UIToolbar
             {
                 BarStyle = UIBarStyle.Default,
                 Translucent = true
@@ -87,23 +85,19 @@ namespace Global.InputForms.iOS.Renderers
 
             if (!string.IsNullOrEmpty(blankPicker.CancelButtonText))
             {
-                UIBarButtonItem cancelButton = new UIBarButtonItem(blankPicker.CancelButtonText, UIBarButtonItemStyle.Done, (s, ev) =>
-                {
-                    Control.ResignFirstResponder();
-                });
+                var cancelButton = new UIBarButtonItem(blankPicker.CancelButtonText, UIBarButtonItemStyle.Done,
+                    (s, ev) => { Control.ResignFirstResponder(); });
                 cancelButton.Clicked += (sender, e) => { blankPicker.SendCancelClicked(); };
                 items.Add(cancelButton);
             }
 
-            UIBarButtonItem flexible = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
+            var flexible = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
             items.Add(flexible);
 
             if (!string.IsNullOrEmpty(blankPicker.DoneButtonText))
             {
-                UIBarButtonItem doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done, (s, ev) =>
-                {
-                    Control.ResignFirstResponder();
-                });
+                var doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done,
+                    (s, ev) => { Control.ResignFirstResponder(); });
                 doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
                 items.Add(doneButton);
             }
