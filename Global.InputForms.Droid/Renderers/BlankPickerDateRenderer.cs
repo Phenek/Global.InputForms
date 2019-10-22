@@ -9,12 +9,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
 using TextAlignment = Android.Views.TextAlignment;
+using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(BlankDatePicker), typeof(BlankPickerDateRenderer))]
 
 namespace Global.InputForms.Droid.Renderers
 {
-    public class BlankPickerDateRenderer : DatePickerRenderer
+    public class BlankPickerDateRenderer : DatePickerRenderer, View.IOnClickListener
     {
         private DatePickerDialog _dialog;
         private BlankDatePicker blankPicker;
@@ -34,7 +35,8 @@ namespace Global.InputForms.Droid.Renderers
             if (e.NewElement != null)
                 if (Control != null)
                 {
-                    Control.Click += OnPickerClick;
+                    Control.SetOnClickListener(this);
+                    Clickable = true;
                     Control.Text = Element.Date.ToString(Element.Format);
                     Control.KeyListener = null;
 
@@ -43,13 +45,16 @@ namespace Global.InputForms.Droid.Renderers
                         var selectedDate = arg.Text.ToString();
                         if (selectedDate == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
                     };
+                    SetPlaceholder();
+                    SetAlignment();
+                    Control.SetPadding(0, 7, 0, 3);
+                    Control.Gravity = GravityFlags.Fill;
                 }
 
-            if (e.OldElement != null) Control.Click -= OnPickerClick;
-            SetPlaceholder();
-            SetAlignment();
-            Control.SetPadding(0, 7, 0, 3);
-            Control.Gravity = GravityFlags.Fill;
+            if (e.OldElement != null)
+            {
+                Control.SetOnClickListener(null);
+            }
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -60,7 +65,6 @@ namespace Global.InputForms.Droid.Renderers
 
             if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
         }
-
 
         private void SetPlaceholder()
         {
@@ -93,17 +97,17 @@ namespace Global.InputForms.Droid.Renderers
             return unixTimestamp;
         }
 
-        public void OnPickerClick(object sender, EventArgs e)
+        public void OnClick(View v)
         {
             var model = Element;
             _dialog = new DatePickerDialog(Context, (o, d) =>
-                {
-                    model.Date = d.Date;
-                    EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
-                    Control.ClearFocus();
+            {
+                model.Date = d.Date;
+                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+                Control.ClearFocus();
 
-                    _dialog = null;
-                }, Element.Date.Year, Element.Date.Month - 1, Element.Date.Day);
+                _dialog = null;
+            }, Element.Date.Year, Element.Date.Month - 1, Element.Date.Day);
             _dialog.DatePicker.MaxDate = UnixTimestampFromDateTime(Element.MaximumDate);
             _dialog.DatePicker.MinDate = UnixTimestampFromDateTime(Element.MinimumDate);
 

@@ -28,6 +28,29 @@ namespace Global.InputForms.Droid.Renderers
 
         private IElementController EController => Element;
 
+        protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
+        {
+            base.OnElementChanged(e);
+            if (!(e.NewElement is BlankPicker bPicker)) return;
+            blankPicker = bPicker;
+            if (e.NewElement != null)
+                if (Control == null)
+                {
+                    var textField = CreateNativeControl();
+                    textField.SetOnClickListener(this);
+                    textField.InputType = InputTypes.Null;
+                    SetNativeControl(textField);
+                }
+
+            if (Control != null)
+            {
+                SetPlaceholder();
+                SetAlignment();
+                Control.SetPadding(0, 7, 0, 3);
+                Control.Gravity = GravityFlags.Fill;
+            }
+        }
+
         public void OnClick(View v)
         {
             var model = Element;
@@ -80,27 +103,6 @@ namespace Global.InputForms.Droid.Renderers
                 EController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
             };
             _dialog.Show();
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
-        {
-            if (!(e.NewElement is BlankPicker bPicker)) return;
-            blankPicker = bPicker;
-            if (e.NewElement != null)
-                if (Control == null)
-                {
-                    var textField = CreateNativeControl();
-                    textField.SetOnClickListener(this);
-                    textField.InputType = InputTypes.Null;
-                    SetNativeControl(textField);
-                }
-
-            base.OnElementChanged(e);
-
-            SetPlaceholder();
-            SetAlignment();
-            Control.SetPadding(0, 7, 0, 3);
-            Control.Gravity = GravityFlags.Fill;
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

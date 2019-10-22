@@ -11,6 +11,17 @@ namespace Global.InputForms
     public class EntryView : EntryLayout
     {
         /// <summary>
+        ///     The default sorting algorithm.
+        /// </summary>
+        private static readonly Func<string, string> _defaultAlgo = (text) => text;
+
+        /// <summary>
+        ///     The sorting algorithm click property.
+        /// </summary>
+        public static readonly BindableProperty StringParserProperty = BindableProperty.Create(
+            nameof(StringParser), typeof(Func<string, string>), typeof(EntryView), _defaultAlgo);
+
+        /// <summary>
         ///     The Entry Text property.
         /// </summary>
         public static readonly BindableProperty EntryTextProperty =
@@ -69,6 +80,11 @@ namespace Global.InputForms
         public static readonly BindableProperty ReturnCommandParameterProperty =
             BindableProperty.Create(nameof(ReturnCommandParameter), typeof(object), typeof(Entry));
 
+        /// <summary>
+        ///     The Validate when unfocus property.
+        /// </summary>
+        public static readonly BindableProperty ValidateWhenUnfocusProperty =
+            BindableProperty.Create(nameof(ValidateWhenUnfocus), typeof(bool), typeof(EntryView), true, propertyChanged: ValidateWhenUnfocusChanged);
 
         private readonly BlankEntry _entry;
         private readonly Frame _pFrame;
@@ -76,7 +92,7 @@ namespace Global.InputForms
         public int _cursorPosition;
         private bool _isAdditon;
 
-        public EventHandler<TextChangedEventArgs> TextChanged;
+        public event EventHandler<TextChangedEventArgs> TextChanged;
 
         public EntryView()
         {
@@ -148,9 +164,15 @@ namespace Global.InputForms
                 if (InfoIsVisible)
                     Validate();
             };
-            Unfocused += (sender, e) => { Validate(); };
+            Unfocused += UnfocusedValidate;
 
             Children.Add(_pFrame, 2, 3, 1, 2);
+        }
+
+        public Func<string, string> StringParser
+        {
+            get => (Func<string, string>)GetValue(StringParserProperty);
+            set => SetValue(StringParserProperty, value);
         }
 
         /// <summary>
@@ -248,6 +270,11 @@ namespace Global.InputForms
             set => SetValue(ReturnCommandParameterProperty, value);
         }
 
+        public bool ValidateWhenUnfocus
+        {
+            get => (bool) GetValue(ValidateWhenUnfocusProperty);
+            set => SetValue(ValidateWhenUnfocusProperty, value);
+        }
 
         private static void EntryTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
@@ -321,6 +348,21 @@ namespace Global.InputForms
             if (!(bindable is EntryView entryView)) return;
         }
 
+        private static void ValidateWhenUnfocusChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is EntryView entryView)) return;
+            if ((bool) newValue)
+                entryView.Unfocused += UnfocusedValidate;
+            else
+                entryView.Unfocused -= UnfocusedValidate;
+        }
+
+        private static void UnfocusedValidate(object sender, FocusEventArgs e)
+        {
+            if (!(sender is EntryView entryView)) return;
+                entryView.Validate();
+        }
+
         private void OnEntryTextChanged(object sender, TextChangedEventArgs args)
         {
             if (!(sender is Entry entry)) return;
@@ -331,7 +373,7 @@ namespace Global.InputForms
                     return;
 
                 var oldText = args.OldTextValue;
-                var newText = args.NewTextValue;
+                var newText = StringParser(args.NewTextValue);
                 if (string.IsNullOrEmpty(oldText))
                 {
                     _isAdditon = true;

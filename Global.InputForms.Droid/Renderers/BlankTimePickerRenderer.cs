@@ -9,12 +9,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
 using TextAlignment = Android.Views.TextAlignment;
+using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(BlankTimePicker), typeof(BlankPickerRenderer))]
 
 namespace Global.InputForms.Droid.Renderers
 {
-    public class BlankTimePickerRenderer : TimePickerRenderer
+    public class BlankTimePickerRenderer : TimePickerRenderer, View.IOnClickListener
     {
         private TimePickerDialog _dialog;
         private BlankTimePicker blankPicker;
@@ -33,9 +34,8 @@ namespace Global.InputForms.Droid.Renderers
             blankPicker = bPicker;
             if (e.NewElement != null)
                 if (Control != null)
-                    //this.Control.Click += OnPickerClick;
-                    //this.Control.Text = Element.Time.ToString(Element.Format);
-                    //this.Control.KeyListener = null;
+                    Control.SetOnClickListener(this);
+                    Clickable = true;
 
                     Control.TextChanged += (sender, arg) =>
                     {
@@ -82,8 +82,7 @@ namespace Global.InputForms.Droid.Renderers
             }
         }
 
-
-        public void OnPickerClick(object sender, EventArgs e)
+        public void OnClick(View v)
         {
             _dialog = new TimePickerDialog(Context, (s, d) =>
             {
