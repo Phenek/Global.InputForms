@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace Global.InputForms.Controls
+namespace Global.InputForms
 {
     public class SliderTick : Grid
     {
