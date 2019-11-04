@@ -34,20 +34,22 @@ namespace Global.InputForms.Droid.Renderers
             if (!(e.NewElement is BlankPicker bPicker)) return;
             blankPicker = bPicker;
             if (e.NewElement != null)
-                if (Control == null)
+                if (Control != null)
                 {
-                    var textField = CreateNativeControl();
-                    textField.SetOnClickListener(this);
-                    textField.InputType = InputTypes.Null;
-                    SetNativeControl(textField);
-                }
+                    Control.SetOnClickListener(this);
+                    Clickable = true;
+                    Control.InputType = InputTypes.Null;
+                    Control.Text = Element.SelectedItem?.ToString();
+                    Control.KeyListener = null;
 
-            if (Control != null)
+                    SetPlaceholder();
+                    SetAlignment();
+                    Control.SetPadding(0, 7, 0, 3);
+                    Control.Gravity = GravityFlags.Fill;
+                }
+            if (e.OldElement != null)
             {
-                SetPlaceholder();
-                SetAlignment();
-                Control.SetPadding(0, 7, 0, 3);
-                Control.Gravity = GravityFlags.Fill;
+                Control.SetOnClickListener(null);
             }
         }
 

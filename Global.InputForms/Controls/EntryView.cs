@@ -104,8 +104,6 @@ namespace Global.InputForms
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
-            _entry.SetBinding(HeightProperty,
-                new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.HorizontalTextAlignmentProperty,
