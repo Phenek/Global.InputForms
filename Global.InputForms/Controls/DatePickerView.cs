@@ -49,6 +49,9 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
+            Input = _datePicker;
+            _datePicker.SetBinding(BlankDatePicker.TextProperty,
+                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
             _datePicker.SetBinding(DatePicker.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(DatePicker.FontFamilyProperty,
@@ -100,6 +103,7 @@ namespace Global.InputForms
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;
             _datePicker.DateSelected += Date_Selected;
+            _datePicker.TextChanged += SendEntryTextChanged;
 
             _datePicker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
             _datePicker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
@@ -175,22 +179,6 @@ namespace Global.InputForms
         private void Date_Selected(object sender, DateChangedEventArgs e)
         {
             DateSelected?.Invoke(this, e);
-        }
-
-        protected override void SetCornerPaddingLayout()
-        {
-            base.SetCornerPaddingLayout();
-
-            if (EntryCornerRadius >= 1f)
-            {
-                var thick = 0.0;
-                if (BorderRelative) thick = Convert.ToDouble(EntryCornerRadius);
-                _datePicker.Margin = new Thickness(thick, 0, thick, 0);
-            }
-            else
-            {
-                _datePicker.Margin = 0;
-            }
         }
     }
 }

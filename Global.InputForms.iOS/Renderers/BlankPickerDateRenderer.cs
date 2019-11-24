@@ -14,6 +14,7 @@ namespace Global.InputForms.iOS.Renderers
     public class BlankPickerDateRenderer : DatePickerRenderer
     {
         private BlankDatePicker blankPicker;
+        private string _oldText;
 
         protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
         {
@@ -22,23 +23,36 @@ namespace Global.InputForms.iOS.Renderers
             if (!(e.NewElement is BlankDatePicker bPicker)) return;
             blankPicker = bPicker;
 
-            Control.ShouldEndEditing += textField =>
-            {
-                var seletedDate = textField;
-                var text = seletedDate.Text;
-                if (text == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
-                return true;
-            };
+            //Control.ShouldEndEditing += textField =>
+            //{
+            //    var seletedDate = textField;
+            //    var text = seletedDate.Text;
+            //    if (text == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
+            //    return true;
+            //};
 
-            if (Control == null)
-                SetNativeControl(new UITextField
+            if (Control is UITextField textField)
+            {
+                if (!string.IsNullOrEmpty(Control.Text))
+                    bPicker.Text = Control.Text;
+                textField.EditingChanged += (sender, arg)
+                    => bPicker.Text = Control.Text;
+
+                textField.EditingDidEnd += (sender, arg) =>
                 {
-                    RightViewMode = UITextFieldViewMode.Always,
-                    ClearButtonMode = UITextFieldViewMode.WhileEditing
-                });
-            SetPlaceholder();
-            SetUIButtons();
-            SetAlignment();
+                    var controlText = Control.Text ?? string.Empty;
+                    var entryText = bPicker.Text ?? string.Empty;
+                    if (controlText != entryText)
+                    {
+                        bPicker.Text = Control.Text;
+                    }
+                };
+
+                SetPlaceholder();
+                SetAlignment();
+                SetUIButtons();
+            }
+
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -48,6 +62,8 @@ namespace Global.InputForms.iOS.Renderers
             if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
 
             if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
+
+            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
         }
 
         private void SetPlaceholder()
@@ -74,6 +90,13 @@ namespace Global.InputForms.iOS.Renderers
                     Control.TextAlignment = UITextAlignment.Left;
                     break;
             }
+        }
+
+        void UpdateText()
+        {
+            // ReSharper disable once RedundantCheckBeforeAssignment
+            if (Control.Text != blankPicker.Text)
+                Control.Text = blankPicker.Text;
         }
 
         public void SetUIButtons()

@@ -57,6 +57,9 @@ namespace Global.InputForms
             {
                 BackgroundColor = Color.Transparent
             };
+            Input = _picker;
+            _picker.SetBinding(BlankPicker.TextProperty,
+                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
             _picker.SetBinding(Picker.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(Picker.FontFamilyProperty,
@@ -111,6 +114,7 @@ namespace Global.InputForms
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
             _picker.SelectedIndexChanged += IndexChanged;
+            _picker.TextChanged += SendEntryTextChanged;
 
             _picker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
             _picker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
@@ -193,22 +197,6 @@ namespace Global.InputForms
         {
             if (!(sender is BlankPicker picker)) return;
             SelectedIndexChanged?.Invoke(this, e);
-        }
-
-        protected override void SetCornerPaddingLayout()
-        {
-            base.SetCornerPaddingLayout();
-
-            if (EntryCornerRadius >= 1f)
-            {
-                var thick = 0.0;
-                if (BorderRelative) thick = Convert.ToDouble(EntryCornerRadius);
-                _picker.Margin = new Thickness(thick, 0, thick, 0);
-            }
-            else
-            {
-                _picker.Margin = 0;
-            }
         }
     }
 }

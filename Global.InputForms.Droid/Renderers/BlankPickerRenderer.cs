@@ -36,11 +36,16 @@ namespace Global.InputForms.Droid.Renderers
             if (e.NewElement != null)
                 if (Control != null)
                 {
+                    if (!string.IsNullOrEmpty(Control.Text))
+                        bPicker.Text = Control.Text;
                     Control.SetOnClickListener(this);
                     Clickable = true;
                     Control.InputType = InputTypes.Null;
                     Control.Text = Element.SelectedItem?.ToString();
                     Control.KeyListener = null;
+
+                    Control.TextChanged += (sender, arg)
+                        => bPicker.Text = arg.Text.ToString();
 
                     SetPlaceholder();
                     SetAlignment();
@@ -114,6 +119,8 @@ namespace Global.InputForms.Droid.Renderers
             if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
 
             if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
+
+            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
         }
 
 
@@ -139,6 +146,13 @@ namespace Global.InputForms.Droid.Renderers
                     Control.TextAlignment = TextAlignment.ViewStart;
                     break;
             }
+        }
+
+        void UpdateText()
+        {
+            // ReSharper disable once RedundantCheckBeforeAssignment
+            if (Control.Text != blankPicker.Text)
+                Control.Text = blankPicker.Text;
         }
     }
 }

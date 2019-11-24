@@ -20,16 +20,33 @@ namespace Global.InputForms.iOS.Renderers
 
             if (!(e.NewElement is BlankTimePicker bPicker)) return;
             blankPicker = bPicker;
-            if (Control == null)
-                SetNativeControl(new UITextField
-                {
-                    RightViewMode = UITextFieldViewMode.Always,
-                    ClearButtonMode = UITextFieldViewMode.WhileEditing
-                });
 
-            SetPlaceholder();
-            SetAlignment();
-            SetUIButtons();
+            if (Control is UITextField textField)
+            {
+                if (!string.IsNullOrEmpty(Control.Text))
+                    bPicker.Text = Control.Text;
+
+                textField.EditingChanged += (sender, arg)
+                    => bPicker.Text = Control.Text;
+
+                textField.EditingDidEnd += (sender, arg) =>
+                {
+                    var controlText = Control.Text ?? string.Empty;
+                    var entryText = bPicker.Text ?? string.Empty;
+                    if (controlText != entryText)
+                    {
+                        bPicker.Text = Control.Text;
+                    }
+                };
+                SetPlaceholder();
+                SetAlignment();
+                SetUIButtons();
+            }
+        }
+
+        private void Control_ValueChanged(object sender, System.EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -39,6 +56,8 @@ namespace Global.InputForms.iOS.Renderers
             if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
 
             if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
+
+            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
         }
 
         private void SetPlaceholder()
@@ -65,6 +84,13 @@ namespace Global.InputForms.iOS.Renderers
                     Control.TextAlignment = UITextAlignment.Left;
                     break;
             }
+        }
+
+        void UpdateText()
+        {
+            // ReSharper disable once RedundantCheckBeforeAssignment
+            if (Control.Text != blankPicker.Text)
+                Control.Text = blankPicker.Text;
         }
 
         public void SetUIButtons()

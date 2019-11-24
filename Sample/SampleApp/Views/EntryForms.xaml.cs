@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using SampleApp.ViewModels;
 using Xamarin.Forms;
 
@@ -12,6 +13,7 @@ namespace SampleApp.Views
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
+            _datePicker.TextChanged += (sender, e) => Console.WriteLine("Toto");
         }
 
         protected override async void OnAppearing()

@@ -5,6 +5,10 @@ namespace Global.InputForms
 {
     public class BlankTimePicker : TimePicker
     {
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(BlankTimePicker), defaultBindingMode: BindingMode.TwoWay,
+            propertyChanged: (bindable, oldValue, newValue) => ((BlankTimePicker)bindable).OnTextChanged((string)oldValue, (string)newValue));
+
+
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankTimePicker), "Ok");
 
@@ -26,6 +30,19 @@ namespace Global.InputForms
         public static readonly BindableProperty HorizontalTextAlignmentProperty =
             BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
                 TextAlignment.Start);
+
+        public event EventHandler<TextChangedEventArgs> TextChanged;
+
+        protected void OnTextChanged(string oldValue, string newValue)
+        {
+            TextChanged?.Invoke(this, new TextChangedEventArgs(oldValue, newValue));
+        }
+
+        public string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
 
         public string DoneButtonText
         {

@@ -29,6 +29,9 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
+            Input = _timePicker;
+            _timePicker.SetBinding(BlankTimePicker.TextProperty,
+                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
             _timePicker.SetBinding(TimePicker.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(TimePicker.FontFamilyProperty,
@@ -70,6 +73,7 @@ namespace Global.InputForms
 
             _timePicker.Focused += FocusEntry;
             _timePicker.Unfocused += UnfocusEntry;
+            _timePicker.TextChanged += SendEntryTextChanged;
 
             Children.Add(_pFrame, 2, 3, 1, 2);
         }

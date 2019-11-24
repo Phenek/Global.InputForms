@@ -30,7 +30,8 @@
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Standart DatePicker with Surrounded Info -->
-                <controls:DatePickerView InfoViewType="Surrounded"
+                <controls:DatePickerView x:Name="_datePicker"
+                    InfoViewType="Surrounded"
                                          EntryBackgroundColor="#88FFFFFF"
                                          InfoColor="Purple"
                                          LabelText="Date">
@@ -77,6 +78,7 @@
 
                 <!-- Rounded Entry with Surrounded Info -->
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
+                                    Padding="0,10,0,0"
                                     EntryCornerRadius="15"
                                     InfoViewType="Surrounded"
                                     LabelText="Entry">

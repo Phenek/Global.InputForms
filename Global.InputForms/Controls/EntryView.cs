@@ -24,7 +24,7 @@ namespace Global.InputForms
         /// <summary>
         ///     The Entry Text property.
         /// </summary>
-        public static readonly BindableProperty EntryTextProperty =
+        public new static readonly BindableProperty EntryTextProperty =
             BindableProperty.Create(nameof(EntryText), typeof(string), typeof(EntryView), string.Empty,
                 propertyChanged: EntryTextChanged);
 
@@ -92,14 +92,15 @@ namespace Global.InputForms
         public int _cursorPosition;
         private bool _isAdditon;
 
-        public event EventHandler<TextChangedEventArgs> TextChanged;
-
         public EntryView()
         {
             _entry = new BlankEntry
             {
                 BackgroundColor = Color.Transparent
             };
+            Input = _entry;
+            base.SetBinding(EntryLayout.EntryTextProperty,
+                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
             _entry.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
@@ -177,7 +178,7 @@ namespace Global.InputForms
         ///     Gets or sets the entry text.
         /// </summary>
         /// <value>The entry text.</value>
-        public string EntryText
+        public new string EntryText
         {
             get => (string) GetValue(EntryTextProperty);
             set => SetValue(EntryTextProperty, value);
@@ -287,8 +288,7 @@ namespace Global.InputForms
                 var masked = entryView.AddMask((string) newValue, entryView._isAdditon);
                 if (entryView.MaskedEntryText != masked) entryView.MaskedEntryText = masked;
             }
-
-            entryView.TextChanged?.Invoke(entryView, new TextChangedEventArgs((string) oldValue, (string) newValue));
+            entryView.SendEntryTextChanged(entryView, new TextChangedEventArgs((string)oldValue, (string)newValue));
         }
 
         private void EntryCursorChanged(object sender, TextChangedEventArgs e)
@@ -477,22 +477,6 @@ namespace Global.InputForms
         {
             add => _entry.Completed += value;
             remove => _entry.Completed -= value;
-        }
-
-        protected override void SetCornerPaddingLayout()
-        {
-            base.SetCornerPaddingLayout();
-
-            if (EntryCornerRadius >= 1f)
-            {
-                var thick = 0.0;
-                if (BorderRelative) thick = Convert.ToDouble(EntryCornerRadius);
-                _entry.Margin = new Thickness(thick, 0, thick, 0);
-            }
-            else
-            {
-                _entry.Margin = 0;
-            }
         }
     }
 }

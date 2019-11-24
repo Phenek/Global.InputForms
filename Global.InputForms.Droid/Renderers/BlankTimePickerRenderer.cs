@@ -19,6 +19,7 @@ namespace Global.InputForms.Droid.Renderers
     {
         private TimePickerDialog _dialog;
         private BlankTimePicker blankPicker;
+        private string _oldText;
 
         public BlankTimePickerRenderer(Context context) : base(context)
         {
@@ -35,12 +36,17 @@ namespace Global.InputForms.Droid.Renderers
             if (e.NewElement != null)
                 if (Control != null)
                 {
+                    if (!string.IsNullOrEmpty(Control.Text))
+                        bPicker.Text = Control.Text;
+
                     Control.SetOnClickListener(this);
                     Clickable = true;
                     Control.TextChanged += (sender, arg) =>
                     {
                         var selectedDate = arg.Text.ToString();
                         if (selectedDate == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
+
+                        bPicker.Text = arg.Text.ToString();
                     };
 
                     SetPlaceholder();
@@ -61,6 +67,8 @@ namespace Global.InputForms.Droid.Renderers
             if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
 
             if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
+
+            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
         }
 
 
@@ -86,6 +94,13 @@ namespace Global.InputForms.Droid.Renderers
                     Control.TextAlignment = TextAlignment.ViewStart;
                     break;
             }
+        }
+
+        void UpdateText()
+        {
+            // ReSharper disable once RedundantCheckBeforeAssignment
+            if (Control.Text != blankPicker.Text)
+                Control.Text = blankPicker.Text;
         }
 
         public void OnClick(View v)

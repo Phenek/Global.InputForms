@@ -21,6 +21,7 @@ namespace Global.InputForms.Droid.Renderers
     {
         private DatePickerDialog _dialog;
         private BlankDatePicker blankPicker;
+        private string _oldText;
 
         public BlankPickerDateRenderer(Context context) : base(context)
         {
@@ -37,6 +38,9 @@ namespace Global.InputForms.Droid.Renderers
             if (e.NewElement != null)
                 if (Control != null)
                 {
+                    if (!string.IsNullOrEmpty(Control.Text))
+                        bPicker.Text = Control.Text;
+
                     Control.SetOnClickListener(this);
                     Clickable = true;
                     Control.Text = Element.Date.ToString(Element.Format);
@@ -46,6 +50,8 @@ namespace Global.InputForms.Droid.Renderers
                     {
                         var selectedDate = arg.Text.ToString();
                         if (selectedDate == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
+
+                        bPicker.Text = arg.Text.ToString();
                     };
                     SetPlaceholder();
                     SetAlignment();
@@ -65,6 +71,8 @@ namespace Global.InputForms.Droid.Renderers
             if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
 
             if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
+            
+            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
         }
 
         private void SetPlaceholder()
@@ -89,6 +97,13 @@ namespace Global.InputForms.Droid.Renderers
                     Control.TextAlignment = TextAlignment.ViewStart;
                     break;
             }
+        }
+
+        void UpdateText()
+        {
+            // ReSharper disable once RedundantCheckBeforeAssignment
+            if (Control.Text != blankPicker.Text)
+                Control.Text = blankPicker.Text;
         }
 
         public static long UnixTimestampFromDateTime(DateTime date)
