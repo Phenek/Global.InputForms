@@ -48,6 +48,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
+            _timePicker.SetBinding(MarginProperty,
+                new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
             _timePicker.SetBinding(TimePicker.FormatProperty,
                 new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});

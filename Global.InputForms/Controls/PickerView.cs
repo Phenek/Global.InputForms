@@ -76,6 +76,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
+            _picker.SetBinding(MarginProperty,
+                new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
             _picker.SetBinding(Picker.ItemsSourceProperty,
                 new Binding(nameof(ItemsSource)) {Source = this, Mode = BindingMode.OneWay});

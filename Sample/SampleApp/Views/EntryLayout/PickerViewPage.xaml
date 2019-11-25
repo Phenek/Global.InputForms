@@ -6,14 +6,14 @@
              x:Class="SampleApp.Views.PickerViewPage">
     <ContentPage.Content>
 
-        <ScrollView BackgroundColor="LightBlue">
+        <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
             Padding="40,10,40,10"
             HeightRequest="900"
             HorizontalOptions="CenterAndExpand">
 
             <controls:PickerView
-                EntryCornerRadius="15"
+                CornerRadius="15"
                 InfoViewType="Surrounded"
                 InfoColor="Purple"
                 EntryBackgroundColor="#88FFFFFF"
@@ -22,7 +22,7 @@
 
 
             <controls:DatePickerView
-                EntryCornerRadius="15"
+                CornerRadius="15"
                 InfoViewType="Surrounded"
                 InfoColor="Purple"
                 EntryBackgroundColor="#88FFFFFF"
@@ -31,7 +31,7 @@
 
 
             <controls:TimePickerView
-                EntryCornerRadius="15"
+                CornerRadius="15"
                 InfoViewType="Surrounded"
                 InfoColor="Purple"
                 EntryBackgroundColor="#88FFFFFF"

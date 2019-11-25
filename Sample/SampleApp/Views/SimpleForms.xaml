@@ -23,7 +23,7 @@
                 </Grid.RowDefinitions>
                 <global:EntryView Grid.Column="0" Grid.Row="0"
                                   EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
+                                  CornerRadius="15"
                                   InfoViewType="Surrounded"
                                   EntryText="{Binding Form.Lastname, Mode=TwoWay}"
                                   LabelText="{i18N:Translate Form.FirstName}"
@@ -34,10 +34,10 @@
                 </global:EntryView>
                 <global:EntryView Grid.Column="1" Grid.Row="0"
                                   EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
+                                  CornerRadius="15"
                                   IsReadOnly="true"
                                   EntryPlaceholder="test"
-                                  EntryBorderColor="Red"
+                                  BorderColor="Red"
                                   EntryTextColor="Red"
                                   InfoViewType="Surrounded"
                                   EntryText="{Binding Form.Lastname, Mode=TwoWay}"
@@ -64,7 +64,7 @@
 
                 <global:EntryView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
                                   EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
+                                  CornerRadius="15"
                                   InfoViewType="Surrounded"
                                   EntryText="{Binding Form.Email, Mode=TwoWay}"
                                   x:Name="_email" LabelText="{i18N:Translate Form.Email}">
@@ -79,7 +79,7 @@
 
                 <global:EntryView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"
                                   EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
+                                  CornerRadius="15"
                                   InfoViewType="Surrounded"
                                   EntryText="{Binding Form.EmailConfirm, Mode=TwoWay}"
                                   LabelText="{i18N:Translate Form.EmailConfirm}"
@@ -96,7 +96,7 @@
                 <global:DatePickerView Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
                                        Date="{Binding Form.BirthDate, Mode=TwoWay}"
                                        x:Name="_birthDate"
-                                       EntryCornerRadius="15"
+                                       CornerRadius="15"
                                        InfoViewType="Surrounded"
                                        EntryBackgroundColor="#88FFFFFF"
                                        LabelText="{i18N:Translate Form.BirthDate}">
@@ -108,7 +108,7 @@
 
                 <global:EntryView Grid.Column="0" Grid.Row="5"
                                   EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
+                                  CornerRadius="15"
                                   InfoViewType="Surrounded"
                                   IsPassword="true"
                                   EntryText="{Binding Form.Password, Mode=TwoWay}"
@@ -124,7 +124,7 @@
 
                 <global:EntryView Grid.Column="1" Grid.Row="5"
                                   EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
+                                  CornerRadius="15"
                                   InfoViewType="Surrounded"
                                   IsPassword="true"
                                   EntryText="{Binding Form.Password, Mode=TwoWay}"

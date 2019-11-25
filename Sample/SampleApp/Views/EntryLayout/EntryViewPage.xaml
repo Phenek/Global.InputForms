@@ -6,7 +6,7 @@
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              x:Class="SampleApp.Views.EntryViewPage">
     <ContentPage.Content>
-        <ScrollView BackgroundColor="LightBlue">
+        <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
                 Padding="40,10,40,10"
                 HeightRequest="900"
@@ -29,102 +29,61 @@
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
-                <!-- Standart DatePicker with Surrounded Info -->
-                <global:DatePickerView InfoViewType="Surrounded"
-                                       EntryBackgroundColor="#88FFFFFF"
-                                       InfoColor="Purple"
-                                       LabelText="Date">
-                    <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
-                    <global:DatePickerView.Behaviors>
-                        <valid:DateMajorValidationBehavior />
-                    </global:DatePickerView.Behaviors>
-                </global:DatePickerView>
+                <!-- Besieged Entry with Surrounded Info -->
 
-                <Label Text="Standart Entry with Background Info" FontSize="Small" TextColor="Gray"
-                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
-
-                <!-- Standart Entry with Line Info -->
-                <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                  InfoViewType="Line"
-                                  LabelText="Entry">
-                    <global:EntryView.Behaviors>
-                        <valid:EmptyValidatorBehavior />
-                    </global:EntryView.Behaviors>
-                    <Image Grid.Column="0" Source="StarChecked" />
-                    <Image Grid.Column="1" Source="StarChecked" />
-                    <Image Grid.Column="3" Source="StarChecked" />
-                    <Image Grid.Column="4" Source="StarChecked" />
-                </global:EntryView>
-                <Label Text="Standart Entry with Line Info" FontSize="Small" TextColor="Gray"
-                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
-
-                <!-- Standart Entry with Background Info -->
-                <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                  InfoViewType="Background"
-                                  LabelText="Entry">
+                <global:EntryView StyleClass="BesiegedEntry"
+                                  ReturnType="Send"
+                                  LabelText="Besieged Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
                 </global:EntryView>
-                <Label Text="Standart Entry with Background Info" FontSize="Small" TextColor="Gray"
+
+                <Label Text="Besieged Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Besieged Entry with Overlaped Label with Surrounded Info -->
+
+                <global:EntryView StyleClass="BesiegedEntryOverlaLabel"
+                                  ReturnType="Send"
+                                  LabelText="Besieged Entry">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Besieged Entry with Overlaped Label with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
 
                 <!-- Rounded Entry with Surrounded Info -->
-                <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
-                                  InfoViewType="Surrounded"
-                                  LabelText="Entry">
+                <global:EntryView StyleClass="RoundedEntry"
+                                  ReturnType="Send"
+                                  LabelText="Rounded Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
                 </global:EntryView>
+
                 <Label Text="Rounded Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
-                <!-- Standart DatePicker with Surrounded Info -->
-                <global:DatePickerView EntryCornerRadius="15"
-                                       InfoViewType="Surrounded"
-                                       InfoColor="Purple"
-                                       EntryBackgroundColor="#88FFFFFF"
-                                       LabelText="Date">
-                    <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
-                    <global:DatePickerView.Behaviors>
-                        <valid:DateMajorValidationBehavior />
-                    </global:DatePickerView.Behaviors>
-                </global:DatePickerView>
-                <Label Text="Standart Entry with Background Info" FontSize="Small" TextColor="Gray"
-                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
-
-                <!-- Rounded Entry with Line Info -->
-                <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
-                                  InfoViewType="Line"
-                                  LabelText="Entry">
+                 <!-- Line Entry with Line Info -->
+                <global:EntryView StyleClass="LineEntry"
+                                  ReturnType="Send"
+                                  LabelText="Line Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
                 </global:EntryView>
-                <Label Text="Rounded Entry with Line Info" FontSize="Small" TextColor="Gray"
+
+                <Label Text="Line Entry with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
-                <!-- Rounded Entry with Background Info -->
-                <global:EntryView EntryBackgroundColor="#88FFFFFF"
-                                  EntryCornerRadius="15"
-                                  InfoViewType="Background"
-                                  LabelText="Entry">
-                    <global:EntryView.Behaviors>
-                        <valid:EmptyValidatorBehavior />
-                    </global:EntryView.Behaviors>
-                </global:EntryView>
-                <Label Text="Rounded Entry with Background Info" FontSize="Small" TextColor="Gray"
-                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -83,6 +83,13 @@
             <Color x:Key="BleuButtonBackground">#335D83</Color>
             <Color x:Key="BleuButtonHighlightBackground">#4b85b9</Color>
 
+            <Color x:Key="TextColor">#000000</Color>
+            <Color x:Key="HightlightTextColor">#93b9d9</Color>
+            <Color x:Key="LineColor">#0B7DB3</Color>
+            <Color x:Key="HightlightLineColor">#0B7DB3</Color>
+            <Color x:Key="PlaceHolderColor">#0B7DB3</Color>
+            <Color x:Key="EntryBackgroundColor">#DCECF2</Color>
+
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="BarTextColor" Value="White" />

@@ -79,7 +79,7 @@
                 <!-- Rounded Entry with Surrounded Info -->
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
                                     Padding="0,10,0,0"
-                                    EntryCornerRadius="15"
+                                    CornerRadius="15"
                                     InfoViewType="Surrounded"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>
@@ -91,7 +91,7 @@
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
                 <!-- Standart DatePicker with Surrounded Info -->
-                <controls:DatePickerView EntryCornerRadius="15"
+                <controls:DatePickerView CornerRadius="15"
                                          InfoViewType="Surrounded"
                                          InfoColor="Purple"
                                          EntryBackgroundColor="#88FFFFFF"
@@ -107,7 +107,7 @@
 
                 <!-- Rounded Entry with Line Info -->
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
+                                    CornerRadius="15"
                                     InfoViewType="Line"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>
@@ -120,7 +120,7 @@
 
                 <!-- Rounded Entry with Background Info -->
                 <controls:EntryView EntryBackgroundColor="#88FFFFFF"
-                                    EntryCornerRadius="15"
+                                    CornerRadius="15"
                                     InfoViewType="Background"
                                     LabelText="Entry">
                     <controls:EntryView.Behaviors>

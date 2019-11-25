@@ -68,6 +68,8 @@ namespace Global.InputForms
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
+            _datePicker.SetBinding(MarginProperty,
+                new Binding(nameof(EntryMarginProperty)) { Source = this, Mode = BindingMode.OneWay });
 
             _datePicker.SetBinding(DatePicker.FormatProperty,
                 new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Resources;
+using SampleApp.Controls;
 using SampleApp.Styles;
 using SampleApp.Views;
 using Xamarin.Forms;
@@ -45,43 +46,43 @@ namespace SampleApp
     {
         public StartPage()
         {
-            var toCheckFormsBtn = new Button {Text = "Check Forms"};
+            var toCheckFormsBtn = new ButtonInputs {Title = "Check Forms"};
             toCheckFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new CheckForms()); };
 
-            var toCheckGroupBtn = new Button {Text = "Check Group"};
+            var toCheckGroupBtn = new ButtonInputs {Title = "Check Group"};
             toCheckGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new CheckGroupPage()); };
 
-            var toRadioGroupBtn = new Button {Text = "Radio Group"};
+            var toRadioGroupBtn = new ButtonInputs {Title = "Radio Group"};
             toRadioGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new RadioGroupPage()); };
 
-            var toRateGroupBtn = new Button {Text = "Rate Group"};
+            var toRateGroupBtn = new ButtonInputs {Title = "Rate Group"};
             toRateGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new RateGroupPage()); };
 
-            var toSimpleFormsBtn = new Button {Text = "Simple Forms"};
+            var toSimpleFormsBtn = new ButtonInputs {Title = "Simple Forms"};
             toSimpleFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SimpleForms()); };
 
-            var toEntriesBtn = new Button {Text = "Entries"};
+            var toEntriesBtn = new ButtonInputs {Title = "Entries"};
             toEntriesBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryForms()); };
 
-            var toEntryViewBtn = new Button {Text = "EntryView"};
+            var toEntryViewBtn = new ButtonInputs {Title = "EntryView"};
             toEntryViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryViewPage()); };
 
-            var toPickerViewBtn = new Button {Text = "PickerView"};
+            var toPickerViewBtn = new ButtonInputs {Title = "PickerView"};
             toPickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new PickerViewPage()); };
 
-            var toDatePickerViewBtn = new Button {Text = "DatePickerView"};
+            var toDatePickerViewBtn = new ButtonInputs {Title = "DatePickerView"};
             toDatePickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new DatePickerViewPage()); };
 
-            var toTimePickerViewBtn = new Button {Text = "TimePickerView"};
+            var toTimePickerViewBtn = new ButtonInputs {Title = "TimePickerView"};
             toTimePickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TimePickerViewPage()); };
 
-            var toButtonContentBtn = new Button {Text = "Buttons"};
+            var toButtonContentBtn = new ButtonInputs {Title = "Buttons"};
             toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonsPage()); };
 
-            var toSwitchBtn = new Button {Text = "Switch"};
+            var toSwitchBtn = new ButtonInputs {Title = "Switch"};
             toSwitchBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SwitchPage()); };
 
-            var toTestBtn = new Button {Text = "Test"};
+            var toTestBtn = new ButtonInputs {Title = "Test"};
             toTestBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TestPage()); };
 
             Content = new ScrollView

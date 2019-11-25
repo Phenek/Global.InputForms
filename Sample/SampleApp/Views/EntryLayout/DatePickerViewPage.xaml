@@ -6,7 +6,7 @@
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              x:Class="SampleApp.Views.DatePickerViewPage">
     <ContentPage.Content>
-        <ScrollView BackgroundColor="LightBlue">
+        <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
                 Padding="40,10,40,10"
                 HeightRequest="900"

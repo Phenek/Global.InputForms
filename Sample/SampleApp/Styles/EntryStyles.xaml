@@ -5,27 +5,98 @@
                     xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
                     x:Class="SampleApp.Styles.EntryStyles">
 
-    <Style TargetType="global:EntryLayout" Class="Entry"
+    <Style TargetType="global:EntryLayout" Class="BesiegedEntry"
            ApplyToDerivedTypes="true">
-        <Setter Property="EntryFontSize" Value="15" />
+        <Setter Property="EntryLayoutType" Value="Besieged" />
+        <Setter Property="InfoViewType" Value="Surrounded" />
+        <Setter Property="LabelTextColor" Value="Black" />
+        <Setter Property="LabelTextColor" Value="Black" />
+        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="BorderColor" Value="BlueViolet" />
+        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
+        <Setter Property="EntryHeightRequest" Value="40" />
+        <Setter Property="EntryFontSize" Value="17" />
+        <Setter Property="EntryFontAttributes" Value="None" />
         <Setter Property="EntryTextColor" Value="Black" />
-        <Setter Property="EntryPlaceholderColor" Value="Gray" />
+        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
+
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="LabelMargin" Value="10,0,10,0" />
+        <Setter Property="EntryMargin" Value="10,0,10,0" />
+        <Setter Property="LineMargin"  Value="0,0,10,0" />
+        <Setter Property="InfoMargin"  Value="10,0,10,0" />
+
+    </Style>
+
+        <Style TargetType="global:EntryLayout" Class="BesiegedEntryOverlaLabel"
+           ApplyToDerivedTypes="true">
+        <Setter Property="EntryLayoutType" Value="Besieged" />
+        <Setter Property="InfoViewType" Value="Surrounded" />
+        <Setter Property="LabelTextColor" Value="Black" />
+        <Setter Property="LabelTextColor" Value="Black" />
+        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="LabelBackgroundColor" Value="WhiteSmoke" />
+        <Setter Property="BorderColor" Value="BlueViolet" />
+        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="WhiteSmoke" />
-        <Setter Property="LineColor" Value="Gray" />
-        <Setter Property="LineHighlightedColor" Value="Blue" />
-        <Setter Property="EntryFontFamily" Value="Bold" />
-        <Setter Property="EntryCornerRadius" Value="0" />
+        <Setter Property="EntryHeightRequest" Value="40" />
+        <Setter Property="EntryFontSize" Value="17" />
+        <Setter Property="EntryFontAttributes" Value="None" />
+        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
+
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="FrameMargin" Value="0,7,0,0" />
+        <Setter Property="LabelMargin" Value="10,-7,10,0" />
+        <Setter Property="EntryMargin" Value="10,0,10,0" />
+        <Setter Property="LineMargin"  Value="0,0,10,0" />
+        <Setter Property="InfoMargin"  Value="10,0,10,0" />
+
     </Style>
 
     <Style TargetType="global:EntryLayout" Class="RoundedEntry"
            ApplyToDerivedTypes="true">
-        <Setter Property="EntryFontSize" Value="15" />
-        <Setter Property="EntryTextColor" Value="Black" />
-        <Setter Property="EntryPlaceholderColor" Value="Gray" />
-        <Setter Property="EntryBackgroundColor" Value="WhiteSmoke" />
+        <Setter Property="EntryLayoutType" Value="Surrounded" />
+        <Setter Property="InfoViewType" Value="Surrounded" />
+        <Setter Property="LabelTextColor" Value="Black" />
+        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="BorderColor" Value="BlueViolet" />
+        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />
-        <Setter Property="EntryCornerRadius" Value="20" />
-        <Setter Property="EntryFontFamily" Value="Bold" />
+        <Setter Property="EntryFontSize" Value="17" />
+        <Setter Property="EntryFontAttributes" Value="None" />
+        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
+
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="LabelMargin" Value="15,0,15,0" />
+        <Setter Property="EntryMargin" Value="15,0,15,0" />
+        <Setter Property="LineMargin"  Value="15,0,15,0" />
+        <Setter Property="InfoMargin"  Value="15,0,15,0" />
+    </Style>
+
+    <Style TargetType="global:EntryLayout" Class="LineEntry"
+           ApplyToDerivedTypes="true">
+        <Setter Property="EntryLayoutType" Value="Line" />
+        <Setter Property="InfoViewType" Value="Line" />
+        <Setter Property="LabelTextColor" Value="Black" />
+        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
+        <Setter Property="EntryHeightRequest" Value="40" />
+        <Setter Property="EntryFontSize" Value="17" />
+        <Setter Property="EntryFontAttributes" Value="None" />
+        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
+        <Setter Property="LineColor" Value="Gray" />
+        <Setter Property="LineHighlightedColor" Value="CornflowerBlue" />
+
+        <Setter Property="CornerRadius" Value="0" />
     </Style>
 
 </ResourceDictionary>

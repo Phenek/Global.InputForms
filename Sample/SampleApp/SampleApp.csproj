@@ -24,6 +24,7 @@
     <Folder Include="Behaviors\" />
     <Folder Include="Views\EntryLayout\" />
     <Folder Include="Styles\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Styles\EjntryStyles.xaml" />
@@ -55,6 +56,9 @@
     </Compile>
     <Compile Update="Styles\EntryStyles.xaml.cs">
       <DependentUpon>EntryStyles.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\ButtonInputs.xaml.cs">
+      <DependentUpon>ButtonInputs.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

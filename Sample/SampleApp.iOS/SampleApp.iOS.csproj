@@ -198,6 +198,9 @@
     <BundleResource Include="Resources\StarUnchecked%402x.png" />
     <BundleResource Include="Resources\StarUnchecked%403x.png" />
     <BundleResource Include="loader.json" />
+    <BundleResource Include="Resources\ChevronRight.png" />
+    <BundleResource Include="Resources\ChevronRight%402x.png" />
+    <BundleResource Include="Resources\ChevronRight%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

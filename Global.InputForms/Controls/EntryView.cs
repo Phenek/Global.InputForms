@@ -117,6 +117,9 @@ namespace Global.InputForms
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
+            _entry.SetBinding(MarginProperty,
+                new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
+
 
             _entry.SetBinding(Entry.IsPasswordProperty,
                 new Binding(nameof(IsPassword)) {Source = this, Mode = BindingMode.OneWay});
