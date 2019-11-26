@@ -47,37 +47,36 @@ namespace Global.InputForms
             _datePicker = new BlankDatePicker
             {
                 BackgroundColor = Color.Transparent,
-                HorizontalOptions = LayoutOptions.FillAndExpand
             };
-            Input = _datePicker;
-            _datePicker.SetBinding(BlankDatePicker.TextProperty,
+            _datePicker.GestureRecognizers.Add(TapGesture);
+            _datePicker.SetBinding(Entry.TextProperty,
                 new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
-            _datePicker.SetBinding(DatePicker.FontAttributesProperty,
+            _datePicker.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(DatePicker.FontFamilyProperty,
+            _datePicker.SetBinding(Entry.FontFamilyProperty,
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(DatePicker.FontSizeProperty,
+            _datePicker.SetBinding(Entry.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(BlankDatePicker.PlaceholderProperty,
+            _datePicker.SetBinding(Entry.PlaceholderProperty,
                 new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(BlankDatePicker.PlaceholderColorProperty,
+            _datePicker.SetBinding(Entry.PlaceholderColorProperty,
                 new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(BlankDatePicker.HorizontalTextAlignmentProperty,
+            _datePicker.SetBinding(Entry.HorizontalTextAlignmentProperty,
                 new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(DatePicker.TextColorProperty,
+            _datePicker.SetBinding(Entry.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(MarginProperty,
                 new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
-            _datePicker.SetBinding(DatePicker.FormatProperty,
+            _datePicker.SetBinding(BlankDatePicker.FormatProperty,
                 new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(DatePicker.MinimumDateProperty,
+            _datePicker.SetBinding(BlankDatePicker.MinimumDateProperty,
                 new Binding(nameof(MinimumDate)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(DatePicker.MaximumDateProperty,
+            _datePicker.SetBinding(BlankDatePicker.MaximumDateProperty,
                 new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(DatePicker.DateProperty,
+            _datePicker.SetBinding(BlankDatePicker.DateProperty,
                 new Binding(nameof(Date)) {Source = this, Mode = BindingMode.TwoWay});
 
             _datePicker.SetBinding(BlankDatePicker.DoneButtonTextProperty,
@@ -92,9 +91,10 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 Content = _datePicker
             };
+            Input = _pFrame;
             _pFrame.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
-                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             _pFrame.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _pFrame.SetBinding(HeightRequestProperty,

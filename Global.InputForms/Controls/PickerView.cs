@@ -55,37 +55,39 @@ namespace Global.InputForms
         {
             _picker = new BlankPicker
             {
-                BackgroundColor = Color.Transparent
+                BackgroundColor = Color.Transparent,
             };
-            Input = _picker;
-            _picker.SetBinding(BlankPicker.TextProperty,
+            _picker.GestureRecognizers.Add(TapGesture);
+            _picker.SetBinding(Entry.TextProperty,
+                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.OneWayToSource });
+            _picker.SetBinding(Entry.TextProperty,
                 new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
-            _picker.SetBinding(Picker.FontAttributesProperty,
+            _picker.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(Picker.FontFamilyProperty,
+            _picker.SetBinding(Entry.FontFamilyProperty,
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(Picker.FontSizeProperty,
+            _picker.SetBinding(Entry.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(BlankPicker.PlaceholderProperty,
+            _picker.SetBinding(Entry.PlaceholderProperty,
                 new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(BlankPicker.PlaceholderColorProperty,
+            _picker.SetBinding(Entry.PlaceholderColorProperty,
                 new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(BlankPicker.HorizontalTextAlignmentProperty,
+            _picker.SetBinding(Entry.HorizontalTextAlignmentProperty,
                 new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(Picker.TextColorProperty,
+            _picker.SetBinding(Entry.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(MarginProperty,
                 new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
-            _picker.SetBinding(Picker.ItemsSourceProperty,
+            _picker.SetBinding(BlankPicker.ItemsSourceProperty,
                 new Binding(nameof(ItemsSource)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(Picker.SelectedIndexProperty,
+            _picker.SetBinding(BlankPicker.SelectedIndexProperty,
                 new Binding(nameof(SelectedIndex)) {Source = this, Mode = BindingMode.TwoWay});
-            _picker.SetBinding(Picker.SelectedItemProperty,
+            _picker.SetBinding(BlankPicker.SelectedItemProperty,
                 new Binding(nameof(SelectedItem)) {Source = this, Mode = BindingMode.TwoWay});
-            _picker.SetBinding(Picker.TitleProperty,
+            _picker.SetBinding(BlankPicker.TitleProperty,
                 new Binding(nameof(Title)) {Source = this, Mode = BindingMode.OneWay});
             //Todo For Xamarin.Forms 4.0
             //_picker.SetBinding(Picker.TitleColorProperty,
@@ -101,11 +103,12 @@ namespace Global.InputForms
                 Padding = 0,
                 HasShadow = false,
                 BackgroundColor = Color.Transparent,
-                Content = _picker
+                Content = _picker,
             };
+            Input = _pFrame;
             _pFrame.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
-                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             _pFrame.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _pFrame.SetBinding(HeightRequestProperty,

@@ -201,8 +201,8 @@ namespace Global.InputForms
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Center,
                 VerticalTextAlignment = TextAlignment.Center,
-                InputTransparent = true,
             };
+            entryLayout._label.GestureRecognizers.Add(entryLayout.TapGesture);
 
             entryLayout._label.SetBinding(Label.FontAttributesProperty, new Binding(nameof(LabelFontAttributes))
             { Source = entryLayout, Mode = BindingMode.OneWay });
@@ -934,6 +934,7 @@ namespace Global.InputForms
         private RowDefinition _rowInfo;
         protected Command TextAlignmentCommand;
         protected View Input;
+        protected TapGestureRecognizer TapGesture = new TapGestureRecognizer();
 
         public EventHandler<EventArgs> Validators;
         public event EventHandler<TextChangedEventArgs> TextChanged;
@@ -959,11 +960,17 @@ namespace Global.InputForms
                 _rowInfo
             };
 
+            TapGesture = new TapGestureRecognizer();
+            TapGesture.Tapped += (s, e) => {
+                Focus();
+            };
+
             _frameEntry = new Frame
             {
                 Padding = 0,
                 HasShadow = false
             };
+            _frameEntry.GestureRecognizers.Add(TapGesture);
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(CornerRadius)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(HeightRequestProperty,
@@ -976,8 +983,10 @@ namespace Global.InputForms
                 HeightRequest = 1,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.End,
-                BackgroundColor = LineColor
+                BackgroundColor = LineColor,
+                InputTransparent = true,
             };
+            _line.GestureRecognizers.Add(TapGesture);
             _line.SetBinding(View.MarginProperty,
                 new Binding(nameof(LineMargin)) { Source = this, Mode = BindingMode.OneWay });
 
@@ -989,8 +998,10 @@ namespace Global.InputForms
                 MinimumHeightRequest = 0,
                 MinimumWidthRequest = 0,
                 HeightRequest = 0,
-                WidthRequest = 0
+                WidthRequest = 0,
+                InputTransparent = true,
             };
+            _dumboView.GestureRecognizers.Add(TapGesture);
             Children.Add(_dumboView, 1, 2, 1, 2);
             _dumboView.SizeChanged += _indigo_SizeChanged;
 

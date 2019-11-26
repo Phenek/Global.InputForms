@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using Foundation;
 using Global.InputForms;
 using Global.InputForms.iOS.Renderers;
@@ -9,10 +10,10 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(BlankDatePicker), typeof(BlankPickerDateRenderer))]
+[assembly: ExportRenderer(typeof(BlankDatePicker), typeof(BlankDatePickerRenderer))]
 namespace Global.InputForms.iOS.Renderers
 {
-    public class BlankPickerDateRenderer : DatePickerRenderer
+    public class BlankDatePickerRenderer : EntryRenderer
     {
         private BlankDatePicker blankPicker;
         private string _oldText;
@@ -21,21 +22,23 @@ namespace Global.InputForms.iOS.Renderers
         UIColor _defaultTextColor;
         bool _disposed;
         bool _useLegacyColorManagement;
-        bool _doneClicked;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
+            base.OnElementChanged(e);
+
             if (!(e.NewElement is BlankDatePicker bPicker)) return;
             blankPicker = bPicker;
 
-            if (Control == null)
+            if (Control != null)
             {
-                var entry = new MyGlobalTextField();
+                Control.SpellCheckingType = UITextSpellCheckingType.No;
+                Control.AutocorrectionType = UITextAutocorrectionType.No;
+                Control.AutocapitalizationType = UITextAutocapitalizationType.None;
+                Control.BorderStyle = UITextBorderStyle.RoundedRect;
 
-                SetNativeControl(entry);
-
-                entry.EditingDidBegin += OnStarted;
-                entry.EditingDidEnd += OnEnded;
+                Control.EditingDidBegin += OnStarted;
+                Control.EditingDidEnd += OnEnded;
 
                 _picker = new UIDatePicker { Mode = UIDatePickerMode.Date, TimeZone = new NSTimeZone("UTC") };
 
@@ -43,90 +46,40 @@ namespace Global.InputForms.iOS.Renderers
 
                 SetInputAccessoryView();
 
-                entry.InputView = _picker;
+                Control.InputView = _picker;
 
-                entry.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-                entry.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+                Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+                Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
-                entry.InputAssistantItem.LeadingBarButtonGroups = null;
-                entry.InputAssistantItem.TrailingBarButtonGroups = null;
+                Control.InputAssistantItem.LeadingBarButtonGroups = null;
+                Control.InputAssistantItem.TrailingBarButtonGroups = null;
 
-                _defaultTextColor = entry.TextColor;
+                _defaultTextColor = Control.TextColor;
 
-                entry.AccessibilityTraits = UIAccessibilityTrait.Button;
+                Control.AccessibilityTraits = UIAccessibilityTrait.Button;
             }
 
             UpdateDateFromModel(false);
-            UpdateFont();
             UpdateMaximumDate();
             UpdateMinimumDate();
-            UpdateTextColor();
-            SetPlaceholder();
-        }
-
-        private void RemoveEvents(EventHandler eventHandler)
-        {
-            foreach (Delegate d in eventHandler.GetInvocationList())
-            {
-                eventHandler -= (EventHandler)d;
-            }
+            SetAttributes();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == DatePicker.DateProperty.PropertyName || e.PropertyName == DatePicker.FormatProperty.PropertyName)
-            {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(BlankDatePicker.Date)
+                || e.PropertyName == nameof(BlankDatePicker.Format))
                 UpdateDateFromModel(true);
-            }
-            else if (e.PropertyName == nameof(DatePicker.MinimumDate)) UpdateMinimumDate();
+            else if (e.PropertyName == nameof(BlankDatePicker.MinimumDate)) UpdateMinimumDate();
 
-            else if (e.PropertyName == nameof(DatePicker.MaximumDate)) UpdateMaximumDate();
-
-            else if (e.PropertyName == nameof(DatePicker.TextColor)
-                || e.PropertyName == nameof(VisualElement.IsEnabled)) UpdateTextColor();
-
-            else if (e.PropertyName == nameof(DatePicker.FontAttributes)
-                || e.PropertyName == nameof(DatePicker.FontFamily)
-                || e.PropertyName == nameof(DatePicker.FontSize)) UpdateFont();
-
-            if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
-
-            if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
-
-            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
+            else if (e.PropertyName == nameof(BlankDatePicker.MaximumDate)) UpdateMaximumDate();
         }
 
-        private void SetPlaceholder()
+        private void SetAttributes()
         {
-            if (Control != null)
-            {
-                Control.BorderStyle = UITextBorderStyle.None;
-                if (Element is BlankDatePicker picker && !string.IsNullOrWhiteSpace(picker.Placeholder))
-                    Control.Text = picker.Placeholder;
-            }
-        }
-
-        private void SetAlignment()
-        {
-            switch (((BlankDatePicker)Element).HorizontalTextAlignment)
-            {
-                case TextAlignment.Center:
-                    Control.TextAlignment = UITextAlignment.Center;
-                    break;
-                case TextAlignment.End:
-                    Control.TextAlignment = UITextAlignment.Right;
-                    break;
-                case TextAlignment.Start:
-                    Control.TextAlignment = UITextAlignment.Left;
-                    break;
-            }
-        }
-
-        void UpdateText()
-        {
-            // ReSharper disable once RedundantCheckBeforeAssignment
-            if (Control.Text != blankPicker.Text)
-                Control.Text = blankPicker.Text;
+            if (Control != null) Control.BorderStyle = UITextBorderStyle.None;
         }
 
         public void SetInputAccessoryView()
@@ -165,7 +118,9 @@ namespace Global.InputForms.iOS.Renderers
                 var doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done,
                     (s, ev) =>
                     {
-                        _doneClicked = true;
+                        blankPicker.Text = Control.Text = _picker.Date.ToDateTime().Date.ToString(blankPicker.Format);
+                        blankPicker.Date = _picker.Date.ToDateTime().Date;
+                        blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
                 doneButton.Clicked += (sender, e) => blankPicker.SendDoneClicked();
@@ -178,9 +133,8 @@ namespace Global.InputForms.iOS.Renderers
 
         void HandleValueChanged(object sender, EventArgs e)
         {
-            blankPicker?.SetValueFromRenderer(DatePicker.DateProperty, _picker.Date.ToDateTime().Date);
+            blankPicker?.SetValueFromRenderer(BlankDatePicker.DateProperty, _picker.Date.ToDateTime().Date);
         }
-
 
         void OnStarted(object sender, EventArgs eventArgs)
         {
@@ -189,46 +143,23 @@ namespace Global.InputForms.iOS.Renderers
 
         void OnEnded(object sender, EventArgs eventArgs)
         {
-            if (_doneClicked)
-            {
-                blankPicker.Text = Control.Text = _picker.Date.ToDateTime().Date.ToString(blankPicker.Format);
-                blankPicker.Date = _picker.Date.ToDateTime().Date;
-            }
             blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
 
         void UpdateDateFromModel(bool animate)
         {
-            if (_picker.Date.ToDateTime().Date != Element.Date.Date)
-                _picker.SetDate(Element.Date.ToNSDate(), animate);
+            if (_picker.Date.ToDateTime().Date != blankPicker.Date.Date)
+                _picker.SetDate(blankPicker.Date.ToNSDate(), animate);
         }
-
-        protected internal virtual void UpdateFont()
-        {
-            Control.Font = UIFont.FromName(Element.FontFamily, (float)Element.FontSize);
-        }
-
+        
         void UpdateMaximumDate()
         {
-            _picker.MaximumDate = Element.MaximumDate.ToNSDate();
+            _picker.MaximumDate = blankPicker.MaximumDate.ToNSDate();
         }
 
         void UpdateMinimumDate()
         {
-            _picker.MinimumDate = Element.MinimumDate.ToNSDate();
-        }
-
-        protected internal virtual void UpdateTextColor()
-        {
-            var textColor = Element.TextColor;
-
-            if (textColor.IsDefault || (!Element.IsEnabled && _useLegacyColorManagement))
-                Control.TextColor = _defaultTextColor;
-            else
-                Control.TextColor = textColor.ToUIColor();
-
-            // HACK This forces the color to update; there's probably a more elegant way to make this happen
-            Control.Text = Control.Text;
+            _picker.MinimumDate = blankPicker.MinimumDate.ToNSDate();
         }
 
         protected override void Dispose(bool disposing)
@@ -258,21 +189,10 @@ namespace Global.InputForms.iOS.Renderers
 
             base.Dispose(disposing);
         }
-    }
-
-    public class MyGlobalTextField : UITextField
-    {
-        public MyGlobalTextField() : base(new RectangleF())
-        {
-            SpellCheckingType = UITextSpellCheckingType.No;
-            AutocorrectionType = UITextAutocorrectionType.No;
-            AutocapitalizationType = UITextAutocapitalizationType.None;
-            BorderStyle = UITextBorderStyle.RoundedRect;
-        }
 
         public override bool CanPerform(ObjCRuntime.Selector action, Foundation.NSObject withSender)
         {
-           return false;
+            return false;
         }
     }
 }

@@ -6,7 +6,7 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(BlankTimePicker), typeof(BlankPickerRenderer))]
+[assembly: ExportRenderer(typeof(BlankTimePicker), typeof(BlankTimePickerRenderer))]
 
 namespace Global.InputForms.iOS.Renderers
 {

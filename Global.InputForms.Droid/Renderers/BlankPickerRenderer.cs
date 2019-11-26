@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Android.App;
 using Android.Content;
@@ -11,14 +12,19 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
 using TextAlignment = Android.Views.TextAlignment;
-using View = Android.Views.View;
+using AView = Android.Views.View;
+using System;
 
 [assembly: ExportRenderer(typeof(BlankPicker), typeof(BlankPickerRenderer))]
 
 namespace Global.InputForms.Droid.Renderers
 {
-    public class BlankPickerRenderer : PickerRenderer, View.IOnClickListener
+    public class BlankPickerRenderer : EntryRenderer
     {
+        readonly static HashSet<Keycode> AvailableKeys = new HashSet<Keycode>(new[] {
+            Keycode.Tab, Keycode.Forward, Keycode.DpadDown, Keycode.DpadLeft, Keycode.DpadRight, Keycode.DpadUp
+        });
+
         private AlertDialog _dialog;
         private BlankPicker blankPicker;
 
@@ -28,7 +34,7 @@ namespace Global.InputForms.Droid.Renderers
 
         private IElementController EController => Element;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
             if (!(e.NewElement is BlankPicker bPicker)) return;
@@ -38,19 +44,19 @@ namespace Global.InputForms.Droid.Renderers
                 {
                     if (!string.IsNullOrEmpty(Control.Text))
                         bPicker.Text = Control.Text;
-                    Control.SetOnClickListener(this);
-                    Clickable = true;
+
+                    Control.Focusable = true;
+                    Control.Clickable = false;
                     Control.InputType = InputTypes.Null;
-                    Control.Text = Element.SelectedItem?.ToString();
+                    blankPicker.Focused += OnClick;
+
+                    Control.Text = blankPicker.SelectedItem?.ToString();
                     Control.KeyListener = null;
 
                     Control.TextChanged += (sender, arg)
                         => bPicker.Text = arg.Text.ToString();
 
-                    SetPlaceholder();
-                    SetAlignment();
-                    Control.SetPadding(0, 7, 0, 3);
-                    Control.Gravity = GravityFlags.Fill;
+                    SetAttributes();
                 }
             if (e.OldElement != null)
             {
@@ -58,10 +64,16 @@ namespace Global.InputForms.Droid.Renderers
             }
         }
 
-        public void OnClick(View v)
+        private void SetAttributes()
         {
-            EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
-            var model = Element;
+            Control.SetBackgroundColor(Color.Transparent);
+            Control.SetPadding(0, 7, 0, 3);
+            Control.Gravity = GravityFlags.Fill;
+        }
+
+        public void OnClick(object sender, EventArgs e)
+        {
+            var model = blankPicker;
             var picker = new NumberPicker(Context);
             if (model.Items != null && model.Items.Any())
             {
@@ -84,28 +96,31 @@ namespace Global.InputForms.Droid.Renderers
                 blankPicker.SendCancelClicked();
                 EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 _dialog = null;
+                Control.ClearFocus();
             });
             builder.SetPositiveButton(blankPicker.DoneButtonText ?? "OK", (s, a) =>
             {
-                EController.SetValueFromRenderer(Picker.SelectedIndexProperty, picker.Value);
+                EController.SetValueFromRenderer(BlankPicker.SelectedIndexProperty, picker.Value);
                 //blankPicker.SelectedItem = picker.Value;
                 blankPicker.SendDoneClicked();
                 // It is possible for the Content of the Page to be changed on SelectedIndexChanged. 
                 // In this case, the Element & Control will no longer exist.
-                if (Element != null)
+                if (blankPicker != null)
                 {
-                    if (model.Items.Count > 0 && Element.SelectedIndex >= 0)
-                        Control.Text = model.Items[Element.SelectedIndex];
+                    if (model.Items.Count > 0 && blankPicker.SelectedIndex >= 0)
+                        Control.Text = model.Items[blankPicker.SelectedIndex];
                     EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                    Control.ClearFocus();
                 }
 
                 _dialog = null;
             });
 
             _dialog = builder.Create();
-            _dialog.DismissEvent += (sender, args) =>
+            _dialog.DismissEvent += (s, args) =>
             {
                 EController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                Control.ClearFocus();
             };
             _dialog.Show();
         }
@@ -113,44 +128,6 @@ namespace Global.InputForms.Droid.Renderers
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
-
-            if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
-
-            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
-        }
-
-
-        private void SetPlaceholder()
-        {
-            Control.SetBackgroundColor(Color.Transparent);
-
-            if (Element is BlankPicker picker && !string.IsNullOrWhiteSpace(picker.Placeholder))
-                Control.Text = picker.Placeholder;
-        }
-
-        private void SetAlignment()
-        {
-            switch (((BlankPicker) Element).HorizontalTextAlignment)
-            {
-                case Xamarin.Forms.TextAlignment.Center:
-                    Control.TextAlignment = TextAlignment.Center;
-                    break;
-                case Xamarin.Forms.TextAlignment.End:
-                    Control.TextAlignment = TextAlignment.ViewEnd;
-                    break;
-                case Xamarin.Forms.TextAlignment.Start:
-                    Control.TextAlignment = TextAlignment.ViewStart;
-                    break;
-            }
-        }
-
-        void UpdateText()
-        {
-            // ReSharper disable once RedundantCheckBeforeAssignment
-            if (Control.Text != blankPicker.Text)
-                Control.Text = blankPicker.Text;
         }
     }
 }

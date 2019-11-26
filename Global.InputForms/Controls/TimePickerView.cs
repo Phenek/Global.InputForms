@@ -29,7 +29,7 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
-            Input = _timePicker;
+            _timePicker.GestureRecognizers.Add(TapGesture);
             _timePicker.SetBinding(BlankTimePicker.TextProperty,
                 new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
             _timePicker.SetBinding(TimePicker.FontAttributesProperty,
@@ -63,9 +63,10 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 Content = _timePicker
             };
+            Input = _pFrame;
             _pFrame.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
-                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             _pFrame.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _pFrame.SetBinding(HeightRequestProperty,
