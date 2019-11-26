@@ -2,7 +2,7 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              x:Class="SampleApp.Views.PickerViewPage">
     <ContentPage.Content>
 
@@ -12,7 +12,7 @@
             HeightRequest="900"
             HorizontalOptions="CenterAndExpand">
 
-            <controls:PickerView
+            <global:PickerView
                 CornerRadius="15"
                 InfoViewType="Surrounded"
                 InfoColor="Purple"
@@ -20,25 +20,47 @@
                 LabelText="Picker"
                 x:Name="_picker"/>
 
+<!-- Besieged DatePicker with Surrounded Info -->
+                <global:PickerView StyleClass="BesiegedEntry"
+                                   LabelText="Besieged DatePicker"
+                                   ItemsSource="{Binding LanguagesList}">
+                </global:PickerView>
 
-            <controls:DatePickerView
-                CornerRadius="15"
-                InfoViewType="Surrounded"
-                InfoColor="Purple"
-                EntryBackgroundColor="#88FFFFFF"
-                LabelText="Picker Date"
-                x:Name="_pickerDate"/>
+                <Label Text="Besieged DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Besieged DatePicker with Overlaped Label with Surrounded Info -->
+
+                <global:PickerView StyleClass="BesiegedEntryOverlaLabel"
+                                   LabelText="Besieged DatePicker"
+                                   ItemsSource="{Binding LanguagesList}">
+                </global:PickerView>
+
+                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
 
-            <controls:TimePickerView
-                CornerRadius="15"
-                InfoViewType="Surrounded"
-                InfoColor="Purple"
-                EntryBackgroundColor="#88FFFFFF"
-                LabelText="Picker Time"
-                x:Name="_pickerTime"/>
+                <!-- Rounded DatePicker with Surrounded Info -->
+                <global:PickerView StyleClass="RoundedEntry"
+                                   LabelText="Rounded DatePicker"
+                                   ItemsSource="{Binding LanguagesList}">
+                </global:PickerView>
 
+                <Label Text="Rounded DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
+                 <!-- Line DatePicker with Line Info -->
+                <global:PickerView StyleClass="LineEntry"
+                                   LabelText="Line DatePicker"
+                                   ItemsSource="{Binding LanguagesList}">
+                </global:PickerView>
+
+                <Label Text="Line DatePicker with Line Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

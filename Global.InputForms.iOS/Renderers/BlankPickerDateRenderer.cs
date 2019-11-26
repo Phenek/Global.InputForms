@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Foundation;
 using Global.InputForms;
 using Global.InputForms.iOS.Renderers;
 using UIKit;
@@ -34,10 +35,13 @@ namespace Global.InputForms.iOS.Renderers
             if (Control is UITextField textField)
             {
                 if (!string.IsNullOrEmpty(Control.Text))
-                    bPicker.Text = Control.Text;
+                    Control.Text = string.Empty;
+                //bPicker.Text = Control.Text;
                 textField.EditingChanged += (sender, arg)
-                    => bPicker.Text = Control.Text;
-
+                =>
+                {
+                    bPicker.Text = Control.Text;
+                };
                 textField.EditingDidEnd += (sender, arg) =>
                 {
                     var controlText = Control.Text ?? string.Empty;
@@ -78,7 +82,7 @@ namespace Global.InputForms.iOS.Renderers
 
         private void SetAlignment()
         {
-            switch (((BlankDatePicker) Element).HorizontalTextAlignment)
+            switch (((BlankDatePicker)Element).HorizontalTextAlignment)
             {
                 case TextAlignment.Center:
                     Control.TextAlignment = UITextAlignment.Center;
@@ -119,8 +123,15 @@ namespace Global.InputForms.iOS.Renderers
             if (!string.IsNullOrEmpty(blankPicker.CancelButtonText))
             {
                 var cancelButton = new UIBarButtonItem(blankPicker.CancelButtonText, UIBarButtonItemStyle.Done,
-                    (s, ev) => { Control.ResignFirstResponder(); });
-                cancelButton.Clicked += (sender, e) => { blankPicker.SendCancelClicked(); };
+                    (s, ev) =>
+                    {
+                        blankPicker.Text = string.Empty;
+                        Control.ResignFirstResponder();
+                    });
+                cancelButton.Clicked += (sender, e) =>
+                {
+                    blankPicker.SendCancelClicked();
+                };
                 items.Add(cancelButton);
             }
 
@@ -130,8 +141,15 @@ namespace Global.InputForms.iOS.Renderers
             if (!string.IsNullOrEmpty(blankPicker.DoneButtonText))
             {
                 var doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done,
-                    (s, ev) => { Control.ResignFirstResponder(); });
-                doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
+                    (s, ev) =>
+                    {
+                        blankPicker.Text = Control.Text;
+                        Control.ResignFirstResponder();
+                    });
+                doneButton.Clicked += (sender, e) =>
+                {
+                    blankPicker.SendDoneClicked();
+                };
                 items.Add(doneButton);
             }
 

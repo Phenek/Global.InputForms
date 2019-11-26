@@ -60,8 +60,8 @@ namespace Global.InputForms.Droid.Renderers
 
         public void OnClick(View v)
         {
+            EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
             var model = Element;
-
             var picker = new NumberPicker(Context);
             if (model.Items != null && model.Items.Any())
             {
@@ -75,8 +75,6 @@ namespace Global.InputForms.Droid.Renderers
 
             var layout = new LinearLayout(Context) {Orientation = Orientation.Vertical};
             layout.AddView(picker);
-
-            EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
 
             var builder = new AlertDialog.Builder(Context);
             builder.SetView(layout);

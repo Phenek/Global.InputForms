@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Global.InputForms.Models;
 using Naxam.I18n;
 using Naxam.I18n.Forms;
@@ -37,6 +38,13 @@ namespace SampleApp.ViewModels
                 {"Spanish", _i18N.GetText("Form.Spanish")},
                 {"Russian", _i18N.GetText("Form.Russian")}
             };
+
+            LanguagesList = new List<string>
+            {
+                _i18N.GetText("Form.English"),
+                _i18N.GetText("Form.Spanish"),
+                _i18N.GetText("Form.Russian")
+            };
         }
 
         public FormModel Form
@@ -52,6 +60,7 @@ namespace SampleApp.ViewModels
         public ObservableDictionary<string, object> Rates { get; set; }
         public ObservableDictionary<string, object> Genders { get; set; }
         public ObservableDictionary<string, object> Languages { get; set; }
+        public List<string> LanguagesList { get; set; }
 
         public async void OnSubmit()
         {

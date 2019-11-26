@@ -49,8 +49,8 @@
         <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
 
         <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="FrameMargin" Value="0,7,0,0" />
-        <Setter Property="LabelMargin" Value="10,-7,10,0" />
+        <Setter Property="FrameMargin" Value="0,14,0,0" />
+        <Setter Property="LabelMargin" Value="10,0,10,0" />
         <Setter Property="EntryMargin" Value="10,0,10,0" />
         <Setter Property="LineMargin"  Value="0,0,10,0" />
         <Setter Property="InfoMargin"  Value="10,0,10,0" />

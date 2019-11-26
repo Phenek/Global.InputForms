@@ -8,6 +8,9 @@ namespace Global.InputForms
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(BlankDatePicker), defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: (bindable, oldValue, newValue) => ((BlankDatePicker)bindable).OnTextChanged((string)oldValue, (string)newValue));
 
+        public new static readonly BindableProperty DateProperty =
+            BindableProperty.Create(nameof(Date), typeof(DateTime), typeof(BlankDatePicker), default(DateTime));
+
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankDatePicker), "Ok");
 
@@ -25,10 +28,26 @@ namespace Global.InputForms
                 TextAlignment.Start);
 
         public event EventHandler<TextChangedEventArgs> TextChanged;
+        private bool _dateBinded;
 
         protected void OnTextChanged(string oldValue, string newValue)
         {
             TextChanged?.Invoke(this, new TextChangedEventArgs(oldValue, newValue));
+        }
+
+        public new DateTime Date
+        {
+            get => (DateTime)GetValue(DateProperty);
+            set
+            {
+                if (!_dateBinded)
+                {
+                    base.SetBinding(DatePicker.DateProperty,
+                    new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
+                    _dateBinded = true;
+                }
+                SetValue(DateProperty, value);
+            }
         }
 
         public string Text

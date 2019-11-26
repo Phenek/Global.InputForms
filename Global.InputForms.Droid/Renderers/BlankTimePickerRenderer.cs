@@ -105,6 +105,7 @@ namespace Global.InputForms.Droid.Renderers
 
         public void OnClick(View v)
         {
+            EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
             _dialog = new TimePickerDialog(Context, this, Element.Time.Hours, Element.Time.Minutes, true);
 
             _dialog.SetButton(blankPicker.CancelButtonText, (s, el) => {
