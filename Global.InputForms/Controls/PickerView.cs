@@ -114,6 +114,8 @@ namespace Global.InputForms
             _picker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
             _picker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
 
+            FloatingLabelWithoutAnimation();
+
             Children.Add(_picker, 2, 3, 1, 2);
         }
 

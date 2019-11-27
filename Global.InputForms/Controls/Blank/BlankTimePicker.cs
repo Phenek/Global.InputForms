@@ -7,13 +7,8 @@ namespace Global.InputForms
     {
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), "t");
 
-        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), null,
-            validateValue: (bindable, value) =>
-        {
-            if (value is TimeSpan time)
-                return time.TotalHours < 24 && time.TotalMilliseconds >= 0;
-            return true;
-        });
+        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), TimeSpan.FromDays(42));
+
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankTimePicker), "Ok");
 
@@ -34,7 +29,7 @@ namespace Global.InputForms
                 var oldValue = Time;
                 TimeSet = true;
                 SetValue(TimeProperty, value);
-                TimeSelected?.Invoke(this, new NullableTimeChangedEventArgs(oldValue, value));
+                TimeSelected?.Invoke(this, new TimeChangedEventArgs(oldValue, value));
             }
         }
 
@@ -50,7 +45,7 @@ namespace Global.InputForms
             set => SetValue(CancelButtonTextProperty, value);
         }
 
-        public event EventHandler<NullableTimeChangedEventArgs> TimeSelected;
+        public event EventHandler<TimeChangedEventArgs> TimeSelected;
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
         public bool TimeSet;
@@ -66,9 +61,9 @@ namespace Global.InputForms
         }
     }
 
-    public class NullableTimeChangedEventArgs : EventArgs
+    public class TimeChangedEventArgs : EventArgs
     {
-        public NullableTimeChangedEventArgs(TimeSpan oldTime, TimeSpan newTime)
+        public TimeChangedEventArgs(TimeSpan oldTime, TimeSpan newTime)
         {
             NewTime = oldTime;
             OldTime = newTime;

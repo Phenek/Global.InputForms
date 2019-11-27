@@ -10,32 +10,37 @@ namespace Global.InputForms
         ///     The Minimum Date property.
         /// </summary>
         public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time),
-            typeof(TimeSpan), typeof(TimePickerView), null);
-        //    propertyChanged: TimeChanged);
+            typeof(TimeSpan), typeof(TimePickerView), new TimeSpan(0), propertyChanged: TimeChanged, coerceValue: CoerceDate);
 
-        //private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is TimePickerView picker)
-        //        picker._timePicker.Time = (TimeSpan)newValue;
-        //}
+        static object CoerceDate(BindableObject bindable, object value)
+        {
+            var val = (TimeSpan)value;
+            TimeSpan timeValue = new TimeSpan(val.Hours, val.Minutes, 0);
+            return timeValue;
+        }
+
+        private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is TimePickerView picker)
+                picker._timePicker.Time = (TimeSpan)newValue;
+        }
 
         /// <summary>
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
-            typeof(TimePickerView), string.Empty);
-        //, propertyChanged: FormatChanged);
+            typeof(TimePickerView), string.Empty, propertyChanged: FormatChanged);
 
-        //private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is TimePickerView picker)
-        //        picker._timePicker.Format = (string)newValue;
-        //}
+        private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is TimePickerView picker)
+                picker._timePicker.Format = (string)newValue;
+        }
 
         private readonly Frame _pFrame;
         private readonly BlankTimePicker _timePicker;
 
-        public event EventHandler<NullableTimeChangedEventArgs> TimeSelected;
+        public event EventHandler<TimeChangedEventArgs> TimeSelected;
 
         public TimePickerView()
         {
@@ -74,10 +79,10 @@ namespace Global.InputForms
             _timePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
-            _timePicker.SetBinding(BlankTimePicker.FormatProperty,
-                new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
-            _timePicker.SetBinding(BlankTimePicker.TimeProperty,
-                new Binding(nameof(Time)) { Source = this, Mode = BindingMode.TwoWay });
+            //_timePicker.SetBinding(BlankTimePicker.FormatProperty,
+            //    new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
+            //_timePicker.SetBinding(BlankTimePicker.TimeProperty,
+            //    new Binding(nameof(Time)) { Source = this, Mode = BindingMode.TwoWay });
 
 
             _timePicker.Focused += FocusEntry;
@@ -96,8 +101,8 @@ namespace Global.InputForms
 
         public string Format
         {
-            get => (string) GetValue(TimePicker.FormatProperty);
-            set => SetValue(TimePicker.FormatProperty, value);
+            get => (string) GetValue(FormatProperty);
+            set => SetValue(FormatProperty, value);
         }
 
         public override void Focus()
@@ -110,9 +115,10 @@ namespace Global.InputForms
             _timePicker.Unfocus();
         }
 
-        private void Time_Selected(object sender, NullableTimeChangedEventArgs e)
+        private void Time_Selected(object sender, TimeChangedEventArgs e)
         {
-            //Time = e.NewTime;
+            if (e.NewTime != Time)
+                Time = e.NewTime;
             TimeSelected?.Invoke(this, e);
         }
     }

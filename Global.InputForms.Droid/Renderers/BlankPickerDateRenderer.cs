@@ -52,12 +52,13 @@ namespace Global.InputForms.Droid.Renderers
                     Control.InputType = InputTypes.Null;
                     blankPicker.Focused += OnClick;
 
-                    Control.TextChanged += (sender, arg) =>
-                    {
-                        if (bPicker.Text != arg.Text.ToString())
-                            bPicker.Text = arg.Text.ToString();
-                    };
+                    //Control.TextChanged += (sender, arg) =>
+                    //{
+                    //    if (bPicker.Text != arg.Text.ToString())
+                    //        bPicker.Text = arg.Text.ToString();
+                    //};
                     SetAttributes();
+                    UpdateDate();
                 }
             if (e.OldElement != null)
             {

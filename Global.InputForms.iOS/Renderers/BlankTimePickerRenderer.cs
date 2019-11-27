@@ -183,5 +183,10 @@ namespace Global.InputForms.iOS.Renderers
 
             base.Dispose(disposing);
         }
+
+        public override bool CanPerform(ObjCRuntime.Selector action, Foundation.NSObject withSender)
+        {
+            return false;
+        }
     }
 }

@@ -53,8 +53,8 @@ namespace Global.InputForms.Droid.Renderers
                     Control.Text = blankPicker.SelectedItem?.ToString();
                     Control.KeyListener = null;
 
-                    Control.TextChanged += (sender, arg)
-                        => bPicker.Text = arg.Text.ToString();
+                    //Control.TextChanged += (sender, arg)
+                    //    => bPicker.Text = arg.Text.ToString();
 
                     SetAttributes();
                 }

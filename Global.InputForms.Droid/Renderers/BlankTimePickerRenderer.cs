@@ -47,13 +47,13 @@ namespace Global.InputForms.Droid.Renderers
                     blankPicker.Focused += OnClick;
 
 
-                    Control.TextChanged += (sender, arg) =>
-                    {
-                        var selectedDate = arg.Text.ToString();
-                        if (selectedDate == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
+                    //Control.TextChanged += (sender, arg) =>
+                    //{
+                    //    var selectedDate = arg.Text.ToString();
+                    //    if (selectedDate == bPicker.Placeholder) Control.Text = DateTime.Now.ToString(bPicker.Format);
 
-                        bPicker.Text = arg.Text.ToString();
-                    };
+                    //    bPicker.Text = arg.Text.ToString();
+                    //};
 
                     SetAttributes();
                     UpdateTime();

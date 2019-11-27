@@ -294,7 +294,7 @@ namespace Global.InputForms
             Device.BeginInvokeOnMainThread(() => smoothAnimation.Commit(this, "EntryAnimation", 16, 300, Easing.Linear, null));
         }
 
-        private void FloatingLabelWithoutAnimation()
+        protected void FloatingLabelWithoutAnimation()
         {
             if (!FloatingLabel || _label == null || IsFocused) return;
 

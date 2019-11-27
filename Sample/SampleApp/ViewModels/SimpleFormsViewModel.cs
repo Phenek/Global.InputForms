@@ -68,7 +68,7 @@ namespace SampleApp.ViewModels
                 _i18N.GetText("Form.Russian")
             };
 
-            Time = DateTime.Now.TimeOfDay;
+            //Time = DateTime.Now.TimeOfDay;
             Date = DateTime.Now.AddYears(1);
             SelectedItem = _i18N.GetText("Form.Russian");
         }

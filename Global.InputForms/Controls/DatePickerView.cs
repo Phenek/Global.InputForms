@@ -11,53 +11,51 @@ namespace Global.InputForms
         ///     The Date property.
         /// </summary>
         public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime),
-            typeof(DatePickerView), new DateTime(42, 1, 1));
-        //, propertyChanged: DateChanged);
+            typeof(DatePickerView), default, BindingMode.TwoWay, coerceValue: CoerceDate, propertyChanged: DateChanged);
 
-        //private static void DateChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is DatePickerView picker)
-        //        picker._datePicker.Date = (DateTime)newValue;
-        //}
+        private static void DateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is DatePickerView picker)
+                picker._datePicker.Date = (DateTime)newValue;
+        }
 
         /// <summary>
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
-            typeof(DatePickerView), string.Empty);
-        //, propertyChanged: FormatChanged);
+            typeof(DatePickerView), string.Empty, propertyChanged: FormatChanged);
 
-        //private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is DatePickerView picker)
-        //        picker._datePicker.Format = (string)newValue;
-        //}
+        private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is DatePickerView picker)
+                picker._datePicker.Format = (string)newValue;
+        }
 
         /// <summary>
         ///     The Minimum Date property.
         /// </summary>
         public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(nameof(MinimumDate),
-            typeof(DateTime), typeof(DatePickerView), new DateTime(1900, 1, 1));
-        //, propertyChanged: MinimumDateChanged);
+            typeof(DateTime), typeof(DatePickerView), new DateTime(1900, 1, 1),
+            validateValue: ValidateMinimumDate, coerceValue: CoerceMinimumDate, propertyChanged: MinimumDateChanged);
 
-        //private static void MinimumDateChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is DatePickerView picker)
-        //        picker._datePicker.MinimumDate = (DateTime)newValue;
-        //}
+        private static void MinimumDateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is DatePickerView picker)
+                picker._datePicker.MinimumDate = (DateTime)newValue;
+        }
 
         /// <summary>
         ///     The Maximum Date property.
         /// </summary>
         public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(nameof(MaximumDate),
-            typeof(DateTime), typeof(DatePickerView), new DateTime(2100, 12, 31));
-        //, propertyChanged: MaximumDateChanged);
+            typeof(DateTime), typeof(DatePickerView), new DateTime(2100, 12, 31),
+            validateValue: ValidateMaximumDate, coerceValue: CoerceMaximumDate, propertyChanged: MaximumDateChanged);
 
-        //private static void MaximumDateChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is DatePickerView picker)
-        //        picker._datePicker.MaximumDate = (DateTime)newValue;
-        //}
+        private static void MaximumDateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is DatePickerView picker)
+                picker._datePicker.MaximumDate = (DateTime)newValue;
+        }
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(DatePickerView), "Ok");
@@ -98,14 +96,14 @@ namespace Global.InputForms
             _datePicker.SetBinding(MarginProperty,
                 new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
-            _datePicker.SetBinding(BlankDatePicker.FormatProperty,
-                new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
-            _datePicker.SetBinding(BlankDatePicker.MinimumDateProperty,
-                new Binding(nameof(MinimumDate)) { Source = this, Mode = BindingMode.OneWay });
-            _datePicker.SetBinding(BlankDatePicker.MaximumDateProperty,
-                new Binding(nameof(MaximumDate)) { Source = this, Mode = BindingMode.OneWay });
-            _datePicker.SetBinding(BlankDatePicker.DateProperty,
-                new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
+            //_datePicker.SetBinding(BlankDatePicker.FormatProperty,
+            //    new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
+            //_datePicker.SetBinding(BlankDatePicker.MinimumDateProperty,
+            //    new Binding(nameof(MinimumDate)) { Source = this, Mode = BindingMode.OneWay });
+            //_datePicker.SetBinding(BlankDatePicker.MaximumDateProperty,
+            //    new Binding(nameof(MaximumDate)) { Source = this, Mode = BindingMode.OneWay });
+            //_datePicker.SetBinding(BlankDatePicker.DateProperty,
+            //    new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
 
             _datePicker.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
@@ -129,12 +127,14 @@ namespace Global.InputForms
             _datePicker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
             _datePicker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
 
+            FloatingLabelWithoutAnimation();
+
             Children.Add(_datePicker, 2, 3, 1, 2);
         }
 
         public DateTime Date
         {
-            get => (DateTime) GetValue(DateProperty);
+            get => (DateTime)GetValue(DateProperty);
             set => SetValue(DateProperty, value);
         }
 
@@ -171,20 +171,61 @@ namespace Global.InputForms
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
 
-        private void TextAlignmentChanged()
+        static object CoerceDate(BindableObject bindable, object value)
         {
-            switch (EntryHorizontalTextAlignment)
-            {
-                case TextAlignment.Center:
-                    _pFrame.HorizontalOptions = LayoutOptions.CenterAndExpand;
-                    break;
-                case TextAlignment.End:
-                    _pFrame.HorizontalOptions = LayoutOptions.EndAndExpand;
-                    break;
-                case TextAlignment.Start:
-                    _pFrame.HorizontalOptions = LayoutOptions.StartAndExpand;
-                    break;
-            }
+            var picker = (DatePickerView)bindable;
+            DateTime dateValue = ((DateTime)value).Date;
+
+            if (dateValue > picker.MaximumDate)
+                dateValue = picker.MaximumDate;
+
+            if (dateValue < picker.MinimumDate)
+                dateValue = picker.MinimumDate;
+
+            return dateValue;
+        }
+
+        static object CoerceMaximumDate(BindableObject bindable, object value)
+        {
+            DateTime dateValue = ((DateTime)value).Date;
+            var picker = (DatePickerView)bindable;
+
+            if (((DatePickerView)bindable)._datePicker.Date == new DateTime(42, 1, 1))
+                return dateValue;
+
+            if (picker.Date > dateValue)
+                picker.Date = dateValue;
+
+            return dateValue;
+        }
+
+        static object CoerceMinimumDate(BindableObject bindable, object value)
+        {
+
+            DateTime dateValue = ((DateTime)value).Date;
+            var picker = (DatePickerView)bindable;
+
+            if (((DatePickerView)bindable)._datePicker.Date == new DateTime(42, 1, 1))
+                return dateValue;
+
+            if (picker.Date < dateValue)
+                picker.Date = dateValue;
+
+            return dateValue;
+        }
+
+        static bool ValidateMaximumDate(BindableObject bindable, object value)
+        {
+            if (((DatePickerView)bindable)._datePicker.Date == new DateTime(42, 1, 1))
+                return true;
+            return ((DateTime)value).Date >= ((DatePickerView)bindable).MinimumDate.Date;
+        }
+
+        static bool ValidateMinimumDate(BindableObject bindable, object value)
+        {
+            if (((DatePickerView)bindable)._datePicker.Date == new DateTime(42, 1, 1))
+                return true;
+            return ((DateTime)value).Date <= ((DatePickerView)bindable).MaximumDate.Date;
         }
 
         public override void Focus()
@@ -199,7 +240,8 @@ namespace Global.InputForms
 
         private void Date_Selected(object sender, DateChangedEventArgs e)
         {
-            //Date = e.NewDate;
+            if (e.NewDate != Date)
+                Date = e.NewDate;
             DateSelected?.Invoke(this, e);
         }
     }
