@@ -11,25 +11,53 @@ namespace Global.InputForms
         ///     The Date property.
         /// </summary>
         public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime),
-            typeof(DatePickerView), DateTime.Today);
+            typeof(DatePickerView), new DateTime(42, 1, 1));
+        //, propertyChanged: DateChanged);
+
+        //private static void DateChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is DatePickerView picker)
+        //        picker._datePicker.Date = (DateTime)newValue;
+        //}
 
         /// <summary>
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
             typeof(DatePickerView), string.Empty);
+        //, propertyChanged: FormatChanged);
+
+        //private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is DatePickerView picker)
+        //        picker._datePicker.Format = (string)newValue;
+        //}
 
         /// <summary>
         ///     The Minimum Date property.
         /// </summary>
         public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(nameof(MinimumDate),
             typeof(DateTime), typeof(DatePickerView), new DateTime(1900, 1, 1));
+        //, propertyChanged: MinimumDateChanged);
+
+        //private static void MinimumDateChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is DatePickerView picker)
+        //        picker._datePicker.MinimumDate = (DateTime)newValue;
+        //}
 
         /// <summary>
         ///     The Maximum Date property.
         /// </summary>
         public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(nameof(MaximumDate),
             typeof(DateTime), typeof(DatePickerView), new DateTime(2100, 12, 31));
+        //, propertyChanged: MaximumDateChanged);
+
+        //private static void MaximumDateChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is DatePickerView picker)
+        //        picker._datePicker.MaximumDate = (DateTime)newValue;
+        //}
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(DatePickerView), "Ok");
@@ -48,7 +76,7 @@ namespace Global.InputForms
             {
                 BackgroundColor = Color.Transparent,
             };
-            _datePicker.GestureRecognizers.Add(TapGesture);
+            Input = _datePicker;
             _datePicker.SetBinding(Entry.TextProperty,
                 new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
             _datePicker.SetBinding(Entry.FontAttributesProperty,
@@ -71,36 +99,27 @@ namespace Global.InputForms
                 new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
             _datePicker.SetBinding(BlankDatePicker.FormatProperty,
-                new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(BlankDatePicker.MinimumDateProperty,
-                new Binding(nameof(MinimumDate)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(MinimumDate)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(BlankDatePicker.MaximumDateProperty,
-                new Binding(nameof(MaximumDate)) {Source = this, Mode = BindingMode.OneWay});
+                new Binding(nameof(MaximumDate)) { Source = this, Mode = BindingMode.OneWay });
             _datePicker.SetBinding(BlankDatePicker.DateProperty,
-                new Binding(nameof(Date)) {Source = this, Mode = BindingMode.TwoWay});
+                new Binding(nameof(Date)) { Source = this, Mode = BindingMode.TwoWay });
+
+            _datePicker.SetBinding(IsEnabledProperty,
+                new Binding(nameof(IsReadOnly))
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+            _datePicker.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _datePicker.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
             _datePicker.SetBinding(BlankDatePicker.DoneButtonTextProperty,
                 new Binding(nameof(DoneButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.CancelButtonTextProperty,
                 new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
-
-            _pFrame = new Frame
-            {
-                Padding = 0,
-                HasShadow = false,
-                BackgroundColor = Color.Transparent,
-                Content = _datePicker
-            };
-            Input = _pFrame;
-            _pFrame.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly))
-                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-            _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
-
-            TextAlignmentCommand = new Command(() => TextAlignmentChanged());
+            
 
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;
@@ -110,7 +129,7 @@ namespace Global.InputForms
             _datePicker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
             _datePicker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
 
-            Children.Add(_pFrame, 2, 3, 1, 2);
+            Children.Add(_datePicker, 2, 3, 1, 2);
         }
 
         public DateTime Date
@@ -180,6 +199,7 @@ namespace Global.InputForms
 
         private void Date_Selected(object sender, DateChangedEventArgs e)
         {
+            //Date = e.NewDate;
             DateSelected?.Invoke(this, e);
         }
     }

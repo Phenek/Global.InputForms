@@ -1,7 +1,72 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              x:Class="SampleApp.Views.TimePickerViewPage">
     <ContentPage.Content>
+
+        <ScrollView BackgroundColor="WhiteSmoke">
+            <StackLayout
+                Padding="40,10,40,10"
+                HeightRequest="900"
+                HorizontalOptions="CenterAndExpand">
+
+                <Label Text="{Binding Time, Mode=TwoWay}" FontSize="20"/>
+
+
+                <!-- Standart DatePicker with Surrounded Info -->
+                <global:TimePickerView StyleClass="RoundedEntry"
+                                       InfoViewType="Line"
+                                       EntryPlaceholder="Date"
+                                       LabelText="Date"
+                                       Time="{Binding Time, Mode=TwoWay}"
+                                       x:Name="_picker">
+                </global:TimePickerView>
+
+                <Label Text="Standart DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Besieged DatePicker with Surrounded Info -->
+
+                <global:TimePickerView StyleClass="BesiegedEntry"
+                                  LabelText="Besieged TimePicker">
+                </global:TimePickerView>
+
+                <Label Text="Besieged DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Besieged DatePicker with Overlaped Label with Surrounded Info -->
+
+                <global:TimePickerView StyleClass="BesiegedEntryOverlaLabel"
+                                  LabelText="Besieged TimePicker">
+                </global:TimePickerView>
+
+                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+
+                <!-- Rounded DatePicker with Surrounded Info -->
+                <global:TimePickerView StyleClass="RoundedEntry"
+                                  LabelText="Rounded TimePicker">
+                </global:TimePickerView>
+
+                <Label Text="Rounded DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                 <!-- Line DatePicker with Line Info -->
+                <global:TimePickerView StyleClass="LineEntry"
+                                  LabelText="Line TimePicker">
+                </global:TimePickerView>
+
+                <Label Text="Line DatePicker with Line Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -12,11 +12,15 @@
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 
+                <Label Text="{Binding Date, Mode=TwoWay}" FontSize="20"/>
+
                 <!-- Standart DatePicker with Surrounded Info -->
-                <global:DatePickerView x:Name="_DatePicker" StyleClass="RoundedEntry"
+                <global:DatePickerView StyleClass="RoundedEntry"
                                        InfoViewType="Line"
                                        EntryPlaceholder="Date"
-                                       LabelText="Date">
+                                       LabelText="Date"
+                                       Date="{Binding Date, Mode=TwoWay}"
+                                       x:Name="_picker">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />

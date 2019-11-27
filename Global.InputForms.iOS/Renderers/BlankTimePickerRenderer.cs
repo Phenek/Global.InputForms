@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Foundation;
 using Global.InputForms;
 using Global.InputForms.iOS.Renderers;
 using UIKit;
@@ -10,90 +12,77 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace Global.InputForms.iOS.Renderers
 {
-    public class BlankTimePickerRenderer : TimePickerRenderer
+    public class BlankTimePickerRenderer : EntryRenderer
     {
         private BlankTimePicker blankPicker;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<TimePicker> e)
+        UIDatePicker _picker;
+        UIColor _defaultTextColor;
+        bool _disposed;
+        bool _useLegacyColorManagement;
+
+        IElementController ElementController => Element as IElementController;
+
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
 
             if (!(e.NewElement is BlankTimePicker bPicker)) return;
             blankPicker = bPicker;
 
-            if (Control is UITextField textField)
+            if (Control != null)
             {
                 if (!string.IsNullOrEmpty(Control.Text))
                     bPicker.Text = Control.Text;
 
-                textField.EditingChanged += (sender, arg)
-                    => bPicker.Text = Control.Text;
+                Control.EditingDidBegin += OnStarted;
+                Control.EditingDidEnd += OnEnded;
 
-                textField.EditingDidEnd += (sender, arg) =>
-                {
-                    var controlText = Control.Text ?? string.Empty;
-                    var entryText = bPicker.Text ?? string.Empty;
-                    if (controlText != entryText)
-                    {
-                        bPicker.Text = Control.Text;
-                    }
-                };
-                SetPlaceholder();
-                SetAlignment();
-                SetUIButtons();
+
+                _picker = new UIDatePicker { Mode = UIDatePickerMode.Time, TimeZone = new NSTimeZone("UTC") };
+
+
+
+                SetInputAccessoryView();
+
+                Control.InputView = _picker;
+
+                Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+                Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+
+                Control.InputAssistantItem.LeadingBarButtonGroups = null;
+                Control.InputAssistantItem.TrailingBarButtonGroups = null;
+
+                _picker.ValueChanged += OnValueChanged;
+
+                Control.AccessibilityTraits = UIAccessibilityTrait.Button;
+
+                //textField.EditingChanged += (sender, arg)
+                //    => bPicker.Text = Control.Text;
+
+                //textField.EditingDidEnd += (sender, arg) =>
+                //{
+                //    var controlText = Control.Text ?? string.Empty;
+                //    var entryText = bPicker.Text ?? string.Empty;
+                //    if (controlText != entryText)
+                //    {
+                //        bPicker.Text = Control.Text;
+                //    }
+                //};
+                UpdateTime();
             }
-        }
-
-        private void Control_ValueChanged(object sender, System.EventArgs e)
-        {
-            throw new System.NotImplementedException();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == nameof(Entry.Placeholder)) SetPlaceholder();
-
-            if (e.PropertyName == nameof(BlankPicker.HorizontalTextAlignment)) SetAlignment();
-
-            if (e.PropertyName == nameof(BlankPicker.Text)) UpdateText();
+            if (e.PropertyName == nameof(BlankTimePicker.Time)
+                || e.PropertyName == nameof(BlankTimePicker.Format))
+                UpdateTime();
         }
 
-        private void SetPlaceholder()
-        {
-            if (Control != null)
-            {
-                Control.BorderStyle = UITextBorderStyle.None;
-                if (Element is BlankTimePicker picker && !string.IsNullOrWhiteSpace(picker.Placeholder))
-                    Control.Text = picker.Placeholder;
-            }
-        }
-
-        private void SetAlignment()
-        {
-            switch (((BlankTimePicker) Element).HorizontalTextAlignment)
-            {
-                case TextAlignment.Center:
-                    Control.TextAlignment = UITextAlignment.Center;
-                    break;
-                case TextAlignment.End:
-                    Control.TextAlignment = UITextAlignment.Right;
-                    break;
-                case TextAlignment.Start:
-                    Control.TextAlignment = UITextAlignment.Left;
-                    break;
-            }
-        }
-
-        void UpdateText()
-        {
-            // ReSharper disable once RedundantCheckBeforeAssignment
-            if (Control.Text != blankPicker.Text)
-                Control.Text = blankPicker.Text;
-        }
-
-        public void SetUIButtons()
+        public void SetInputAccessoryView()
         {
             if (string.IsNullOrEmpty(blankPicker.DoneButtonText) && string.IsNullOrEmpty(blankPicker.CancelButtonText))
             {
@@ -124,13 +113,75 @@ namespace Global.InputForms.iOS.Renderers
             if (!string.IsNullOrEmpty(blankPicker.DoneButtonText))
             {
                 var doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done,
-                    (s, ev) => { Control.ResignFirstResponder(); });
+                    (s, ev) =>
+                    {
+                        blankPicker.Text = Control.Text = _picker.Date.ToDateTime().TimeOfDay.ToString(blankPicker.Format);
+                        blankPicker.SetValueFromRenderer(BlankTimePicker.TimeProperty, _picker.Date.ToDateTime() - new DateTime(1, 1, 1).TimeOfDay);
+                        blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                        Control.ResignFirstResponder();
+                    });
                 doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
                 items.Add(doneButton);
             }
 
             toolbar.SetItems(items.ToArray(), true);
             Control.InputAccessoryView = toolbar;
+        }
+
+        void OnEnded(object sender, EventArgs eventArgs)
+        {
+            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+        }
+
+        void OnStarted(object sender, EventArgs eventArgs)
+        {
+            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
+        }
+
+        void OnValueChanged(object sender, EventArgs e)
+        {
+            //ElementController.SetValueFromRenderer(BlankTimePicker.TimeProperty, _picker.Date.ToDateTime() - new DateTime(1, 1, 1));
+        }
+
+        void UpdateTime()
+        {
+            if (blankPicker.TimeSet)
+            {
+                _picker.Date = new DateTime(1, 1, 1).Add(blankPicker.Time).ToNSDate();
+                Control.Text = DateTime.Today.Add(blankPicker.Time).ToString(blankPicker.Format);
+            }
+            else
+                Control.Text = string.Empty;
+            //blankPicker.InvalidateMeasureNonVirtual(Internals.InvalidationTrigger.MeasureChanged);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            _disposed = true;
+
+            if (disposing)
+            {
+                _defaultTextColor = null;
+
+                if (_picker != null)
+                {
+                    _picker.RemoveFromSuperview();
+                    _picker.ValueChanged -= OnValueChanged;
+                    _picker.Dispose();
+                    _picker = null;
+                }
+
+                if (Control != null)
+                {
+                    Control.EditingDidBegin -= OnStarted;
+                    Control.EditingDidEnd -= OnEnded;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

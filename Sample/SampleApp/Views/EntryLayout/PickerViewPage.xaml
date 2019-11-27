@@ -12,6 +12,8 @@
             HeightRequest="900"
             HorizontalOptions="CenterAndExpand">
 
+                <Label Text="{Binding SelectedItem, Mode=TwoWay}" FontSize="20"/>
+
             <global:PickerView
                 CornerRadius="15"
                 InfoViewType="Surrounded"
@@ -20,10 +22,11 @@
                 LabelText="Picker"
                 x:Name="_picker"/>
 
-<!-- Besieged DatePicker with Surrounded Info -->
+                <!-- Besieged DatePicker with Surrounded Info -->
                 <global:PickerView StyleClass="BesiegedEntry"
                                    LabelText="Besieged DatePicker"
-                                   ItemsSource="{Binding LanguagesList}">
+                                   ItemsSource="{Binding LanguagesList}"
+                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                 </global:PickerView>
 
                 <Label Text="Besieged DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"

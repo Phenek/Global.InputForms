@@ -10,17 +10,32 @@ namespace Global.InputForms
         ///     The Minimum Date property.
         /// </summary>
         public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time),
-            typeof(TimeSpan), typeof(TimePickerView), new TimeSpan());
+            typeof(TimeSpan), typeof(TimePickerView), null);
+        //    propertyChanged: TimeChanged);
+
+        //private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is TimePickerView picker)
+        //        picker._timePicker.Time = (TimeSpan)newValue;
+        //}
 
         /// <summary>
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
             typeof(TimePickerView), string.Empty);
+        //, propertyChanged: FormatChanged);
+
+        //private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is TimePickerView picker)
+        //        picker._timePicker.Format = (string)newValue;
+        //}
 
         private readonly Frame _pFrame;
-
         private readonly BlankTimePicker _timePicker;
+
+        public event EventHandler<NullableTimeChangedEventArgs> TimeSelected;
 
         public TimePickerView()
         {
@@ -29,56 +44,48 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
-            _timePicker.GestureRecognizers.Add(TapGesture);
-            _timePicker.SetBinding(BlankTimePicker.TextProperty,
+            Input = _timePicker;
+            _timePicker.SetBinding(Entry.TextProperty,
                 new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
-            _timePicker.SetBinding(TimePicker.FontAttributesProperty,
+            _timePicker.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(TimePicker.FontFamilyProperty,
+            _timePicker.SetBinding(Entry.FontFamilyProperty,
                 new Binding(nameof(EntryFontFamily)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(TimePicker.FontSizeProperty,
+            _timePicker.SetBinding(Entry.FontSizeProperty,
                 new Binding(nameof(EntryFontSize)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(BlankTimePicker.PlaceholderProperty,
+            _timePicker.SetBinding(Entry.PlaceholderProperty,
                 new Binding(nameof(EntryPlaceholder)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(BlankTimePicker.PlaceholderColorProperty,
+            _timePicker.SetBinding(Entry.PlaceholderColorProperty,
                 new Binding(nameof(EntryPlaceholderColor)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(BlankTimePicker.HorizontalTextAlignmentProperty,
+            _timePicker.SetBinding(Entry.HorizontalTextAlignmentProperty,
                 new Binding(nameof(EntryHorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(TimePicker.TextColorProperty,
+            _timePicker.SetBinding(Entry.TextColorProperty,
                 new Binding(nameof(EntryTextColor)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(MarginProperty,
                 new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
 
-            _timePicker.SetBinding(TimePicker.FormatProperty,
-                new Binding(nameof(Format)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(TimePicker.TimeProperty,
-                new Binding(nameof(Time)) {Source = this, Mode = BindingMode.TwoWay});
-
-            _pFrame = new Frame
-            {
-                Padding = 0,
-                HasShadow = false,
-                BackgroundColor = Color.Transparent,
-                Content = _timePicker
-            };
-            Input = _pFrame;
-            _pFrame.SetBinding(IsEnabledProperty,
+            _timePicker.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
                 { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-            _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
+            _timePicker.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _timePicker.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
 
-            TextAlignmentCommand = new Command(() => TextAlignmentChanged());
+            _timePicker.SetBinding(BlankTimePicker.FormatProperty,
+                new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
+            _timePicker.SetBinding(BlankTimePicker.TimeProperty,
+                new Binding(nameof(Time)) { Source = this, Mode = BindingMode.TwoWay });
+
 
             _timePicker.Focused += FocusEntry;
             _timePicker.Unfocused += UnfocusEntry;
             _timePicker.TextChanged += SendEntryTextChanged;
+            _timePicker.TimeSelected += Time_Selected;
 
-            Children.Add(_pFrame, 2, 3, 1, 2);
+            Children.Add(_timePicker, 2, 3, 1, 2);
         }
 
         public TimeSpan Time
@@ -93,22 +100,6 @@ namespace Global.InputForms
             set => SetValue(TimePicker.FormatProperty, value);
         }
 
-        private void TextAlignmentChanged()
-        {
-            switch (EntryHorizontalTextAlignment)
-            {
-                case TextAlignment.Center:
-                    _pFrame.HorizontalOptions = LayoutOptions.CenterAndExpand;
-                    break;
-                case TextAlignment.End:
-                    _pFrame.HorizontalOptions = LayoutOptions.EndAndExpand;
-                    break;
-                case TextAlignment.Start:
-                    _pFrame.HorizontalOptions = LayoutOptions.StartAndExpand;
-                    break;
-            }
-        }
-
         public override void Focus()
         {
             _timePicker.Focus();
@@ -117,6 +108,12 @@ namespace Global.InputForms
         public override void Unfocus()
         {
             _timePicker.Unfocus();
+        }
+
+        private void Time_Selected(object sender, NullableTimeChangedEventArgs e)
+        {
+            //Time = e.NewTime;
+            TimeSelected?.Invoke(this, e);
         }
     }
 }

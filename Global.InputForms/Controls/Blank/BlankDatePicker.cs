@@ -7,10 +7,8 @@ namespace Global.InputForms
     {
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankDatePicker), "d");
 
-        public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime), typeof(BlankDatePicker), default(DateTime), BindingMode.TwoWay,
-            coerceValue: CoerceDate,
-            propertyChanged: DatePropertyChanged,
-            defaultValueCreator: (bindable) => DateTime.Today);
+        public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime), typeof(BlankDatePicker), new DateTime(42, 1, 1),
+            coerceValue: CoerceDate);
 
         public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(BlankDatePicker), new DateTime(1900, 1, 1),
             validateValue: ValidateMinimumDate, coerceValue: CoerceMinimumDate);
@@ -27,6 +25,7 @@ namespace Global.InputForms
         public event EventHandler<DateChangedEventArgs> DateSelected;
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
+        public bool DateSet;
 
         private bool _dateBinded;
 
@@ -37,7 +36,12 @@ namespace Global.InputForms
         public DateTime Date
         {
             get => (DateTime)GetValue(DateProperty);
-            set => SetValue(DateProperty, value);
+            set
+            {
+                DateSet = true;
+                SetValue(DateProperty, value);
+                //DateSelected?.Invoke(this, new NullableDateChangedEventArgs(oldValue, value));
+            }
         }
 
         public string Format
@@ -72,16 +76,16 @@ namespace Global.InputForms
 
         static object CoerceDate(BindableObject bindable, object value)
         {
-            var picker = (BlankDatePicker)bindable;
-            DateTime dateValue = ((DateTime)value).Date;
+            			var picker = (DatePicker)bindable;
+			DateTime dateValue = ((DateTime)value).Date;
 
-            if (dateValue > picker.MaximumDate)
-                dateValue = picker.MaximumDate;
+			if (dateValue > picker.MaximumDate)
+				dateValue = picker.MaximumDate;
 
-            if (dateValue < picker.MinimumDate)
-                dateValue = picker.MinimumDate;
+			if (dateValue < picker.MinimumDate)
+				dateValue = picker.MinimumDate;
 
-            return dateValue;
+			return dateValue;
         }
 
         static object CoerceMaximumDate(BindableObject bindable, object value)
@@ -104,23 +108,22 @@ namespace Global.InputForms
             return dateValue;
         }
 
-        static void DatePropertyChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var blankDatePicker = (BlankDatePicker)bindable;
-            EventHandler<DateChangedEventArgs> selected = blankDatePicker.DateSelected;
-
-            if (selected != null)
-                selected(blankDatePicker, new DateChangedEventArgs((DateTime)oldValue, (DateTime)newValue));
-        }
-
         static bool ValidateMaximumDate(BindableObject bindable, object value)
         {
-            return ((DateTime)value).Date >= ((BlankDatePicker)bindable).MinimumDate.Date;
+            if (bindable is BlankDatePicker picker && picker.Date is DateTime dateValue)
+            {
+                return dateValue >= picker.MinimumDate.Date;
+            }
+            return true;
         }
 
         static bool ValidateMinimumDate(BindableObject bindable, object value)
         {
-            return ((DateTime)value).Date <= ((BlankDatePicker)bindable).MaximumDate.Date;
+            if (bindable is BlankDatePicker picker && picker.Date is DateTime dateValue)
+            {
+                return dateValue <= picker.MaximumDate.Date;
+            }
+            return true;
         }
 
         public void SendDoneClicked()

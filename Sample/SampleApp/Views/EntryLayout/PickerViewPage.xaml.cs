@@ -13,16 +13,11 @@ namespace SampleApp.Views
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
-
-
-            _picker.ItemsSource = _viewModel.Languages.Values.ToList();
-            _picker.DoneClicked += (sender, e) => Console.WriteLine("Picker Done");
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _picker.Focus();
         }
     }
 }

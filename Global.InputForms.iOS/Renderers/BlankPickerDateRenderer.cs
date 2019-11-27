@@ -16,12 +16,9 @@ namespace Global.InputForms.iOS.Renderers
     public class BlankDatePickerRenderer : EntryRenderer
     {
         private BlankDatePicker blankPicker;
-        private string _oldText;
 
         UIDatePicker _picker;
-        UIColor _defaultTextColor;
         bool _disposed;
-        bool _useLegacyColorManagement;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
@@ -54,12 +51,10 @@ namespace Global.InputForms.iOS.Renderers
                 Control.InputAssistantItem.LeadingBarButtonGroups = null;
                 Control.InputAssistantItem.TrailingBarButtonGroups = null;
 
-                _defaultTextColor = Control.TextColor;
-
                 Control.AccessibilityTraits = UIAccessibilityTrait.Button;
             }
 
-            UpdateDateFromModel(false);
+            UpdateDate();
             UpdateMaximumDate();
             UpdateMinimumDate();
             SetAttributes();
@@ -71,10 +66,23 @@ namespace Global.InputForms.iOS.Renderers
 
             if (e.PropertyName == nameof(BlankDatePicker.Date)
                 || e.PropertyName == nameof(BlankDatePicker.Format))
-                UpdateDateFromModel(true);
+                UpdateDate();
             else if (e.PropertyName == nameof(BlankDatePicker.MinimumDate)) UpdateMinimumDate();
 
             else if (e.PropertyName == nameof(BlankDatePicker.MaximumDate)) UpdateMaximumDate();
+        }
+
+
+        void UpdateDate()
+        {
+            if (blankPicker.DateSet)
+            {
+                Control.Text = blankPicker.Date.Date.ToString(blankPicker.Format);
+                if (_picker.Date.ToDateTime().Date != blankPicker.Date.Date)
+                    _picker.SetDate(blankPicker.Date.Date.ToNSDate(), false);
+            }
+            else
+                Control.Text = string.Empty;
         }
 
         private void SetAttributes()
@@ -145,12 +153,6 @@ namespace Global.InputForms.iOS.Renderers
         {
             blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
-
-        void UpdateDateFromModel(bool animate)
-        {
-            if (_picker.Date.ToDateTime().Date != blankPicker.Date.Date)
-                _picker.SetDate(blankPicker.Date.ToNSDate(), animate);
-        }
         
         void UpdateMaximumDate()
         {
@@ -171,7 +173,6 @@ namespace Global.InputForms.iOS.Renderers
 
             if (disposing)
             {
-                _defaultTextColor = null;
 
                 if (_picker != null)
                 {

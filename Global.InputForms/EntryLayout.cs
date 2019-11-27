@@ -400,7 +400,7 @@ namespace Global.InputForms
         /// </summary>
         public static readonly BindableProperty EntryHorizontalTextAlignmentProperty =
             BindableProperty.Create(nameof(EntryHorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
-                TextAlignment.Start, propertyChanged: TextAlignmentChanged);
+                TextAlignment.Start);
 
         /// <summary>
         ///     The Entry Height property.
@@ -932,7 +932,6 @@ namespace Global.InputForms
         private View _dumboView;
         private RowDefinition _rowLabel;
         private RowDefinition _rowInfo;
-        protected Command TextAlignmentCommand;
         protected View Input;
         protected TapGestureRecognizer TapGesture = new TapGestureRecognizer();
 
@@ -1042,14 +1041,6 @@ namespace Global.InputForms
             {
                 entryLayout.FloatingLabelWithoutAnimation();
             }
-        }
-
-        public static void TextAlignmentChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is EntryLayout entryLayout
-                && entryLayout.TextAlignmentCommand != null
-                && entryLayout.TextAlignmentCommand.CanExecute(null))
-                entryLayout.TextAlignmentCommand.Execute(null);
         }
 
         /// <summary>

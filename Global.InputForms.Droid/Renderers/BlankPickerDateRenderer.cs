@@ -68,6 +68,9 @@ namespace Global.InputForms.Droid.Renderers
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(BlankDatePicker.Date) || e.PropertyName == nameof(BlankDatePicker.Format))
+                UpdateDate();
         }
 
         private void SetAttributes()
@@ -114,6 +117,16 @@ namespace Global.InputForms.Droid.Renderers
             Control.ClearFocus();
 
             _dialog = null;
+        }
+
+        void UpdateDate()
+        {
+            if (blankPicker.DateSet)
+            {
+                Control.Text = blankPicker.Date.Date.ToString(blankPicker.Format);
+            }
+            else
+                Control.Text = string.Empty;
         }
 
         public static void Dispose(EditText editText)

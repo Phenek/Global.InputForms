@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Global.InputForms.Models;
 using Naxam.I18n;
@@ -14,6 +15,27 @@ namespace SampleApp.ViewModels
             .Get<ILocalizedResourceProvider>();
 
         private FormModel _form = new FormModel();
+
+        private TimeSpan _time;
+        public TimeSpan Time
+        {
+            get => _time;
+            set => SetProperty(ref _time, value);
+        }
+
+        private DateTime _date;
+        public DateTime Date
+        {
+            get => _date;
+            set => SetProperty(ref _date, value);
+        }
+
+        private string selectedItem;
+        public string SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
+        }
 
         public SimpleFormsViewModel()
         {
@@ -45,6 +67,10 @@ namespace SampleApp.ViewModels
                 _i18N.GetText("Form.Spanish"),
                 _i18N.GetText("Form.Russian")
             };
+
+            Time = DateTime.Now.TimeOfDay;
+            Date = DateTime.Now.AddYears(1);
+            SelectedItem = _i18N.GetText("Form.Russian");
         }
 
         public FormModel Form

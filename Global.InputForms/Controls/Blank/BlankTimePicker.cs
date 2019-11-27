@@ -3,45 +3,39 @@ using Xamarin.Forms;
 
 namespace Global.InputForms
 {
-    public class BlankTimePicker : TimePicker
+    public class BlankTimePicker : Entry
     {
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(BlankTimePicker), defaultBindingMode: BindingMode.TwoWay,
-            propertyChanged: (bindable, oldValue, newValue) => ((BlankTimePicker)bindable).OnTextChanged((string)oldValue, (string)newValue));
+        public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), "t");
 
-
+        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), null,
+            validateValue: (bindable, value) =>
+        {
+            if (value is TimeSpan time)
+                return time.TotalHours < 24 && time.TotalMilliseconds >= 0;
+            return true;
+        });
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankTimePicker), "Ok");
 
         public static readonly BindableProperty CancelButtonTextProperty =
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankTimePicker), "Cancel");
 
-        /// <summary>
-        ///     The Entry Placeholder property.
-        /// </summary>
-        public static readonly BindableProperty PlaceholderProperty =
-            BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(BlankTimePicker), string.Empty);
-
-        /// <summary>
-        ///     The Entry Placeholder Color property.
-        /// </summary>
-        public static readonly BindableProperty PlaceholderColorProperty =
-            BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(BlankTimePicker), Color.Black);
-
-        public static readonly BindableProperty HorizontalTextAlignmentProperty =
-            BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(DatePickerView),
-                TextAlignment.Start);
-
-        public event EventHandler<TextChangedEventArgs> TextChanged;
-
-        protected void OnTextChanged(string oldValue, string newValue)
+        public string Format
         {
-            TextChanged?.Invoke(this, new TextChangedEventArgs(oldValue, newValue));
+            get { return (string)GetValue(FormatProperty); }
+            set { SetValue(FormatProperty, value); }
         }
 
-        public string Text
+        public TimeSpan Time
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get { return (TimeSpan)GetValue(TimeProperty); }
+            set
+            {
+                var oldValue = Time;
+                TimeSet = true;
+                SetValue(TimeProperty, value);
+                TimeSelected?.Invoke(this, new NullableTimeChangedEventArgs(oldValue, value));
+            }
         }
 
         public string DoneButtonText
@@ -56,34 +50,10 @@ namespace Global.InputForms
             set => SetValue(CancelButtonTextProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets the entry placeholder.
-        /// </summary>
-        /// <value>The entry placeholdeer.</value>
-        public string Placeholder
-        {
-            get => (string) GetValue(PlaceholderProperty);
-            set => SetValue(PlaceholderProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the entry placeholder color.
-        /// </summary>
-        /// <value>The entry placeholder color.</value>
-        public Color PlaceholderColor
-        {
-            get => (Color) GetValue(PlaceholderColorProperty);
-            set => SetValue(PlaceholderColorProperty, value);
-        }
-
-        public TextAlignment HorizontalTextAlignment
-        {
-            get => (TextAlignment) GetValue(HorizontalTextAlignmentProperty);
-            set => SetValue(HorizontalTextAlignmentProperty, value);
-        }
-
+        public event EventHandler<NullableTimeChangedEventArgs> TimeSelected;
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
+        public bool TimeSet;
 
         public void SendDoneClicked()
         {
@@ -94,5 +64,18 @@ namespace Global.InputForms
         {
             CancelClicked?.Invoke(this, new EventArgs());
         }
+    }
+
+    public class NullableTimeChangedEventArgs : EventArgs
+    {
+        public NullableTimeChangedEventArgs(TimeSpan oldTime, TimeSpan newTime)
+        {
+            NewTime = oldTime;
+            OldTime = newTime;
+        }
+
+        public TimeSpan NewTime { get; private set; }
+
+        public TimeSpan OldTime { get; private set; }
     }
 }

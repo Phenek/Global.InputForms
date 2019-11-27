@@ -57,7 +57,7 @@ namespace Global.InputForms
             {
                 BackgroundColor = Color.Transparent,
             };
-            _picker.GestureRecognizers.Add(TapGesture);
+            Input = _picker;
             _picker.SetBinding(Entry.TextProperty,
                 new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.OneWayToSource });
             _picker.SetBinding(Entry.TextProperty,
@@ -89,6 +89,14 @@ namespace Global.InputForms
                 new Binding(nameof(SelectedItem)) {Source = this, Mode = BindingMode.TwoWay});
             _picker.SetBinding(BlankPicker.TitleProperty,
                 new Binding(nameof(Title)) {Source = this, Mode = BindingMode.OneWay});
+
+            _picker.SetBinding(IsEnabledProperty,
+                new Binding(nameof(IsReadOnly))
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+            _picker.SetBinding(InputTransparentProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+            _picker.SetBinding(HeightRequestProperty,
+                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
             //Todo For Xamarin.Forms 4.0
             //_picker.SetBinding(Picker.TitleColorProperty,
             //new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
@@ -98,24 +106,6 @@ namespace Global.InputForms
             _picker.SetBinding(BlankPicker.CancelButtonTextProperty,
                 new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
 
-            _pFrame = new Frame
-            {
-                Padding = 0,
-                HasShadow = false,
-                BackgroundColor = Color.Transparent,
-                Content = _picker,
-            };
-            Input = _pFrame;
-            _pFrame.SetBinding(IsEnabledProperty,
-                new Binding(nameof(IsReadOnly))
-                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
-            _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
-
-            TextAlignmentCommand = new Command(() => TextAlignmentChanged());
-
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
             _picker.SelectedIndexChanged += IndexChanged;
@@ -124,7 +114,7 @@ namespace Global.InputForms
             _picker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
             _picker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
 
-            Children.Add(_pFrame, 2, 3, 1, 2);
+            Children.Add(_picker, 2, 3, 1, 2);
         }
 
         public IList ItemsSource
@@ -171,22 +161,6 @@ namespace Global.InputForms
 
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
-
-        private void TextAlignmentChanged()
-        {
-            switch (EntryHorizontalTextAlignment)
-            {
-                case TextAlignment.Center:
-                    _picker.HorizontalOptions = LayoutOptions.Center;
-                    break;
-                case TextAlignment.End:
-                    _picker.HorizontalOptions = LayoutOptions.End;
-                    break;
-                case TextAlignment.Start:
-                    _picker.HorizontalOptions = LayoutOptions.Start;
-                    break;
-            }
-        }
 
         public override void Focus()
         {
