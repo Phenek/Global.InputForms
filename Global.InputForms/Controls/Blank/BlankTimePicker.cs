@@ -5,7 +5,7 @@ namespace Global.InputForms
 {
     public class BlankTimePicker : Entry
     {
-        public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), @"H\:m");
+        public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), @"H\:mm");
 
         public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), TimeSpan.FromDays(42),
             defaultValueCreator: (bindable) => TimeSpan.FromDays(42), propertyChanged: TimeChanged);

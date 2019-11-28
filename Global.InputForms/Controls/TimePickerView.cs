@@ -29,7 +29,7 @@ namespace Global.InputForms
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
-            typeof(TimePickerView), @"H\:m", propertyChanged: FormatChanged);
+            typeof(TimePickerView), @"H\:mm", propertyChanged: FormatChanged);
         
         private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
         {

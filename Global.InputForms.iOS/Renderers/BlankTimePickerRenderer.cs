@@ -56,6 +56,7 @@ namespace Global.InputForms.iOS.Renderers
 
                 Control.AccessibilityTraits = UIAccessibilityTrait.Button;
                 UpdateTime();
+                SetAttributes();
             }
         }
 
@@ -135,11 +136,17 @@ namespace Global.InputForms.iOS.Renderers
             if (blankPicker.TimeSet)
             {
                 _picker.Date = new DateTime(blankPicker.Time.Ticks).ToNSDate();
-                Control.Text = new DateTime(blankPicker.Time.Ticks).ToString(blankPicker.Format);
+                blankPicker.Text = Control.Text = new DateTime(blankPicker.Time.Ticks).ToString(blankPicker.Format);
             }
             else
-                Control.Text = string.Empty;
+                blankPicker.Text = Control.Text = string.Empty;
             //blankPicker.InvalidateMeasureNonVirtual(Internals.InvalidationTrigger.MeasureChanged);
+        }
+
+        private void SetAttributes()
+        {
+            if (Control != null)
+                Control.BorderStyle = UITextBorderStyle.None;
         }
 
         protected override void Dispose(bool disposing)

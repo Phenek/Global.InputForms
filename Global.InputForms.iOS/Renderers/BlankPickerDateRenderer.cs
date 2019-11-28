@@ -77,12 +77,12 @@ namespace Global.InputForms.iOS.Renderers
         {
             if (blankPicker.DateSet)
             {
-                Control.Text = blankPicker.Date.Date.ToString(blankPicker.Format);
+                blankPicker.Text = Control.Text = blankPicker.Date.Date.ToString(blankPicker.Format);
                 if (_picker.Date.ToDateTime().Date != blankPicker.Date.Date)
                     _picker.SetDate(blankPicker.Date.Date.ToNSDate(), false);
             }
             else
-                Control.Text = string.Empty;
+                blankPicker.Text = Control.Text = string.Empty;
         }
 
         private void SetAttributes()

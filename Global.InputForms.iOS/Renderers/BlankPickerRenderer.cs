@@ -84,7 +84,8 @@ namespace Global.InputForms.iOS.Renderers
 
         private void SetAttributes()
         {
-            if (Control != null) Control.BorderStyle = UITextBorderStyle.None;
+            if (Control != null)
+                Control.BorderStyle = UITextBorderStyle.None;
         }
 
         public void SetInputAccessoryView()
@@ -141,7 +142,7 @@ namespace Global.InputForms.iOS.Renderers
             // Reset the TextField's Text so it appears as if typing with a keyboard does not work.
             var selectedIndex = blankPicker.SelectedIndex;
             var items = blankPicker.Items;
-            Control.Text = selectedIndex == -1 || items == null ? "" : items[selectedIndex];
+            blankPicker.Text = Control.Text = selectedIndex == -1 || items == null ? "" : items[selectedIndex];
             // Also clears the undo stack (undo/redo possible on iPads)
             Control.UndoManager.RemoveAllActions();
         }
@@ -167,7 +168,7 @@ namespace Global.InputForms.iOS.Renderers
             var items = blankPicker.Items;
 
             var oldText = Control.Text;
-            Control.Text = selectedIndex == -1 || items == null || selectedIndex >= items.Count ? "" : items[selectedIndex];
+            blankPicker.Text = Control.Text = selectedIndex == -1 || items == null || selectedIndex >= items.Count ? "" : items[selectedIndex];
             UpdatePickerNativeSize(oldText);
             _picker.ReloadAllComponents();
             if (items == null || items.Count == 0)

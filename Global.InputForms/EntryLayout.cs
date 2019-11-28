@@ -1073,9 +1073,9 @@ namespace Global.InputForms
                 case EntryLayoutType.Besieged:
                     
                     SetRow(entryLayout._frameEntry, 0);
-                    SetColumn(entryLayout._frameEntry, 0);
+                    SetColumn(entryLayout._frameEntry, 1);
                     SetRowSpan(entryLayout._frameEntry, 2);
-                    SetColumnSpan(entryLayout._frameEntry, 5);
+                    SetColumnSpan(entryLayout._frameEntry, 4);
                     break;
                 case EntryLayoutType.Surrounded:
                     break;
