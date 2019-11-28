@@ -14,7 +14,6 @@ using Global.InputForms.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using static Android.App.DatePickerDialog;
-using AView = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(BlankDatePicker), typeof(BlankPickerDateRenderer))]
 
@@ -76,9 +75,18 @@ namespace Global.InputForms.Droid.Renderers
 
         private void SetAttributes()
         {
+            // Disable the Keyboard on Focus
+            this.Control.ShowSoftInputOnFocus = false;
+
             Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
             Control.SetPadding(0, 7, 0, 3);
             Control.Gravity = GravityFlags.Fill;
+        }
+
+        private void HideKeyboard()
+        {
+            InputMethodManager imm = (InputMethodManager)this.Context.GetSystemService(Context.InputMethodService);
+            imm.HideSoftInputFromWindow(this.Control.WindowToken, 0);
         }
 
         public static long UnixTimestampFromDateTime(DateTime date)
@@ -90,6 +98,7 @@ namespace Global.InputForms.Droid.Renderers
 
         public void OnClick(object sender, EventArgs e)
         {
+            HideKeyboard();
             _dialog = new DatePickerDialog(Context, this, blankPicker.Date.Year, blankPicker.Date.Month - 1, blankPicker.Date.Day);
             _dialog.DatePicker.MaxDate = UnixTimestampFromDateTime(blankPicker.MaximumDate);
             _dialog.DatePicker.MinDate = UnixTimestampFromDateTime(blankPicker.MinimumDate);
@@ -101,11 +110,13 @@ namespace Global.InputForms.Droid.Renderers
                 blankPicker.SendDoneClicked();
                 EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
+                HideKeyboard();
             });
             _dialog.SetButton2(blankPicker.CancelButtonText, (s, el) => {
                 blankPicker.SendCancelClicked();
                 EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
+                HideKeyboard();
             });
 
             _dialog.CancelEvent += _dialog_DismissEvent;
@@ -119,6 +130,7 @@ namespace Global.InputForms.Droid.Renderers
             blankPicker.Unfocus();
             EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
+            HideKeyboard();
         }
 
         public void OnDateSet(Android.Widget.DatePicker view, int year, int month, int dayOfMonth)
@@ -127,6 +139,7 @@ namespace Global.InputForms.Droid.Renderers
             blankPicker.Date = new DateTime(year, month, dayOfMonth);
             EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
+            HideKeyboard();
 
             _dialog = null;
         }

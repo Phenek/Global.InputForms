@@ -14,6 +14,7 @@ using Color = Android.Graphics.Color;
 using TextAlignment = Android.Views.TextAlignment;
 using AView = Android.Views.View;
 using System;
+using Android.Views.InputMethods;
 
 [assembly: ExportRenderer(typeof(BlankPicker), typeof(BlankPickerRenderer))]
 
@@ -64,15 +65,32 @@ namespace Global.InputForms.Droid.Renderers
             }
         }
 
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+        }
+
         private void SetAttributes()
         {
+            // Disable the Keyboard on Focus
+            this.Control.ShowSoftInputOnFocus = false;
+
             Control.SetBackgroundColor(Color.Transparent);
             Control.SetPadding(0, 7, 0, 3);
             Control.Gravity = GravityFlags.Fill;
         }
 
+
+        private void HideKeyboard()
+        {
+            InputMethodManager imm = (InputMethodManager)this.Context.GetSystemService(Context.InputMethodService);
+            imm.HideSoftInputFromWindow(this.Control.WindowToken, 0);
+        }
+
         public void OnClick(object sender, EventArgs e)
         {
+            HideKeyboard();
             var model = blankPicker;
             var picker = new NumberPicker(Context);
             if (model.Items != null && model.Items.Any())
@@ -97,6 +115,7 @@ namespace Global.InputForms.Droid.Renderers
                 EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 _dialog = null;
                 Control.ClearFocus();
+                HideKeyboard();
             });
             builder.SetPositiveButton(blankPicker.DoneButtonText ?? "OK", (s, a) =>
             {
@@ -111,6 +130,7 @@ namespace Global.InputForms.Droid.Renderers
                         Control.Text = model.Items[blankPicker.SelectedIndex];
                     EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                     Control.ClearFocus();
+                    HideKeyboard();
                 }
 
                 _dialog = null;
@@ -121,13 +141,9 @@ namespace Global.InputForms.Droid.Renderers
             {
                 EController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
+                HideKeyboard();
             };
             _dialog.Show();
-        }
-
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
         }
     }
 }
