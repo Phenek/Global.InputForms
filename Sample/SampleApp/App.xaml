@@ -43,7 +43,7 @@
                                     CheckedTextColor="White" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRateImage">
-                <global:CheckBox CheckType="Image" ImageChecked="StarChecked" ImageUnchecked="StarUnchecked"
+                <global:CheckContent CheckType="Image" ImageChecked="StarChecked" ImageUnchecked="StarUnchecked"
                                  IconSize="20" Padding="5,0,5,0" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRadioImage">
@@ -54,7 +54,7 @@
                 <global:CheckLabel CheckType="Image" ImageChecked="BoxChecked" ImageUnchecked="BoxUnchecked" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconCustomRate">
-                <global:CheckBox CheckType="Custom" CheckedLabel="★" UncheckedLabel="☆"
+                <global:CheckContent CheckType="Custom" CheckedLabel="★" UncheckedLabel="☆"
                                  CheckLabelFontSize="30"
                                  IconSize="30"
                                  Color="LightGray"
@@ -70,7 +70,7 @@
                             <On Platform="Android, WinPhone, Windows" Value="0,-10,0,0" />
                         </OnPlatform>
                     </global:CheckLabel.CheckLabelMargin>
-                </global:CheckBox>
+                </global:CheckContent>
             </ControlTemplate>
             <Color x:Key="Primary">#335D83</Color>
             <Color x:Key="PrimaryDark">#1976D2</Color>

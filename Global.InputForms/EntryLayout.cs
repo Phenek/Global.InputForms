@@ -79,7 +79,7 @@ namespace Global.InputForms
         ///     The Floating Label property.
         /// </summary>
         public static readonly BindableProperty FloatingLabelProperty =
-            BindableProperty.Create(nameof(FloatingLabel), typeof(bool), typeof(EntryLayout), true,
+            BindableProperty.Create(nameof(FloatingLabel), typeof(bool), typeof(EntryLayout), false,
                 propertyChanged: FloatingLabelChanged);
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Global.InputForms
             if (EntryLayoutType == EntryLayoutType.Besieged)
                 smoothAnimation.Add(0, 1, new Animation(f => Input.TranslationY = f, Input.TranslationY, translateY, Easing.Linear));
 
-            Device.BeginInvokeOnMainThread(() => smoothAnimation.Commit(this, "EntryAnimation", 16, 300, Easing.Linear, null));
+            Device.BeginInvokeOnMainThread(() => smoothAnimation.Commit(this, "EntryAnimation", 16, 200, Easing.Linear, null));
         }
 
         private void FloatingLabelFocused(object sender, FocusEventArgs e)
@@ -291,7 +291,7 @@ namespace Global.InputForms
             if (EntryLayoutType == EntryLayoutType.Besieged)
                 smoothAnimation.Add(0, 1, new Animation(f => Input.TranslationY = f, Input.TranslationY, 0, Easing.Linear));
 
-            Device.BeginInvokeOnMainThread(() => smoothAnimation.Commit(this, "EntryAnimation", 16, 300, Easing.Linear, null));
+            Device.BeginInvokeOnMainThread(() => smoothAnimation.Commit(this, "EntryAnimation", 16, 200, Easing.Linear, null));
         }
 
         protected void FloatingLabelWithoutAnimation()
@@ -708,7 +708,7 @@ namespace Global.InputForms
         ///     The Info property.
         /// </summary>
         public static readonly BindableProperty FloatingInfoProperty =
-            BindableProperty.Create(nameof(FloatingInfo), typeof(bool), typeof(EntryLayout), true);
+            BindableProperty.Create(nameof(FloatingInfo), typeof(bool), typeof(EntryLayout), false);
 
         /// <summary>
         ///     Gets or sets the info label font attributes.

@@ -13,6 +13,8 @@
         <Setter Property="LabelTextColor" Value="Black" />
         <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="FloatingLabel" Value="True" />
+        <Setter Property="FloatingInfo" Value="True" />
         <Setter Property="BorderColor" Value="BlueViolet" />
         <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
@@ -39,6 +41,8 @@
         <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="LabelBackgroundColor" Value="WhiteSmoke" />
+        <Setter Property="FloatingLabel" Value="True" />
+        <Setter Property="FloatingInfo" Value="True" />
         <Setter Property="BorderColor" Value="BlueViolet" />
         <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="WhiteSmoke" />
@@ -64,6 +68,8 @@
         <Setter Property="LabelTextColor" Value="Black" />
         <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="FloatingLabel" Value="True" />
+        <Setter Property="FloatingInfo" Value="True" />
         <Setter Property="BorderColor" Value="BlueViolet" />
         <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
@@ -87,6 +93,8 @@
         <Setter Property="LabelTextColor" Value="Black" />
         <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="LabelFontSize" Value="14" />
+        <Setter Property="FloatingLabel" Value="True" />
+        <Setter Property="FloatingInfo" Value="True" />
         <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />
         <Setter Property="EntryFontSize" Value="17" />

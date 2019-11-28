@@ -5,10 +5,10 @@ using Xamarin.Forms;
 
 namespace Global.InputForms
 {
-    public class CheckBox : StackLayout, ICheckable
+    public class CheckContent : StackLayout, ICheckable
     {
         public static readonly BindableProperty CheckedProperty = BindableProperty.Create(nameof(Checked), typeof(bool),
-            typeof(CheckBox), false, propertyChanged: OnCheckedPropertyChanged);
+            typeof(CheckContent), false, propertyChanged: OnCheckedPropertyChanged);
 
         public static readonly BindableProperty ItemProperty = BindableProperty.Create(nameof(Item),
             typeof(KeyValuePair<string, object>), typeof(CheckButton), new KeyValuePair<string, object>(),
@@ -18,15 +18,15 @@ namespace Global.InputForms
         ///     The Icon position property.
         /// </summary>
         public static readonly BindableProperty IconPositionProperty = BindableProperty.Create(nameof(IconPosition),
-            typeof(IconPosition), typeof(CheckBox), IconPosition.Start, propertyChanged: IconPositionChanged);
+            typeof(IconPosition), typeof(CheckContent), IconPosition.Start, propertyChanged: IconPositionChanged);
 
         /// <summary>
         ///     The Icon Size property.
         /// </summary>
         public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize),
-            typeof(double), typeof(CheckBox), 20.0, propertyChanged: IconSizeChanged);
+            typeof(double), typeof(CheckContent), 20.0);
 
-        public CheckBox()
+        public CheckContent()
         {
             Orientation = StackOrientation.Horizontal;
 
@@ -44,6 +44,10 @@ namespace Global.InputForms
                 new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
             _icon.SetBinding(WidthRequestProperty,
                 new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
+            _icon.SetBinding(MinimumHeightRequestProperty,
+                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
+            _icon.SetBinding(MinimumWidthRequestProperty,
+                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
 
             var tap = new TapGestureRecognizer();
             tap.Tapped += OnChecked;
@@ -167,7 +171,7 @@ namespace Global.InputForms
 
         private static void OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is CheckBox checkBox) || checkBox._icon == null) return;
+            if (!(bindable is CheckContent checkBox) || checkBox._icon == null) return;
 
             checkBox.SetCheckedColorsStyles();
             checkBox.CheckedChanged?.Invoke(bindable, (bool) newValue);
@@ -175,22 +179,8 @@ namespace Global.InputForms
 
         private static void OnItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox CheckBox)
+            if (bindable is CheckContent CheckBox)
                 CheckBox.ItemChanged?.Invoke(CheckBox, CheckBox.Item);
-        }
-
-        /// <summary>
-        ///     The Icon Size property changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void IconSizeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (!(bindable is CheckBox checkBox) || checkBox._checkLabel == null) return;
-
-            checkBox._icon.HeightRequest = (double) newValue;
-            checkBox._icon.WidthRequest = (double) newValue;
         }
 
         private void Animation(object sender, bool e)
@@ -214,121 +204,121 @@ namespace Global.InputForms
         ///     The Check Type property.
         /// </summary>
         public static readonly BindableProperty CheckTypeProperty =
-            BindableProperty.Create(nameof(CheckType), typeof(CheckType), typeof(CheckBox), CheckType.None,
+            BindableProperty.Create(nameof(CheckType), typeof(CheckType), typeof(CheckContent), CheckType.None,
                 propertyChanged: CheckTypeChanged);
 
         /// <summary>
         ///     The Label Font Attributes property.
         /// </summary>
         public static readonly BindableProperty CheckLabelFontAttributesProperty =
-            BindableProperty.Create(nameof(CheckLabelFontAttributes), typeof(FontAttributes), typeof(CheckBox),
+            BindableProperty.Create(nameof(CheckLabelFontAttributes), typeof(FontAttributes), typeof(CheckContent),
                 FontAttributes.Bold, propertyChanged: CheckLabelFontAttributesChanged);
 
         /// <summary>
         ///     The Check Label Font Family property.
         /// </summary>
         public static readonly BindableProperty CheckLabelFontFamilyProperty =
-            BindableProperty.Create(nameof(CheckLabelFontFamily), typeof(string), typeof(CheckBox), string.Empty,
+            BindableProperty.Create(nameof(CheckLabelFontFamily), typeof(string), typeof(CheckContent), string.Empty,
                 propertyChanged: CheckLabelFontFamilyChanged);
 
         /// <summary>
         ///     The Check Label Font Size property.
         /// </summary>
         public static readonly BindableProperty CheckLabelFontSizeProperty =
-            BindableProperty.Create(nameof(CheckLabelFontSize), typeof(double), typeof(CheckBox), -1.0,
+            BindableProperty.Create(nameof(CheckLabelFontSize), typeof(double), typeof(CheckContent), -1.0,
                 propertyChanged: CheckLabelFontSizeChanged);
 
         /// <summary>
         ///     The Check Label Font Size property.
         /// </summary>
         public static readonly BindableProperty CheckLabelMarginProperty =
-            BindableProperty.Create(nameof(CheckLabelMargin), typeof(Thickness), typeof(CheckBox), new Thickness(),
+            BindableProperty.Create(nameof(CheckLabelMargin), typeof(Thickness), typeof(CheckContent), new Thickness(),
                 propertyChanged: CheckLabelMarginChanged);
 
         /// <summary>
         ///     The Checked Label Text property.
         /// </summary>
         public static readonly BindableProperty CheckedLabelProperty =
-            BindableProperty.Create(nameof(CheckedLabel), typeof(string), typeof(CheckBox), string.Empty);
+            BindableProperty.Create(nameof(CheckedLabel), typeof(string), typeof(CheckContent), string.Empty);
 
         /// <summary>
         ///     The Unchecked Label Text property.
         /// </summary>
         public static readonly BindableProperty UncheckedLabelProperty =
-            BindableProperty.Create(nameof(UncheckedLabel), typeof(string), typeof(CheckBox), string.Empty,
+            BindableProperty.Create(nameof(UncheckedLabel), typeof(string), typeof(CheckContent), string.Empty,
                 propertyChanged: UncheckedLabelTextChanged);
 
         /// <summary>
         ///     The Image Checked property.
         /// </summary>
         public static readonly BindableProperty ImageCheckedProperty = BindableProperty.Create(nameof(ImageChecked),
-            typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: ImageCheckedChanged);
+            typeof(ImageSource), typeof(CheckContent), default(ImageSource), propertyChanged: ImageCheckedChanged);
 
         /// <summary>
         ///     The Image Unchecked property.
         /// </summary>
         public static readonly BindableProperty ImageUncheckedProperty = BindableProperty.Create(nameof(ImageUnchecked),
-            typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: ImageUncheckedChanged);
+            typeof(ImageSource), typeof(CheckContent), default(ImageSource), propertyChanged: ImageUncheckedChanged);
 
         /// <summary>
         ///     The Image Aspect property.
         /// </summary>
         public static readonly BindableProperty ImageAspectProperty = BindableProperty.Create(nameof(ImageAspect),
-            typeof(Aspect), typeof(CheckBox), Aspect.AspectFill, propertyChanged: ImageAspectChanged);
+            typeof(Aspect), typeof(CheckContent), Aspect.AspectFill, propertyChanged: ImageAspectChanged);
 
         /// <summary>
         ///     The Image Is Opaque property.
         /// </summary>
         public static readonly BindableProperty ImageIsOpaqueProperty = BindableProperty.Create(nameof(ImageIsOpaque),
-            typeof(bool), typeof(CheckBox), false, propertyChanged: ImageIsOpaqueChanged);
+            typeof(bool), typeof(CheckContent), false, propertyChanged: ImageIsOpaqueChanged);
 
         /// <summary>
         ///     The Corner Radius property.
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty =
-            BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), 5f,
+            BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckContent), 5f,
                 propertyChanged: CornerRadiusChanged);
 
         /// <summary>
         ///     The UnChecked Color property.
         /// </summary>
         public static readonly BindableProperty ColorProperty =
-            BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Black,
+            BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckContent), Color.Black,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The UnChecked background Color property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(CheckBox), Color.White,
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(CheckContent), Color.White,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The UnChecked Border Color property.
         /// </summary>
         public static readonly BindableProperty BorderColorProperty =
-            BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), Color.White,
+            BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckContent), Color.White,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Checked Color property.
         /// </summary>
         public static readonly BindableProperty CheckedColorPropety =
-            BindableProperty.Create(nameof(CheckedColor), typeof(Color), typeof(CheckBox), Color.Black,
+            BindableProperty.Create(nameof(CheckedColor), typeof(Color), typeof(CheckContent), Color.Black,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Checked background Color property.
         /// </summary>
         public static readonly BindableProperty CheckedBackgroundColorPropety =
-            BindableProperty.Create(nameof(CheckedBackgroundColor), typeof(Color), typeof(CheckBox), Color.WhiteSmoke,
+            BindableProperty.Create(nameof(CheckedBackgroundColor), typeof(Color), typeof(CheckContent), Color.WhiteSmoke,
                 propertyChanged: ColorsChanged);
 
         /// <summary>
         ///     The Checked border Color property.
         /// </summary>
         public static readonly BindableProperty CheckedBorderColorPropety =
-            BindableProperty.Create(nameof(CheckedBorderColor), typeof(Color), typeof(CheckBox), Color.Black,
+            BindableProperty.Create(nameof(CheckedBorderColor), typeof(Color), typeof(CheckContent), Color.Black,
                 propertyChanged: ColorsChanged);
 
         #endregion
@@ -362,7 +352,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void IconPositionChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is CheckBox CheckBox) || CheckBox._icon == null) return;
+            if (!(bindable is CheckContent CheckBox) || CheckBox._icon == null) return;
 
             CheckBox.Children.Remove(CheckBox._icon);
 
@@ -390,7 +380,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CheckLabelFontAttributesChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._checkLabel != null)
+            if (bindable is CheckContent checkBox && checkBox._checkLabel != null)
                 checkBox._checkLabel.FontAttributes = (FontAttributes) newValue;
         }
 
@@ -412,7 +402,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CheckLabelFontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._checkLabel != null)
+            if (bindable is CheckContent checkBox && checkBox._checkLabel != null)
                 checkBox._checkLabel.FontFamily = (string) newValue;
         }
 
@@ -434,7 +424,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CheckLabelFontSizeChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._checkLabel != null)
+            if (bindable is CheckContent checkBox && checkBox._checkLabel != null)
                 checkBox._checkLabel.FontSize = (double) newValue;
         }
 
@@ -456,7 +446,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CheckLabelMarginChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._checkLabel != null)
+            if (bindable is CheckContent checkBox && checkBox._checkLabel != null)
                 checkBox._checkLabel.Margin = (Thickness) newValue;
         }
 
@@ -472,7 +462,7 @@ namespace Global.InputForms
 
         private static void UncheckedLabelTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkIcon && checkIcon.CheckType == CheckType.Custom)
+            if (bindable is CheckContent checkIcon && checkIcon.CheckType == CheckType.Custom)
                 checkIcon._checkLabel.Text = (string) newValue;
         }
 
@@ -506,7 +496,7 @@ namespace Global.InputForms
         [TypeConverter(typeof(ImageSourceConverter))]
         private static void ImageCheckedChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._image is Image image)
+            if (bindable is CheckContent checkBox && checkBox._image is Image image)
                 image.Source = (ImageSource) newValue;
         }
 
@@ -529,7 +519,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void ImageUncheckedChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._image is Image image)
+            if (bindable is CheckContent checkBox && checkBox._image is Image image)
                 image.Source = (ImageSource) newValue;
         }
 
@@ -551,7 +541,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void ImageAspectChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._image is Image image)
+            if (bindable is CheckContent checkBox && checkBox._image is Image image)
                 image.Aspect = (Aspect) newValue;
         }
 
@@ -574,7 +564,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void ImageIsOpaqueChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox && checkBox._image is Image image)
+            if (bindable is CheckContent checkBox && checkBox._image is Image image)
                 image.IsOpaque = (bool) newValue;
         }
 
@@ -594,7 +584,7 @@ namespace Global.InputForms
 
         private static void CornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is CheckBox checkBox)) return;
+            if (!(bindable is CheckContent checkBox)) return;
 
             checkBox.CornerRadius = (float) newValue;
             if (checkBox._fill != null && checkBox._fill.Height > 0)
@@ -620,7 +610,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void ColorsChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox) checkBox.SetCheckedColorsStyles();
+            if (bindable is CheckContent checkBox) checkBox.SetCheckedColorsStyles();
         }
 
         /// <summary>
@@ -699,7 +689,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CheckTypeChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckBox checkBox) checkBox.UpdateContent((CheckType) newValue);
+            if (bindable is CheckContent checkBox) checkBox.UpdateContent((CheckType) newValue);
         }
 
         public void SetIconChecked()
@@ -793,8 +783,6 @@ namespace Global.InputForms
                             VerticalOptions = LayoutOptions.FillAndExpand,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                             Source = ImageUnchecked,
-                            HeightRequest = IconSize,
-                            WidthRequest = IconSize,
                             Aspect = ImageAspect,
                             IsOpaque = ImageIsOpaque
                         };
