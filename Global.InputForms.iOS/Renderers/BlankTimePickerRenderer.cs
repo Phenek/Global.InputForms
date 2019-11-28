@@ -31,16 +31,16 @@ namespace Global.InputForms.iOS.Renderers
 
             if (Control != null)
             {
-                if (!string.IsNullOrEmpty(Control.Text))
-                    bPicker.Text = Control.Text;
+                Control.SpellCheckingType = UITextSpellCheckingType.No;
+                Control.AutocorrectionType = UITextAutocorrectionType.No;
+                Control.AutocapitalizationType = UITextAutocapitalizationType.None;
+                Control.BorderStyle = UITextBorderStyle.RoundedRect;
+                UIMenuController.SharedMenuController.MenuVisible = false;
 
                 Control.EditingDidBegin += OnStarted;
                 Control.EditingDidEnd += OnEnded;
 
-
                 _picker = new UIDatePicker { Mode = UIDatePickerMode.Time, TimeZone = new NSTimeZone("UTC") };
-
-
 
                 SetInputAccessoryView();
 
@@ -179,7 +179,11 @@ namespace Global.InputForms.iOS.Renderers
 
         public override bool CanPerform(ObjCRuntime.Selector action, Foundation.NSObject withSender)
         {
-            return false;
+            NSOperationQueue.MainQueue.AddOperation(() =>
+            {
+                UIMenuController.SharedMenuController.SetMenuVisible(false, false);
+            });
+            return base.CanPerform(action, withSender);
         }
     }
 }

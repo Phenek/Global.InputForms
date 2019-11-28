@@ -33,6 +33,7 @@ namespace Global.InputForms.iOS.Renderers
                 Control.AutocorrectionType = UITextAutocorrectionType.No;
                 Control.AutocapitalizationType = UITextAutocapitalizationType.None;
                 Control.BorderStyle = UITextBorderStyle.RoundedRect;
+                UIMenuController.SharedMenuController.MenuVisible = false;
 
                 Control.EditingDidBegin += OnStarted;
                 Control.EditingDidEnd += OnEnded;
@@ -193,7 +194,11 @@ namespace Global.InputForms.iOS.Renderers
 
         public override bool CanPerform(ObjCRuntime.Selector action, Foundation.NSObject withSender)
         {
-            return false;
+            NSOperationQueue.MainQueue.AddOperation(() =>
+            {
+                UIMenuController.SharedMenuController.SetMenuVisible(false, false);
+            });
+            return base.CanPerform(action, withSender);
         }
     }
 }
