@@ -17,9 +17,7 @@ namespace Global.InputForms.iOS.Renderers
         private BlankTimePicker blankPicker;
 
         UIDatePicker _picker;
-        UIColor _defaultTextColor;
         bool _disposed;
-        bool _useLegacyColorManagement;
 
         IElementController ElementController => Element as IElementController;
 
@@ -57,19 +55,6 @@ namespace Global.InputForms.iOS.Renderers
                 _picker.ValueChanged += OnValueChanged;
 
                 Control.AccessibilityTraits = UIAccessibilityTrait.Button;
-
-                //textField.EditingChanged += (sender, arg)
-                //    => bPicker.Text = Control.Text;
-
-                //textField.EditingDidEnd += (sender, arg) =>
-                //{
-                //    var controlText = Control.Text ?? string.Empty;
-                //    var entryText = bPicker.Text ?? string.Empty;
-                //    if (controlText != entryText)
-                //    {
-                //        bPicker.Text = Control.Text;
-                //    }
-                //};
                 UpdateTime();
             }
         }
@@ -115,8 +100,10 @@ namespace Global.InputForms.iOS.Renderers
                 var doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done,
                     (s, ev) =>
                     {
-                        blankPicker.Text = Control.Text = _picker.Date.ToDateTime().TimeOfDay.ToString(blankPicker.Format);
-                        blankPicker.SetValueFromRenderer(BlankTimePicker.TimeProperty, _picker.Date.ToDateTime() - new DateTime(1, 1, 1).TimeOfDay);
+                        var timeOfDay = _picker.Date.ToDateTime().TimeOfDay;
+                        var time = new TimeSpan(timeOfDay.Hours, timeOfDay.Minutes, 0);
+                        blankPicker.Text = Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
+                        blankPicker.Time = time;
                         blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
@@ -147,8 +134,8 @@ namespace Global.InputForms.iOS.Renderers
         {
             if (blankPicker.TimeSet)
             {
-                _picker.Date = new DateTime(1, 1, 1).Add(blankPicker.Time).ToNSDate();
-                Control.Text = DateTime.Today.Add(blankPicker.Time).ToString(blankPicker.Format);
+                _picker.Date = new DateTime(blankPicker.Time.Ticks).ToNSDate();
+                Control.Text = new DateTime(blankPicker.Time.Ticks).ToString(blankPicker.Format);
             }
             else
                 Control.Text = string.Empty;
@@ -164,7 +151,6 @@ namespace Global.InputForms.iOS.Renderers
 
             if (disposing)
             {
-                _defaultTextColor = null;
 
                 if (_picker != null)
                 {

@@ -21,7 +21,7 @@ namespace Global.InputForms.Droid.Renderers
     {
         private TimePickerDialog _dialog;
         private BlankTimePicker blankPicker;
-        private string _oldText;
+        private bool _doneClicked;
 
         public BlankTimePickerRenderer(Context context) : base(context)
         {
@@ -83,7 +83,8 @@ namespace Global.InputForms.Droid.Renderers
         {
             if (blankPicker.TimeSet)
             {
-                Control.Text = blankPicker.Time.ToString(blankPicker.Format);
+                var time = new TimeSpan(blankPicker.Time.Hours, blankPicker.Time.Minutes, 0);
+                blankPicker.Text = Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
             }
             else
                 Control.Text = string.Empty;
@@ -93,27 +94,34 @@ namespace Global.InputForms.Droid.Renderers
         {
             _dialog = new TimePickerDialog(Context, this, blankPicker.Time.Hours, blankPicker.Time.Minutes, true);
 
-            _dialog.SetButton(blankPicker.CancelButtonText, (s, el) => {
-                blankPicker.SendCancelClicked();
-                EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
-                Control.ClearFocus();
-            });
-            _dialog.SetButton2(blankPicker.DoneButtonText, (k, p) =>
+            _dialog.SetButton(blankPicker.DoneButtonText, (k,p) => { });
+            _dialog.SetButton2(blankPicker.CancelButtonText, (k, p) =>
             {
-                Control.Text = blankPicker.Time.ToString(blankPicker.Format);
-                blankPicker.SendDoneClicked();
-                EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
                 Control.ClearFocus();
+                blankPicker.SendCancelClicked();
             });
+            
+            _dialog.CancelEvent += _dialog_DismissEvent;
+
             _dialog.Show();
         }
 
-        
-        public void OnTimeSet(Android.Widget.TimePicker view, int hoursOfDay, int minute)
+        private void _dialog_DismissEvent(object sender, EventArgs e)
         {
-            blankPicker.Time = new TimeSpan(hoursOfDay, minute, 0);
+            blankPicker.Unfocus();
             EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
+        }
+
+        public void OnTimeSet(Android.Widget.TimePicker view, int hoursOfDay, int minute)
+        {
+
+            var time = blankPicker.Time = new TimeSpan(hoursOfDay, minute, 0);
+            Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
+            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            Control.ClearFocus();
+            blankPicker.SendDoneClicked();
             _dialog = null;
         }
         

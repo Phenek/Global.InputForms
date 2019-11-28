@@ -107,7 +107,18 @@ namespace Global.InputForms.Droid.Renderers
                 EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
             });
+
+            _dialog.CancelEvent += _dialog_DismissEvent;
+
+
             _dialog.Show();
+        }
+
+        private void _dialog_DismissEvent(object sender, EventArgs e)
+        {
+            blankPicker.Unfocus();
+            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            Control.ClearFocus();
         }
 
         public void OnDateSet(Android.Widget.DatePicker view, int year, int month, int dayOfMonth)

@@ -29,13 +29,19 @@ namespace Global.InputForms
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
-            typeof(TimePickerView), string.Empty, propertyChanged: FormatChanged);
-
+            typeof(TimePickerView), @"H\:m", propertyChanged: FormatChanged);
+        
         private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is TimePickerView picker)
                 picker._timePicker.Format = (string)newValue;
         }
+
+        public static readonly BindableProperty DoneButtonTextProperty =
+            BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(DatePickerView), "Ok");
+
+        public static readonly BindableProperty CancelButtonTextProperty =
+            BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DatePickerView), "Cancel");
 
         private readonly Frame _pFrame;
         private readonly BlankTimePicker _timePicker;
@@ -85,6 +91,11 @@ namespace Global.InputForms
             //    new Binding(nameof(Time)) { Source = this, Mode = BindingMode.TwoWay });
 
 
+            _timePicker.SetBinding(BlankTimePicker.DoneButtonTextProperty,
+                new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });
+            _timePicker.SetBinding(BlankTimePicker.CancelButtonTextProperty,
+                new Binding(nameof(CancelButtonText)) { Source = this, Mode = BindingMode.OneWay });
+
             _timePicker.Focused += FocusEntry;
             _timePicker.Unfocused += UnfocusEntry;
             _timePicker.TextChanged += SendEntryTextChanged;
@@ -103,6 +114,18 @@ namespace Global.InputForms
         {
             get => (string) GetValue(FormatProperty);
             set => SetValue(FormatProperty, value);
+        }
+
+        public string DoneButtonText
+        {
+            get => (string)GetValue(DoneButtonTextProperty);
+            set => SetValue(DoneButtonTextProperty, value);
+        }
+
+        public string CancelButtonText
+        {
+            get => (string)GetValue(CancelButtonTextProperty);
+            set => SetValue(CancelButtonTextProperty, value);
         }
 
         public override void Focus()

@@ -5,9 +5,17 @@ namespace Global.InputForms
 {
     public class BlankTimePicker : Entry
     {
-        public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), "t");
+        public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), @"H\:m");
 
-        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), TimeSpan.FromDays(42));
+        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), TimeSpan.FromDays(42),
+            defaultValueCreator: (bindable) => TimeSpan.FromDays(42), propertyChanged: TimeChanged);
+
+        private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is BlankTimePicker picker)
+            if ((TimeSpan)newValue != TimeSpan.FromDays(42))
+                    picker.TimeSelected?.Invoke(picker, new TimeChangedEventArgs((TimeSpan)oldValue, (TimeSpan)newValue));
+        }
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankTimePicker), "Ok");
@@ -26,10 +34,8 @@ namespace Global.InputForms
             get { return (TimeSpan)GetValue(TimeProperty); }
             set
             {
-                var oldValue = Time;
                 TimeSet = true;
                 SetValue(TimeProperty, value);
-                TimeSelected?.Invoke(this, new TimeChangedEventArgs(oldValue, value));
             }
         }
 
@@ -65,8 +71,8 @@ namespace Global.InputForms
     {
         public TimeChangedEventArgs(TimeSpan oldTime, TimeSpan newTime)
         {
-            NewTime = oldTime;
-            OldTime = newTime;
+            NewTime = newTime;
+            OldTime = oldTime;
         }
 
         public TimeSpan NewTime { get; private set; }

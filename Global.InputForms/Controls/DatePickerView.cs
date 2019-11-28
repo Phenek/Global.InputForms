@@ -176,10 +176,10 @@ namespace Global.InputForms
             var picker = (DatePickerView)bindable;
             DateTime dateValue = ((DateTime)value).Date;
 
-            if (dateValue > picker.MaximumDate)
+            if (dateValue > picker.MaximumDate && picker.Date != default)
                 dateValue = picker.MaximumDate;
 
-            if (dateValue < picker.MinimumDate)
+            if (dateValue < picker.MinimumDate && picker.Date != default)
                 dateValue = picker.MinimumDate;
 
             return dateValue;
@@ -190,10 +190,7 @@ namespace Global.InputForms
             DateTime dateValue = ((DateTime)value).Date;
             var picker = (DatePickerView)bindable;
 
-            if (((DatePickerView)bindable)._datePicker.Date == new DateTime(42, 1, 1))
-                return dateValue;
-
-            if (picker.Date > dateValue)
+            if (picker.Date > dateValue && picker.Date != default)
                 picker.Date = dateValue;
 
             return dateValue;
@@ -205,10 +202,7 @@ namespace Global.InputForms
             DateTime dateValue = ((DateTime)value).Date;
             var picker = (DatePickerView)bindable;
 
-            if (((DatePickerView)bindable)._datePicker.Date == new DateTime(42, 1, 1))
-                return dateValue;
-
-            if (picker.Date < dateValue)
+            if (picker.Date < dateValue && picker.Date != default)
                 picker.Date = dateValue;
 
             return dateValue;
