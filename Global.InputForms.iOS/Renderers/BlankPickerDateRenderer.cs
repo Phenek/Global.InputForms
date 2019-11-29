@@ -47,7 +47,6 @@ namespace Global.InputForms.iOS.Renderers
                 Control.InputView = _picker;
 
                 Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-                Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
                 Control.InputAssistantItem.LeadingBarButtonGroups = null;
                 Control.InputAssistantItem.TrailingBarButtonGroups = null;
@@ -136,13 +135,20 @@ namespace Global.InputForms.iOS.Renderers
                 items.Add(doneButton);
             }
 
+
+            Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+
             toolbar.SetItems(items.ToArray(), true);
             Control.InputAccessoryView = toolbar;
         }
 
         void HandleValueChanged(object sender, EventArgs e)
         {
-            blankPicker?.SetValueFromRenderer(BlankDatePicker.DateProperty, _picker.Date.ToDateTime().Date);
+            if (blankPicker.UpdateMode == UpdateMode.Immediately)
+            {
+                blankPicker.Text = Control.Text = _picker.Date.ToDateTime().Date.ToString(blankPicker.Format);
+                blankPicker.Date = _picker.Date.ToDateTime().Date;
+            }
         }
 
         void OnStarted(object sender, EventArgs eventArgs)

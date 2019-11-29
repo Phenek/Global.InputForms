@@ -63,6 +63,15 @@ namespace Global.InputForms
         public static readonly BindableProperty CancelButtonTextProperty =
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DatePickerView), "Cancel");
 
+        public static readonly BindableProperty UpdateModeProperty =
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(DatePickerView), UpdateMode.Immediately);
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode)GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
+        }
+
         private readonly BlankDatePicker _datePicker;
         private readonly Frame _pFrame;
 
@@ -117,7 +126,9 @@ namespace Global.InputForms
                 new Binding(nameof(DoneButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _datePicker.SetBinding(BlankDatePicker.CancelButtonTextProperty,
                 new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
-            
+            _datePicker.SetBinding(BlankDatePicker.UpdateModeProperty,
+                new Binding(nameof(UpdateMode)) { Source = this, Mode = BindingMode.OneWay });
+
 
             _datePicker.Focused += FocusEntry;
             _datePicker.Unfocused += UnfocusEntry;

@@ -23,6 +23,15 @@ namespace Global.InputForms
         public static readonly BindableProperty CancelButtonTextProperty =
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankTimePicker), "Cancel");
 
+        public static readonly BindableProperty UpdateModeProperty =
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankTimePicker), UpdateMode.Immediately);
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode)GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
+        }
+
         public string Format
         {
             get { return (string)GetValue(FormatProperty); }

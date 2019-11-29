@@ -51,13 +51,10 @@ namespace Global.InputForms.iOS.Renderers
                 Control.EditingChanged += OnEditing;
 
                 _picker = new UIPickerView();
+                Control.InputView = _picker;
+                Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
                 SetInputAccessoryView();
-
-                Control.InputView = _picker;
-
-                Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-                Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
                 if (IsiOS9OrNewer)
                 {
@@ -133,6 +130,8 @@ namespace Global.InputForms.iOS.Renderers
                 doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
                 items.Add(doneButton);
             }
+
+            Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
             toolbar.SetItems(items.ToArray(), true);
             Control.InputAccessoryView = toolbar;
@@ -249,65 +248,66 @@ namespace Global.InputForms.iOS.Renderers
             });
             return base.CanPerform(action, withSender);
         }
-    }
 
-    class PickerSource : UIPickerViewModel
-    {
-        BlankPickerRenderer _renderer;
-        bool _disposed;
-
-        public PickerSource(BlankPickerRenderer renderer)
+        class PickerSource : UIPickerViewModel
         {
-            _renderer = renderer;
-        }
+            BlankPickerRenderer _renderer;
+            bool _disposed;
 
-        public int SelectedIndex { get; internal set; }
-
-        public string SelectedItem { get; internal set; }
-
-        public override nint GetComponentCount(UIPickerView picker)
-        {
-            return 1;
-        }
-
-        public override nint GetRowsInComponent(UIPickerView pickerView, nint component)
-        {
-            return _renderer.blankPicker.Items != null ? _renderer.blankPicker.Items.Count : 0;
-        }
-
-        public override string GetTitle(UIPickerView picker, nint row, nint component)
-        {
-            return _renderer.blankPicker.Items[(int)row];
-        }
-
-        public override void Selected(UIPickerView picker, nint row, nint component)
-        {
-            if (_renderer.blankPicker.Items.Count == 0)
+            public PickerSource(BlankPickerRenderer renderer)
             {
-                SelectedItem = null;
-                SelectedIndex = -1;
-            }
-            else
-            {
-                SelectedItem = _renderer.blankPicker.Items[(int)row];
-                SelectedIndex = (int)row;
+                _renderer = renderer;
             }
 
-            //if (_renderer.Element.On<PlatformConfiguration.iOS>().UpdateMode() == UpdateMode.Immediately)
-            //    _renderer.UpdatePickerFromModel(this);
-        }
+            public int SelectedIndex { get; internal set; }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
+            public string SelectedItem { get; internal set; }
 
-            _disposed = true;
+            public override nint GetComponentCount(UIPickerView picker)
+            {
+                return 1;
+            }
 
-            if (disposing)
-                _renderer = null;
+            public override nint GetRowsInComponent(UIPickerView pickerView, nint component)
+            {
+                return _renderer.blankPicker.Items != null ? _renderer.blankPicker.Items.Count : 0;
+            }
 
-            base.Dispose(disposing);
+            public override string GetTitle(UIPickerView picker, nint row, nint component)
+            {
+                return _renderer.blankPicker.Items[(int)row];
+            }
+
+            public override void Selected(UIPickerView picker, nint row, nint component)
+            {
+                if (_renderer.blankPicker.Items.Count == 0)
+                {
+                    SelectedItem = null;
+                    SelectedIndex = -1;
+                }
+                else
+                {
+                    SelectedItem = _renderer.blankPicker.Items[(int)row];
+                    SelectedIndex = (int)row;
+                }
+
+                if (_renderer.blankPicker.UpdateMode == UpdateMode.Immediately)
+                    _renderer.UpdatePickerFromModel(this);
+
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                if (_disposed)
+                    return;
+
+                _disposed = true;
+
+                if (disposing)
+                    _renderer = null;
+
+                base.Dispose(disposing);
+            }
         }
     }
 }

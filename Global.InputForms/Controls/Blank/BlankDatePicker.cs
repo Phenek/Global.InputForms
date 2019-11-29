@@ -24,6 +24,9 @@ namespace Global.InputForms
         public static readonly BindableProperty CancelButtonTextProperty =
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankDatePicker), "Cancel");
 
+        public static readonly BindableProperty UpdateModeProperty =
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankDatePicker), UpdateMode.Immediately);
+
         public event EventHandler<DateChangedEventArgs> DateSelected;
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
@@ -75,6 +78,12 @@ namespace Global.InputForms
         {
             get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
+        }
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode)GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
         }
 
         public void SendDoneClicked()

@@ -36,4 +36,10 @@
         Image,
         Icon
     }
+
+    public enum UpdateMode
+    {
+        Immediately,
+        WhenFinished
+    }
 }

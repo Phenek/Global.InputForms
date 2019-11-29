@@ -1096,7 +1096,7 @@ namespace Global.InputForms
             InfoText = info;
             Info = isVisible;
 
-            if (FloatingInfo)
+            if (FloatingInfo && _infoLabel != null && InfoIsVisible != isVisible)
             {
                 var translateY = 0.0;
                 if (isVisible)

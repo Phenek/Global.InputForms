@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Xamarin.Forms;
@@ -16,7 +17,7 @@ namespace Global.InputForms
                                     propertyChanged: OnSelectedIndexChanged, coerceValue: CoerceSelectedIndex);
 
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create(nameof(ItemsSource), typeof(IList<string>), typeof(BlankPicker), default(IList<string>),
+            BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(BlankPicker), default(IList),
                                     propertyChanged: OnItemsSourceChanged);
 
         public static readonly BindableProperty SelectedItemProperty =
@@ -28,6 +29,15 @@ namespace Global.InputForms
 
         public static readonly BindableProperty CancelButtonTextProperty =
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankPicker), "Cancel");
+
+        public static readonly BindableProperty UpdateModeProperty =
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankPicker), UpdateMode.Immediately);
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode)GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
+        }
 
         public BlankPicker()
         {
@@ -48,9 +58,9 @@ namespace Global.InputForms
 
         public IList<string> Items { get; } = new LockableObservableListWrapper();
 
-        public IList<string> ItemsSource
+        public IList ItemsSource
         {
-            get { return (IList<string>)GetValue(ItemsSourceProperty); }
+            get { return (IList)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
@@ -128,10 +138,10 @@ namespace Global.InputForms
 
         static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            ((BlankPicker)bindable).OnItemsSourceChanged((IList<string>)oldValue, (IList<string>)newValue);
+            ((BlankPicker)bindable).OnItemsSourceChanged((IList)oldValue, (IList)newValue);
         }
 
-        void OnItemsSourceChanged(IList<string> oldValue, IList<string> newValue)
+        void OnItemsSourceChanged(IList oldValue, IList newValue)
         {
             var oldObservable = oldValue as INotifyCollectionChanged;
             if (oldObservable != null)
