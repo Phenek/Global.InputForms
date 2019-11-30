@@ -10,32 +10,14 @@ namespace Global.InputForms
         ///     The Minimum Date property.
         /// </summary>
         public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time),
-            typeof(TimeSpan), typeof(TimePickerView), new TimeSpan(0), propertyChanged: TimeChanged, coerceValue: CoerceDate);
-
-        static object CoerceDate(BindableObject bindable, object value)
-        {
-            var val = (TimeSpan)value;
-            TimeSpan timeValue = new TimeSpan(val.Hours, val.Minutes, 0);
-            return timeValue;
-        }
-
-        private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is TimePickerView picker)
-                picker._timePicker.Time = (TimeSpan)newValue;
-        }
+            typeof(TimeSpan), typeof(TimePickerView), new TimeSpan(0), propertyChanged: TimeChanged,
+            coerceValue: CoerceDate);
 
         /// <summary>
         ///     The Format property.
         /// </summary>
         public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string),
             typeof(TimePickerView), @"H\:mm", propertyChanged: FormatChanged);
-        
-        private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is TimePickerView picker)
-                picker._timePicker.Format = (string)newValue;
-        }
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(DatePickerView), "Ok");
@@ -44,17 +26,10 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DatePickerView), "Cancel");
 
         public static readonly BindableProperty UpdateModeProperty =
-            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(DatePickerView), UpdateMode.Immediately);
-
-        public UpdateMode UpdateMode
-        {
-            get => (UpdateMode)GetValue(UpdateModeProperty);
-            set => SetValue(UpdateModeProperty, value);
-        }
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(DatePickerView),
+                UpdateMode.Immediately);
 
         private readonly BlankTimePicker _timePicker;
-
-        public event EventHandler<TimeChangedEventArgs> TimeSelected;
 
         public TimePickerView()
         {
@@ -65,7 +40,7 @@ namespace Global.InputForms
             };
             Input = _timePicker;
             _timePicker.SetBinding(Entry.TextProperty,
-                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
+                new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.TwoWay});
             _timePicker.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(Entry.FontFamilyProperty,
@@ -83,15 +58,15 @@ namespace Global.InputForms
             _timePicker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(MarginProperty,
-                new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryMargin)) {Source = this, Mode = BindingMode.OneWay});
 
             _timePicker.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
-                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _timePicker.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             //_timePicker.SetBinding(BlankTimePicker.FormatProperty,
             //    new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
@@ -100,11 +75,11 @@ namespace Global.InputForms
 
 
             _timePicker.SetBinding(BlankTimePicker.DoneButtonTextProperty,
-                new Binding(nameof(DoneButtonText)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(DoneButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(BlankTimePicker.CancelButtonTextProperty,
-                new Binding(nameof(CancelButtonText)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _timePicker.SetBinding(BlankTimePicker.UpdateModeProperty,
-                new Binding(nameof(UpdateMode)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(UpdateMode)) {Source = this, Mode = BindingMode.OneWay});
 
             _timePicker.Focused += FocusEntry;
             _timePicker.Unfocused += UnfocusEntry;
@@ -112,6 +87,12 @@ namespace Global.InputForms
             _timePicker.TimeSelected += Time_Selected;
 
             Children.Add(_timePicker, 2, 3, 1, 2);
+        }
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode) GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
         }
 
         public TimeSpan Time
@@ -128,15 +109,36 @@ namespace Global.InputForms
 
         public string DoneButtonText
         {
-            get => (string)GetValue(DoneButtonTextProperty);
+            get => (string) GetValue(DoneButtonTextProperty);
             set => SetValue(DoneButtonTextProperty, value);
         }
 
         public string CancelButtonText
         {
-            get => (string)GetValue(CancelButtonTextProperty);
+            get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
         }
+
+        private static object CoerceDate(BindableObject bindable, object value)
+        {
+            var val = (TimeSpan) value;
+            var timeValue = new TimeSpan(val.Hours, val.Minutes, 0);
+            return timeValue;
+        }
+
+        private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is TimePickerView picker)
+                picker._timePicker.Time = (TimeSpan) newValue;
+        }
+
+        private static void FormatChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is TimePickerView picker)
+                picker._timePicker.Format = (string) newValue;
+        }
+
+        public event EventHandler<TimeChangedEventArgs> TimeSelected;
 
         public override void Focus()
         {

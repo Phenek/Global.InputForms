@@ -12,7 +12,7 @@
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 
-                <Label Text="{Binding Time, Mode=TwoWay, StringFormat=\{0:h\\:mm\\:ss\} }" FontSize="20"/>
+                <Label Text="{Binding Time, Mode=TwoWay, StringFormat=\{0:h\\:mm\\:ss\} }" FontSize="20" />
 
 
                 <!-- Standart DatePicker with Surrounded Info -->
@@ -21,8 +21,7 @@
                                        EntryPlaceholder="Date"
                                        LabelText="Date"
                                        Time="{Binding Time, Mode=TwoWay}"
-                                       x:Name="_picker">
-                </global:TimePickerView>
+                                       x:Name="_picker" />
 
                 <Label Text="Standart DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
@@ -31,8 +30,7 @@
                 <!-- Besieged DatePicker with Surrounded Info -->
 
                 <global:TimePickerView StyleClass="BesiegedEntry"
-                                  LabelText="Besieged TimePicker">
-                </global:TimePickerView>
+                                       LabelText="Besieged TimePicker" />
 
                 <Label Text="Besieged DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
@@ -41,27 +39,25 @@
                 <!-- Besieged DatePicker with Overlaped Label with Surrounded Info -->
 
                 <global:TimePickerView StyleClass="BesiegedEntryOverlaLabel"
-                                  LabelText="Besieged TimePicker">
-                </global:TimePickerView>
+                                       LabelText="Besieged TimePicker" />
 
-                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small" TextColor="Gray"
+                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small"
+                       TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
 
                 <!-- Rounded DatePicker with Surrounded Info -->
                 <global:TimePickerView StyleClass="RoundedEntry"
-                                  LabelText="Rounded TimePicker">
-                </global:TimePickerView>
+                                       LabelText="Rounded TimePicker" />
 
                 <Label Text="Rounded DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
-                 <!-- Line DatePicker with Line Info -->
+                <!-- Line DatePicker with Line Info -->
                 <global:TimePickerView StyleClass="LineEntry"
-                                  LabelText="Line TimePicker">
-                </global:TimePickerView>
+                                       LabelText="Line TimePicker" />
 
                 <Label Text="Line DatePicker with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />

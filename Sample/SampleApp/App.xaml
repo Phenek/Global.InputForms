@@ -44,7 +44,7 @@
             </ControlTemplate>
             <ControlTemplate x:Key="IconRateImage">
                 <global:CheckContent CheckType="Image" ImageChecked="StarChecked" ImageUnchecked="StarUnchecked"
-                                 IconSize="20" Padding="5,0,5,0" />
+                                     IconSize="20" Padding="5,0,5,0" />
             </ControlTemplate>
             <ControlTemplate x:Key="IconRadioImage">
                 <global:CheckLabel CheckType="Image" ImageChecked="RadioButtonChecked"
@@ -55,15 +55,15 @@
             </ControlTemplate>
             <ControlTemplate x:Key="IconCustomRate">
                 <global:CheckContent CheckType="Custom" CheckedLabel="★" UncheckedLabel="☆"
-                                 CheckLabelFontSize="30"
-                                 IconSize="30"
-                                 Color="LightGray"
-                                 BorderColor="Transparent"
-                                 BackgroundColor="Transparent"
-                                 CheckedColor="#FFD700"
-                                 CheckedBorderColor="Transparent"
-                                 CheckedBackgroundColor="Transparent"
-                                 CheckLabelFontAttributes="None">
+                                     CheckLabelFontSize="30"
+                                     IconSize="30"
+                                     Color="LightGray"
+                                     BorderColor="Transparent"
+                                     BackgroundColor="Transparent"
+                                     CheckedColor="#FFD700"
+                                     CheckedBorderColor="Transparent"
+                                     CheckedBackgroundColor="Transparent"
+                                     CheckLabelFontAttributes="None">
                     <global:CheckLabel.CheckLabelMargin>
                         <OnPlatform x:TypeArguments="Thickness">
                             <On Platform="iOS" Value="0" />

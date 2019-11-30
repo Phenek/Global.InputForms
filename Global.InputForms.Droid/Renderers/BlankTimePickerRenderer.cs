@@ -4,15 +4,14 @@ using Android.App;
 using Android.Content;
 using Android.Text;
 using Android.Views;
+using Android.Views.InputMethods;
 using Global.InputForms;
 using Global.InputForms.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using Color = Android.Graphics.Color;
 using static Android.App.TimePickerDialog;
-using TextAlignment = Android.Views.TextAlignment;
-using View = Android.Views.View;
-using Android.Views.InputMethods;
+using Color = Android.Graphics.Color;
+using TimePicker = Android.Widget.TimePicker;
 
 [assembly: ExportRenderer(typeof(BlankTimePicker), typeof(BlankTimePickerRenderer))]
 
@@ -21,14 +20,25 @@ namespace Global.InputForms.Droid.Renderers
     public class BlankTimePickerRenderer : EntryRenderer, IOnTimeSetListener
     {
         private TimePickerDialog _dialog;
-        private BlankTimePicker blankPicker;
         private bool _doneClicked;
+        private BlankTimePicker blankPicker;
 
         public BlankTimePickerRenderer(Context context) : base(context)
         {
         }
 
         private IElementController EController => Element;
+
+        public void OnTimeSet(TimePicker view, int hoursOfDay, int minute)
+        {
+            var time = blankPicker.Time = new TimeSpan(hoursOfDay, minute, 0);
+            Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
+            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            Control.ClearFocus();
+            HideKeyboard();
+            blankPicker.SendDoneClicked();
+            _dialog = null;
+        }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
@@ -59,10 +69,8 @@ namespace Global.InputForms.Droid.Renderers
                     SetAttributes();
                     UpdateTime();
                 }
-            if (e.OldElement != null)
-            {
-                Control.SetOnClickListener(null);
-            }
+
+            if (e.OldElement != null) Control.SetOnClickListener(null);
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -76,7 +84,7 @@ namespace Global.InputForms.Droid.Renderers
         private void SetAttributes()
         {
             // Disable the Keyboard on Focus
-            this.Control.ShowSoftInputOnFocus = false;
+            Control.ShowSoftInputOnFocus = false;
 
             Control.SetBackgroundColor(Color.Transparent);
             Control.SetPadding(0, 7, 0, 3);
@@ -86,11 +94,11 @@ namespace Global.InputForms.Droid.Renderers
 
         private void HideKeyboard()
         {
-            InputMethodManager imm = (InputMethodManager)this.Context.GetSystemService(Context.InputMethodService);
-            imm.HideSoftInputFromWindow(this.Control.WindowToken, 0);
+            var imm = (InputMethodManager) Context.GetSystemService(Context.InputMethodService);
+            imm.HideSoftInputFromWindow(Control.WindowToken, 0);
         }
 
-        void UpdateTime()
+        private void UpdateTime()
         {
             if (blankPicker.TimeSet)
             {
@@ -98,7 +106,9 @@ namespace Global.InputForms.Droid.Renderers
                 blankPicker.Text = Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
             }
             else
+            {
                 Control.Text = string.Empty;
+            }
         }
 
         public void OnClick(object sender, EventArgs e)
@@ -106,7 +116,7 @@ namespace Global.InputForms.Droid.Renderers
             HideKeyboard();
             _dialog = new TimePickerDialog(Context, this, blankPicker.Time.Hours, blankPicker.Time.Minutes, true);
 
-            _dialog.SetButton(blankPicker.DoneButtonText, (k,p) => { });
+            _dialog.SetButton(blankPicker.DoneButtonText, (k, p) => { });
             _dialog.SetButton2(blankPicker.CancelButtonText, (k, p) =>
             {
                 EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
@@ -114,7 +124,7 @@ namespace Global.InputForms.Droid.Renderers
                 HideKeyboard();
                 blankPicker.SendCancelClicked();
             });
-            
+
             _dialog.CancelEvent += _dialog_DismissEvent;
 
             _dialog.Show();
@@ -126,18 +136,6 @@ namespace Global.InputForms.Droid.Renderers
             EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
             HideKeyboard();
-        }
-
-        public void OnTimeSet(Android.Widget.TimePicker view, int hoursOfDay, int minute)
-        {
-
-            var time = blankPicker.Time = new TimeSpan(hoursOfDay, minute, 0);
-            Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
-            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
-            Control.ClearFocus();
-            HideKeyboard();
-            blankPicker.SendDoneClicked();
-            _dialog = null;
         }
     }
 }

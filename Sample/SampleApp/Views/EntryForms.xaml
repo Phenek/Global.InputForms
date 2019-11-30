@@ -31,7 +31,7 @@
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <controls:DatePickerView x:Name="_datePicker"
-                    InfoViewType="Surrounded"
+                                         InfoViewType="Surrounded"
                                          EntryBackgroundColor="#88FFFFFF"
                                          InfoColor="Purple"
                                          LabelText="Date">

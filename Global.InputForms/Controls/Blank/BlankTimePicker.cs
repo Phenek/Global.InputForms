@@ -5,17 +5,12 @@ namespace Global.InputForms
 {
     public class BlankTimePicker : Entry
     {
-        public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), @"H\:mm");
+        public static readonly BindableProperty FormatProperty =
+            BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankTimePicker), @"H\:mm");
 
-        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(BlankTimePicker), TimeSpan.FromDays(42),
-            defaultValueCreator: (bindable) => TimeSpan.FromDays(42), propertyChanged: TimeChanged);
-
-        private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is BlankTimePicker picker)
-            if ((TimeSpan)newValue != TimeSpan.FromDays(42))
-                    picker.TimeSelected?.Invoke(picker, new TimeChangedEventArgs((TimeSpan)oldValue, (TimeSpan)newValue));
-        }
+        public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan),
+            typeof(BlankTimePicker), TimeSpan.FromDays(42),
+            defaultValueCreator: bindable => TimeSpan.FromDays(42), propertyChanged: TimeChanged);
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankTimePicker), "Ok");
@@ -24,23 +19,26 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankTimePicker), "Cancel");
 
         public static readonly BindableProperty UpdateModeProperty =
-            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankTimePicker), UpdateMode.Immediately);
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankTimePicker),
+                UpdateMode.Immediately);
+
+        public bool TimeSet;
 
         public UpdateMode UpdateMode
         {
-            get => (UpdateMode)GetValue(UpdateModeProperty);
+            get => (UpdateMode) GetValue(UpdateModeProperty);
             set => SetValue(UpdateModeProperty, value);
         }
 
         public string Format
         {
-            get { return (string)GetValue(FormatProperty); }
-            set { SetValue(FormatProperty, value); }
+            get => (string) GetValue(FormatProperty);
+            set => SetValue(FormatProperty, value);
         }
 
         public TimeSpan Time
         {
-            get { return (TimeSpan)GetValue(TimeProperty); }
+            get => (TimeSpan) GetValue(TimeProperty);
             set
             {
                 TimeSet = true;
@@ -60,10 +58,17 @@ namespace Global.InputForms
             set => SetValue(CancelButtonTextProperty, value);
         }
 
+        private static void TimeChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is BlankTimePicker picker)
+                if ((TimeSpan) newValue != TimeSpan.FromDays(42))
+                    picker.TimeSelected?.Invoke(picker,
+                        new TimeChangedEventArgs((TimeSpan) oldValue, (TimeSpan) newValue));
+        }
+
         public event EventHandler<TimeChangedEventArgs> TimeSelected;
         public event EventHandler DoneClicked;
         public event EventHandler CancelClicked;
-        public bool TimeSet;
 
         public void SendDoneClicked()
         {
@@ -84,8 +89,8 @@ namespace Global.InputForms
             OldTime = oldTime;
         }
 
-        public TimeSpan NewTime { get; private set; }
+        public TimeSpan NewTime { get; }
 
-        public TimeSpan OldTime { get; private set; }
+        public TimeSpan OldTime { get; }
     }
 }

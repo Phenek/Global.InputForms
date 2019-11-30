@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Threading.Tasks;
 using Foundation;
 using Global.InputForms;
 using Global.InputForms.iOS.Renderers;
+using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(BlankDatePicker), typeof(BlankDatePickerRenderer))]
+
 namespace Global.InputForms.iOS.Renderers
 {
     public class BlankDatePickerRenderer : EntryRenderer
     {
-        private BlankDatePicker blankPicker;
+        private bool _disposed;
 
-        UIDatePicker _picker;
-        bool _disposed;
+        private UIDatePicker _picker;
+        private BlankDatePicker blankPicker;
+        private bool IsiOS9OrNewer => UIDevice.CurrentDevice.CheckSystemVersion(9, 0);
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
@@ -33,31 +34,29 @@ namespace Global.InputForms.iOS.Renderers
                 Control.AutocorrectionType = UITextAutocorrectionType.No;
                 Control.AutocapitalizationType = UITextAutocapitalizationType.None;
                 Control.BorderStyle = UITextBorderStyle.RoundedRect;
+                Control.AccessibilityTraits = UIAccessibilityTrait.Button;
                 UIMenuController.SharedMenuController.MenuVisible = false;
 
                 Control.EditingDidBegin += OnStarted;
                 Control.EditingDidEnd += OnEnded;
 
-                _picker = new UIDatePicker { Mode = UIDatePickerMode.Date, TimeZone = new NSTimeZone("UTC") };
+                if (IsiOS9OrNewer)
+                {
+                    Control.InputAssistantItem.LeadingBarButtonGroups = null;
+                    Control.InputAssistantItem.TrailingBarButtonGroups = null;
+                }
 
+                _picker = new UIDatePicker {Mode = UIDatePickerMode.Date, TimeZone = new NSTimeZone("UTC")};
                 _picker.ValueChanged += HandleValueChanged;
-
-                SetInputAccessoryView();
-
                 Control.InputView = _picker;
-
                 Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
-                Control.InputAssistantItem.LeadingBarButtonGroups = null;
-                Control.InputAssistantItem.TrailingBarButtonGroups = null;
-
-                Control.AccessibilityTraits = UIAccessibilityTrait.Button;
+                SetInputAccessoryView();
+                UpdateDate();
+                UpdateMaximumDate();
+                UpdateMinimumDate();
+                SetAttributes();
             }
-
-            UpdateDate();
-            UpdateMaximumDate();
-            UpdateMinimumDate();
-            SetAttributes();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -73,7 +72,7 @@ namespace Global.InputForms.iOS.Renderers
         }
 
 
-        void UpdateDate()
+        private void UpdateDate()
         {
             if (blankPicker.DateSet)
             {
@@ -82,7 +81,9 @@ namespace Global.InputForms.iOS.Renderers
                     _picker.SetDate(blankPicker.Date.Date.ToNSDate(), false);
             }
             else
+            {
                 blankPicker.Text = Control.Text = string.Empty;
+            }
         }
 
         private void SetAttributes()
@@ -110,10 +111,7 @@ namespace Global.InputForms.iOS.Renderers
             if (!string.IsNullOrEmpty(blankPicker.CancelButtonText))
             {
                 var cancelButton = new UIBarButtonItem(blankPicker.CancelButtonText, UIBarButtonItemStyle.Done,
-                    (s, ev) =>
-                    {
-                        Control.ResignFirstResponder();
-                    });
+                    (s, ev) => { Control.ResignFirstResponder(); });
                 cancelButton.Clicked += (sender, e) => blankPicker.SendCancelClicked();
                 items.Add(cancelButton);
             }
@@ -134,15 +132,12 @@ namespace Global.InputForms.iOS.Renderers
                 doneButton.Clicked += (sender, e) => blankPicker.SendDoneClicked();
                 items.Add(doneButton);
             }
-
-
-            Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-
             toolbar.SetItems(items.ToArray(), true);
             Control.InputAccessoryView = toolbar;
+            Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
         }
 
-        void HandleValueChanged(object sender, EventArgs e)
+        private void HandleValueChanged(object sender, EventArgs e)
         {
             if (blankPicker.UpdateMode == UpdateMode.Immediately)
             {
@@ -151,22 +146,22 @@ namespace Global.InputForms.iOS.Renderers
             }
         }
 
-        void OnStarted(object sender, EventArgs eventArgs)
+        private void OnStarted(object sender, EventArgs eventArgs)
         {
             blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
         }
 
-        void OnEnded(object sender, EventArgs eventArgs)
+        private void OnEnded(object sender, EventArgs eventArgs)
         {
             blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
-        
-        void UpdateMaximumDate()
+
+        private void UpdateMaximumDate()
         {
             _picker.MaximumDate = blankPicker.MaximumDate.ToNSDate();
         }
 
-        void UpdateMinimumDate()
+        private void UpdateMinimumDate()
         {
             _picker.MinimumDate = blankPicker.MinimumDate.ToNSDate();
         }
@@ -180,7 +175,6 @@ namespace Global.InputForms.iOS.Renderers
 
             if (disposing)
             {
-
                 if (_picker != null)
                 {
                     _picker.RemoveFromSuperview();
@@ -189,16 +183,13 @@ namespace Global.InputForms.iOS.Renderers
                     _picker = null;
                 }
 
-                if (Control != null)
-                {
-                    Control.EditingDidBegin -= OnStarted;
-                }
+                if (Control != null) Control.EditingDidBegin -= OnStarted;
             }
 
             base.Dispose(disposing);
         }
 
-        public override bool CanPerform(ObjCRuntime.Selector action, Foundation.NSObject withSender)
+        public override bool CanPerform(Selector action, NSObject withSender)
         {
             NSOperationQueue.MainQueue.AddOperation(() =>
             {

@@ -14,15 +14,15 @@ namespace Global.InputForms
 
         public static readonly BindableProperty SelectedIndexProperty =
             BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(BlankPicker), -1, BindingMode.TwoWay,
-                                    propertyChanged: OnSelectedIndexChanged, coerceValue: CoerceSelectedIndex);
+                propertyChanged: OnSelectedIndexChanged, coerceValue: CoerceSelectedIndex);
 
         public static readonly BindableProperty ItemsSourceProperty =
             BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(BlankPicker), default(IList),
-                                    propertyChanged: OnItemsSourceChanged);
+                propertyChanged: OnItemsSourceChanged);
 
         public static readonly BindableProperty SelectedItemProperty =
             BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(BlankPicker), null, BindingMode.TwoWay,
-                                    propertyChanged: OnSelectedItemChanged);
+                propertyChanged: OnSelectedItemChanged);
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankPicker), "Ok");
@@ -31,17 +31,23 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankPicker), "Cancel");
 
         public static readonly BindableProperty UpdateModeProperty =
-            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankPicker), UpdateMode.Immediately);
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankPicker),
+                UpdateMode.Immediately);
 
-        public UpdateMode UpdateMode
-        {
-            get => (UpdateMode)GetValue(UpdateModeProperty);
-            set => SetValue(UpdateModeProperty, value);
-        }
+        private static readonly BindableProperty s_displayProperty =
+            BindableProperty.Create("Display", typeof(string), typeof(Picker), default(string));
+
+        private BindingBase _itemDisplayBinding;
 
         public BlankPicker()
         {
-            ((INotifyCollectionChanged)Items).CollectionChanged += OnItemsCollectionChanged;
+            ((INotifyCollectionChanged) Items).CollectionChanged += OnItemsCollectionChanged;
+        }
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode) GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
         }
 
         public string DoneButtonText
@@ -60,32 +66,31 @@ namespace Global.InputForms
 
         public IList ItemsSource
         {
-            get { return (IList)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IList) GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         public int SelectedIndex
         {
-            get { return (int)GetValue(SelectedIndexProperty); }
-            set { SetValue(SelectedIndexProperty, value); }
+            get => (int) GetValue(SelectedIndexProperty);
+            set => SetValue(SelectedIndexProperty, value);
         }
 
         public object SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
 
         public string Title
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+            get => (string) GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
         }
 
-        BindingBase _itemDisplayBinding;
         public BindingBase ItemDisplayBinding
         {
-            get { return _itemDisplayBinding; }
+            get => _itemDisplayBinding;
             set
             {
                 if (_itemDisplayBinding == value)
@@ -103,31 +108,28 @@ namespace Global.InputForms
         public event EventHandler CancelClicked;
         public event EventHandler SelectedIndexChanged;
 
-        static readonly BindableProperty s_displayProperty =
-            BindableProperty.Create("Display", typeof(string), typeof(Picker), default(string));
-
-        string GetDisplayMember(object item)
+        private string GetDisplayMember(object item)
         {
             if (ItemDisplayBinding == null)
                 return item.ToString();
 
             //ItemDisplayBinding.Apply(item, this, s_displayProperty);
             //ItemDisplayBinding.Unapply();
-            return (string)GetValue(s_displayProperty);
+            return (string) GetValue(s_displayProperty);
         }
 
-        static object CoerceSelectedIndex(BindableObject bindable, object value)
+        private static object CoerceSelectedIndex(BindableObject bindable, object value)
         {
-            var picker = (BlankPicker)bindable;
-            return picker.Items == null ? -1 : ((int)value).Clamp(-1, picker.Items.Count - 1);
+            var picker = (BlankPicker) bindable;
+            return picker.Items == null ? -1 : ((int) value).Clamp(-1, picker.Items.Count - 1);
         }
 
-        void OnItemDisplayBindingChanged(BindingBase oldValue, BindingBase newValue)
+        private void OnItemDisplayBindingChanged(BindingBase oldValue, BindingBase newValue)
         {
             ResetItems();
         }
 
-        void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             var oldIndex = SelectedIndex;
             var newIndex = SelectedIndex = SelectedIndex.Clamp(-1, Items.Count - 1);
@@ -136,36 +138,33 @@ namespace Global.InputForms
                 UpdateSelectedItem(newIndex);
         }
 
-        static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            ((BlankPicker)bindable).OnItemsSourceChanged((IList)oldValue, (IList)newValue);
+            ((BlankPicker) bindable).OnItemsSourceChanged((IList) oldValue, (IList) newValue);
         }
 
-        void OnItemsSourceChanged(IList oldValue, IList newValue)
+        private void OnItemsSourceChanged(IList oldValue, IList newValue)
         {
             var oldObservable = oldValue as INotifyCollectionChanged;
             if (oldObservable != null)
                 oldObservable.CollectionChanged -= CollectionChanged;
 
             var newObservable = newValue as INotifyCollectionChanged;
-            if (newObservable != null)
-            {
-                newObservable.CollectionChanged += CollectionChanged;
-            }
+            if (newObservable != null) newObservable.CollectionChanged += CollectionChanged;
 
             if (newValue != null)
             {
-                ((LockableObservableListWrapper)Items).IsLocked = true;
+                ((LockableObservableListWrapper) Items).IsLocked = true;
                 ResetItems();
             }
             else
             {
-                ((LockableObservableListWrapper)Items).InternalClear();
-                ((LockableObservableListWrapper)Items).IsLocked = false;
+                ((LockableObservableListWrapper) Items).InternalClear();
+                ((LockableObservableListWrapper) Items).IsLocked = false;
             }
         }
 
-        void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
@@ -180,54 +179,56 @@ namespace Global.InputForms
                     break;
             }
         }
-        void AddItems(NotifyCollectionChangedEventArgs e)
+
+        private void AddItems(NotifyCollectionChangedEventArgs e)
         {
-            int index = e.NewStartingIndex < 0 ? Items.Count : e.NewStartingIndex;
-            foreach (object newItem in e.NewItems)
-                ((LockableObservableListWrapper)Items).InternalInsert(index++, GetDisplayMember(newItem));
+            var index = e.NewStartingIndex < 0 ? Items.Count : e.NewStartingIndex;
+            foreach (var newItem in e.NewItems)
+                ((LockableObservableListWrapper) Items).InternalInsert(index++, GetDisplayMember(newItem));
         }
 
-        void RemoveItems(NotifyCollectionChangedEventArgs e)
+        private void RemoveItems(NotifyCollectionChangedEventArgs e)
         {
-            int index = e.OldStartingIndex < Items.Count ? e.OldStartingIndex : Items.Count;
-            foreach (object _ in e.OldItems)
-                ((LockableObservableListWrapper)Items).InternalRemoveAt(index--);
+            var index = e.OldStartingIndex < Items.Count ? e.OldStartingIndex : Items.Count;
+            foreach (var _ in e.OldItems)
+                ((LockableObservableListWrapper) Items).InternalRemoveAt(index--);
         }
 
-        void ResetItems()
+        private void ResetItems()
         {
             if (ItemsSource == null)
                 return;
-            ((LockableObservableListWrapper)Items).InternalClear();
-            foreach (object item in ItemsSource)
-                ((LockableObservableListWrapper)Items).InternalAdd(GetDisplayMember(item));
+            ((LockableObservableListWrapper) Items).InternalClear();
+            foreach (var item in ItemsSource)
+                ((LockableObservableListWrapper) Items).InternalAdd(GetDisplayMember(item));
             UpdateSelectedItem(SelectedIndex);
         }
 
-        static void OnSelectedIndexChanged(object bindable, object oldValue, object newValue)
+        private static void OnSelectedIndexChanged(object bindable, object oldValue, object newValue)
         {
-            var picker = (BlankPicker)bindable;
+            var picker = (BlankPicker) bindable;
             picker.UpdateSelectedItem(picker.SelectedIndex);
             picker.SelectedIndexChanged?.Invoke(bindable, EventArgs.Empty);
         }
 
-        static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var picker = (BlankPicker)bindable;
+            var picker = (BlankPicker) bindable;
             picker.UpdateSelectedIndex(newValue);
         }
 
-        void UpdateSelectedIndex(object selectedItem)
+        private void UpdateSelectedIndex(object selectedItem)
         {
             if (ItemsSource != null)
             {
                 SelectedIndex = ItemsSource.IndexOf(selectedItem);
                 return;
             }
+
             SelectedIndex = Items.IndexOf(selectedItem);
         }
 
-        void UpdateSelectedItem(int index)
+        private void UpdateSelectedItem(int index)
         {
             if (index == -1)
             {

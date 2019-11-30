@@ -13,7 +13,7 @@ namespace Global.InputForms
         /// <summary>
         ///     The default sorting algorithm.
         /// </summary>
-        private static readonly Func<string, string> _defaultAlgo = (text) => text;
+        private static readonly Func<string, string> _defaultAlgo = text => text;
 
         /// <summary>
         ///     The sorting algorithm click property.
@@ -84,7 +84,8 @@ namespace Global.InputForms
         ///     The Validate when unfocus property.
         /// </summary>
         public static readonly BindableProperty ValidateWhenUnfocusProperty =
-            BindableProperty.Create(nameof(ValidateWhenUnfocus), typeof(bool), typeof(EntryView), true, propertyChanged: ValidateWhenUnfocusChanged);
+            BindableProperty.Create(nameof(ValidateWhenUnfocus), typeof(bool), typeof(EntryView), true,
+                propertyChanged: ValidateWhenUnfocusChanged);
 
         private readonly BlankEntry _entry;
         private readonly Frame _pFrame;
@@ -99,8 +100,8 @@ namespace Global.InputForms
                 BackgroundColor = Color.Transparent
             };
             Input = _entry;
-            base.SetBinding(EntryLayout.EntryTextProperty,
-                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
+            SetBinding(EntryLayout.EntryTextProperty,
+                new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.TwoWay});
             _entry.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.FontFamilyProperty,
@@ -118,7 +119,7 @@ namespace Global.InputForms
             _entry.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(MarginProperty,
-                new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryMargin)) {Source = this, Mode = BindingMode.OneWay});
 
 
             _entry.SetBinding(Entry.IsPasswordProperty,
@@ -173,7 +174,7 @@ namespace Global.InputForms
 
         public Func<string, string> StringParser
         {
-            get => (Func<string, string>)GetValue(StringParserProperty);
+            get => (Func<string, string>) GetValue(StringParserProperty);
             set => SetValue(StringParserProperty, value);
         }
 
@@ -291,7 +292,8 @@ namespace Global.InputForms
                 var masked = entryView.AddMask((string) newValue, entryView._isAdditon);
                 if (entryView.MaskedEntryText != masked) entryView.MaskedEntryText = masked;
             }
-            entryView.SendEntryTextChanged(entryView, new TextChangedEventArgs((string)oldValue, (string)newValue));
+
+            entryView.SendEntryTextChanged(entryView, new TextChangedEventArgs((string) oldValue, (string) newValue));
         }
 
         private void EntryCursorChanged(object sender, TextChangedEventArgs e)
@@ -361,7 +363,7 @@ namespace Global.InputForms
         private static void UnfocusedValidate(object sender, FocusEventArgs e)
         {
             if (!(sender is EntryView entryView)) return;
-                entryView.Validate();
+            entryView.Validate();
         }
 
         private void OnEntryTextChanged(object sender, TextChangedEventArgs args)

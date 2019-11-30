@@ -45,9 +45,9 @@ namespace Global.InputForms
             _icon.SetBinding(WidthRequestProperty,
                 new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
             _icon.SetBinding(MinimumHeightRequestProperty,
-                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
             _icon.SetBinding(MinimumWidthRequestProperty,
-                new Binding(nameof(IconSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IconSize)) {Source = this, Mode = BindingMode.OneWay});
 
             var tap = new TapGestureRecognizer();
             tap.Tapped += OnChecked;
@@ -311,7 +311,8 @@ namespace Global.InputForms
         ///     The Checked background Color property.
         /// </summary>
         public static readonly BindableProperty CheckedBackgroundColorPropety =
-            BindableProperty.Create(nameof(CheckedBackgroundColor), typeof(Color), typeof(CheckContent), Color.WhiteSmoke,
+            BindableProperty.Create(nameof(CheckedBackgroundColor), typeof(Color), typeof(CheckContent),
+                Color.WhiteSmoke,
                 propertyChanged: ColorsChanged);
 
         /// <summary>

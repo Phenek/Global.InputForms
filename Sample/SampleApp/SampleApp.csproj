@@ -22,9 +22,10 @@
     <Folder Include="Models\" />
     <Folder Include="ResX\" />
     <Folder Include="Behaviors\" />
-    <Folder Include="Views\EntryLayout\" />
+    <Folder Include="Views\Entries\" />
     <Folder Include="Styles\" />
     <Folder Include="Controls\" />
+    <Folder Include="Views\Group\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Styles\EjntryStyles.xaml" />

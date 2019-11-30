@@ -9,14 +9,17 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(Format), typeof(string), typeof(BlankDatePicker), "d");
 
         public static readonly BindableProperty DateProperty =
-            BindableProperty.Create(nameof(Date), typeof(DateTime), typeof(BlankDatePicker), new DateTime(42, 1, 1), BindingMode.TwoWay,
-            defaultValueCreator: (bindable) => new DateTime(42, 1, 1));
+            BindableProperty.Create(nameof(Date), typeof(DateTime), typeof(BlankDatePicker), new DateTime(42, 1, 1),
+                BindingMode.TwoWay,
+                defaultValueCreator: bindable => new DateTime(42, 1, 1));
 
         public static readonly BindableProperty MinimumDateProperty =
-            BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(BlankDatePicker), new DateTime(1900, 1, 1));
+            BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(BlankDatePicker),
+                new DateTime(1900, 1, 1));
 
         public static readonly BindableProperty MaximumDateProperty =
-            BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(BlankDatePicker), new DateTime(2100, 12, 31));
+            BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(BlankDatePicker),
+                new DateTime(2100, 12, 31));
 
         public static readonly BindableProperty DoneButtonTextProperty =
             BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(BlankDatePicker), "Ok");
@@ -25,22 +28,15 @@ namespace Global.InputForms
             BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(BlankDatePicker), "Cancel");
 
         public static readonly BindableProperty UpdateModeProperty =
-            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankDatePicker), UpdateMode.Immediately);
-
-        public event EventHandler<DateChangedEventArgs> DateSelected;
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
-        public bool DateSet;
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(BlankDatePicker),
+                UpdateMode.Immediately);
 
         private bool _dateBinded;
-
-        public BlankDatePicker()
-        {
-        }
+        public bool DateSet;
 
         public DateTime Date
         {
-            get => (DateTime)GetValue(DateProperty);
+            get => (DateTime) GetValue(DateProperty);
             set
             {
                 DateSet = true;
@@ -52,20 +48,20 @@ namespace Global.InputForms
 
         public string Format
         {
-            get { return (string)GetValue(FormatProperty); }
-            set { SetValue(FormatProperty, value); }
+            get => (string) GetValue(FormatProperty);
+            set => SetValue(FormatProperty, value);
         }
 
         public DateTime MaximumDate
         {
-            get { return (DateTime)GetValue(MaximumDateProperty); }
-            set { SetValue(MaximumDateProperty, value); }
+            get => (DateTime) GetValue(MaximumDateProperty);
+            set => SetValue(MaximumDateProperty, value);
         }
 
         public DateTime MinimumDate
         {
-            get { return (DateTime)GetValue(MinimumDateProperty); }
-            set { SetValue(MinimumDateProperty, value); }
+            get => (DateTime) GetValue(MinimumDateProperty);
+            set => SetValue(MinimumDateProperty, value);
         }
 
         public string DoneButtonText
@@ -82,9 +78,13 @@ namespace Global.InputForms
 
         public UpdateMode UpdateMode
         {
-            get => (UpdateMode)GetValue(UpdateModeProperty);
+            get => (UpdateMode) GetValue(UpdateModeProperty);
             set => SetValue(UpdateModeProperty, value);
         }
+
+        public event EventHandler<DateChangedEventArgs> DateSelected;
+        public event EventHandler DoneClicked;
+        public event EventHandler CancelClicked;
 
         public void SendDoneClicked()
         {

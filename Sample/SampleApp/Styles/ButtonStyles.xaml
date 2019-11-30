@@ -3,7 +3,7 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-                    x:Class="SampleApp.Styles.EntryStyles">
+                    x:Class="SampleApp.Styles.ButtonStyles">
 
     <Style TargetType="global:EntryLayout" Class="BesiegedEntry"
            ApplyToDerivedTypes="true">

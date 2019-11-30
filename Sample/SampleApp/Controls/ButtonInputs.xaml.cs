@@ -21,7 +21,8 @@ namespace SampleApp.Controls
         {
             InitializeComponent();
 
-            _title.SetBinding(Label.TextProperty, new Binding(nameof(Title)) { Source = this, Mode = BindingMode.OneWay });
+            _title.SetBinding(Label.TextProperty,
+                new Binding(nameof(Title)) {Source = this, Mode = BindingMode.OneWay});
         }
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace SampleApp.Controls
         /// <value>The entry text.</value>
         public string Value
         {
-            get => (string)GetValue(ValueProperty);
+            get => (string) GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
@@ -40,7 +41,7 @@ namespace SampleApp.Controls
         /// <value>The entry text.</value>
         public string Title
         {
-            get => (string)GetValue(TitleProperty);
+            get => (string) GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
     }

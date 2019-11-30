@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Text;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using Global.InputForms;
 using Global.InputForms.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using Color = Android.Graphics.Color;
-using TextAlignment = Android.Views.TextAlignment;
 using AView = Android.Views.View;
-using System;
-using Android.Views.InputMethods;
+using Color = Android.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(BlankPicker), typeof(BlankPickerRenderer))]
 
@@ -22,7 +21,8 @@ namespace Global.InputForms.Droid.Renderers
 {
     public class BlankPickerRenderer : EntryRenderer
     {
-        readonly static HashSet<Keycode> AvailableKeys = new HashSet<Keycode>(new[] {
+        private static readonly HashSet<Keycode> AvailableKeys = new HashSet<Keycode>(new[]
+        {
             Keycode.Tab, Keycode.Forward, Keycode.DpadDown, Keycode.DpadLeft, Keycode.DpadRight, Keycode.DpadUp
         });
 
@@ -59,10 +59,8 @@ namespace Global.InputForms.Droid.Renderers
 
                     SetAttributes();
                 }
-            if (e.OldElement != null)
-            {
-                Control.SetOnClickListener(null);
-            }
+
+            if (e.OldElement != null) Control.SetOnClickListener(null);
         }
 
 
@@ -74,7 +72,7 @@ namespace Global.InputForms.Droid.Renderers
         private void SetAttributes()
         {
             // Disable the Keyboard on Focus
-            this.Control.ShowSoftInputOnFocus = false;
+            Control.ShowSoftInputOnFocus = false;
 
             Control.SetBackgroundColor(Color.Transparent);
             Control.SetPadding(0, 7, 0, 3);
@@ -84,8 +82,8 @@ namespace Global.InputForms.Droid.Renderers
 
         private void HideKeyboard()
         {
-            InputMethodManager imm = (InputMethodManager)this.Context.GetSystemService(Context.InputMethodService);
-            imm.HideSoftInputFromWindow(this.Control.WindowToken, 0);
+            var imm = (InputMethodManager) Context.GetSystemService(Context.InputMethodService);
+            imm.HideSoftInputFromWindow(Control.WindowToken, 0);
         }
 
         public void OnClick(object sender, EventArgs e)

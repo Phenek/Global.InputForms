@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Drawing;
-using System.Threading.Tasks;
 using Foundation;
 using Global.InputForms;
 using Global.InputForms.iOS.Renderers;
+using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 [assembly: ExportRenderer(typeof(BlankPicker), typeof(BlankPickerRenderer))]
 
@@ -18,22 +16,20 @@ namespace Global.InputForms.iOS.Renderers
 {
     public class BlankPickerRenderer : EntryRenderer
     {
-        bool IsiOS9OrNewer => UIDevice.CurrentDevice.CheckSystemVersion(9, 0);
+        private bool _disposed;
+
+        private UIPickerView _picker;
         public BlankPicker blankPicker;
+        private bool IsiOS9OrNewer => UIDevice.CurrentDevice.CheckSystemVersion(9, 0);
 
-        UIPickerView _picker;
-        UIColor _defaultTextColor;
-        bool _disposed;
-        bool _useLegacyColorManagement;
+        private IElementController ElementController => Element;
 
-        IElementController ElementController => Element as IElementController;
-
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Entry> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
 
             if (e.OldElement != null)
-                ((INotifyCollectionChanged)blankPicker.Items).CollectionChanged -= RowsCollectionChanged;
+                ((INotifyCollectionChanged) blankPicker.Items).CollectionChanged -= RowsCollectionChanged;
 
             if (!(e.NewElement is BlankPicker bPicker)) return;
             blankPicker = bPicker;
@@ -44,17 +40,12 @@ namespace Global.InputForms.iOS.Renderers
                 Control.AutocorrectionType = UITextAutocorrectionType.No;
                 Control.AutocapitalizationType = UITextAutocapitalizationType.None;
                 Control.BorderStyle = UITextBorderStyle.RoundedRect;
+                Control.AccessibilityTraits = UIAccessibilityTrait.Button;
                 UIMenuController.SharedMenuController.MenuVisible = false;
 
                 Control.EditingDidBegin += OnStarted;
                 Control.Ended += OnEnded;
                 Control.EditingChanged += OnEditing;
-
-                _picker = new UIPickerView();
-                Control.InputView = _picker;
-                Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-
-                SetInputAccessoryView();
 
                 if (IsiOS9OrNewer)
                 {
@@ -62,14 +53,17 @@ namespace Global.InputForms.iOS.Renderers
                     Control.InputAssistantItem.TrailingBarButtonGroups = null;
                 }
 
-                Control.AccessibilityTraits = UIAccessibilityTrait.Button;
-
+                _picker = new UIPickerView();
+                Control.InputView = _picker;
                 _picker.Model = new PickerSource(this);
+                Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
+                SetInputAccessoryView();
                 UpdatePicker();
                 SetAttributes();
 
-                ((INotifyCollectionChanged)blankPicker.Items).CollectionChanged += RowsCollectionChanged;
+                if (blankPicker.Items is INotifyCollectionChanged Collection)
+                    Collection.CollectionChanged += RowsCollectionChanged;
             }
         }
 
@@ -119,25 +113,23 @@ namespace Global.InputForms.iOS.Renderers
                 var doneButton = new UIBarButtonItem(blankPicker.DoneButtonText, UIBarButtonItemStyle.Done,
                     (sd, ev) =>
                     {
-                        var s = (PickerSource)_picker.Model;
+                        var s = (PickerSource) _picker.Model;
                         if (s.SelectedIndex == -1 && blankPicker.Items != null && blankPicker.Items.Count > 0)
                             UpdatePickerSelectedIndex(0);
                         UpdatePickerFromModel(s);
 
-                        ElementController.SetValueFromRenderer(Xamarin.Forms.VisualElement.IsFocusedPropertyKey, false);
+                        ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
                 doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
                 items.Add(doneButton);
             }
-
-            Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-
             toolbar.SetItems(items.ToArray(), true);
             Control.InputAccessoryView = toolbar;
+            Control.InputAccessoryView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
         }
 
-        void OnEditing(object sender, EventArgs eventArgs)
+        private void OnEditing(object sender, EventArgs eventArgs)
         {
             // Reset the TextField's Text so it appears as if typing with a keyboard does not work.
             var selectedIndex = blankPicker.SelectedIndex;
@@ -147,28 +139,30 @@ namespace Global.InputForms.iOS.Renderers
             Control.UndoManager.RemoveAllActions();
         }
 
-        void OnEnded(object sender, EventArgs eventArgs)
+        private void OnEnded(object sender, EventArgs eventArgs)
         {
-            ElementController.SetValueFromRenderer(Xamarin.Forms.VisualElement.IsFocusedPropertyKey, false);
+            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
 
-        void OnStarted(object sender, EventArgs eventArgs)
+        private void OnStarted(object sender, EventArgs eventArgs)
         {
-            ElementController.SetValueFromRenderer(Xamarin.Forms.VisualElement.IsFocusedPropertyKey, true);
+            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
         }
 
-        void RowsCollectionChanged(object sender, EventArgs e)
+        private void RowsCollectionChanged(object sender, EventArgs e)
         {
             UpdatePicker();
         }
 
-        void UpdatePicker()
+        private void UpdatePicker()
         {
             var selectedIndex = blankPicker.SelectedIndex;
             var items = blankPicker.Items;
 
             var oldText = Control.Text;
-            blankPicker.Text = Control.Text = selectedIndex == -1 || items == null || selectedIndex >= items.Count ? "" : items[selectedIndex];
+            blankPicker.Text = Control.Text = selectedIndex == -1 || items == null || selectedIndex >= items.Count
+                ? ""
+                : items[selectedIndex];
             UpdatePickerNativeSize(oldText);
             _picker.ReloadAllComponents();
             if (items == null || items.Count == 0)
@@ -177,7 +171,7 @@ namespace Global.InputForms.iOS.Renderers
             UpdatePickerSelectedIndex(selectedIndex);
         }
 
-        void UpdatePickerFromModel(PickerSource s)
+        private void UpdatePickerFromModel(PickerSource s)
         {
             if (Element != null)
             {
@@ -188,15 +182,15 @@ namespace Global.InputForms.iOS.Renderers
             }
         }
 
-        void UpdatePickerNativeSize(string oldText)
+        private void UpdatePickerNativeSize(string oldText)
         {
             if (oldText != Control.Text)
-                ((IVisualElementController)Element).NativeSizeChanged();
+                ((IVisualElementController) Element).NativeSizeChanged();
         }
 
-        void UpdatePickerSelectedIndex(int formsIndex)
+        private void UpdatePickerSelectedIndex(int formsIndex)
         {
-            var source = (PickerSource)_picker.Model;
+            var source = (PickerSource) _picker.Model;
             source.SelectedIndex = formsIndex;
             source.SelectedItem = formsIndex >= 0 ? blankPicker.Items[formsIndex] : null;
             _picker.Select(Math.Max(formsIndex, 0), 0, true);
@@ -211,8 +205,6 @@ namespace Global.InputForms.iOS.Renderers
 
             if (disposing)
             {
-                _defaultTextColor = null;
-
                 if (_picker != null)
                 {
                     if (_picker.Model != null)
@@ -233,14 +225,14 @@ namespace Global.InputForms.iOS.Renderers
                     Control.EditingChanged -= OnEditing;
                 }
 
-                if (Element != null)
-                    ((INotifyCollectionChanged)blankPicker.Items).CollectionChanged -= RowsCollectionChanged;
+                if (Element != null && blankPicker.Items is INotifyCollectionChanged colletion)
+                    colletion.CollectionChanged -= RowsCollectionChanged;
             }
 
             base.Dispose(disposing);
         }
 
-        public override bool CanPerform(ObjCRuntime.Selector action, Foundation.NSObject withSender)
+        public override bool CanPerform(Selector action, NSObject withSender)
         {
             NSOperationQueue.MainQueue.AddOperation(() =>
             {
@@ -249,10 +241,10 @@ namespace Global.InputForms.iOS.Renderers
             return base.CanPerform(action, withSender);
         }
 
-        class PickerSource : UIPickerViewModel
+        private class PickerSource : UIPickerViewModel
         {
-            BlankPickerRenderer _renderer;
-            bool _disposed;
+            private bool _disposed;
+            private BlankPickerRenderer _renderer;
 
             public PickerSource(BlankPickerRenderer renderer)
             {
@@ -275,7 +267,7 @@ namespace Global.InputForms.iOS.Renderers
 
             public override string GetTitle(UIPickerView picker, nint row, nint component)
             {
-                return _renderer.blankPicker.Items[(int)row];
+                return _renderer.blankPicker.Items[(int) row];
             }
 
             public override void Selected(UIPickerView picker, nint row, nint component)
@@ -287,13 +279,12 @@ namespace Global.InputForms.iOS.Renderers
                 }
                 else
                 {
-                    SelectedItem = _renderer.blankPicker.Items[(int)row];
-                    SelectedIndex = (int)row;
+                    SelectedItem = _renderer.blankPicker.Items[(int) row];
+                    SelectedIndex = (int) row;
                 }
 
                 if (_renderer.blankPicker.UpdateMode == UpdateMode.Immediately)
                     _renderer.UpdatePickerFromModel(this);
-
             }
 
             protected override void Dispose(bool disposing)

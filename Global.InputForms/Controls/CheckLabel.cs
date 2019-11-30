@@ -59,21 +59,21 @@ namespace Global.InputForms
             };
 
             _label.SetBinding(Label.FontAttributesProperty,
-                new Binding(nameof(FontAttributes)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(FontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _label.SetBinding(Label.FontFamilyProperty,
-                new Binding(nameof(FontFamily)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(FontFamily)) {Source = this, Mode = BindingMode.OneWay});
             _label.SetBinding(Label.FontSizeProperty,
-                new Binding(nameof(FontSize)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(FontSize)) {Source = this, Mode = BindingMode.OneWay});
             _label.SetBinding(Label.HorizontalTextAlignmentProperty,
-                new Binding(nameof(HorizontalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(HorizontalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _label.SetBinding(Label.VerticalTextAlignmentProperty,
-                new Binding(nameof(VerticalTextAlignment)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(VerticalTextAlignment)) {Source = this, Mode = BindingMode.OneWay});
             _label.SetBinding(Label.TextColorProperty,
-                new Binding(nameof(TextColor)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(TextColor)) {Source = this, Mode = BindingMode.OneWay});
 
             // Is It needed?
             _label.SetBinding(Label.TextProperty,
-                new Binding(nameof(Text)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(Text)) {Source = this, Mode = BindingMode.OneWay});
 
             ItemChanged += (sender, e) =>
             {
@@ -90,7 +90,7 @@ namespace Global.InputForms
         /// <value>The label font attributes.</value>
         public FontAttributes FontAttributes
         {
-            get => (FontAttributes)GetValue(FontAttributesProperty);
+            get => (FontAttributes) GetValue(FontAttributesProperty);
             set => SetValue(FontAttributesProperty, value);
         }
 
@@ -100,7 +100,7 @@ namespace Global.InputForms
         /// <value>The label font family.</value>
         public string FontFamily
         {
-            get => (string)GetValue(FontFamilyProperty);
+            get => (string) GetValue(FontFamilyProperty);
             set => SetValue(FontFamilyProperty, value);
         }
 
@@ -110,7 +110,7 @@ namespace Global.InputForms
         /// <value>The label font size.</value>
         public double FontSize
         {
-            get => (double)GetValue(FontSizeProperty);
+            get => (double) GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
         }
 
@@ -120,7 +120,7 @@ namespace Global.InputForms
         /// <value>The label horizontal text alignment.</value>
         public TextAlignment HorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(HorizontalTextAlignmentProperty);
             set => SetValue(HorizontalTextAlignmentProperty, value);
         }
 
@@ -130,7 +130,7 @@ namespace Global.InputForms
         /// <value>The label vertical text alignment.</value>
         public TextAlignment VerticalTextAlignment
         {
-            get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(VerticalTextAlignmentProperty);
             set => SetValue(VerticalTextAlignmentProperty, value);
         }
 
@@ -140,7 +140,7 @@ namespace Global.InputForms
         /// <value>The label text.</value>
         public string Text
         {
-            get => (string)GetValue(TextProperty);
+            get => (string) GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
@@ -150,7 +150,7 @@ namespace Global.InputForms
         /// <value>The label text color.</value>
         public Color TextColor
         {
-            get => (Color)GetValue(TextColorProperty);
+            get => (Color) GetValue(TextColorProperty);
             set => SetValue(TextColorProperty, value);
         }
     }

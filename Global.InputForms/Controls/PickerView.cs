@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -15,13 +14,7 @@ namespace Global.InputForms
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
             typeof(IList),
             typeof(PickerView),
-             propertyChanged: ItemsSourceChanged);
-
-        private static void ItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is PickerView picker)
-                picker._picker.ItemsSource = (IList)newValue;
-        }
+            propertyChanged: ItemsSourceChanged);
 
         /// <summary>
         ///     The Format property.
@@ -32,21 +25,9 @@ namespace Global.InputForms
             -1,
             propertyChanged: SelectedIdexChanged);
 
-        private static void SelectedIdexChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is PickerView picker)
-                picker._picker.SelectedIndex = (int)newValue;
-        }
-
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem),
             typeof(object), typeof(PickerView),
-             propertyChanged: SelectedItemChanged);
-
-        private static void SelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is PickerView picker)
-                picker._picker.SelectedItem = (string)newValue;
-        }
+            propertyChanged: SelectedItemChanged);
 
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title),
             typeof(string), typeof(PickerView), string.Empty);
@@ -63,12 +44,6 @@ namespace Global.InputForms
         public static readonly BindableProperty UpdateModeProperty =
             BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(PickerView), UpdateMode.Immediately);
 
-        public UpdateMode UpdateMode
-        {
-            get => (UpdateMode)GetValue(UpdateModeProperty);
-            set => SetValue(UpdateModeProperty, value);
-        }
-
         private readonly BlankPicker _picker;
         public EventHandler SelectedIndexChanged;
 
@@ -76,13 +51,13 @@ namespace Global.InputForms
         {
             _picker = new BlankPicker
             {
-                BackgroundColor = Color.Transparent,
+                BackgroundColor = Color.Transparent
             };
             Input = _picker;
             _picker.SetBinding(Entry.TextProperty,
-                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.OneWayToSource });
+                new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.OneWayToSource});
             _picker.SetBinding(Entry.TextProperty,
-                new Binding(nameof(EntryText)) { Source = this, Mode = BindingMode.TwoWay });
+                new Binding(nameof(EntryText)) {Source = this, Mode = BindingMode.TwoWay});
             _picker.SetBinding(Entry.FontAttributesProperty,
                 new Binding(nameof(EntryFontAttributes)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(Entry.FontFamilyProperty,
@@ -100,7 +75,7 @@ namespace Global.InputForms
             _picker.SetBinding(HeightRequestProperty,
                 new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(MarginProperty,
-                new Binding(nameof(EntryMargin)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryMargin)) {Source = this, Mode = BindingMode.OneWay});
 
             //_picker.SetBinding(BlankPicker.ItemsSourceProperty,
             //    new Binding(nameof(ItemsSource)) {Source = this, Mode = BindingMode.OneWay});
@@ -113,11 +88,11 @@ namespace Global.InputForms
 
             _picker.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
-                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
+                    {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _picker.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             //Todo For Xamarin.Forms 4.0
             //_picker.SetBinding(Picker.TitleColorProperty,
             //new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
@@ -127,7 +102,7 @@ namespace Global.InputForms
             _picker.SetBinding(BlankPicker.CancelButtonTextProperty,
                 new Binding(nameof(CancelButtonText)) {Source = this, Mode = BindingMode.OneWay});
             _picker.SetBinding(BlankPicker.UpdateModeProperty,
-                new Binding(nameof(UpdateMode)) { Source = this, Mode = BindingMode.OneWay });
+                new Binding(nameof(UpdateMode)) {Source = this, Mode = BindingMode.OneWay});
 
             _picker.Focused += FocusEntry;
             _picker.Unfocused += UnfocusEntry;
@@ -140,6 +115,12 @@ namespace Global.InputForms
             FloatingLabelWithoutAnimation();
 
             Children.Add(_picker, 2, 3, 1, 2);
+        }
+
+        public UpdateMode UpdateMode
+        {
+            get => (UpdateMode) GetValue(UpdateModeProperty);
+            set => SetValue(UpdateModeProperty, value);
         }
 
         public IList ItemsSource
@@ -182,6 +163,24 @@ namespace Global.InputForms
         {
             get => (string) GetValue(CancelButtonTextProperty);
             set => SetValue(CancelButtonTextProperty, value);
+        }
+
+        private static void ItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is PickerView picker)
+                picker._picker.ItemsSource = (IList) newValue;
+        }
+
+        private static void SelectedIdexChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is PickerView picker)
+                picker._picker.SelectedIndex = (int) newValue;
+        }
+
+        private static void SelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is PickerView picker)
+                picker._picker.SelectedItem = (string) newValue;
         }
 
         public event EventHandler DoneClicked;

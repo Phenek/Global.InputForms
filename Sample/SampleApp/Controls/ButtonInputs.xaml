@@ -10,7 +10,7 @@
                       CornerRadius="0"
                       MinimumHeightRequest="50">
 
-    <StackLayout Orientation="Horizontal" Margin="10,0,10,0" >
+    <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
         <Label x:Name="_title" TextColor="Black"
                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
                FontSize="Medium"

@@ -4,7 +4,7 @@
     {
         Line = 0,
         Surrounded = 1,
-        Background = 2,
+        Background = 2
     }
 
     public enum EntryLayoutType

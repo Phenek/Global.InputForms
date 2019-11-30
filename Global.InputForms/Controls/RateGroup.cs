@@ -165,7 +165,7 @@ namespace Global.InputForms
         /// <value>The Rate group Items Source.</value>
         public IDictionary<string, object> ItemsSource
         {
-            get => (IDictionary<string, object>)GetValue(ItemsSourceProperty);
+            get => (IDictionary<string, object>) GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -185,7 +185,7 @@ namespace Global.InputForms
         /// <value>The Rate group selected index.</value>
         public int SelectedIndex
         {
-            get => (int)GetValue(SelectedIndexProperty);
+            get => (int) GetValue(SelectedIndexProperty);
             set
             {
                 if (!_isBusy) SetValue(SelectedIndexProperty, value);
@@ -198,7 +198,7 @@ namespace Global.InputForms
         /// <value>The Rate group selected index.</value>
         public KeyValuePair<string, object> SelectedItem
         {
-            get => (KeyValuePair<string, object>)GetValue(SelectedItemProperty);
+            get => (KeyValuePair<string, object>) GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
         }
 
@@ -208,7 +208,7 @@ namespace Global.InputForms
         /// <value>The Rate group selected index.</value>
         public int DefaultIndex
         {
-            get => (int)GetValue(DefaultIndexProperty);
+            get => (int) GetValue(DefaultIndexProperty);
             set => SetValue(DefaultIndexProperty, value);
         }
 
@@ -218,7 +218,7 @@ namespace Global.InputForms
         /// <value>The Orientation of Rate buttons.</value>
         public new StackOrientation Orientation
         {
-            get => (StackOrientation)GetValue(OrientationProperty);
+            get => (StackOrientation) GetValue(OrientationProperty);
             set => SetValue(OrientationProperty, value);
         }
 
@@ -228,7 +228,7 @@ namespace Global.InputForms
         /// <value>The Spacing of Check buttons.</value>
         public new double Spacing
         {
-            get => (double)GetValue(SpacingProperty);
+            get => (double) GetValue(SpacingProperty);
             set => SetValue(SpacingProperty, value);
         }
 
@@ -238,7 +238,7 @@ namespace Global.InputForms
         /// <value>The label font attributes.</value>
         public FontAttributes LabelFontAttributes
         {
-            get => (FontAttributes)GetValue(LabelFontAttributesProperty);
+            get => (FontAttributes) GetValue(LabelFontAttributesProperty);
             set => SetValue(LabelFontAttributesProperty, value);
         }
 
@@ -248,7 +248,7 @@ namespace Global.InputForms
         /// <value>The label font family.</value>
         public string LabelFontFamily
         {
-            get => (string)GetValue(LabelFontFamilyProperty);
+            get => (string) GetValue(LabelFontFamilyProperty);
             set => SetValue(LabelFontFamilyProperty, value);
         }
 
@@ -258,7 +258,7 @@ namespace Global.InputForms
         /// <value>The label font size.</value>
         public double LabelFontSize
         {
-            get => (double)GetValue(LabelFontSizeProperty);
+            get => (double) GetValue(LabelFontSizeProperty);
             set => SetValue(LabelFontSizeProperty, value);
         }
 
@@ -268,7 +268,7 @@ namespace Global.InputForms
         /// <value>The label horizontal text alignment.</value>
         public TextAlignment LabelHorizontalTextAlignment
         {
-            get => (TextAlignment)GetValue(LabelHorizontalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(LabelHorizontalTextAlignmentProperty);
             set => SetValue(LabelHorizontalTextAlignmentProperty, value);
         }
 
@@ -278,7 +278,7 @@ namespace Global.InputForms
         /// <value>The label vertical text alignment.</value>
         public TextAlignment LabelVerticalTextAlignment
         {
-            get => (TextAlignment)GetValue(LabelVerticalTextAlignmentProperty);
+            get => (TextAlignment) GetValue(LabelVerticalTextAlignmentProperty);
             set => SetValue(LabelVerticalTextAlignmentProperty, value);
         }
 
@@ -288,7 +288,7 @@ namespace Global.InputForms
         /// <value>The label text color.</value>
         public Color LabelTextColor
         {
-            get => (Color)GetValue(LabelTextColorProperty);
+            get => (Color) GetValue(LabelTextColorProperty);
             set => SetValue(LabelTextColorProperty, value);
         }
 
@@ -298,7 +298,7 @@ namespace Global.InputForms
         /// <value>The label is Visible.</value>
         public bool LabelIsVisible
         {
-            get => (bool)GetValue(LabelIsVisibleProperty);
+            get => (bool) GetValue(LabelIsVisibleProperty);
             set => SetValue(LabelIsVisibleProperty, value);
         }
 
@@ -400,7 +400,7 @@ namespace Global.InputForms
                     foreach (var checkable in CheckList)
                         if (checkable.Item.Key == item.Key)
                             view = checkable;
-                    if (view != null) Children.Remove((View)view);
+                    if (view != null) Children.Remove((View) view);
                 }
         }
 
@@ -408,7 +408,7 @@ namespace Global.InputForms
         {
             if (!(GenerateCheckableView(null) is View view)) return;
 
-            ((ICheckable)view).Item = item;
+            ((ICheckable) view).Item = item;
             Children.Add(view);
         }
 
@@ -447,7 +447,7 @@ namespace Global.InputForms
             rateGroup._isBusy = true;
             var animationDuration = 200 / (rateGroup.CheckList.Count() + 1);
 
-            rateGroup.SelectedIndexChanged?.Invoke(rateGroup, (int)newValue);
+            rateGroup.SelectedIndexChanged?.Invoke(rateGroup, (int) newValue);
             if (rateGroup.SelectedIndex >= 0 && rateGroup.CheckList.Any() &&
                 rateGroup.CheckList[rateGroup.SelectedIndex].Item.Value is string str)
                 rateGroup._rateLabel.Text = str;
@@ -455,7 +455,7 @@ namespace Global.InputForms
                 rateGroup._rateLabel.Text = "-";
 
             var index = 0;
-            var list = (int)oldValue < (int)newValue ? rateGroup.CheckList : rateGroup.CheckList.Reverse();
+            var list = (int) oldValue < (int) newValue ? rateGroup.CheckList : rateGroup.CheckList.Reverse();
             foreach (var item in list)
             {
                 if (index < rateGroup.CheckList.Count() && item.Checked != item.Index <= rateGroup.SelectedIndex)
@@ -479,7 +479,7 @@ namespace Global.InputForms
         private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup.SelectedItemChanged?.Invoke(rateGroup, (KeyValuePair<string, object>)newValue);
+                rateGroup.SelectedItemChanged?.Invoke(rateGroup, (KeyValuePair<string, object>) newValue);
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Global.InputForms
         private static void OrientationChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup && rateGroup._rateLayout != null)
-                rateGroup._rateLayout.Orientation = (StackOrientation)newValue;
+                rateGroup._rateLayout.Orientation = (StackOrientation) newValue;
         }
 
         /// <summary>
@@ -516,7 +516,7 @@ namespace Global.InputForms
         {
             if (!(bindable is RateGroup rateGroup) || rateGroup._rateLayout == null) return;
 
-            rateGroup.Spacing = (double)newValue;
+            rateGroup.Spacing = (double) newValue;
             var index = 0;
             foreach (var item in rateGroup._rateLayout.Children)
                 if (item is CheckContent checkBox)
@@ -534,7 +534,7 @@ namespace Global.InputForms
         private static void LabelFontAttributesChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.FontAttributes = (FontAttributes)newValue;
+                rateGroup._rateLabel.FontAttributes = (FontAttributes) newValue;
         }
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace Global.InputForms
         private static void LabelFontFamilyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.FontFamily = (string)newValue;
+                rateGroup._rateLabel.FontFamily = (string) newValue;
         }
 
         /// <summary>
@@ -558,7 +558,7 @@ namespace Global.InputForms
         private static void LabelFontSizeChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.FontSize = (double)newValue;
+                rateGroup._rateLabel.FontSize = (double) newValue;
         }
 
         /// <summary>
@@ -571,7 +571,7 @@ namespace Global.InputForms
             object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.HorizontalTextAlignment = (TextAlignment)newValue;
+                rateGroup._rateLabel.HorizontalTextAlignment = (TextAlignment) newValue;
         }
 
         /// <summary>
@@ -583,7 +583,7 @@ namespace Global.InputForms
         private static void LabelVerticalTextAlignmentChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.VerticalTextAlignment = (TextAlignment)newValue;
+                rateGroup._rateLabel.VerticalTextAlignment = (TextAlignment) newValue;
         }
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace Global.InputForms
         private static void LabelTextColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.TextColor = (Color)newValue;
+                rateGroup._rateLabel.TextColor = (Color) newValue;
         }
 
         /// <summary>
@@ -607,7 +607,7 @@ namespace Global.InputForms
         private static void LabelIsVisibleChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup._rateLabel.IsVisible = (bool)newValue;
+                rateGroup._rateLabel.IsVisible = (bool) newValue;
         }
 
         private void OnItemClicked(object sender, bool check)

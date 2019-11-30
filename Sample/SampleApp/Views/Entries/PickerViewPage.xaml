@@ -8,26 +8,25 @@
 
         <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
-            Padding="40,10,40,10"
-            HeightRequest="900"
-            HorizontalOptions="CenterAndExpand">
+                Padding="40,10,40,10"
+                HeightRequest="900"
+                HorizontalOptions="CenterAndExpand">
 
-                <Label Text="{Binding SelectedItem, Mode=TwoWay}" FontSize="20"/>
+                <Label Text="{Binding SelectedItem, Mode=TwoWay}" FontSize="20" />
 
-            <global:PickerView
-                CornerRadius="15"
-                InfoViewType="Surrounded"
-                InfoColor="Purple"
-                EntryBackgroundColor="#88FFFFFF"
-                LabelText="Picker"
-                x:Name="_picker"/>
+                <global:PickerView
+                    CornerRadius="15"
+                    InfoViewType="Surrounded"
+                    InfoColor="Purple"
+                    EntryBackgroundColor="#88FFFFFF"
+                    LabelText="Picker"
+                    x:Name="_picker" />
 
                 <!-- Besieged DatePicker with Surrounded Info -->
                 <global:PickerView StyleClass="BesiegedEntry"
                                    LabelText="Besieged DatePicker"
                                    ItemsSource="{Binding LanguagesList}"
-                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                </global:PickerView>
+                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
 
                 <Label Text="Besieged DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
@@ -37,10 +36,10 @@
 
                 <global:PickerView StyleClass="BesiegedEntryOverlaLabel"
                                    LabelText="Besieged DatePicker"
-                                   ItemsSource="{Binding LanguagesList}">
-                </global:PickerView>
+                                   ItemsSource="{Binding LanguagesList}" />
 
-                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small" TextColor="Gray"
+                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small"
+                       TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
@@ -48,18 +47,16 @@
                 <!-- Rounded DatePicker with Surrounded Info -->
                 <global:PickerView StyleClass="RoundedEntry"
                                    LabelText="Rounded DatePicker"
-                                   ItemsSource="{Binding LanguagesList}">
-                </global:PickerView>
+                                   ItemsSource="{Binding LanguagesList}" />
 
                 <Label Text="Rounded DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
-                 <!-- Line DatePicker with Line Info -->
+                <!-- Line DatePicker with Line Info -->
                 <global:PickerView StyleClass="LineEntry"
                                    LabelText="Line DatePicker"
-                                   ItemsSource="{Binding LanguagesList}">
-                </global:PickerView>
+                                   ItemsSource="{Binding LanguagesList}" />
 
                 <Label Text="Line DatePicker with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />

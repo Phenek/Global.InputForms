@@ -12,7 +12,7 @@
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 
-                <Label Text="{Binding Date, Mode=TwoWay}" FontSize="20"/>
+                <Label Text="{Binding Date, Mode=TwoWay}" FontSize="20" />
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView StyleClass="RoundedEntry"
@@ -34,7 +34,7 @@
                 <!-- Besieged DatePicker with Surrounded Info -->
 
                 <global:DatePickerView StyleClass="BesiegedEntry"
-                                  LabelText="Besieged DatePicker">
+                                       LabelText="Besieged DatePicker">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -48,21 +48,22 @@
                 <!-- Besieged DatePicker with Overlaped Label with Surrounded Info -->
 
                 <global:DatePickerView StyleClass="BesiegedEntryOverlaLabel"
-                                  LabelText="Besieged DatePicker">
+                                       LabelText="Besieged DatePicker">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
                     </global:DatePickerView.Behaviors>
                 </global:DatePickerView>
 
-                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small" TextColor="Gray"
+                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small"
+                       TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
 
                 <!-- Rounded DatePicker with Surrounded Info -->
                 <global:DatePickerView StyleClass="RoundedEntry"
-                                  LabelText="Rounded DatePicker">
+                                       LabelText="Rounded DatePicker">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />
@@ -73,9 +74,9 @@
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
-                 <!-- Line DatePicker with Line Info -->
+                <!-- Line DatePicker with Line Info -->
                 <global:DatePickerView StyleClass="LineEntry"
-                                  LabelText="Line DatePicker">
+                                       LabelText="Line DatePicker">
                     <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
                     <global:DatePickerView.Behaviors>
                         <valid:DateMajorValidationBehavior />

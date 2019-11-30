@@ -14,28 +14,13 @@ namespace SampleApp.ViewModels
         private readonly ILocalizedResourceProvider _i18N = DependencyService.Get<IDependencyGetter>()
             .Get<ILocalizedResourceProvider>();
 
+        private DateTime _date;
+
         private FormModel _form = new FormModel();
 
         private TimeSpan _time;
-        public TimeSpan Time
-        {
-            get => _time;
-            set => SetProperty(ref _time, value);
-        }
-
-        private DateTime _date;
-        public DateTime Date
-        {
-            get => _date;
-            set => SetProperty(ref _date, value);
-        }
 
         private string selectedItem;
-        public string SelectedItem
-        {
-            get => selectedItem;
-            set => SetProperty(ref selectedItem, value);
-        }
 
         public SimpleFormsViewModel()
         {
@@ -71,6 +56,24 @@ namespace SampleApp.ViewModels
             Time = new TimeSpan(DateTime.Now.Ticks);
             Date = DateTime.Today.AddYears(1);
             SelectedItem = _i18N.GetText("Form.Russian");
+        }
+
+        public TimeSpan Time
+        {
+            get => _time;
+            set => SetProperty(ref _time, value);
+        }
+
+        public DateTime Date
+        {
+            get => _date;
+            set => SetProperty(ref _date, value);
+        }
+
+        public string SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
         }
 
         public FormModel Form
