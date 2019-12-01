@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:SampleApp.ViewModels"
              xmlns:i18N="clr-namespace:Naxam.I18n.Forms;assembly=Naxam.I18n.Forms"
              x:Class="SampleApp.Views.CheckForms">
-    <ScrollView BackgroundColor="LightBlue">
+    <ScrollView >
         <StackLayout
             Margin="30"
             Spacing="20"

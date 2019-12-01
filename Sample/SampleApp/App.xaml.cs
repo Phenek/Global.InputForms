@@ -18,6 +18,7 @@ namespace SampleApp
         {
             InitializeComponent();
 
+            Resources.MergedDictionaries.Add(new ButtonStyles());
             Resources.MergedDictionaries.Add(new EntryStyles());
 
             MainPage = new NavigationPage(new StartPage());
@@ -46,6 +47,9 @@ namespace SampleApp
     {
         public StartPage()
         {
+            var toButtonContentBtn = new ButtonInputs { Title = "Buttons" };
+            toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonsPage()); };
+
             var toCheckFormsBtn = new ButtonInputs {Title = "Check Forms"};
             toCheckFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new CheckForms()); };
 
@@ -57,12 +61,6 @@ namespace SampleApp
 
             var toRateGroupBtn = new ButtonInputs {Title = "Rate Group"};
             toRateGroupBtn.Clicked += (sender, e) => { Navigation.PushAsync(new RateGroupPage()); };
-
-            var toSimpleFormsBtn = new ButtonInputs {Title = "Simple Forms"};
-            toSimpleFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SimpleForms()); };
-
-            var toEntriesBtn = new ButtonInputs {Title = "Entries"};
-            toEntriesBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryForms()); };
 
             var toEntryViewBtn = new ButtonInputs {Title = "EntryView"};
             toEntryViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new EntryViewPage()); };
@@ -76,14 +74,11 @@ namespace SampleApp
             var toTimePickerViewBtn = new ButtonInputs {Title = "TimePickerView"};
             toTimePickerViewBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TimePickerViewPage()); };
 
-            var toButtonContentBtn = new ButtonInputs {Title = "Buttons"};
-            toButtonContentBtn.Clicked += (sender, e) => { Navigation.PushAsync(new ButtonsPage()); };
-
             var toSwitchBtn = new ButtonInputs {Title = "Switch"};
             toSwitchBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SwitchPage()); };
 
-            var toTestBtn = new ButtonInputs {Title = "Test"};
-            toTestBtn.Clicked += (sender, e) => { Navigation.PushAsync(new TestPage()); };
+            var toSimpleFormsBtn = new ButtonInputs { Title = "Simple Forms" };
+            toSimpleFormsBtn.Clicked += (sender, e) => { Navigation.PushAsync(new SimpleForms()); };
 
             Content = new ScrollView
             {

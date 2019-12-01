@@ -5,106 +5,64 @@
                     xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
                     x:Class="SampleApp.Styles.ButtonStyles">
 
-    <Style TargetType="global:EntryLayout" Class="BesiegedEntry"
+    <Style Class="ButtonGreen" TargetType="global:ButtonContent"
            ApplyToDerivedTypes="true">
-        <Setter Property="EntryLayoutType" Value="Besieged" />
-        <Setter Property="InfoViewType" Value="Surrounded" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="LabelFontSize" Value="14" />
-        <Setter Property="FloatingLabel" Value="True" />
-        <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="BlueViolet" />
-        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
-        <Setter Property="EntryHeightRequest" Value="40" />
-        <Setter Property="EntryFontSize" Value="17" />
-        <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
-        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
-
-        <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="LabelMargin" Value="10,0,10,0" />
-        <Setter Property="EntryMargin" Value="10,0,10,0" />
-        <Setter Property="LineMargin" Value="0,0,10,0" />
-        <Setter Property="InfoMargin" Value="10,0,10,0" />
-
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderColor" Value="Teal" />
+        <Setter Property="HighlightBorderColor" Value="Teal" />
+        <Setter Property="BackgroundColor" Value="Teal" />
+        <Setter Property="HighlightBackgroundColor" Value="PaleGreen" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="Teal" />
     </Style>
 
-    <Style TargetType="global:EntryLayout" Class="BesiegedEntryOverlaLabel"
+    <Style Class="ButtonRed" TargetType="global:ButtonContent"
            ApplyToDerivedTypes="true">
-        <Setter Property="EntryLayoutType" Value="Besieged" />
-        <Setter Property="InfoViewType" Value="Surrounded" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="LabelFontSize" Value="14" />
-        <Setter Property="LabelBackgroundColor" Value="WhiteSmoke" />
-        <Setter Property="FloatingLabel" Value="True" />
-        <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="BlueViolet" />
-        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="EntryBackgroundColor" Value="WhiteSmoke" />
-        <Setter Property="EntryHeightRequest" Value="40" />
-        <Setter Property="EntryFontSize" Value="17" />
-        <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
-        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
-
-        <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="FrameMargin" Value="0,14,0,0" />
-        <Setter Property="LabelMargin" Value="10,0,10,0" />
-        <Setter Property="EntryMargin" Value="10,0,10,0" />
-        <Setter Property="LineMargin" Value="0,0,10,0" />
-        <Setter Property="InfoMargin" Value="10,0,10,0" />
-
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderColor" Value="Maroon" />
+        <Setter Property="HighlightBorderColor" Value="Maroon" />
+        <Setter Property="BackgroundColor" Value="Maroon" />
+        <Setter Property="HighlightBackgroundColor" Value="Salmon" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="Maroon" />
     </Style>
 
-    <Style TargetType="global:EntryLayout" Class="RoundedEntry"
+    <Style Class="ButtonGray" TargetType="global:ButtonContent"
            ApplyToDerivedTypes="true">
-        <Setter Property="EntryLayoutType" Value="Surrounded" />
-        <Setter Property="InfoViewType" Value="Surrounded" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="LabelFontSize" Value="14" />
-        <Setter Property="FloatingLabel" Value="True" />
-        <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="BlueViolet" />
-        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
-        <Setter Property="EntryHeightRequest" Value="40" />
-        <Setter Property="EntryFontSize" Value="17" />
-        <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
-        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
-
-        <Setter Property="CornerRadius" Value="15" />
-        <Setter Property="LabelMargin" Value="15,0,15,0" />
-        <Setter Property="EntryMargin" Value="15,0,15,0" />
-        <Setter Property="LineMargin" Value="15,0,15,0" />
-        <Setter Property="InfoMargin" Value="15,0,15,0" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderColor" Value="Gray" />
+        <Setter Property="HighlightBorderColor" Value="Gray" />
+        <Setter Property="BackgroundColor" Value="Gray" />
+        <Setter Property="HighlightBackgroundColor" Value="LightGray" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="White" />
     </Style>
 
-    <Style TargetType="global:EntryLayout" Class="LineEntry"
+    <Style Class="ButtonBlue" TargetType="global:ButtonContent"
            ApplyToDerivedTypes="true">
-        <Setter Property="EntryLayoutType" Value="Line" />
-        <Setter Property="InfoViewType" Value="Line" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="LabelFontSize" Value="14" />
-        <Setter Property="FloatingLabel" Value="True" />
-        <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
-        <Setter Property="EntryHeightRequest" Value="40" />
-        <Setter Property="EntryFontSize" Value="17" />
-        <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
-        <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
-        <Setter Property="LineColor" Value="Gray" />
-        <Setter Property="LineHighlightedColor" Value="CornflowerBlue" />
-
-        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="BorderColor" Value="Navy" />
+        <Setter Property="HighlightBorderColor" Value="Navy" />
+        <Setter Property="BackgroundColor" Value="Navy" />
+        <Setter Property="HighlightBackgroundColor" Value="LightSkyBlue" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="Navy" />
     </Style>
 
 </ResourceDictionary>

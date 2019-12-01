@@ -7,59 +7,32 @@
              x:Class="SampleApp.Views.ButtonsPage">
     <ContentPage.Content>
         <!-- xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" -->
-        <ScrollView BackgroundColor="LightBlue">
+        <ScrollView >
             <StackLayout
                 x:Name="_stack"
                 Spacing="10"
-                Padding="0,30,0,30"
+                Padding="30"
                 VerticalOptions="Center"
                 HorizontalOptions="CenterAndExpand">
 
                 <!-- Simple Button without content -->
                 <global:ButtonContent
+                    StyleClass="ButtonGreen"
                     Clicked="SubmitClicked"
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
-                    Text="Sign In"
-                    BorderWidth="2"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    WidthRequest="250"
-                    BackgroundColor="Teal"
-                    BorderColor="White"
-                    TextColor="White"
-                    HighlightBackgroundColor="White"
-                    HighlightBorderColor="White"
-                    HighlightTextColor="Teal" />
+                    Text="Sign In" />
 
                 <global:ButtonContent
+                    StyleClass="ButtonRed"
                     Clicked="SubmitClicked"
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
-                    Text="Sign In"
-                    BorderWidth="2"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    WidthRequest="250"
-                    BackgroundColor="Maroon"
-                    BorderColor="White"
-                    TextColor="White"
-                    HighlightBackgroundColor="White"
-                    HighlightBorderColor="Maroon"
-                    HighlightTextColor="Maroon" />
+                    Text="Sign In"/>
 
                 <global:ButtonContent
+                    StyleClass="ButtonBlue"
                     Clicked="SubmitClicked"
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
-                    Text="Sign In"
-                    BorderWidth="2"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    WidthRequest="250"
-                    BackgroundColor="Navy"
-                    BorderColor="Navy"
-                    TextColor="White"
-                    HighlightBackgroundColor="White"
-                    HighlightBorderColor="Navy"
-                    HighlightTextColor="Navy" />
+                    Text="Sign In"/>
 
                 <Label Text="Simple Buttons without content"
                        FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
@@ -106,12 +79,17 @@
                     </StackLayout>
                 </global:ButtonContent>
 
+                <Label Text="Button with content and Button Border"
+                       FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
                 <global:ButtonContent
+                    Clicked="ReadMoreClicked"
                     BackgroundColor="Transparent"
                     HighlightBackgroundColor="Gray">
 
                     <StackLayout Orientation="Vertical">
-                        <!---
+                        
                         <Label x:Name="_descriptionLabel" 
                             MaxLines="2"
                             TextColor="Black"
@@ -119,12 +97,12 @@
                             LineBreakMode="TailTruncation" 
                             Text="You should see 2 lines of text and truncation at the end. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis quam non enim pellentesque, ut placerat purus finibus. Nulla quis tincidunt ante. Ut mauris lectus, aliquam a sagittis vitae, consequat eget elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque convallis nunc nisi, a imperdiet elit efficitur et. Duis in lectus mollis, interdum ipsum et, tincidunt orci. Fusce ipsum metus, imperdiet non lacus vitae, facilisis feugiat magna. Nulla volutpat nisl tortor, a consectetur felis consectetur non. Curabitur in enim vulputate sem volutpat bibendum id nec lorem. Mauris laoreet lacus ac volutpat tempus.">
                         </Label>
-                        -->
-                        <Label x:Name="_readMoreLabel"
+                        
+                        <Label x:Name="_readBtn"
                                HorizontalOptions="Center"
                                TextColor="Blue"
                                FontSize="Default"
-                               Text="Lire plus" />
+                               Text="Read more" />
                     </StackLayout>
                 </global:ButtonContent>
 

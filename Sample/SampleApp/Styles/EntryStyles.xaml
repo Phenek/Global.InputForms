@@ -15,7 +15,7 @@
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="BlueViolet" />
+        <Setter Property="BorderColor" Value="Blue" />
         <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />
@@ -43,7 +43,7 @@
         <Setter Property="LabelBackgroundColor" Value="WhiteSmoke" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="BlueViolet" />
+        <Setter Property="BorderColor" Value="Blue" />
         <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="WhiteSmoke" />
         <Setter Property="EntryHeightRequest" Value="40" />
@@ -70,7 +70,7 @@
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="BlueViolet" />
+        <Setter Property="BorderColor" Value="Blue" />
         <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
         <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />

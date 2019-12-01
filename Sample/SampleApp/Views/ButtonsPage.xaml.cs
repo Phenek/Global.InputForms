@@ -25,6 +25,12 @@ namespace SampleApp.Views
             _viewModel.OnSubmit();
         }
 
+        private void ReadMoreClicked(object sender, EventArgs e)
+        {
+            _descriptionLabel.MaxLines = _descriptionLabel.MaxLines == 2 ? 42 : 2;
+            _readBtn.Text = _descriptionLabel.MaxLines == 2 ? "Read more" : "Read less";
+        }
+
         private void ParameterClicked(object sender, EventArgs e)
         {
             /*
