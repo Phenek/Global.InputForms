@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Styles\EjntryStyles.xaml" />
+    <EmbeddedResource Remove="SplashScreen.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="ResX\AppResources.resx">
@@ -44,6 +45,12 @@
     <EmbeddedResource Update="Views\SwitchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ResX\AppResources.Designer.cs">

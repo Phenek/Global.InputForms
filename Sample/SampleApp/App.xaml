@@ -89,6 +89,7 @@
             <Color x:Key="HightlightLineColor">#0B7DB3</Color>
             <Color x:Key="PlaceHolderColor">#0B7DB3</Color>
             <Color x:Key="EntryBackgroundColor">#DCECF2</Color>
+            <Color x:Key="PrimaryColor">#B63029</Color>
 
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />

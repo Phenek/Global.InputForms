@@ -90,14 +90,13 @@ namespace SampleApp
                         toCheckGroupBtn,
                         toRadioGroupBtn,
                         toRateGroupBtn,
-                        toSimpleFormsBtn,
-                        toEntriesBtn,
                         toEntryViewBtn,
                         toPickerViewBtn,
                         toDatePickerViewBtn,
                         toTimePickerViewBtn,
                         toButtonContentBtn,
-                        toSwitchBtn
+                        toSwitchBtn,
+                        toSimpleFormsBtn,
                         //toTestBtn
                     }
                 }

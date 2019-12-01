@@ -12,7 +12,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace SampleApp.Droid
 {
-    [Activity(Label = "SampleApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(Label = "SampleApp", Icon = "@mipmap/appicon", Theme = "@style/MainTheme", MainLauncher = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsAppCompatActivity
     {

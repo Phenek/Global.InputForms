@@ -25,4 +25,17 @@
     <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">#FF4081</item>
     </style>
+
+    <style name="MyTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
+        <!-- SplashSCreen Background -->
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <!-- Tansparent status Bar. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">@color/appicon_background</item>
+    </style>
 </resources>
