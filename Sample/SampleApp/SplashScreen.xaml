@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="false"
+             BackgroundColor="{ StaticResource PrimaryColor}"
+             x:Class="SampleApp.SplashScreen">
+
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Image x:Name="_logo" Source="GlobalLogo"
+               HeightRequest="128" WidthRequest="128"
+               HorizontalOptions="Center" VerticalOptions="Center"
+               Aspect="AspectFit"/>
+    </Grid>
+</ContentPage>

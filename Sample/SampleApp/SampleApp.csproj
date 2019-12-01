@@ -13,6 +13,7 @@
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1039999" />
     <PackageReference Include="Naxam.I18n" Version="1.0.1" />
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="2.7.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="SimpleForms.cs" />
@@ -29,7 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Styles\EjntryStyles.xaml" />
-    <EmbeddedResource Remove="SplashScreen.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="ResX\AppResources.resx">
@@ -45,12 +45,6 @@
     <EmbeddedResource Update="Views\SwitchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="SplashScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ResX\AppResources.Designer.cs">

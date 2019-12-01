@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+             xmlns:controls="clr-namespace:SampleApp.Controls"
+             NavigationPage.HasNavigationBar="false"
+             BackgroundColor="{ StaticResource PrimaryColor}"
+             x:Class="SampleApp.MenuPage">
+    <ContentPage.Content>
+
+         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Image x:Name="_logo" Source="GlobalLogo"
+                   HeightRequest="128" WidthRequest="128"
+                   HorizontalOptions="Center" VerticalOptions="Center"
+                   Aspect="AspectFit"/>
+
+             <ScrollView  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+                <ContentView>
+                    <StackLayout x:Name="_stackLayout" Spacing="0" BackgroundColor="White">
+                        <BoxView HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toButtonContentBtn" Title="Buttons"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toCheckFormsBtn" Title="Check Box"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toCheckGroupBtn" Title="Check Group"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toRadioGroupBtn" Title="Radio Group"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toRateGroupBtn" Title="Rate Group"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toEntryViewBtn" Title="EntryView"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toPickerViewBtn" Title="PickerView"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toDatePickerViewBtn" Title="DatePickerView"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toTimePickerViewBtn" Title="TimePickerView"/>
+                        <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toSwitchBtn" Title="Switch"/>
+                        <BoxView Margin="40,0,40,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
+                        <controls:ButtonInputs x:Name="toSimpleFormsBtn" Title="Simple Forms"/>
+                    </StackLayout>
+                </ContentView>
+        </ScrollView>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

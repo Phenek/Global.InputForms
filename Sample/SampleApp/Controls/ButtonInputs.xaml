@@ -4,11 +4,11 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
                       x:Class="SampleApp.Controls.ButtonInputs"
-                      BackgroundColor="LightGray"
-                      HighlightBackgroundColor="LightBlue"
-                      HeightRequest="50"
+                      BackgroundColor="White"
+                      HighlightBackgroundColor="Salmon"
+                      HeightRequest="45"
                       CornerRadius="0"
-                      MinimumHeightRequest="50">
+                      MinimumHeightRequest="45">
 
     <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
         <Label x:Name="_title" TextColor="Black"
