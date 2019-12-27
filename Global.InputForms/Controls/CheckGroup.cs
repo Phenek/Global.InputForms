@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Global.InputForms.Extentions;
 using Global.InputForms.Interfaces;
+using Global.InputForms.Models;
 using Xamarin.Forms;
 
 namespace Global.InputForms
@@ -13,8 +16,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The Items Source property.
         /// </summary>
-        public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(IDictionary<string, object>), typeof(CheckGroup), null, propertyChanged: OnItemsSourceChanged);
+        public static readonly BindableProperty ItemsSourceProperty =
+            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(CheckGroup), null, propertyChanged: ItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -22,17 +25,10 @@ namespace Global.InputForms
         private static readonly BindableProperty CheckTemplateProperty = BindableProperty.Create(nameof(CheckTemplate),
             typeof(ControlTemplate), typeof(CheckGroup), null, propertyChanged: CheckTemplateChanged);
 
-        /*
-        /// <summary>
-        /// The Orientation property.
-        /// </summary>
-        public static new BindableProperty OrientationProperty = BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(CheckGroup), StackOrientation.Vertical, propertyChanged: OrientationChanged);
-
         /// <summary>
         /// The Spacing property.
         /// </summary>
         public static readonly new BindableProperty SpacingProperty = BindableProperty.Create(nameof(Spacing), typeof(double), typeof(CheckGroup), 10.0, propertyChanged: SpacingChanged);
-        */
 
         /// <summary>
         ///     The Icheckable List
@@ -45,20 +41,12 @@ namespace Global.InputForms
         public CheckGroup()
         {
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new Dictionary<string, object>();
         }
 
-        /// <summary>
-        ///     Gets or sets the Check group Items Source.
-        /// </summary>
-        /// <value>The Check group Items Source.</value>
-        public IDictionary<string, object> ItemsSource
+        public IEnumerable ItemsSource
         {
-            get => (IDictionary<string, object>) GetValue(ItemsSourceProperty);
-            set
-            {
-                if (value != null) SetValue(ItemsSourceProperty, value);
-            }
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         /// <summary>
@@ -72,7 +60,7 @@ namespace Global.InputForms
         }
 
         public event EventHandler<bool> CheckedChanged;
-        public event EventHandler<Dictionary<string, object>> CheckedCollectionChanged;
+        public event EventHandler<IEnumerable> CheckedCollectionChanged;
 
         protected override void OnParentSet()
         {
@@ -87,28 +75,20 @@ namespace Global.InputForms
 
             if (child is ICheckable checkable)
             {
-                if (!string.IsNullOrEmpty(checkable.Key) && CheckList.All(c => c.Key != checkable.Key))
+                checkable.Clicked += OnCheckedChanged;
+                checkable.Index = CheckList.Count;
+                CheckList.Add(checkable);
+
+                if (ItemsSource == null) return;
+
+                if (ItemsSource is IDictionary<object, object> dic && !dic.ContainsKey(checkable.Key))
+                    dic.Add(checkable.Key, checkable.Value);
+                else if (ItemsSource is IList list && !list.Contains(checkable.Value))
                 {
-                    checkable.Clicked += OnCheckedChanged;
-                    checkable.Index = CheckList.Count;
-                    CheckList.Add(checkable);
-                    if (!ItemsSource.ContainsKey(checkable.Key)) ItemsSource.Add(checkable.Key, checkable.Value);
-                    /*
-                    //Spacing
-                    if (checkable is CheckBox checkBox)
-                    {
-                        checkBox.Padding = SetSpacingPadding(checkable.Index);
-                    }
-                    else
-                    {
-                        ((View)checkable).Margin = SetSpacingPadding(checkable.Index);
-                    }
-                    */
-                }
-                else
-                {
-                    Console.WriteLine("{CheckGroup}: Each elements must have a unique Key!");
-                    throw new Exception("{CheckGroup}: Each elements must have a unique Key!");
+                    list.Add(checkable.Value);
+                    var index = 0;
+                    foreach (var check in CheckList)
+                        check.Key = index++.ToString();
                 }
             }
             else
@@ -124,27 +104,59 @@ namespace Global.InputForms
             if (!(child is ICheckable checkable)) return;
             checkable.Clicked -= OnCheckedChanged;
             CheckList.Remove(checkable);
-            ItemsSource.Remove(checkable.Key);
+
+            if (ItemsSource is IDictionary dic && dic.Contains(checkable.Key))
+                dic.Remove(checkable.Key);
+            else if (ItemsSource is IList list)
+            {
+                if (list.Contains(checkable.Value))
+                    list.Remove(checkable.Value);
+                var i = 0;
+                foreach (var check in CheckList)
+                    check.Key = i++.ToString();
+            }
 
             var index = 0;
             foreach (var check in CheckList) check.Index = index++;
         }
 
-        private void ItemSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
-                foreach (KeyValuePair<string, object> item in e.NewItems)
-                    if (CheckList.All(c => c.Key != item.Key))
-                        AddItemToView(item);
+            if (ItemsSource is IList list && list.ContainsDuplicates())
+            {
+                Console.WriteLine("{CheckGroup}: Each elements must have a unique Key/Value!");
+                throw new Exception("{CheckGroup}: Each elements must have a unique Key/Value!");
+            }
+
             if (e.OldItems != null)
-                foreach (KeyValuePair<string, object> item in e.OldItems)
+            {
+                var index = e.OldStartingIndex;
+                foreach (var item in e.OldItems)
                 {
+                    string key = item is KeyValuePair<string, object> kvp ? kvp.Key : index++.ToString();
                     var view = default(ICheckable);
                     foreach (var checkable in CheckList)
-                        if (checkable.Item.Key == item.Key)
+                        if (checkable.Item.Key == key)
                             view = checkable;
-                    if (view != null) Children.Remove((View) view);
+                    if (view != null) Children.Remove((View)view);
                 }
+            }
+
+            if (e.NewItems != null)
+            {
+                var index = e.NewStartingIndex;
+                foreach (var item in e.NewItems)
+                {
+                    string key = item is KeyValuePair<string, object> kvp ? kvp.Key : index++.ToString();
+                    if (CheckList.All(c => c.Key != key))
+                        if (item is KeyValuePair<string, object>)
+                            AddItemToView(kvp);
+                        else
+                            AddItemToView(new KeyValuePair<string, object>(index++.ToString(), item));
+                    
+                }
+            }
         }
 
         private void AddItemToView(KeyValuePair<string, object> item)
@@ -161,7 +173,16 @@ namespace Global.InputForms
             Children.Clear();
             CheckList.Clear();
 
-            foreach (var item in ItemsSource) AddItemToView(item);
+            if (ItemsSource == null) return;
+
+            var index = 0;
+            foreach (var item in ItemsSource)
+            {
+                if (item is KeyValuePair<string, object> kvp)
+                    AddItemToView(kvp);
+                else
+                    AddItemToView(new KeyValuePair<string, object>(index++.ToString(), item));
+            }
         }
 
         public View GenerateCheckableView(object context)
@@ -179,47 +200,82 @@ namespace Global.InputForms
             throw new Exception("{CheckGroup}: CheckTemplate must implement interface ICheckable");
         }
 
-        /// <summary>
-        ///     The Check group Items Source changed.
-        /// </summary>
-        /// <param name="bindable">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is CheckGroup checkGroup) || checkGroup.ItemsSource == null) return;
+            if (!(bindable is CheckGroup checkGroup)) return;
 
             if (oldValue is INotifyCollectionChanged oldSource)
-                oldSource.CollectionChanged -= checkGroup.ItemSource_CollectionChanged;
+                oldSource.CollectionChanged -= checkGroup.CollectionChanged;
             checkGroup.GenerateChekableList();
             if (newValue is INotifyCollectionChanged newSource)
-                newSource.CollectionChanged += checkGroup.ItemSource_CollectionChanged;
+                newSource.CollectionChanged += checkGroup.CollectionChanged;
         }
 
         private static void CheckTemplateChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is CheckGroup checkGroup && checkGroup.ItemsSource != null)
+            if (bindable is CheckGroup checkGroup)
             {
                 //CheckGroup.GenerateChekableList();
             }
         }
 
-        public Dictionary<string, object> GetCheckedDictionary()
+        /// <summary>
+        /// The StackLayout Spacing changed.
+        /// </summary>
+        /// <param name="bindable">The object.</param>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        private static void SpacingChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var result = new Dictionary<string, object>();
-            for (var i = 0; i < CheckList.Count; ++i)
-                if (CheckList[i].Checked)
-                    result.Add(CheckList[i].Key, CheckList[i].Value);
-            return result;
+            if (!(bindable is CheckGroup checkGroup)) return;
+
+            checkGroup.Spacing = (double)newValue;
+            var index = 0;
+            foreach (var item in checkGroup.Children)
+                if (item is CheckContent checkBox)
+                    checkBox.Padding = checkGroup.SetSpacingPadding(index++);
+                else
+                    item.Margin = checkGroup.SetSpacingPadding(index++);
         }
 
-        public Dictionary<string, object> GetUnCheckedDictionary()
+        public IEnumerable GetCheckedItems()
         {
-            var result = new Dictionary<string, object>();
-            for (var i = 0; i < CheckList.Count; ++i)
-                if (!CheckList[i].Checked)
-                    result.Add(CheckList[i].Key, CheckList[i].Value);
-            return result;
+            if (ItemsSource is IDictionary)
+            {
+                var result = new Dictionary<string, object>();
+                for (var i = 0; i < CheckList.Count; ++i)
+                    if (CheckList[i].Checked)
+                        result.Add(CheckList[i].Key, CheckList[i].Value);
+                return result;
+            }
+            else
+            {
+                var result = new List<object>();
+                for (var i = 0; i < CheckList.Count; ++i)
+                    if (CheckList[i].Checked)
+                        result.Add(CheckList[i].Value);
+                return result;
+            }
+        }
+
+        public IEnumerable GetUnCheckedItems()
+        {
+            if (ItemsSource is IDictionary)
+            {
+                var result = new Dictionary<string, object>();
+                for (var i = 0; i < CheckList.Count; ++i)
+                    if (!CheckList[i].Checked)
+                        result.Add(CheckList[i].Key, CheckList[i].Value);
+                return result;
+            }
+            else
+            {
+                var result = new List<object>();
+                for (var i = 0; i < CheckList.Count; ++i)
+                    if (!CheckList[i].Checked)
+                        result.Add(CheckList[i].Value);
+                return result;
+            }
         }
 
         private void OnCheckedChanged(object sender, bool check)
@@ -227,7 +283,7 @@ namespace Global.InputForms
             if (!(sender is ICheckable checkBox)) return;
 
             CheckedChanged?.Invoke(sender, check);
-            CheckedCollectionChanged?.Invoke(this, GetCheckedDictionary());
+            CheckedCollectionChanged?.Invoke(this, GetCheckedItems());
         }
 
         public bool Validate()
@@ -239,28 +295,19 @@ namespace Global.InputForms
             return !frameInfo.Info;
         }
 
-        /*
         private Thickness SetSpacingPadding(int index)
         {
             if (index == 0)
-            {
-                return (Orientation == StackOrientation.Horizontal)
+                return Orientation == StackOrientation.Horizontal
                     ? new Thickness(0, 0, Spacing / 2, 0)
                     : new Thickness(0, 0, 0, Spacing / 2);
-            }
-            else if (index == ItemsSource.Count - 1)
-            {
-                return (Orientation == StackOrientation.Horizontal)
+            if (index == Children.Count - 1)
+                return Orientation == StackOrientation.Horizontal
                     ? new Thickness(Spacing / 2, 0, 0, 0)
                     : new Thickness(0, Spacing / 2, 0, 0);
-            }
-            else
-            {
-                return (Orientation == StackOrientation.Horizontal)
-                    ? new Thickness(Spacing / 2, 0, Spacing / 2, 0)
-                    : new Thickness(0, Spacing / 2, 0, Spacing / 2);
-            }
+            return Orientation == StackOrientation.Horizontal
+                ? new Thickness(Spacing / 2, 0, Spacing / 2, 0)
+                : new Thickness(0, Spacing / 2, 0, Spacing / 2);
         }
-        */
     }
 }

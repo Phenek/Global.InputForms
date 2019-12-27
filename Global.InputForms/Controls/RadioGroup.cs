@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Global.InputForms.Extentions;
 using Global.InputForms.Interfaces;
 using Xamarin.Forms;
 
@@ -13,14 +15,19 @@ namespace Global.InputForms
         /// <summary>
         ///     The Items Source property.
         /// </summary>
-        public static BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(IDictionary<string, object>), typeof(RadioGroup), null, propertyChanged: OnItemsSourceChanged);
+        public static readonly BindableProperty ItemsSourceProperty =
+            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(CheckGroup), null, propertyChanged: ItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
         /// </summary>
         private static readonly BindableProperty CheckTemplateProperty = BindableProperty.Create(nameof(CheckTemplate),
             typeof(ControlTemplate), typeof(CheckGroup), null, propertyChanged: CheckTemplateChanged);
+
+        /// <summary>
+        /// The Spacing property.
+        /// </summary>
+        public static readonly new BindableProperty SpacingProperty = BindableProperty.Create(nameof(Spacing), typeof(double), typeof(CheckGroup), 10.0, propertyChanged: SpacingChanged);
 
         /// <summary>
         ///     The deselectable property.
@@ -44,7 +51,7 @@ namespace Global.InputForms
         ///     The Selected Item property.
         /// </summary>
         public static BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem),
-            typeof(KeyValuePair<string, object>), typeof(RadioGroup), new KeyValuePair<string, object>(null, null),
+            typeof(object), typeof(RadioGroup), null,
             propertyChanged: OnSelectedItemChanged);
 
         /// <summary>
@@ -58,16 +65,11 @@ namespace Global.InputForms
         public RadioGroup()
         {
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new Dictionary<string, object>();
         }
 
-        /// <summary>
-        ///     Gets or sets the radio group Items Source.
-        /// </summary>
-        /// <value>The radio group Items Source.</value>
-        public IDictionary<string, object> ItemsSource
+        public IEnumerable ItemsSource
         {
-            get => (IDictionary<string, object>) GetValue(ItemsSourceProperty);
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -115,14 +117,14 @@ namespace Global.InputForms
         ///     Gets or sets the radio group selected index.
         /// </summary>
         /// <value>The radio group selected index.</value>
-        public KeyValuePair<string, object> SelectedItem
+        public object SelectedItem
         {
-            get => (KeyValuePair<string, object>) GetValue(SelectedItemProperty);
+            get => GetValue(SelectedItemProperty);
             private set => SetValue(SelectedItemProperty, value);
         }
 
         public event EventHandler<int> SelectedIndexChanged;
-        public event EventHandler<KeyValuePair<string, object>> SelectedItemChanged;
+        public event EventHandler<object> SelectedItemChanged;
 
         protected override void OnParentSet()
         {
@@ -137,7 +139,16 @@ namespace Global.InputForms
             Children.Clear();
             CheckList.Clear();
 
-            foreach (var item in ItemsSource) AddItemToView(item);
+            if (ItemsSource == null) return;
+
+            var index = 0;
+            foreach (var item in ItemsSource)
+            {
+                if (item is KeyValuePair<string, object> kvp)
+                    AddItemToView(kvp);
+                else
+                    AddItemToView(new KeyValuePair<string, object>(index++.ToString(), item));
+            }
 
             if (CheckList.Any() && DefaultIndex >= 0) CheckList[DefaultIndex].Checked = true;
         }
@@ -163,19 +174,21 @@ namespace Global.InputForms
 
             if (child is ICheckable checkable)
             {
-                if (!string.IsNullOrEmpty(checkable.Key) && CheckList.All(c => c.Key != checkable.Key))
-                {
-                    checkable.Clicked += OnItemClicked;
-                    checkable.Index = CheckList.Count;
-                    CheckList.Add(checkable);
-                    if (!ItemsSource.ContainsKey(checkable.Key)) ItemsSource.Add(checkable.Key, checkable.Value);
+                checkable.Clicked += OnItemClicked;
+                checkable.Index = CheckList.Count;
+                CheckList.Add(checkable);
 
-                    if (DefaultIndex == checkable.Index) checkable.Checked = true;
-                }
-                else
+                if (ItemsSource == null) return;
+                if (DefaultIndex == checkable.Index) checkable.Checked = true;
+
+                if (ItemsSource is IDictionary<object, object> dic && !dic.ContainsKey(checkable.Key))
+                    dic.Add(checkable.Key, checkable.Value);
+                else if (ItemsSource is IList list && !list.Contains(checkable.Value))
                 {
-                    Console.WriteLine("{RadioGroup}: Each elements must have a unique Key!");
-                    throw new Exception("{RadioGroup}: Each elements must have a unique Key!");
+                    list.Add(checkable.Value);
+                    var index = 0;
+                    foreach (var check in CheckList)
+                        check.Key = index++.ToString();
                 }
             }
             else
@@ -193,27 +206,56 @@ namespace Global.InputForms
 
             checkable.Clicked -= OnItemClicked;
             CheckList.Remove(checkable);
-            ItemsSource.Remove(checkable.Key);
+            if (ItemsSource is IDictionary dic && dic.Contains(checkable.Key))
+                dic.Remove(checkable.Key);
+            else if (ItemsSource is IList list)
+            {
+                if (list.Contains(checkable.Value))
+                    list.Remove(checkable.Value);
+                var i = 0;
+                foreach (var check in CheckList)
+                    check.Key = i++.ToString();
+            }
 
             var index = 0;
             foreach (var check in CheckList) check.Index = index++;
         }
 
-        private void ItemSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
-                foreach (KeyValuePair<string, object> item in e.NewItems)
-                    if (CheckList.All(c => c.Key != item.Key))
-                        AddItemToView(item);
+            if (ItemsSource is IList list && list.ContainsDuplicates())
+            {
+                Console.WriteLine("{RadioGroup}: Each elements must have a unique Key/Value!");
+                throw new Exception("{RadioGroup}: Each elements must have a unique Key/Value!");
+            }
+
             if (e.OldItems != null)
-                foreach (KeyValuePair<string, object> item in e.OldItems)
+            {
+                var index = e.OldStartingIndex;
+                foreach (var item in e.OldItems)
                 {
+                    string key = item is KeyValuePair<string, object> kvp ? kvp.Key : index++.ToString();
                     var view = default(ICheckable);
                     foreach (var checkable in CheckList)
-                        if (checkable.Item.Key == item.Key)
+                        if (checkable.Item.Key == key)
                             view = checkable;
-                    if (view != null) Children.Remove((View) view);
+                    if (view != null) Children.Remove((View)view);
                 }
+            }
+
+            if (e.NewItems != null)
+            {
+                var index = e.NewStartingIndex;
+                foreach (var item in e.NewItems)
+                {
+                    string key = item is KeyValuePair<string, object> kvp ? kvp.Key : index++.ToString();
+                    if (CheckList.All(c => c.Key != key))
+                        if (item is KeyValuePair<string, object>)
+                            AddItemToView(kvp);
+                        else
+                            AddItemToView(new KeyValuePair<string, object>(index++.ToString(), item));
+                }
+            }
         }
 
         private void AddItemToView(KeyValuePair<string, object> item)
@@ -230,15 +272,15 @@ namespace Global.InputForms
         /// <param name="bindable">The object.</param>
         /// <param name="oldValue">The old value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is RadioGroup radioGroup) || radioGroup.ItemsSource == null) return;
 
             if (oldValue is INotifyCollectionChanged oldSource)
-                oldSource.CollectionChanged -= radioGroup.ItemSource_CollectionChanged;
+                oldSource.CollectionChanged -= radioGroup.CollectionChanged;
             radioGroup.GenerateChekableList();
             if (newValue is INotifyCollectionChanged newSource)
-                newSource.CollectionChanged += radioGroup.ItemSource_CollectionChanged;
+                newSource.CollectionChanged += radioGroup.CollectionChanged;
         }
 
         private static void CheckTemplateChanged(BindableObject bindable, object oldValue, object newValue)
@@ -276,14 +318,14 @@ namespace Global.InputForms
             if ((int) newValue < 0)
             {
                 foreach (var button in radioGroup.CheckList) button.Checked = false;
-                radioGroup.SelectedItem = new KeyValuePair<string, object>(null, null);
+                radioGroup.SelectedItem = null;
                 return;
             }
 
             foreach (var button in radioGroup.CheckList)
                 if (button.Index == radioGroup.SelectedIndex)
                 {
-                    radioGroup.SelectedItem = button.Item;
+                    radioGroup.SelectedItem = radioGroup.ItemsSource is IDictionary ? button.Item : button.Item.Value;
                     button.Checked = true;
                 }
                 else
@@ -301,7 +343,26 @@ namespace Global.InputForms
         private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RadioGroup radioGroup)
-                radioGroup.SelectedItemChanged?.Invoke(radioGroup, (KeyValuePair<string, object>) newValue);
+                radioGroup.SelectedItemChanged?.Invoke(radioGroup, newValue);
+        }
+
+        /// <summary>
+        /// The StackLayout Spacing changed.
+        /// </summary>
+        /// <param name="bindable">The object.</param>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        private static void SpacingChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is RadioGroup radioGroup)) return;
+
+            radioGroup.Spacing = (double)newValue;
+            var index = 0;
+            foreach (var item in radioGroup.Children)
+                if (item is CheckContent checkBox)
+                    checkBox.Padding = radioGroup.SetSpacingPadding(index++);
+                else
+                    item.Margin = radioGroup.SetSpacingPadding(index++);
         }
 
         private void OnItemClicked(object sender, bool check)
@@ -312,7 +373,7 @@ namespace Global.InputForms
             {
                 if (IsDeselectable)
                 {
-                    SelectedItem = new KeyValuePair<string, object>(null, null);
+                    SelectedItem = null;
                     SelectedIndex = -1;
                 }
                 else
@@ -326,7 +387,7 @@ namespace Global.InputForms
             foreach (var item in CheckList)
                 if (selected.Index.Equals(item.Index))
                 {
-                    SelectedItem = selected.Item;
+                    SelectedItem = ItemsSource is IDictionary ? selected.Item : selected.Item.Value;
                     SelectedIndex = selected.Index;
                 }
                 else
@@ -342,6 +403,21 @@ namespace Global.InputForms
             frameInfo.Info = false;
             frameInfo.Validators?.Invoke(this, new EventArgs());
             return !frameInfo.Info;
+        }
+
+        private Thickness SetSpacingPadding(int index)
+        {
+            if (index == 0)
+                return Orientation == StackOrientation.Horizontal
+                    ? new Thickness(0, 0, Spacing / 2, 0)
+                    : new Thickness(0, 0, 0, Spacing / 2);
+            if (index == Children.Count - 1)
+                return Orientation == StackOrientation.Horizontal
+                    ? new Thickness(Spacing / 2, 0, 0, 0)
+                    : new Thickness(0, Spacing / 2, 0, 0);
+            return Orientation == StackOrientation.Horizontal
+                ? new Thickness(Spacing / 2, 0, Spacing / 2, 0)
+                : new Thickness(0, Spacing / 2, 0, Spacing / 2);
         }
     }
 }

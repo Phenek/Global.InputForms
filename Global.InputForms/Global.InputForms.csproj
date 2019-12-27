@@ -32,6 +32,7 @@
     <Folder Include="Controls\Blank\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Converters\" />
+    <Folder Include="Extentions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="InputForms.cs" />

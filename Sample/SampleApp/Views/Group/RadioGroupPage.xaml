@@ -52,8 +52,8 @@
 
                     <global:CheckButton Key="0" Value="Male"
                                         WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                        BackgroundColor="White"
-                                        BorderColor="Maroon"
+                                        BackgroundColor="LightGray"
+                                        BorderColor="LightGray"
                                         TextColor="Maroon"
                                         CheckedBackgroundColor="Maroon"
                                         CheckedBorderColor="Maroon"
@@ -61,8 +61,8 @@
 
                     <global:CheckButton Key="1" Value="Female"
                                         WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                        BackgroundColor="White"
-                                        BorderColor="Teal"
+                                        BackgroundColor="LightGray"
+                                        BorderColor="LightGray"
                                         TextColor="Teal"
                                         CheckedBackgroundColor="Teal"
                                         CheckedBorderColor="Teal"

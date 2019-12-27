@@ -17,7 +17,7 @@
             <ControlTemplate x:Key="RightIconCheck">
                 <global:CheckLabel CheckType="Check"
                                    HorizontalOptions="End"
-                                   IconPosition="Start"
+                                   IconPosition="End"
                                    BackgroundColor="Transparent"
                                    BorderColor="Gray"
                                    CheckedBackgroundColor="Transparent"
@@ -35,8 +35,8 @@
             <ControlTemplate x:Key="ButtonRadio">
                 <global:CheckButton Text="Hop!"
                                     WidthRequest="70" HeightRequest="30" CornerRadius="15" FontSize="12"
-                                    BackgroundColor="White"
-                                    BorderColor="White"
+                                    BackgroundColor="LightGray"
+                                    BorderColor="LightGray"
                                     TextColor="Navy"
                                     CheckedBackgroundColor="Navy"
                                     CheckedBorderColor="White"

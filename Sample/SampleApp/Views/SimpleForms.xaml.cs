@@ -28,10 +28,10 @@ namespace SampleApp.Views
             _checkStore.CheckedChanged += _CheckStoreChanged;
         }
 
-        private void _RadioGenderChanged(object sender, KeyValuePair<string, object> e)
+        private void _RadioGenderChanged(object sender, object e)
         {
-            if (sender is RadioGroup)
-                _viewModel.Form.Gender = e.Key != null && e.Value is string str ? str : null;
+            if (sender is RadioGroup && e is KeyValuePair<string, object> kvp)
+                _viewModel.Form.Gender = kvp.Key != null && kvp.Value is string str ? str : null;
         }
 
         private void _CheckStoreChanged(object sender, bool e)
@@ -56,19 +56,22 @@ namespace SampleApp.Views
             }
         }
 
-        private void _RateSaleChanged(object sender, KeyValuePair<string, object> e)
+        private void _RateSaleChanged(object sender, object e)
         {
-            if (sender is RateGroup rateGroup) _viewModel.Form.RateEnglish = Convert.ToInt32(e.Key);
+            if (sender is RateGroup rateGroup && e is KeyValuePair<string, object> kvp)
+                _viewModel.Form.RateEnglish = Convert.ToInt32(kvp.Key);
         }
 
-        private void _RateStreetChanged(object sender, KeyValuePair<string, object> e)
+        private void _RateStreetChanged(object sender, object e)
         {
-            if (sender is RateGroup rateGroup) _viewModel.Form.RateSpanish = Convert.ToInt32(e.Key);
+            if (sender is RateGroup rateGroup && e is KeyValuePair<string, object> kvp)
+                _viewModel.Form.RateSpanish = Convert.ToInt32(kvp.Key);
         }
 
-        private void _RateBeautyChanged(object sender, KeyValuePair<string, object> e)
+        private void _RateBeautyChanged(object sender, object e)
         {
-            if (sender is RateGroup rateGroup) _viewModel.Form.RateRussian = Convert.ToInt32(e.Key);
+            if (sender is RateGroup rateGroup && e is KeyValuePair<string, object> kvp)
+                _viewModel.Form.RateRussian = Convert.ToInt32(kvp.Key);
         }
 
         private void _AlreadyHaveAccountClicked(object sender, EventArgs e)

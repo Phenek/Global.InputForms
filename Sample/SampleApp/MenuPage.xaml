@@ -38,8 +38,6 @@
                         <controls:ButtonInputs x:Name="toTimePickerViewBtn" Title="TimePickerView"/>
                         <BoxView Margin="20,0,20,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
                         <controls:ButtonInputs x:Name="toSwitchBtn" Title="Switch"/>
-                        <BoxView Margin="40,0,40,0" HeightRequest="2" HorizontalOptions="FillAndExpand" BackgroundColor="{DynamicResource SeparatorColor}" />
-                        <controls:ButtonInputs x:Name="toSimpleFormsBtn" Title="Simple Forms"/>
                     </StackLayout>
                 </ContentView>
         </ScrollView>

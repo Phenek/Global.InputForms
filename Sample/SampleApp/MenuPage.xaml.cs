@@ -40,8 +40,6 @@ namespace SampleApp
             { Navigation.PushAsync(new TimePickerViewPage()); };
             toSwitchBtn.Clicked += (sender, e) =>
             { Navigation.PushAsync(new SwitchPage()); };
-            toSimpleFormsBtn.Clicked += (sender, e) =>
-            { Navigation.PushAsync(new SimpleForms()); };
         }
 
         protected override void OnAppearing()

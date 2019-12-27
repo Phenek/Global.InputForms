@@ -57,7 +57,7 @@ namespace SampleApp.Behaviors
 
             if (sender is RadioGroup radioGroup && radioGroup.Parent is FrameInfo frameInfo && !frameInfo.Info)
             {
-                var isValid = radioGroup.SelectedItem.Key != null;
+                var isValid = radioGroup.SelectedItem != null;
                 frameInfo.ShowInfo(!isValid, i18N.GetText("Error.Check"));
             }
         }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using Global.InputForms.Extentions;
 using Global.InputForms.Interfaces;
 using Xamarin.Forms;
 
@@ -14,8 +16,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The Items Source property.
         /// </summary>
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
-            typeof(IDictionary<string, object>), typeof(RateGroup), null, propertyChanged: OnItemsSourceChanged);
+        public static readonly BindableProperty ItemsSourceProperty =
+            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(CheckGroup), null, propertyChanged: ItemsSourceChanged);
 
         /// <summary>
         ///     Icon Template Property.
@@ -39,7 +41,7 @@ namespace Global.InputForms
         ///     The Selected Item property.
         /// </summary>
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem),
-            typeof(KeyValuePair<string, object>), typeof(RateGroup), new KeyValuePair<string, object>(null, null),
+            typeof(object), typeof(RateGroup), null,
             propertyChanged: OnSelectedItemChanged);
 
         /// <summary>
@@ -145,7 +147,6 @@ namespace Global.InputForms
             base.Children.Add(_rateLayout);
 
             CheckList = new ObservableCollection<ICheckable>();
-            ItemsSource = new Dictionary<string, object>();
 
             _rateLayout.ChildAdded += ChildCheckAdded;
             _rateLayout.ChildRemoved += ChildCheckRemoved;
@@ -163,9 +164,9 @@ namespace Global.InputForms
         ///     Gets or sets the Rate group Items Source.
         /// </summary>
         /// <value>The Rate group Items Source.</value>
-        public IDictionary<string, object> ItemsSource
+        public IEnumerable ItemsSource
         {
-            get => (IDictionary<string, object>) GetValue(ItemsSourceProperty);
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -196,9 +197,9 @@ namespace Global.InputForms
         ///     Gets or sets the Rate group selected index.
         /// </summary>
         /// <value>The Rate group selected index.</value>
-        public KeyValuePair<string, object> SelectedItem
+        public object SelectedItem
         {
-            get => (KeyValuePair<string, object>) GetValue(SelectedItemProperty);
+            get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
         }
 
@@ -303,7 +304,7 @@ namespace Global.InputForms
         }
 
         public event EventHandler<int> SelectedIndexChanged;
-        public event EventHandler<KeyValuePair<string, object>> SelectedItemChanged;
+        public event EventHandler<object> SelectedItemChanged;
 
         protected override void OnParentSet()
         {
@@ -318,7 +319,16 @@ namespace Global.InputForms
             Children.Clear();
             CheckList.Clear();
 
-            foreach (var item in ItemsSource) AddItemToView(item);
+            if (ItemsSource == null) return;
+
+            var index = 0;
+            foreach (var item in ItemsSource)
+            {
+                if (item is KeyValuePair<string, object> kvp)
+                    AddItemToView(kvp);
+                else
+                    AddItemToView(new KeyValuePair<string, object>(index++.ToString(), item));
+            }
 
             // Check the default index & set the label
             if (CheckList.Any() && DefaultIndex >= 0)
@@ -352,20 +362,22 @@ namespace Global.InputForms
         {
             if (e.Element is ICheckable checkable)
             {
-                if (!string.IsNullOrEmpty(checkable.Key) && CheckList.All(c => c.Key != checkable.Key))
-                {
-                    checkable.DisableCheckOnClick = true;
-                    checkable.Clicked += OnItemClicked;
-                    checkable.Index = CheckList.Count;
-                    CheckList.Add(checkable);
-                    if (!ItemsSource.ContainsKey(checkable.Key)) ItemsSource.Add(checkable.Key, checkable.Value);
+                checkable.DisableCheckOnClick = true;
+                checkable.Clicked += OnItemClicked;
+                checkable.Index = CheckList.Count;
+                CheckList.Add(checkable);
 
-                    if (DefaultIndex == checkable.Index) checkable.Checked = true;
-                }
-                else
+                if (ItemsSource == null) return;
+                if(DefaultIndex == checkable.Index) checkable.Checked = true;
+
+                if (ItemsSource is IDictionary<object, object> dic && !dic.ContainsKey(checkable.Key))
+                    dic.Add(checkable.Key, checkable.Value);
+                else if (ItemsSource is IList list && !list.Contains(checkable.Value))
                 {
-                    Console.WriteLine("{RateGroup}: Each elements must have a unique Key!");
-                    throw new Exception("{RateGroup}: Each elements must have a unique Key!");
+                    list.Add(checkable.Value);
+                    var index = 0;
+                    foreach (var check in CheckList)
+                        check.Key = index++.ToString();
                 }
             }
             else
@@ -381,27 +393,56 @@ namespace Global.InputForms
 
             checkable.Clicked -= OnItemClicked;
             CheckList.Remove(checkable);
-            ItemsSource.Remove(checkable.Key);
+            if (ItemsSource is IDictionary dic && dic.Contains(checkable.Key))
+                dic.Remove(checkable.Key);
+            else if (ItemsSource is IList list)
+            {
+                if (list.Contains(checkable.Value))
+                    list.Remove(checkable.Value);
+                var i = 0;
+                foreach (var check in CheckList)
+                    check.Key = i++.ToString();
+            }
 
             var index = 0;
             foreach (var check in CheckList) check.Index = index++;
         }
 
-        private void ItemSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
-                foreach (KeyValuePair<string, object> item in e.NewItems)
-                    if (CheckList.All(c => c.Key != item.Key))
-                        AddItemToView(item);
+            if (ItemsSource is IList list && list.ContainsDuplicates())
+            {
+                Console.WriteLine("{RateGroup}: Each elements must have a unique Key/Value!");
+                throw new Exception("{RateGroup}: Each elements must have a unique Key/Value!");
+            }
+
             if (e.OldItems != null)
-                foreach (KeyValuePair<string, object> item in e.OldItems)
+            {
+                var index = e.OldStartingIndex;
+                foreach (var item in e.OldItems)
                 {
+                    string key = item is KeyValuePair<string, object> kvp ? kvp.Key : index++.ToString();
                     var view = default(ICheckable);
                     foreach (var checkable in CheckList)
-                        if (checkable.Item.Key == item.Key)
+                        if (checkable.Item.Key == key)
                             view = checkable;
-                    if (view != null) Children.Remove((View) view);
+                    if (view != null) Children.Remove((View)view);
                 }
+            }
+
+            if (e.NewItems != null)
+            {
+                var index = e.NewStartingIndex;
+                foreach (var item in e.NewItems)
+                {
+                    string key = item is KeyValuePair<string, object> kvp ? kvp.Key : index++.ToString();
+                    if (CheckList.All(c => c.Key != key))
+                        if (item is KeyValuePair<string, object>)
+                            AddItemToView(kvp);
+                        else
+                            AddItemToView(new KeyValuePair<string, object>(index++.ToString(), item));
+                }
+            }
         }
 
         private void AddItemToView(KeyValuePair<string, object> item)
@@ -418,15 +459,15 @@ namespace Global.InputForms
         /// <param name="bindable">The object.</param>
         /// <param name="oldValue">The old value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (!(bindable is RateGroup rateGroup) || rateGroup.ItemsSource == null) return;
 
             if (oldValue is INotifyCollectionChanged oldSource)
-                oldSource.CollectionChanged -= rateGroup.ItemSource_CollectionChanged;
+                oldSource.CollectionChanged -= rateGroup.CollectionChanged;
             rateGroup.GenerateChekableList();
             if (newValue is INotifyCollectionChanged newSource)
-                newSource.CollectionChanged += rateGroup.ItemSource_CollectionChanged;
+                newSource.CollectionChanged += rateGroup.CollectionChanged;
         }
 
         private static void CheckTemplateChanged(BindableObject bindable, object oldValue, object newValue)
@@ -479,7 +520,7 @@ namespace Global.InputForms
         private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is RateGroup rateGroup)
-                rateGroup.SelectedItemChanged?.Invoke(rateGroup, (KeyValuePair<string, object>) newValue);
+                rateGroup.SelectedItemChanged?.Invoke(rateGroup, newValue);
         }
 
         /// <summary>
@@ -621,11 +662,11 @@ namespace Global.InputForms
                     return;
                 case false when selectedCheckBox.Index == SelectedIndex && SelectedIndex > DefaultIndex:
                     SelectedIndex = SelectedIndex - 1;
-                    SelectedItem = selectedCheckBox.Item;
+                    SelectedItem = ItemsSource is IDictionary ? selectedCheckBox.Item : selectedCheckBox.Item.Value;
                     return;
                 default:
                     SelectedIndex = selectedCheckBox.Index;
-                    SelectedItem = selectedCheckBox.Item;
+                    SelectedItem = ItemsSource is IDictionary ? selectedCheckBox.Item : selectedCheckBox.Item.Value;
                     break;
             }
         }
@@ -636,7 +677,7 @@ namespace Global.InputForms
                 return Orientation == StackOrientation.Horizontal
                     ? new Thickness(0, 0, Spacing / 2, 0)
                     : new Thickness(0, 0, 0, Spacing / 2);
-            if (index == ItemsSource.Count - 1)
+            if (index == Children.Count - 1)
                 return Orientation == StackOrientation.Horizontal
                     ? new Thickness(Spacing / 2, 0, 0, 0)
                     : new Thickness(0, Spacing / 2, 0, 0);
