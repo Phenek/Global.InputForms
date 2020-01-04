@@ -199,7 +199,10 @@ namespace Global.InputForms
         private void IndexChanged(object sender, EventArgs e)
         {
             if (_picker.SelectedIndex != SelectedIndex)
+            {
                 SelectedIndex = _picker.SelectedIndex;
+                SelectedItem = ItemsSource[SelectedIndex];
+            }
             SelectedIndexChanged?.Invoke(this, e);
         }
     }

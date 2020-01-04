@@ -3,7 +3,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.PickerViewPage">
+             x:Class="SampleApp.Views.PickerViewPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
 
         <ScrollView BackgroundColor="WhiteSmoke">
@@ -14,13 +15,6 @@
 
                 <Label Text="{Binding SelectedItem, Mode=TwoWay}" FontSize="20" />
 
-                <global:PickerView
-                    CornerRadius="15"
-                    InfoViewType="Surrounded"
-                    InfoColor="Purple"
-                    EntryBackgroundColor="#88FFFFFF"
-                    LabelText="Picker"
-                    x:Name="_picker" />
 
                 <!-- Besieged DatePicker with Surrounded Info -->
                 <global:PickerView StyleClass="BesiegedEntry"

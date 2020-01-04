@@ -6,19 +6,141 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              mc:Ignorable="d"
+             BackgroundColor="{StaticResource LightBackgroundColor}"
              x:Class="SampleApp.Views.SwitchPage">
     <ContentPage.Content>
         <StackLayout Padding="10">
 
-            <global:Switch x:Name="switchTest"
+            <global:Switch x:Name="_switchNitendo"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            SwitchHeightRequest="80"
-                           SwitchWidthRequest="160"
-                           CornerRadius="40"
+                           SwitchWidthRequest="125"
                            SwitchCornerRadius="40"
-                           SwitchColor="Blue" BackgroundColor="Beige" />
+                           HeightRequest="70"
+                           CornerRadius="35"
+                           WidthRequest="200"
+                           SwitchLimit="Max"
+                           SwitchColor="#EA5A50" BackgroundColor="#32B9D9">
 
-            <Image Source="SwitchCalendarBlue" />
+                <global:Switch.BackgroundContent>
+                        <FlexLayout JustifyContent="SpaceEvenly">
+                            <Label Text="Girls" TextColor="White" FontSize="Large" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
+                            <Label Text="Boys" TextColor="White" FontSize="Large" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
+                        </FlexLayout>
+                </global:Switch.BackgroundContent>
+
+               <global:Switch.SwitchContent>
+                    <StackLayout Orientation="Horizontal">
+                        <FlexLayout x:Name="_nitendo" JustifyContent="SpaceEvenly" Margin="25,0,25,0" WidthRequest="200"> <!-- We need space here  -->
+                            <Label Text="Girls" TextColor="White" FontSize="Large" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
+                            <Label Text="Boys" TextColor="White" FontSize="Large" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
+                        </FlexLayout>
+                    </StackLayout>
+                </global:Switch.SwitchContent>
+
+            </global:Switch>
+
+            <Label Text="Nintendo Switch" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+            <!-- Nintendo Switch -->
+
+            <global:Switch x:Name="_switchAndroid"
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           HeightRequest="20"
+                           WidthRequest="60"
+                           CornerRadius="10"
+                           SwitchHeightRequest="34"
+                           SwitchWidthRequest="34"
+                           SwitchCornerRadius="17"
+                           BackgroundColor="#A6A6A6"
+                           SwitchColor="White"/>
+
+            
+            <Label Text="Android Switch" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+            <!-- Android Switch -->
+
+            <global:Switch x:Name="_switchIos"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                HeightRequest="40"
+                WidthRequest="70"
+                CornerRadius="20"
+                SwitchHeightRequest="36"
+                SwitchWidthRequest="36"
+                SwitchCornerRadius="18"
+                HorizontalSwitchMargin="2"
+                BackgroundColor="#EBECEC"
+                SwitchColor="White"
+                SwitchLimit="Boundary">
+                <global:Switch.BackgroundContent>
+                    <StackLayout Orientation="Horizontal" >
+                        <Label Text=" |" TextColor="White" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
+                        <Label Text="⚬" FontSize="30" TextColor="#BBBBBB"
+                               HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </global:Switch.BackgroundContent>
+            </global:Switch>
+
+            <Label Text="iOS Switch" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+            <!-- iOS Switch -->
+
+            <global:Switch x:Name="_switchGlaseEye"
+                                 HeightRequest="50"
+                                 WidthRequest="120"
+                                 CornerRadius="25"
+                                 SwitchHeightRequest="60"
+                                 SwitchWidthRequest="60"
+                                 SwitchCornerRadius="30"
+                                 SwitchColor="DarkRed"
+                                 BackgroundColor="LightGray"
+                                 SwitchLimit="Boundary">
+
+                    <global:Switch.BackgroundContent>
+                        <FlexLayout Margin="15,0,15,0" JustifyContent="SpaceBetween" AlignItems="Center">
+                            <Image Source="AndroidBlack" Aspect="AspectFit" VerticalOptions="Center"
+                                   HorizontalOptions="Center" HeightRequest="30" />
+                            <Image Source="AppleBlack" Aspect="AspectFit" VerticalOptions="Center"
+                                   HorizontalOptions="Center" HeightRequest="30" />
+                        </FlexLayout>
+                    </global:Switch.BackgroundContent>
+
+                    <global:Switch.SwitchContent>
+                        <StackLayout Orientation="Horizontal">
+                            <FlexLayout x:Name="_flex" Margin="15,0,15,0" JustifyContent="SpaceBetween"
+                                        AlignItems="Center" WidthRequest="90">
+                                <Image Source="AndroidGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                                <Image Source="AppleGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                            </FlexLayout>
+                        </StackLayout>
+                    </global:Switch.SwitchContent>
+
+                </global:Switch>
+
+             <Label Text="GlaseEye Switch" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+            <!-- GlaseEye Switch -->
 
             <global:Switch x:Name="switchTest2"
                            HorizontalOptions="Center" VerticalOptions="Center"
@@ -26,8 +148,13 @@
                            SwitchWidthRequest="50"
                            CornerRadius="20"
                            SwitchCornerRadius="20"
-                           BackgroundColor="Beige" SwitchColor="Blue" />
+                           BackgroundColor="LightGray" SwitchColor="Navy" />
 
+            <Label Text="Others Switch" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+            <!-- Others Switch -->
 
             <global:Switch x:Name="switchTest3"
                            HorizontalOptions="Center" VerticalOptions="Center"
@@ -35,15 +162,13 @@
                            SwitchWidthRequest="80"
                            CornerRadius="20"
                            SwitchCornerRadius="20"
-                           BackgroundColor="Beige" SwitchColor="DarkRed" />
+                           BackgroundColor="LightGray" SwitchColor="DarkRed" />
 
-            <global:Switch x:Name="switchTest4"
-                           HorizontalOptions="Center" VerticalOptions="Center"
-                           SwitchHeightRequest="80"
-                           SwitchWidthRequest="100"
-                           CornerRadius="30"
-                           SwitchCornerRadius="30"
-                           BackgroundColor="Beige" />
+             <Label Text="Others Switch" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+            <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+            <!-- Others Switch -->
 
         </StackLayout>
     </ContentPage.Content>
