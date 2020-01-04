@@ -11,7 +11,7 @@
             <StackLayout
                 Spacing="10"
                 Padding="0,10,0,10"
-                VerticalOptions="Center"
+                VerticalOptions="Start"
                 HorizontalOptions="Center">
 
                 <!-- Standard RadioGroup with defaultIndex to 0 -->

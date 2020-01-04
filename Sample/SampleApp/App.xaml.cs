@@ -19,6 +19,7 @@ namespace SampleApp
             InitializeComponent();
 
             Resources.MergedDictionaries.Add(new ButtonStyles());
+            Resources.MergedDictionaries.Add(new CheckStyles());
             Resources.MergedDictionaries.Add(new EntryStyles());
 
             MainPage = new SplashScreen();

@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace SampleApp.Styles
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ButtonStyles : ResourceDictionary
+    public partial class CheckStyles : ResourceDictionary
     {
-        public ButtonStyles()
+        public CheckStyles()
         {
             InitializeComponent();
         }

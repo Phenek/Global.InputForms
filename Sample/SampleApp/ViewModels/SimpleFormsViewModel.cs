@@ -15,7 +15,7 @@ namespace SampleApp.ViewModels
         private readonly ILocalizedResourceProvider _i18N = DependencyService.Get<IDependencyGetter>()
             .Get<ILocalizedResourceProvider>();
 
-        private string _entryText;
+        private string _entryText = "Global.InputForms";
 
         private DateTime _date;
 

@@ -11,7 +11,7 @@
         <Setter Property="CornerRadius" Value="25" />
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="BorderColor" Value="Teal" />
-        <Setter Property="HighlightBorderColor" Value="Teal" />
+        <Setter Property="HighlightBorderColor" Value="PaleGreen" />
         <Setter Property="BackgroundColor" Value="Teal" />
         <Setter Property="HighlightBackgroundColor" Value="PaleGreen" />
         <Setter Property="FontFamily" Value="Bold" />
@@ -26,7 +26,7 @@
         <Setter Property="CornerRadius" Value="25" />
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="BorderColor" Value="Maroon" />
-        <Setter Property="HighlightBorderColor" Value="Maroon" />
+        <Setter Property="HighlightBorderColor" Value="Salmon" />
         <Setter Property="BackgroundColor" Value="Maroon" />
         <Setter Property="HighlightBackgroundColor" Value="Salmon" />
         <Setter Property="FontFamily" Value="Bold" />
@@ -41,7 +41,7 @@
         <Setter Property="CornerRadius" Value="25" />
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="BorderColor" Value="Gray" />
-        <Setter Property="HighlightBorderColor" Value="Gray" />
+        <Setter Property="HighlightBorderColor" Value="LightGray" />
         <Setter Property="BackgroundColor" Value="Gray" />
         <Setter Property="HighlightBackgroundColor" Value="LightGray" />
         <Setter Property="FontFamily" Value="Bold" />
@@ -58,7 +58,7 @@
         <Setter Property="FontFamily" Value="Bold" />
         <Setter Property="FontSize" Value="Default" />
         <Setter Property="BorderColor" Value="Navy" />
-        <Setter Property="HighlightBorderColor" Value="Navy" />
+        <Setter Property="HighlightBorderColor" Value="LightSkyBlue" />
         <Setter Property="BackgroundColor" Value="Navy" />
         <Setter Property="HighlightBackgroundColor" Value="LightSkyBlue" />
         <Setter Property="TextColor" Value="White" />
