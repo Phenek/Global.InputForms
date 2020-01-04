@@ -15,6 +15,8 @@ namespace SampleApp.ViewModels
         private readonly ILocalizedResourceProvider _i18N = DependencyService.Get<IDependencyGetter>()
             .Get<ILocalizedResourceProvider>();
 
+        private string _entryText;
+
         private DateTime _date;
 
         private FormModel _form = new FormModel();
@@ -67,6 +69,12 @@ namespace SampleApp.ViewModels
         {
             get => selectedItem;
             set => SetProperty(ref selectedItem, value);
+        }
+
+        public string EntryText
+        {
+            get => _entryText;
+            set => SetProperty(ref _entryText, value);
         }
 
         public FormModel Form

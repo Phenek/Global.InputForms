@@ -72,10 +72,10 @@
                     </global:CheckLabel.CheckLabelMargin>
                 </global:CheckContent>
             </ControlTemplate>
-            <Color x:Key="Primary">#335D83</Color>
+            <Color x:Key="Primary">#B63029</Color>
             <Color x:Key="PrimaryDark">#1976D2</Color>
             <Color x:Key="Accent">#96d1ff</Color>
-            <Color x:Key="LightBackgroundColor">#AED9E4</Color>
+            <Color x:Key="LightBackgroundColor">#F5F5F5</Color>
             <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
             <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
             <Color x:Key="LightTextColor">#999999</Color>
@@ -88,7 +88,7 @@
             <Color x:Key="LineColor">#0B7DB3</Color>
             <Color x:Key="HightlightLineColor">#0B7DB3</Color>
             <Color x:Key="PlaceHolderColor">#0B7DB3</Color>
-            <Color x:Key="EntryBackgroundColor">#DCECF2</Color>
+            <Color x:Key="EntryBackgroundColor">#eba8a5</Color>
             <Color x:Key="PrimaryColor">#B63029</Color>
             <Color x:Key="SeparatorColor">#E6E6E6</Color>
 

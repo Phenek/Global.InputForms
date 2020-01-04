@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.ButtonsPage">
+             x:Class="SampleApp.Views.ButtonsPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
         <!-- xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" -->
         <ScrollView >
@@ -42,19 +43,26 @@
                 <global:ButtonContent VerticalOptions="Start"
                                       Clicked="ParameterClicked" BackgroundColor="White"
                                       HighlightBackgroundColor="LightGray">
-                    <StackLayout Orientation="Horizontal" Margin="10">
-                        <Frame Padding="0" HasShadow="false"
+                    <StackLayout Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="false" 
                                BackgroundColor="Maroon"
                                CornerRadius="25"
                                HeightRequest="50"
-                               WidthRequest="50" VerticalOptions="Center" />
+                               WidthRequest="50" VerticalOptions="Center">
+                            <Image Source="AndroidGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
                         <Label Text="Parameters"
                                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
                                FontSize="Medium" FontFamily="Bold"
                                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                        <Label Margin="25,0,0,0" Text=">" ScaleY="1.5" TextColor="Navy" FontSize="40"
-                               HorizontalOptions="End"
-                               VerticalOptions="FillAndExpand" />
+                        <Frame Padding="0" HasShadow="false" CornerRadius="0"
+                               BackgroundColor="Blue"
+                               HeightRequest="40"
+                               WidthRequest="40" VerticalOptions="Center" >
+                             <Image Source="AppleGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
                     </StackLayout>
                 </global:ButtonContent>
 
@@ -67,7 +75,10 @@
                                BackgroundColor="Maroon"
                                CornerRadius="20"
                                HeightRequest="40"
-                               WidthRequest="40" VerticalOptions="Center" />
+                               WidthRequest="40" VerticalOptions="Center" >
+                            <Image Source="AndroidGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
                         <Label Text="Parameters"
                                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
                                FontSize="Medium" FontFamily="Bold"
@@ -75,7 +86,10 @@
                         <Frame Padding="0" HasShadow="false" CornerRadius="0"
                                BackgroundColor="Blue"
                                HeightRequest="40"
-                               WidthRequest="40" VerticalOptions="Center" />
+                               WidthRequest="40" VerticalOptions="Center" >
+                             <Image Source="AppleGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
                     </StackLayout>
                 </global:ButtonContent>
 

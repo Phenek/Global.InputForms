@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.DatePickerViewPage">
+             x:Class="SampleApp.Views.DatePickerViewPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
         <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
@@ -12,7 +13,8 @@
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 
-                <Label Text="{Binding Date, Mode=TwoWay}" FontSize="20" />
+                <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                <Label Text="{Binding Date, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView StyleClass="RoundedEntry"

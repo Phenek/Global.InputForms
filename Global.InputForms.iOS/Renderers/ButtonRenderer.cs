@@ -17,7 +17,7 @@ namespace Global.InputForms.iOS.Renderers
 
             if (Control != null && e.NewElement is Button view)
             {
-                /*
+                
                 Control.TouchDragOutside += (sender, ea) => Console.WriteLine("Touch Drag Outside");
                 Control.TouchDragInside += (sender, ea) => Console.WriteLine("Touch Drag Inside");
                 Control.TouchDragExit += (sender, ea) => Console.WriteLine("Touch Drag Exit");
@@ -25,7 +25,7 @@ namespace Global.InputForms.iOS.Renderers
                 Control.TouchUpOutside += (sender, ea) => Console.WriteLine("Touch up outside");
                 Control.TouchUpInside += (sender, ea) => Console.WriteLine("Touch up inside");
                 Control.TouchCancel += (sender, ea) => Console.WriteLine("Touch Cancel");
-                */
+                
                 Control.TouchCancel += SendReleased;
                 Control.TouchDragExit += SendReleased;
                 Control.TouchDragEnter += SendPressed;

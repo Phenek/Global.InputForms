@@ -4,7 +4,8 @@
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              xmlns:vm="clr-namespace:SampleApp.ViewModels"
              xmlns:i18N="clr-namespace:Naxam.I18n.Forms;assembly=Naxam.I18n.Forms"
-             x:Class="SampleApp.Views.CheckForms">
+             x:Class="SampleApp.Views.CheckForms"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ScrollView >
         <StackLayout
             Margin="30"

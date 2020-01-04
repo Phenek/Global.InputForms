@@ -8,6 +8,13 @@ namespace Global.InputForms
         /// <summary>
         ///     The switch height request property.
         /// </summary>
+        public static readonly BindableProperty HorizontalSwitchMarginProperty = BindableProperty.Create(
+            nameof(HorizontalSwitchMargin),
+            typeof(double), typeof(Switch), 0d, propertyChanged: SizeRequestChanged);
+
+        /// <summary>
+        ///     The switch height request property.
+        /// </summary>
         public static readonly BindableProperty SwitchHeightRequestProperty = BindableProperty.Create(
             nameof(SwitchHeightRequest),
             typeof(double), typeof(Switch), -1d, propertyChanged: SizeRequestChanged);
@@ -84,7 +91,7 @@ namespace Global.InputForms
             typeof(SwitchLimit), typeof(Switch), SwitchLimit.Boundary, propertyChanged: SizeRequestChanged);
 
         private readonly Frame _backgroundFrame;
-        private readonly Frame _switchFrame;
+        private readonly Frame SwitchFrame;
         private double _xRef;
         private double TmpTotalX;
 
@@ -113,25 +120,25 @@ namespace Global.InputForms
             _backgroundFrame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(BackgroundContent)) {Source = this, Mode = BindingMode.OneWay});
 
-            _switchFrame = new Frame
+            SwitchFrame = new Frame
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 IsClippedToBounds = true,
                 Padding = 0
             };
-            _switchFrame.SetBinding(Frame.CornerRadiusProperty,
+            SwitchFrame.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(SwitchCornerRadius)) {Source = this, Mode = BindingMode.OneWay});
-            _switchFrame.SetBinding(VisualElement.HeightRequestProperty,
+            SwitchFrame.SetBinding(VisualElement.HeightRequestProperty,
                 new Binding(nameof(SwitchHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
-            _switchFrame.SetBinding(VisualElement.WidthRequestProperty,
+            SwitchFrame.SetBinding(VisualElement.WidthRequestProperty,
                 new Binding(nameof(SwitchWidthRequest)) {Source = this, Mode = BindingMode.OneWay});
-            _switchFrame.SetBinding(ContentView.ContentProperty,
+            SwitchFrame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(SwitchContent)) {Source = this, Mode = BindingMode.TwoWay});
-            _switchFrame.SetBinding(VisualElement.BackgroundColorProperty,
+            SwitchFrame.SetBinding(VisualElement.BackgroundColorProperty,
                 new Binding(nameof(SwitchColor)) {Source = this, Mode = BindingMode.OneWay});
 
-            Children.Add(_switchFrame, 0, 0);
+            Children.Add(SwitchFrame, 0, 0);
 
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
@@ -142,10 +149,14 @@ namespace Global.InputForms
             GestureRecognizers.Add(tapGestureRecognizer);
         }
 
-        public View RightView { get; set; }
-        public View LeftView { get; set; }
         public SwitchState State { get; set; }
         public double ProgressRate { get; set; }
+
+        public double HorizontalSwitchMargin
+        {
+            get => (double)GetValue(HorizontalSwitchMarginProperty);
+            set => SetValue(HorizontalSwitchMarginProperty, value);
+        }
 
         /// <summary>
         ///     Gets or sets the Switch Height Request.
@@ -290,9 +301,9 @@ namespace Global.InputForms
             if (bindable is Switch view)
             {
                 //Switch
-                view._switchFrame.WidthRequest =
+                view.SwitchFrame.WidthRequest =
                     view.SwitchWidthRequest < 0.0 ? view.Width / 2 : view.SwitchWidthRequest;
-                view._switchFrame.HeightRequest =
+                view.SwitchFrame.HeightRequest =
                     view.SwitchHeightRequest < 0.0 ? view.Height : view.SwitchHeightRequest;
 
                 //Background
@@ -301,32 +312,32 @@ namespace Global.InputForms
 
                 //View
                 view.SetBaseWidthRequest(Math.Max(view._backgroundFrame.WidthRequest,
-                    view._switchFrame.WidthRequest * 2));
+                    view.SwitchFrame.WidthRequest * 2));
 
                 switch (view.SwitchLimit)
                 {
                     case SwitchLimit.Boundary:
-                        view._xRef = (view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2;
+                        view._xRef = ((view._backgroundFrame.WidthRequest - view.SwitchFrame.WidthRequest) / 2) - view.HorizontalSwitchMargin;
                         break;
                     case SwitchLimit.Centered:
-                        view._xRef = (view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2
-                                     - (view._backgroundFrame.WidthRequest / 2 - view._switchFrame.WidthRequest) / 2;
+                        view._xRef = (view._backgroundFrame.WidthRequest - view.SwitchFrame.WidthRequest) / 2
+                                     - (view._backgroundFrame.WidthRequest / 2 - view.SwitchFrame.WidthRequest) / 2;
                         break;
                     case SwitchLimit.Max:
-                        view._xRef = Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2) /
+                        view._xRef = Math.Max(view._backgroundFrame.WidthRequest, view.SwitchFrame.WidthRequest * 2) /
                                      4;
                         break;
                 }
 
-                //Console.WriteLine($"Outside: {Math.Max(view._backgroundFrame.WidthRequest, view._switchFrame.WidthRequest * 2) / 4}");
-                //Console.WriteLine($"Inside: {(((view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2) - (((view._backgroundFrame.WidthRequest / 2) - view._switchFrame.WidthRequest) / 2))}");
-                //Console.WriteLine($"Boundary: {(view._backgroundFrame.WidthRequest - view._switchFrame.WidthRequest) / 2}");
+                //Console.WriteLine($"Outside: {Math.Max(view._backgroundFrame.WidthRequest, view.SwitchFrame.WidthRequest * 2) / 4}");
+                //Console.WriteLine($"Inside: {(((view._backgroundFrame.WidthRequest - view.SwitchFrame.WidthRequest) / 2) - (((view._backgroundFrame.WidthRequest / 2) - view.SwitchFrame.WidthRequest) / 2))}");
+                //Console.WriteLine($"Boundary: {(view._backgroundFrame.WidthRequest - view.SwitchFrame.WidthRequest) / 2}");
                 //Console.WriteLine("-----------------------------");
 
                 if (view.State == SwitchState.Left)
-                    view._switchFrame.TranslationX = -view._xRef;
+                    view.SwitchFrame.TranslationX = -view._xRef;
                 else
-                    view._switchFrame.TranslationX = view._xRef;
+                    view.SwitchFrame.TranslationX = view._xRef;
             }
         }
 
@@ -374,16 +385,16 @@ namespace Global.InputForms
                     SendSwitchPanUpdatedEventArgs(PanStatus.Started);
                     break;
                 case GestureStatus.Running:
-                    _switchFrame.TranslationX = Math.Min(_xRef, Math.Max(-_xRef, _switchFrame.TranslationX + dragX));
+                    SwitchFrame.TranslationX = Math.Min(_xRef, Math.Max(-_xRef, SwitchFrame.TranslationX + dragX));
                     TmpTotalX = e.TotalX;
                     SendSwitchPanUpdatedEventArgs(PanStatus.Running);
                     break;
                 case GestureStatus.Completed:
                     var percentage = IsToggled
-                        ? Math.Abs(_switchFrame.TranslationX - _xRef) / (2 * _xRef) * 100
-                        : Math.Abs(_switchFrame.TranslationX + _xRef) / (2 * _xRef) * 100;
+                        ? Math.Abs(SwitchFrame.TranslationX - _xRef) / (2 * _xRef) * 100
+                        : Math.Abs(SwitchFrame.TranslationX + _xRef) / (2 * _xRef) * 100;
 
-                    if (_switchFrame.TranslationX > 0)
+                    if (SwitchFrame.TranslationX > 0)
                         GoToRight(percentage);
                     else
                         GoToLeft(percentage);
@@ -401,11 +412,11 @@ namespace Global.InputForms
             {
                 xRef = _xRef,
                 IsToggled = IsToggled,
-                TranslateX = _switchFrame.TranslationX,
+                TranslateX = SwitchFrame.TranslationX,
                 Status = status,
                 Percentage = IsToggled
-                    ? Math.Abs(_switchFrame.TranslationX - _xRef) / (2 * _xRef) * 100
-                    : Math.Abs(_switchFrame.TranslationX + _xRef) / (2 * _xRef) * 100
+                    ? Math.Abs(SwitchFrame.TranslationX - _xRef) / (2 * _xRef) * 100
+                    : Math.Abs(SwitchFrame.TranslationX + _xRef) / (2 * _xRef) * 100
             };
 
             //Console.WriteLine($"IsToggled: {ev.IsToggled}");
@@ -419,14 +430,14 @@ namespace Global.InputForms
 
         private void GoToLeft(double pourcentage = 0.0)
         {
-            if (Math.Abs(_switchFrame.TranslationX + _xRef) > 0.0)
+            if (Math.Abs(SwitchFrame.TranslationX + _xRef) > 0.0)
             {
                 var dur = 100;
                 var duration = Convert.ToUInt32(dur - dur * pourcentage / 100);
                 this.AbortAnimation("SwitchAnimation");
                 new Animation
                 {
-                    {0, 1, new Animation(v => _switchFrame.TranslationX = v, _switchFrame.TranslationX, -_xRef)},
+                    {0, 1, new Animation(v => SwitchFrame.TranslationX = v, SwitchFrame.TranslationX, -_xRef)},
                     {0, 1, new Animation(v => SendSwitchPanUpdatedEventArgs(PanStatus.Running))}
                 }.Commit(this, "SwitchAnimation", 16, duration, null, (d, b) =>
                 {
@@ -447,14 +458,14 @@ namespace Global.InputForms
 
         private void GoToRight(double pourcentage = 0.0)
         {
-            if (Math.Abs(_switchFrame.TranslationX - _xRef) > 0.0)
+            if (Math.Abs(SwitchFrame.TranslationX - _xRef) > 0.0)
             {
                 var dur = 100;
                 var duration = Convert.ToUInt32(dur - dur * pourcentage / 100);
                 this.AbortAnimation("SwitchAnimation");
                 new Animation
                 {
-                    {0, 1, new Animation(v => _switchFrame.TranslationX = v, _switchFrame.TranslationX, _xRef)},
+                    {0, 1, new Animation(v => SwitchFrame.TranslationX = v, SwitchFrame.TranslationX, _xRef)},
                     {0, 1, new Animation(v => SendSwitchPanUpdatedEventArgs(PanStatus.Running))}
                 }.Commit(this, "SwitchAnimation", 16, duration, null, (d, b) =>
                 {

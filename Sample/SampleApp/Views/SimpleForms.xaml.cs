@@ -58,19 +58,19 @@ namespace SampleApp.Views
 
         private void _RateSaleChanged(object sender, object e)
         {
-            if (sender is RateGroup rateGroup && e is KeyValuePair<string, object> kvp)
+            if (e is KeyValuePair<string, object> kvp)
                 _viewModel.Form.RateEnglish = Convert.ToInt32(kvp.Key);
         }
 
         private void _RateStreetChanged(object sender, object e)
         {
-            if (sender is RateGroup rateGroup && e is KeyValuePair<string, object> kvp)
+            if (e is KeyValuePair<string, object> kvp)
                 _viewModel.Form.RateSpanish = Convert.ToInt32(kvp.Key);
         }
 
         private void _RateBeautyChanged(object sender, object e)
         {
-            if (sender is RateGroup rateGroup && e is KeyValuePair<string, object> kvp)
+            if (e is KeyValuePair<string, object> kvp)
                 _viewModel.Form.RateRussian = Convert.ToInt32(kvp.Key);
         }
 

@@ -3,7 +3,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="SampleApp.Views.RateGroupPage">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SampleApp.Views.RateGroupPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
         <ScrollView >
             <StackLayout

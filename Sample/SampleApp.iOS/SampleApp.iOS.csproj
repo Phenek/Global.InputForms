@@ -186,6 +186,18 @@
     <BundleResource Include="Resources\GlobalLogo.png" />
     <BundleResource Include="Resources\GlobalLogo%402x.png" />
     <BundleResource Include="Resources\GlobalLogo%403x.png" />
+    <BundleResource Include="Resources\AppleGray%403x.png" />
+    <BundleResource Include="Resources\AndroidGray%403x.png" />
+    <BundleResource Include="Resources\AndroidBlack%403x.png" />
+    <BundleResource Include="Resources\AppleBlack%402x.png" />
+    <BundleResource Include="Resources\AppleGray.png" />
+    <BundleResource Include="Resources\AppleGray%402x.png" />
+    <BundleResource Include="Resources\AppleBlack%403x.png" />
+    <BundleResource Include="Resources\AndroidBlack%402x.png" />
+    <BundleResource Include="Resources\AndroidGray%402x.png" />
+    <BundleResource Include="Resources\AndroidBlack.png" />
+    <BundleResource Include="Resources\AndroidGray.png" />
+    <BundleResource Include="Resources\AppleBlack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

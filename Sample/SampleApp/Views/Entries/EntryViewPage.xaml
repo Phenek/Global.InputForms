@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.EntryViewPage">
+             x:Class="SampleApp.Views.EntryViewPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
         <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
@@ -12,28 +13,15 @@
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 
-                <!-- Standart Entry with Surrounded Info -->
-                <global:EntryView EntryBackgroundColor="#88FFFFFF" x:Name="_entry"
-                                  InfoViewType="Line"
-                                  Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
-                                  EntryText="BlaaBlaaBlaa"
-                                  LineColor="Purple"
-                                  ReturnType="Send"
-                                  LabelText="Entry">
-                    <global:EntryView.Behaviors>
-                        <valid:EmptyValidatorBehavior />
-                    </global:EntryView.Behaviors>
-                </global:EntryView>
-
-                <Label Text="Standart Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
-                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
-                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+                <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                <Label Text="{Binding EntryText, Mode=TwoWay}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
 
                 <!-- Besieged Entry with Surrounded Info -->
 
                 <global:EntryView StyleClass="BesiegedEntry"
                                   ReturnType="Send"
-                                  LabelText="Besieged Entry">
+                                  LabelText="Besieged Entry"
+                                  EntryText="{Binding EntryText, Mode=TwoWay}">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
                     </global:EntryView.Behaviors>
@@ -82,6 +70,23 @@
                 </global:EntryView>
 
                 <Label Text="Line Entry with Line Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+               <!-- Masked Entry Test with Surrounded Info -->
+                <global:EntryView EntryBackgroundColor="#88FFFFFF" x:Name="_entry"
+                                  InfoViewType="Line"
+                                  Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
+                                  EntryText="BlaaBlaaBlaa"
+                                  LineColor="Purple"
+                                  ReturnType="Send"
+                                  LabelText="Iban Bank">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Masked Entry Test with Surrounded Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 

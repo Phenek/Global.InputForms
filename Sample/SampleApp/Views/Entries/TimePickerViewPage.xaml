@@ -3,7 +3,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.TimePickerViewPage">
+             x:Class="SampleApp.Views.TimePickerViewPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
 
         <ScrollView BackgroundColor="WhiteSmoke">
@@ -12,7 +13,9 @@
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 
-                <Label Text="{Binding Time, Mode=TwoWay, StringFormat=\{0:h\\:mm\\:ss\} }" FontSize="20" />
+                <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                
+                <Label Text="{Binding Time, Mode=TwoWay, StringFormat=\{0:h\\:mm\\:ss\} }" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
 
 
                 <!-- Standart DatePicker with Surrounded Info -->

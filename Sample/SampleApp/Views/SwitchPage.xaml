@@ -14,12 +14,12 @@
             <global:Switch x:Name="_switchNitendo"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            SwitchHeightRequest="80"
-                           SwitchWidthRequest="125"
+                           SwitchWidthRequest="110"
                            SwitchCornerRadius="40"
                            HeightRequest="70"
                            CornerRadius="35"
                            WidthRequest="200"
-                           SwitchLimit="Max"
+                           SwitchLimit="Boundary"
                            SwitchColor="#EA5A50" BackgroundColor="#32B9D9">
 
                 <global:Switch.BackgroundContent>
@@ -35,7 +35,7 @@
 
                <global:Switch.SwitchContent>
                     <StackLayout Orientation="Horizontal">
-                        <FlexLayout x:Name="_nitendo" JustifyContent="SpaceEvenly" Margin="25,0,25,0" WidthRequest="200"> <!-- We need space here  -->
+                        <FlexLayout x:Name="_nitendo" JustifyContent="SpaceEvenly" WidthRequest="200"> <!-- We need space here  -->
                             <Label Text="Girls" TextColor="White" FontSize="Large" FontAttributes="Bold"
                                    HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
                                    VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
@@ -63,6 +63,7 @@
                            SwitchWidthRequest="34"
                            SwitchCornerRadius="17"
                            BackgroundColor="#A6A6A6"
+                           SwitchLimit="Max"
                            SwitchColor="White"/>
 
             
@@ -80,7 +81,7 @@
                 SwitchHeightRequest="36"
                 SwitchWidthRequest="36"
                 SwitchCornerRadius="18"
-                HorizontalSwitchMargin="2"
+                HorizontalSwitchMargin="1"
                 BackgroundColor="#EBECEC"
                 SwitchColor="White"
                 SwitchLimit="Boundary">
@@ -89,7 +90,7 @@
                         <Label Text=" |" TextColor="White" FontAttributes="Bold"
                                HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
                                VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
-                        <Label Text="⚬" FontSize="30" TextColor="#BBBBBB"
+                        <Label Text="〇" FontSize="12" FontAttributes="Bold" TextColor="#BBBBBB"
                                HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"
                                VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"/>
                     </StackLayout>

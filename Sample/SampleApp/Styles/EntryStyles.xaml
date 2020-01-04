@@ -9,19 +9,18 @@
            ApplyToDerivedTypes="true">
         <Setter Property="EntryLayoutType" Value="Besieged" />
         <Setter Property="InfoViewType" Value="Surrounded" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelTextColor" Value="#207093" />
+        <Setter Property="LabelHighlightedColor" Value="{StaticResource  PrimaryColor}" />
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="Blue" />
-        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
+        <Setter Property="BorderColor" Value="#207093" />
+        <Setter Property="BorderHighlightedColor" Value="{StaticResource  PrimaryColor}" />
+        <Setter Property="EntryBackgroundColor" Value="{StaticResource  LightBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />
         <Setter Property="EntryFontSize" Value="17" />
         <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryTextColor" Value="#207093" />
         <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
 
         <Setter Property="CornerRadius" Value="5" />
@@ -36,20 +35,19 @@
            ApplyToDerivedTypes="true">
         <Setter Property="EntryLayoutType" Value="Besieged" />
         <Setter Property="InfoViewType" Value="Surrounded" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelTextColor" Value="#207093" />
+        <Setter Property="LabelHighlightedColor" Value="{StaticResource  PrimaryColor}" />
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="LabelBackgroundColor" Value="WhiteSmoke" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="Blue" />
-        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="BorderColor" Value="#207093" />
+        <Setter Property="BorderHighlightedColor" Value="{StaticResource  PrimaryColor}" />
         <Setter Property="EntryBackgroundColor" Value="WhiteSmoke" />
         <Setter Property="EntryHeightRequest" Value="40" />
         <Setter Property="EntryFontSize" Value="17" />
         <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryTextColor" Value="#207093" />
         <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
 
         <Setter Property="CornerRadius" Value="5" />
@@ -65,18 +63,18 @@
            ApplyToDerivedTypes="true">
         <Setter Property="EntryLayoutType" Value="Surrounded" />
         <Setter Property="InfoViewType" Value="Surrounded" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelTextColor" Value="#207093" />
+        <Setter Property="LabelHighlightedColor" Value="{StaticResource  PrimaryColor}" />
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="BorderColor" Value="Blue" />
-        <Setter Property="BorderHighlightedColor" Value="CornflowerBlue" />
-        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
+        <Setter Property="BorderColor" Value="#207093" />
+        <Setter Property="BorderHighlightedColor" Value="{StaticResource  PrimaryColor}" />
+        <Setter Property="EntryBackgroundColor" Value="{StaticResource  LightBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />
         <Setter Property="EntryFontSize" Value="17" />
         <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryTextColor" Value="#207093" />
         <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
 
         <Setter Property="CornerRadius" Value="15" />
@@ -90,19 +88,19 @@
            ApplyToDerivedTypes="true">
         <Setter Property="EntryLayoutType" Value="Line" />
         <Setter Property="InfoViewType" Value="Line" />
-        <Setter Property="LabelTextColor" Value="Black" />
-        <Setter Property="LabelHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LabelTextColor" Value="#207093" />
+        <Setter Property="LabelHighlightedColor" Value="{StaticResource  PrimaryColor}" />
         <Setter Property="LabelFontSize" Value="14" />
         <Setter Property="FloatingLabel" Value="True" />
         <Setter Property="FloatingInfo" Value="True" />
-        <Setter Property="EntryBackgroundColor" Value="{StaticResource  EntryBackgroundColor}" />
+        <Setter Property="EntryBackgroundColor" Value="{StaticResource  LightBackgroundColor}" />
         <Setter Property="EntryHeightRequest" Value="40" />
         <Setter Property="EntryFontSize" Value="17" />
         <Setter Property="EntryFontAttributes" Value="None" />
-        <Setter Property="EntryTextColor" Value="Black" />
+        <Setter Property="EntryTextColor" Value="#207093" />
         <Setter Property="EntryPlaceholderColor" Value="#9B9B9B" />
         <Setter Property="LineColor" Value="Gray" />
-        <Setter Property="LineHighlightedColor" Value="CornflowerBlue" />
+        <Setter Property="LineHighlightedColor" Value="{StaticResource  PrimaryColor}" />
 
         <Setter Property="CornerRadius" Value="0" />
     </Style>

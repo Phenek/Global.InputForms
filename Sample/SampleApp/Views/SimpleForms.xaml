@@ -5,7 +5,8 @@
              x:Class="SampleApp.Views.SimpleForms"
              xmlns:valid="clr-namespace:SampleApp.Behaviors"
              xmlns:vm="clr-namespace:SampleApp.ViewModels"
-             xmlns:i18N="clr-namespace:Naxam.I18n.Forms;assembly=Naxam.I18n.Forms">
+             xmlns:i18N="clr-namespace:Naxam.I18n.Forms;assembly=Naxam.I18n.Forms"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
     <ContentPage.Content>
         <ScrollView BackgroundColor="LightBlue" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Grid x:Name="_gridLayout" RowSpacing="10" Padding="10, 30, 10, 10">

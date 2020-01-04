@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:SampleApp.Controls"
              NavigationPage.HasNavigationBar="false"
              BackgroundColor="{ StaticResource PrimaryColor}"
+            
              x:Class="SampleApp.MenuPage">
     <ContentPage.Content>
 
