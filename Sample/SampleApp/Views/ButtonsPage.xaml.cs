@@ -12,12 +12,6 @@ namespace SampleApp.Views
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
-
-            var button = new Button
-            {
-                Text = "test"
-            };
-            _stack.Children.Add(button);
         }
 
         private void SubmitClicked(object sender, EventArgs e)

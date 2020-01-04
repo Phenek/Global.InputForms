@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
+                    x:Class="SampleApp.Styles.ButtonStyles">
+
+    <Style Class="ButtonGreen" TargetType="global:ButtonContent"
+           ApplyToDerivedTypes="true">
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderColor" Value="Teal" />
+        <Setter Property="HighlightBorderColor" Value="Teal" />
+        <Setter Property="BackgroundColor" Value="Teal" />
+        <Setter Property="HighlightBackgroundColor" Value="PaleGreen" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="Teal" />
+    </Style>
+
+    <Style Class="ButtonRed" TargetType="global:ButtonContent"
+           ApplyToDerivedTypes="true">
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderColor" Value="Maroon" />
+        <Setter Property="HighlightBorderColor" Value="Maroon" />
+        <Setter Property="BackgroundColor" Value="Maroon" />
+        <Setter Property="HighlightBackgroundColor" Value="Salmon" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="Maroon" />
+    </Style>
+
+    <Style Class="ButtonGray" TargetType="global:ButtonContent"
+           ApplyToDerivedTypes="true">
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderColor" Value="Gray" />
+        <Setter Property="HighlightBorderColor" Value="Gray" />
+        <Setter Property="BackgroundColor" Value="Gray" />
+        <Setter Property="HighlightBackgroundColor" Value="LightGray" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="White" />
+    </Style>
+
+    <Style Class="ButtonBlue" TargetType="global:ButtonContent"
+           ApplyToDerivedTypes="true">
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="BorderColor" Value="Navy" />
+        <Setter Property="HighlightBorderColor" Value="Navy" />
+        <Setter Property="BackgroundColor" Value="Navy" />
+        <Setter Property="HighlightBackgroundColor" Value="LightSkyBlue" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="HighlightTextColor" Value="Navy" />
+    </Style>
+
+</ResourceDictionary>

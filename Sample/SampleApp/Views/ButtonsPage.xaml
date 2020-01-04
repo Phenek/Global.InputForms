@@ -13,10 +13,10 @@
                 x:Name="_stack"
                 Spacing="10"
                 Padding="30"
-                VerticalOptions="Center"
+                VerticalOptions="Start"
                 HorizontalOptions="CenterAndExpand">
 
-                <!-- Simple Button without content -->
+                <!-- Simple Busy Button without content -->
                 <global:ButtonContent
                     StyleClass="ButtonGreen"
                     Clicked="SubmitClicked"
@@ -35,12 +35,12 @@
                     IsBusy="{Binding IsBusy, Mode=OneWay}"
                     Text="Sign In"/>
 
-                <Label Text="Simple Buttons without content"
+                <Label Text="Simple Busy Buttons without content"
                        FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
 
                 <!-- Simple Button with content -->
-                <global:ButtonContent VerticalOptions="Start"
+                <global:ButtonContent VerticalOptions="Start" BorderWidth="1"
                                       Clicked="ParameterClicked" BackgroundColor="White"
                                       HighlightBackgroundColor="LightGray">
                     <StackLayout Orientation="Horizontal">
