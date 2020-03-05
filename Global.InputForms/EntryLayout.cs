@@ -1,4 +1,5 @@
 ﻿using System;
+using Global.InputForms.Converters;
 using Xamarin.Forms;
 
 namespace Global.InputForms
@@ -301,7 +302,7 @@ namespace Global.InputForms
             };
             RowSpacing = 0;
             _rowLabel = new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)};
-            _rowInfo = new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)};
+            _rowInfo = new RowDefinition {Height = new GridLength( InfoFontSize + 10 + InfoMargin.Top + InfoMargin.Bottom, GridUnitType.Absolute)};
             RowDefinitions = new RowDefinitionCollection
             {
                 _rowLabel,
@@ -318,6 +319,9 @@ namespace Global.InputForms
                 HasShadow = false
             };
             _frameEntry.GestureRecognizers.Add(TapGesture);
+            _frameEntry.SetBinding(IsEnabledProperty,
+                new Binding(nameof(IsReadOnly))
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             _frameEntry.SetBinding(Frame.CornerRadiusProperty,
                 new Binding(nameof(CornerRadius)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(HeightRequestProperty,
@@ -334,6 +338,9 @@ namespace Global.InputForms
                 InputTransparent = true
             };
             _line.GestureRecognizers.Add(TapGesture);
+            _line.SetBinding(IsEnabledProperty,
+                new Binding(nameof(IsReadOnly))
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             _line.SetBinding(MarginProperty,
                 new Binding(nameof(LineMargin)) {Source = this, Mode = BindingMode.OneWay});
 
@@ -349,6 +356,9 @@ namespace Global.InputForms
                 InputTransparent = true
             };
             _dumboView.GestureRecognizers.Add(TapGesture);
+            _dumboView.SetBinding(IsEnabledProperty,
+                new Binding(nameof(IsReadOnly))
+                { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             Children.Add(_dumboView, 1, 2, 1, 2);
             _dumboView.SizeChanged += _indigo_SizeChanged;
 
@@ -645,6 +655,8 @@ namespace Global.InputForms
                 VerticalTextAlignment = TextAlignment.Center
             };
             entryLayout._label.GestureRecognizers.Add(entryLayout.TapGesture);
+            entryLayout._label.SetBinding(IsEnabledProperty, new Binding(nameof(IsReadOnly))
+                { Source = entryLayout, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
 
             entryLayout._label.SetBinding(Label.FontAttributesProperty, new Binding(nameof(LabelFontAttributes))
                 {Source = entryLayout, Mode = BindingMode.OneWay});
@@ -1116,11 +1128,6 @@ namespace Global.InputForms
                     {Source = entryLayout, Mode = BindingMode.OneWay});
                 entryLayout._infoLabel.SetBinding(MarginProperty, new Binding(nameof(InfoMargin))
                     {Source = entryLayout, Mode = BindingMode.OneWay});
-
-                entryLayout._rowInfo.Height =
-                    new GridLength(
-                        entryLayout.InfoFontSize + 10 + entryLayout.InfoMargin.Top + entryLayout.InfoMargin.Bottom,
-                        GridUnitType.Absolute);
 
                 if (entryLayout.FloatingInfo)
                     entryLayout._infoLabel.TranslationY = -entryLayout.InfoFontSize + -entryLayout.InfoMargin.Top;

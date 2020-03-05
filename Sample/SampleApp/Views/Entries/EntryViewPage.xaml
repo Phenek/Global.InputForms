@@ -21,6 +21,7 @@
                 <global:EntryView StyleClass="BesiegedEntry"
                                   ReturnType="Send"
                                   LabelText="Besieged Entry"
+                                  IsReadOnly="True"
                                   EntryText="{Binding EntryText, Mode=TwoWay}">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
@@ -35,6 +36,7 @@
 
                 <global:EntryView StyleClass="BesiegedEntryOverlaLabel"
                                   ReturnType="Send"
+                                  IsReadOnly="True"
                                   LabelText="Besieged Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />
@@ -50,6 +52,7 @@
                 <!-- Rounded Entry with Surrounded Info -->
                 <global:EntryView StyleClass="RoundedEntry"
                                   ReturnType="Send"
+                                  IsReadOnly="True"
                                   LabelText="Rounded Entry">
                     <global:EntryView.Behaviors>
                         <valid:EmptyValidatorBehavior />

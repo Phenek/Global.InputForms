@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageVersion>0.0.3</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>Phenek</Authors>
     <Description>Global.InputForms provides a Xamarin.Forms essentials controls for iOS and Android apps.</Description>
     <PackageId>Global.InputForms</PackageId>
-    <PackageIconUrl>https://github.com/Phenek/Global.InputForms/master/Icon.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/Phenek/Global.InputForms/blob/master/LICENSE</PackageLicenseUrl>
     <Owners>Vice</Owners>
     <PackageProjectUrl>https://github.com/Phenek/Global.InputForms/</PackageProjectUrl>
     <PackageTags>map portable pcl android ios xamarin monoandroid monodroid xamarin.forms</PackageTags>
     <ReleaseVersion>1.1.1</ReleaseVersion>
+    <PackageIcon>Icon-128.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,5 +39,8 @@
     <Compile Remove="InputForms.cs" />
     <Compile Remove="App.xaml.cs" />
     <Compile Remove="Interfaces\IInfoView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Icons\Icon-128.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 </Project>
