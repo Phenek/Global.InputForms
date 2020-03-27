@@ -10,6 +10,7 @@
         <ScrollView BackgroundColor="WhiteSmoke">
             <StackLayout
                 Padding="40,10,40,10"
+                Spacing="10"
                 HeightRequest="900"
                 HorizontalOptions="CenterAndExpand">
 

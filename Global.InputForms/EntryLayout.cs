@@ -282,7 +282,6 @@ namespace Global.InputForms
         private readonly View _dumboView;
         private Label _infoLabel;
         private Label _label;
-        private readonly RowDefinition _rowInfo;
         private readonly RowDefinition _rowLabel;
         protected View Input;
         protected TapGestureRecognizer TapGesture = new TapGestureRecognizer();
@@ -302,12 +301,10 @@ namespace Global.InputForms
             };
             RowSpacing = 0;
             _rowLabel = new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)};
-            _rowInfo = new RowDefinition {Height = new GridLength( InfoFontSize + 10 + InfoMargin.Top + InfoMargin.Bottom, GridUnitType.Absolute)};
             RowDefinitions = new RowDefinitionCollection
             {
                 _rowLabel,
-                new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)},
-                _rowInfo
+                new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)}
             };
 
             TapGesture = new TapGestureRecognizer();
@@ -458,11 +455,11 @@ namespace Global.InputForms
 
             if (FloatingInfo && _infoLabel != null && InfoIsVisible != isVisible)
             {
-                var translateY = 0.0;
+                var translateY = InfoFontSize + InfoMargin.Top + InfoMargin.Bottom;
                 if (isVisible)
                     InfoIsVisible = isVisible;
                 else
-                    translateY = -InfoFontSize + -InfoMargin.Top;
+                    translateY = 0;
 
                 var smoothAnimation = new Animation
                 {
@@ -1109,7 +1106,10 @@ namespace Global.InputForms
             }
             else
             {
-                entryLayout._infoLabel = new Label();
+                entryLayout._infoLabel = new Label()
+                {
+                    VerticalOptions = LayoutOptions.End
+                };
                 entryLayout._infoLabel.SetBinding(Label.FontAttributesProperty,
                     new Binding(nameof(InfoFontAttributes))
                         {Source = entryLayout, Mode = BindingMode.OneWay});
@@ -1129,13 +1129,13 @@ namespace Global.InputForms
                 entryLayout._infoLabel.SetBinding(MarginProperty, new Binding(nameof(InfoMargin))
                     {Source = entryLayout, Mode = BindingMode.OneWay});
 
-                if (entryLayout.FloatingInfo)
-                    entryLayout._infoLabel.TranslationY = -entryLayout.InfoFontSize + -entryLayout.InfoMargin.Top;
+                if (!entryLayout.FloatingInfo)
+                    entryLayout._infoLabel.TranslationY = entryLayout.InfoFontSize + entryLayout.InfoMargin.Top + entryLayout.InfoMargin.Bottom;
 
                 entryLayout.Children.Insert(0, entryLayout._infoLabel);
                 SetColumn(entryLayout._infoLabel, 1);
                 SetColumnSpan(entryLayout._infoLabel, 3);
-                SetRow(entryLayout._infoLabel, 2);
+                SetRow(entryLayout._infoLabel, 1);
             }
         }
 
