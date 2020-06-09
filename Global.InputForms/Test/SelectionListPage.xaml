@@ -1,17 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:popup=
-             xmlns:views="clr-namespace:SampleApp.Views"
-             x:Class="SampleApp.Views.SelectionListPage">
+             xmlns:views="clr-namespace:Global.InputForms"
+             x:Class="Global.InputForms.SelectionListPage">
     <ContentPage.Content>
-            <CollectionView x:Name="_collection" BackgroundColor="{StaticResource BackgroundColor}" SelectionMode="None" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <views:SelectionCell BindingContext="{Binding .}">
-                            </views:SelectionCell>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+            <StackLayout Padding="20" BackgroundColor="LightGray" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+            <CarouselView x:Name="_carousel" PeekAreaInsets="80"
+                          HeightRequest="200" >
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="0" />
+                    </CarouselView.ItemsLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Label HeightRequest="20" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"
+                          StyleClass="CellButton"
+                          FontSize="Large"
+                               TextColor="DarkGray"
+                          Margin="20,5,20,5"
+                          Text="{Binding .}"
+                          Padding="0">
+                        </Label>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            </StackLayout>
     </ContentPage.Content>
 </ContentPage>

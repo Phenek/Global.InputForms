@@ -41,6 +41,25 @@ namespace SampleApp.ViewModels
                 {"2", _i18N.GetText("Form.Woman")}
             };
 
+            Test = new ObservableDictionary<string, object>
+            {
+                {"1", _i18N.GetText("Form.Man")},
+                {"2", _i18N.GetText("Form.Woman")},
+                {"3", _i18N.GetText("Form.English") },
+                {"4", _i18N.GetText("Form.Spanish") },
+                {"5", _i18N.GetText("Form.Russian") },
+                {"6", "test1" },
+                {"7", "test2" },
+                {"8", "test3" },
+                {"9", "test4" },
+                {"10", "test5" },
+                {"11", "test6" },
+                {"12", "test7" },
+                {"13", "test8" },
+                {"14", "test9" },
+                {"15", "test10" },
+            };
+
             Languages = new ObservableCollection<string>
             {
                 _i18N.GetText("Form.English"),
@@ -89,6 +108,7 @@ namespace SampleApp.ViewModels
 
         public ObservableDictionary<string, object> Rates { get; set; }
         public ObservableDictionary<string, object> Genders { get; set; }
+        public ObservableDictionary<string, object> Test { get; set; }
         public ObservableCollection<string> Languages { get; set; }
 
         public async void OnSubmit()

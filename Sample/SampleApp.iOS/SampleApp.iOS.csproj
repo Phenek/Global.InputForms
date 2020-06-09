@@ -169,15 +169,15 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1039999" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.772" />
     <PackageReference Include="Naxam.I18n">
-      <Version>1.0.1</Version>
+      <Version>1.0.2.2</Version>
     </PackageReference>
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie">
-      <Version>2.7.1</Version>
+      <Version>3.1.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.1.0</Version>
+      <Version>1.5.3.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

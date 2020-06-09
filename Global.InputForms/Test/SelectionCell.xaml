@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms"
-             x:Class="SampleApp.Views.SelectionCell">
+             x:Class="Global.InputForms.SelectionCell"
+             HeightRequest="20">
 
-    <global:ButtonContent x:Name="_btn"
+    <Label HeightRequest="20" VerticalOptions="Center"
                           StyleClass="CellButton"
+                          FontSize="Large"
                           Margin="20,5,20,5"
                           Padding="0">
-    </global:ButtonContent>
+    </Label>
 </ContentView>

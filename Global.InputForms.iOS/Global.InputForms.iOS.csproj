@@ -99,6 +99,8 @@
     <Compile Include="InputForms.cs" />
     <Compile Include="Renderers\BlankPickerRenderer.cs" />
     <Compile Include="Renderers\BlankTimePickerRenderer.cs" />
+    <Compile Include="Renderers\TestEntryRenderer.cs" />
+    <Compile Include="Renderers\KeyboardRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -107,7 +109,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1039999" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.772" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
