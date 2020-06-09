@@ -1,5 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Global.InputForms.Test.CollectionKeyboard">
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="Red"
+             x:Class="Global.InputForms.CollectionKeyboard">
     <ContentView.Content>
+        <StackLayout Padding="20" BackgroundColor="Red" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+            <Label Text="TEST" TextColor="Black"/>
+            <CarouselView x:Name="_carousel" PeekAreaInsets="80"
+                          HeightRequest="200" >
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="0" />
+                    </CarouselView.ItemsLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Label HeightRequest="20" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"
+                          StyleClass="CellButton"
+                          FontSize="Large"
+                               TextColor="DarkGray"
+                          Margin="20,5,20,5"
+                          Text="{Binding .}"
+                          Padding="0">
+                        </Label>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </StackLayout>
     </ContentView.Content>
 </ContentView>

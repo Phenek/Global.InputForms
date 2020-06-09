@@ -10,7 +10,6 @@
     <Owners>Vice</Owners>
     <PackageProjectUrl>https://github.com/Phenek/Global.InputForms/</PackageProjectUrl>
     <PackageTags>map portable pcl android ios xamarin monoandroid monodroid xamarin.forms</PackageTags>
-    <ReleaseVersion>1.1.1</ReleaseVersion>
     <PackageIcon>Icon-128.png</PackageIcon>
   </PropertyGroup>
 
@@ -25,7 +24,7 @@
     <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1039999" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.772" />
     <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +33,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Converters\" />
     <Folder Include="Extentions\" />
+    <Folder Include="Test\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="InputForms.cs" />
@@ -41,6 +41,6 @@
     <Compile Remove="Interfaces\IInfoView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Icons\Icon-128.png" Pack="true" PackagePath=""/>
+    <None Include="..\Icons\Icon-128.png" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>

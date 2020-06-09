@@ -8,7 +8,7 @@
     <ContentPage.Content>
 
         <ScrollView BackgroundColor="WhiteSmoke">
-            <StackLayout
+            <StackLayout x:Name="_stack"
                 Padding="40,10,40,10"
                 Spacing="10"
                 HeightRequest="900"

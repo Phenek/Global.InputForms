@@ -1,4 +1,6 @@
-﻿using SampleApp.ViewModels;
+﻿using System.Linq;
+using Global.InputForms;
+using SampleApp.ViewModels;
 using Xamarin.Forms;
 
 namespace SampleApp.Views
@@ -11,6 +13,19 @@ namespace SampleApp.Views
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
+
+
+            var button = new TestEntry()
+            {
+                Text = "NewPickerTest",
+                ItemsSource = _viewModel.Test.Values.ToList()
+            };
+            _stack.Children.Add(button);
+        }
+
+        private void Button_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new SelectionListPage(_viewModel.Test, _viewModel.Form, "LastName", "Test"));
         }
 
         protected override void OnAppearing()
