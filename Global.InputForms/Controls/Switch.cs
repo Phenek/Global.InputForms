@@ -118,6 +118,8 @@ namespace Global.InputForms
                 new Binding(nameof(WidthRequest)) { Source = this, Mode = BindingMode.OneWay });
             _backgroundFrame.SetBinding(VisualElement.BackgroundColorProperty,
                 new Binding(nameof(BackgroundColor)) { Source = this, Mode = BindingMode.OneWay });
+            _backgroundFrame.SetBinding(Frame.BorderColorProperty,
+                new Binding(nameof(BackgroundColor)) { Source = this, Mode = BindingMode.OneWay });
             _backgroundFrame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(BackgroundContent)) { Source = this, Mode = BindingMode.OneWay });
 
@@ -138,6 +140,8 @@ namespace Global.InputForms
             SwitchFrame.SetBinding(ContentView.ContentProperty,
                 new Binding(nameof(SwitchContent)) { Source = this, Mode = BindingMode.TwoWay });
             SwitchFrame.SetBinding(VisualElement.BackgroundColorProperty,
+                new Binding(nameof(SwitchColor)) { Source = this, Mode = BindingMode.OneWay });
+            SwitchFrame.SetBinding(Frame.BorderColorProperty,
                 new Binding(nameof(SwitchColor)) { Source = this, Mode = BindingMode.OneWay });
 
             Children.Add(SwitchFrame, 0, 0);
