@@ -10,7 +10,6 @@
     <Owners>Vice</Owners>
     <PackageProjectUrl>https://github.com/Phenek/Global.InputForms/</PackageProjectUrl>
     <PackageTags>map portable pcl android ios xamarin monoandroid monodroid xamarin.forms</PackageTags>
-    <ReleaseVersion>1.1.1</ReleaseVersion>
     <PackageIcon>Icon-128.png</PackageIcon>
   </PropertyGroup>
 
@@ -41,6 +40,6 @@
     <Compile Remove="Interfaces\IInfoView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Icons\Icon-128.png" Pack="true" PackagePath=""/>
+    <None Include="..\Icons\Icon-128.png" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>

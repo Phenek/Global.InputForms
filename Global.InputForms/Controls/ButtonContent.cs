@@ -94,6 +94,12 @@ namespace Global.InputForms
             typeof(Color), typeof(ButtonContent), Color.White);
 
         /// <summary>
+        ///     The loader color property.
+        /// </summary>
+        public static readonly BindableProperty LoaderProperty = BindableProperty.Create(nameof(Loader),
+            typeof(View), typeof(ButtonContent), null, propertyChanged : LoaderChanged);
+
+        /// <summary>
         ///     The Background Color Property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty =
@@ -142,6 +148,8 @@ namespace Global.InputForms
         private readonly Frame _frame;
         private readonly ActivityIndicator _loader;
 
+        public event EventHandler<bool> BusyChanged;
+
         public ButtonContent()
         {
             _frame = new Frame
@@ -185,18 +193,6 @@ namespace Global.InputForms
             _button.SetBinding(Button.FontAttributesProperty,
                 new Binding(nameof(FontAttributes)) {Source = this, Mode = BindingMode.OneWay});
 
-            _loader = new ActivityIndicator
-            {
-                Margin = 0,
-                IsRunning = true,
-                IsVisible = false,
-                InputTransparent = true,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
-            };
-            _loader.SetBinding(ActivityIndicator.ColorProperty,
-                new Binding(nameof(LoaderColor)) {Source = this, Mode = BindingMode.OneWay});
-
             _button.SetBinding(Button.PaddingProperty,
                 new Binding(nameof(Padding)) {Source = this, Mode = BindingMode.OneWay});
 
@@ -209,7 +205,18 @@ namespace Global.InputForms
 
             Children.Add(_button, 0, 0);
             Children.Add(_frame, 0, 0);
-            Children.Add(_loader, 0, 0);
+
+            Loader = _loader = new ActivityIndicator
+            {
+                Margin = 0,
+                IsRunning = true,
+                IsVisible = false,
+                InputTransparent = true,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
+            };
+            _loader.SetBinding(ActivityIndicator.ColorProperty,
+                new Binding(nameof(LoaderColor)) { Source = this, Mode = BindingMode.OneWay });
         }
 
         public View Content
@@ -351,6 +358,16 @@ namespace Global.InputForms
         }
 
         /// <summary>
+        ///     Gets or sets ths custom loader View value.
+        /// </summary>
+        /// <value>The loader color.</value>
+        public View Loader
+        {
+            get => (View)GetValue(LoaderProperty);
+            set => SetValue(LoaderProperty, value);
+        }
+
+        /// <summary>
         ///     Gets or sets background color value.
         /// </summary>
         /// <value>The background color.</value>
@@ -477,15 +494,32 @@ namespace Global.InputForms
 
             if ((bool) newValue)
             {
-                button._loader.IsVisible = true;
+                button.Loader.IsVisible = true;
                 button._button.Text = string.Empty;
                 button._button.Image = null;
             }
             else
             {
-                button._loader.IsVisible = false;
+                button.Loader.IsVisible = false;
                 button._button.Text = button.Text;
                 button._button.Image = button.Image;
+            }
+            button.BusyChanged?.Invoke(button, (bool) newValue);
+        }
+
+        private static void LoaderChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is ButtonContent button)) return;
+
+            if (oldValue is View oldLoader && button.Children.Contains(oldLoader))
+            {
+                button.Children.Remove(oldLoader);
+            }
+
+            if (newValue is View newLoader)
+            {
+                newLoader.IsVisible = button.IsBusy;
+                button.Children.Add(newLoader, 0, 0);
             }
         }
 
