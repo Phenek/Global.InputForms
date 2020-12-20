@@ -91,6 +91,8 @@
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
 
+                <Entry />
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

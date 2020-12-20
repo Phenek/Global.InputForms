@@ -89,6 +89,8 @@
                 <Label Text="Line DatePicker with Line Info" FontSize="Small" TextColor="Gray"
                        HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <DatePicker/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

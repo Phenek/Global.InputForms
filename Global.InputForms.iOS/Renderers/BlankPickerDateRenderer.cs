@@ -48,6 +48,7 @@ namespace Global.InputForms.iOS.Renderers
 
                 _picker = new UIDatePicker {Mode = UIDatePickerMode.Date, TimeZone = new NSTimeZone("UTC")};
                 _picker.ValueChanged += HandleValueChanged;
+                _picker.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
                 Control.InputView = _picker;
                 Control.InputView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
 
