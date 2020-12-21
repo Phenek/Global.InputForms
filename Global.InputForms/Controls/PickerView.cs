@@ -180,7 +180,7 @@ namespace Global.InputForms
         private static void SelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is PickerView picker)
-                picker._picker.SelectedItem = (string) newValue;
+                picker._picker.SelectedItem = newValue;
         }
 
         public event EventHandler DoneClicked;
