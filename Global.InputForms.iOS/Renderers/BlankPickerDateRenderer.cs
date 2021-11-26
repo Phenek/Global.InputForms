@@ -132,7 +132,7 @@ namespace Global.InputForms.iOS.Renderers
                     {
                         blankPicker.Text = Control.Text = _picker.Date.ToDateTime().Date.ToString(blankPicker.Format);
                         blankPicker.Date = _picker.Date.ToDateTime().Date;
-                        if (EController != null)
+                        if (blankPicker != null)
                             blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
