@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Foundation;
 using Global.InputForms.iOS;
-using Lottie.Forms.iOS.Renderers;
+using Lottie.Forms.Platforms.Ios;
 using Naxam.I18n;
 using Naxam.I18n.Forms;
 using Naxam.I18n.iOS;
@@ -36,7 +36,7 @@ namespace SampleApp.iOS
             DependencyService.Register<IDependencyGetter, DepenencyGetter>();
 
             //Lottie Animation
-            AnimationViewRenderer.Init();
+            //AnimationViewRenderer.Init();
 
             LoadApplication(new App());
 
