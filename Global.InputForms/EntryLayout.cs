@@ -284,7 +284,10 @@ namespace Global.InputForms
         private Label _label;
         private readonly RowDefinition _rowLabel;
         protected View Input;
-        protected TapGestureRecognizer TapGesture = new TapGestureRecognizer();
+        protected TapGestureRecognizer FrameTapGesture = new TapGestureRecognizer();
+        protected TapGestureRecognizer LineTapGesture = new TapGestureRecognizer();
+        protected TapGestureRecognizer DumboViewTapGesture = new TapGestureRecognizer();
+        protected TapGestureRecognizer LabelTapGesture;
 
         public EventHandler<EventArgs> Validators;
 
@@ -307,15 +310,13 @@ namespace Global.InputForms
                 new RowDefinition {Height = new GridLength(1, GridUnitType.Auto)}
             };
 
-            TapGesture = new TapGestureRecognizer();
-            TapGesture.Tapped += (s, e) => { Focus(); };
-
             _frameEntry = new Frame
             {
                 Padding = 0,
                 HasShadow = false
             };
-            _frameEntry.GestureRecognizers.Add(TapGesture);
+            FrameTapGesture.Tapped += TappedGestures;
+            _frameEntry.GestureRecognizers.Add(FrameTapGesture);
             _frameEntry.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
                 { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
@@ -334,7 +335,8 @@ namespace Global.InputForms
                 BackgroundColor = LineColor,
                 InputTransparent = true
             };
-            _line.GestureRecognizers.Add(TapGesture);
+            LineTapGesture.Tapped += TappedGestures;
+            _line.GestureRecognizers.Add(LineTapGesture);
             _line.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
                 { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
@@ -352,7 +354,8 @@ namespace Global.InputForms
                 WidthRequest = 0,
                 InputTransparent = true
             };
-            _dumboView.GestureRecognizers.Add(TapGesture);
+            DumboViewTapGesture.Tapped += TappedGestures;
+            _dumboView.GestureRecognizers.Add(DumboViewTapGesture);
             _dumboView.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
                 { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
@@ -361,6 +364,11 @@ namespace Global.InputForms
 
             Children.Add(_frameEntry, 1, 4, 1, 2);
             Children.Add(_line, 1, 4, 1, 2);
+        }
+
+        private void TappedGestures(object sender, EventArgs e)
+        {
+            Focus();
         }
 
         public new bool IsFocused { get; set; }
@@ -651,7 +659,8 @@ namespace Global.InputForms
                 VerticalOptions = LayoutOptions.Center,
                 VerticalTextAlignment = TextAlignment.Center
             };
-            entryLayout._label.GestureRecognizers.Add(entryLayout.TapGesture);
+            entryLayout.LabelTapGesture = new TapGestureRecognizer();
+            entryLayout._label.GestureRecognizers.Add(entryLayout.LabelTapGesture);
             entryLayout._label.SetBinding(IsEnabledProperty, new Binding(nameof(IsReadOnly))
                 { Source = entryLayout, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
 

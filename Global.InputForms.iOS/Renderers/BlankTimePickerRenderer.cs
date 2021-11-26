@@ -105,7 +105,8 @@ namespace Global.InputForms.iOS.Renderers
                         var time = new TimeSpan(timeOfDay.Hours, timeOfDay.Minutes, 0);
                         blankPicker.Text = Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
                         blankPicker.Time = time;
-                        blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                        if (blankPicker != null)
+                            blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
                 doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
@@ -118,12 +119,14 @@ namespace Global.InputForms.iOS.Renderers
 
         private void OnEnded(object sender, EventArgs eventArgs)
         {
-            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+            if (ElementController != null)
+                ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
 
         private void OnStarted(object sender, EventArgs eventArgs)
         {
-            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
+            if (ElementController != null)
+                ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
         }
 
         private void OnValueChanged(object sender, EventArgs e)

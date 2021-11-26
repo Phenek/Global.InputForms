@@ -15,7 +15,7 @@
                 HorizontalOptions="CenterAndExpand">
 
                 <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
-                <Label Text="{Binding EntryText, Mode=TwoWay}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                <Label Text="{Binding EntryText}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
 
                 <!-- Besieged Entry with Surrounded Info -->
 

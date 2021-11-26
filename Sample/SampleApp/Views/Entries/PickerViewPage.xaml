@@ -16,7 +16,7 @@
 
                 <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
                 
-                <Label Text="{Binding SelectedItem, Mode=TwoWay}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                <Label Text="{Binding SelectedItem}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
 
 
                 <!-- Besieged DatePicker with Surrounded Info -->

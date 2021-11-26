@@ -33,7 +33,8 @@ namespace Global.InputForms.Droid.Renderers
         {
             var time = blankPicker.Time = new TimeSpan(hoursOfDay, minute, 0);
             Control.Text = new DateTime(time.Ticks).ToString(blankPicker.Format);
-            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            if (EController != null)
+                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
             HideKeyboard();
             blankPicker.SendDoneClicked();
@@ -118,7 +119,8 @@ namespace Global.InputForms.Droid.Renderers
             _dialog.SetButton(blankPicker.DoneButtonText, (k, p) => { });
             _dialog.SetButton2(blankPicker.CancelButtonText, (k, p) =>
             {
-                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+                if (EController != null)
+                    EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
                 Control.ClearFocus();
                 HideKeyboard();
                 blankPicker.SendCancelClicked();
@@ -132,7 +134,8 @@ namespace Global.InputForms.Droid.Renderers
         private void _dialog_DismissEvent(object sender, EventArgs e)
         {
             blankPicker.Unfocus();
-            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            if (EController != null)
+                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
             HideKeyboard();
         }

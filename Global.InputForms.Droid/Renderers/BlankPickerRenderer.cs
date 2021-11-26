@@ -109,14 +109,16 @@ namespace Global.InputForms.Droid.Renderers
             builder.SetNegativeButton(blankPicker.CancelButtonText ?? "Cancel", (s, a) =>
             {
                 blankPicker.SendCancelClicked();
-                EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                if (EController != null)
+                    EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 _dialog = null;
                 Control.ClearFocus();
                 HideKeyboard();
             });
             builder.SetPositiveButton(blankPicker.DoneButtonText ?? "OK", (s, a) =>
             {
-                EController.SetValueFromRenderer(BlankPicker.SelectedIndexProperty, picker.Value);
+                if (EController != null)
+                    EController.SetValueFromRenderer(BlankPicker.SelectedIndexProperty, picker.Value);
                 //blankPicker.SelectedItem = picker.Value;
                 blankPicker.SendDoneClicked();
                 // It is possible for the Content of the Page to be changed on SelectedIndexChanged. 
@@ -136,7 +138,8 @@ namespace Global.InputForms.Droid.Renderers
             _dialog = builder.Create();
             _dialog.DismissEvent += (s, args) =>
             {
-                EController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                if (EController != null)
+                    EController?.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
                 HideKeyboard();
             };

@@ -40,7 +40,8 @@ namespace Global.InputForms.Droid.Renderers
         {
             blankPicker.Text = _dialog.DatePicker.DateTime.ToString(blankPicker.Format);
             blankPicker.Date = new DateTime(year, month, dayOfMonth);
-            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            if (EController != null)
+                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
             HideKeyboard();
 
@@ -119,14 +120,16 @@ namespace Global.InputForms.Droid.Renderers
                 blankPicker.Text = _dialog.DatePicker.DateTime.ToString(blankPicker.Format);
                 blankPicker.Date = _dialog.DatePicker.DateTime;
                 blankPicker.SendDoneClicked();
-                EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                if (EController != null)
+                    EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
                 HideKeyboard();
             });
             _dialog.SetButton2(blankPicker.CancelButtonText, (s, el) =>
             {
                 blankPicker.SendCancelClicked();
-                EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                if (EController != null)
+                    EController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                 Control.ClearFocus();
                 HideKeyboard();
             });
@@ -140,7 +143,8 @@ namespace Global.InputForms.Droid.Renderers
         private void _dialog_DismissEvent(object sender, EventArgs e)
         {
             blankPicker.Unfocus();
-            EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
+            if (EController != null)
+                EController.SetValueFromRenderer(VisualElement.IsFocusedProperty, false);
             Control.ClearFocus();
             HideKeyboard();
         }

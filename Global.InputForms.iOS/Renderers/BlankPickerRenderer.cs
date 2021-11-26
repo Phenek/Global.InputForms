@@ -117,8 +117,8 @@ namespace Global.InputForms.iOS.Renderers
                         if (s.SelectedIndex == -1 && blankPicker.Items != null && blankPicker.Items.Count > 0)
                             UpdatePickerSelectedIndex(0);
                         UpdatePickerFromModel(s);
-
-                        ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                        if (ElementController != null)
+                            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
                 doneButton.Clicked += (sender, e) => { blankPicker.SendDoneClicked(); };
@@ -141,12 +141,14 @@ namespace Global.InputForms.iOS.Renderers
 
         private void OnEnded(object sender, EventArgs eventArgs)
         {
-            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+            if (ElementController != null)
+                ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
 
         private void OnStarted(object sender, EventArgs eventArgs)
         {
-            ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
+            if (ElementController != null)
+                ElementController.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
         }
 
         private void RowsCollectionChanged(object sender, EventArgs e)
@@ -178,7 +180,8 @@ namespace Global.InputForms.iOS.Renderers
                 var oldText = Control.Text;
                 blankPicker.Text = Control.Text = s.SelectedItem;
                 UpdatePickerNativeSize(oldText);
-                ElementController.SetValueFromRenderer(BlankPicker.SelectedIndexProperty, s.SelectedIndex);
+                if (ElementController != null)
+                    ElementController.SetValueFromRenderer(BlankPicker.SelectedIndexProperty, s.SelectedIndex);
             }
         }
 

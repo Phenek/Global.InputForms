@@ -15,7 +15,7 @@
                 HorizontalOptions="CenterAndExpand">
 
                 <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
-                <Label Text="{Binding Date, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Label Text="{Binding Date}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
 
                 <!-- Standart DatePicker with Surrounded Info -->
                 <global:DatePickerView StyleClass="RoundedEntry"

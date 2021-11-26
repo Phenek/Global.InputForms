@@ -16,7 +16,7 @@
 
                 <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
                 
-                <Label Text="{Binding Time, Mode=TwoWay, StringFormat=\{0:h\\:mm\\:ss\} }" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                <Label Text="{Binding Time, StringFormat=\{0:h\\:mm\\:ss\} }" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
 
 
                 <!-- Standart DatePicker with Surrounded Info -->

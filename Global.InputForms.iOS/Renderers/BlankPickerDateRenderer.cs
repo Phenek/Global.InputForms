@@ -132,7 +132,8 @@ namespace Global.InputForms.iOS.Renderers
                     {
                         blankPicker.Text = Control.Text = _picker.Date.ToDateTime().Date.ToString(blankPicker.Format);
                         blankPicker.Date = _picker.Date.ToDateTime().Date;
-                        blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+                        if (EController != null)
+                            blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
                         Control.ResignFirstResponder();
                     });
                 doneButton.Clicked += (sender, e) => blankPicker.SendDoneClicked();
@@ -154,12 +155,14 @@ namespace Global.InputForms.iOS.Renderers
 
         private void OnStarted(object sender, EventArgs eventArgs)
         {
-            blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
+            if (blankPicker != null)
+                blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, true);
         }
 
         private void OnEnded(object sender, EventArgs eventArgs)
         {
-            blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
+            if (blankPicker != null)
+                blankPicker.SetValueFromRenderer(VisualElement.IsFocusedPropertyKey, false);
         }
 
         private void UpdateMaximumDate()
