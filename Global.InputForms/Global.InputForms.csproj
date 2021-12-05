@@ -11,17 +11,18 @@
     <PackageProjectUrl>https://github.com/Phenek/Global.InputForms/</PackageProjectUrl>
     <PackageTags>map portable pcl android ios xamarin monoandroid monodroid xamarin.forms</PackageTags>
     <PackageIcon>Icon-128.png</PackageIcon>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>pdbonly</DebugType>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>bin\Debug\netstandard2.0</OutputPath>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>bin\Release\netstandard2.0</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />

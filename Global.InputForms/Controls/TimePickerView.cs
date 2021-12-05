@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -20,13 +21,13 @@ namespace Global.InputForms
             typeof(TimePickerView), @"H\:mm", propertyChanged: FormatChanged);
 
         public static readonly BindableProperty DoneButtonTextProperty =
-            BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(DatePickerView), "Ok");
+            BindableProperty.Create(nameof(DoneButtonText), typeof(string), typeof(TimePickerView), "Ok");
 
         public static readonly BindableProperty CancelButtonTextProperty =
-            BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DatePickerView), "Cancel");
+            BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(TimePickerView), "Cancel");
 
         public static readonly BindableProperty UpdateModeProperty =
-            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(DatePickerView),
+            BindableProperty.Create(nameof(UpdateMode), typeof(UpdateMode), typeof(TimePickerView),
                 UpdateMode.Immediately);
 
         private readonly BlankTimePicker _timePicker;
@@ -139,6 +140,19 @@ namespace Global.InputForms
         }
 
         public event EventHandler<TimeChangedEventArgs> TimeSelected;
+
+
+        public event EventHandler DoneClicked
+        {
+            add => _timePicker.DoneClicked += value;
+            remove => _timePicker.DoneClicked -= value;
+        }
+
+        public event EventHandler CancelClicked
+        {
+            add => _timePicker.CancelClicked += value;
+            remove => _timePicker.CancelClicked -= value;
+        }
 
         public override void Focus()
         {

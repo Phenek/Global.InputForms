@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -106,9 +107,6 @@ namespace Global.InputForms
             _datePicker.DateSelected += Date_Selected;
             _datePicker.TextChanged += SendEntryTextChanged;
 
-            _datePicker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
-            _datePicker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
-
             FloatingLabelWithoutAnimation();
 
             Children.Add(_datePicker, 2, 3, 1, 2);
@@ -180,8 +178,17 @@ namespace Global.InputForms
                 picker._datePicker.MaximumDate = (DateTime) newValue;
         }
 
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
+        public event EventHandler DoneClicked
+        {
+            add => _datePicker.DoneClicked += value;
+            remove => _datePicker.DoneClicked -= value;
+        }
+
+        public event EventHandler CancelClicked
+        {
+            add => _datePicker.CancelClicked += value;
+            remove => _datePicker.CancelClicked -= value;
+        }
 
         private static object CoerceDate(BindableObject bindable, object value)
         {

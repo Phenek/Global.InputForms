@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Windows.Input;
 using Global.InputForms.Converters;
 using Xamarin.Forms;
 
@@ -109,9 +110,6 @@ namespace Global.InputForms
             _picker.SelectedIndexChanged += IndexChanged;
             _picker.TextChanged += SendEntryTextChanged;
 
-            _picker.DoneClicked += (sender, e) => DoneClicked?.Invoke(this, e);
-            _picker.CancelClicked += (sender, e) => CancelClicked?.Invoke(this, e);
-
             FloatingLabelWithoutAnimation();
 
             Children.Add(_picker, 2, 3, 1, 2);
@@ -183,8 +181,17 @@ namespace Global.InputForms
                 picker._picker.SelectedItem = (string) newValue;
         }
 
-        public event EventHandler DoneClicked;
-        public event EventHandler CancelClicked;
+        public event EventHandler DoneClicked
+        {
+            add => _picker.DoneClicked += value;
+            remove => _picker.DoneClicked -= value;
+        }
+
+        public event EventHandler CancelClicked
+        {
+            add => _picker.CancelClicked += value;
+            remove => _picker.CancelClicked -= value;
+        }
 
         public override void Focus()
         {

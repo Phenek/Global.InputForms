@@ -11,7 +11,6 @@ namespace SampleApp.Views
         {
             BindingContext = _viewModel = new SimpleFormsViewModel();
             InitializeComponent();
-            //_entry.ReturnType = ReturnType.
         }
     }
 }

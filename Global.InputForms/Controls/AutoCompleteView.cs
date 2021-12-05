@@ -24,71 +24,58 @@ namespace Global.InputForms
                 .Take(40).ToList();
 
         /// <summary>
-        ///     The sorting algorithm click property.
+        ///     The sorting algorithm property.
         /// </summary>
         public static readonly BindableProperty SortingAlgorithmProperty = BindableProperty.Create(
             nameof(SortingAlgorithm),
             typeof(Func<string, IEnumerable<object>, IEnumerable<object>>),
             typeof(AutoCompleteView), _defaultAlgo);
 
-        /// <summary>
-        ///     The execute on suggestion click property.
-        /// </summary>
-        public static readonly BindableProperty ExecuteOnItemClickProperty =
-            BindableProperty.Create(nameof(ExecuteOnSuggestionClick), typeof(bool), typeof(AutoCompleteView), false);
+        public static readonly BindableProperty SelectionChangedCommandProperty =
+            BindableProperty.Create(nameof(SelectionChangedCommand), typeof(ICommand), typeof(AutoCompleteView));
 
-        /// <summary>
-        ///     The selected command property.
-        /// </summary>
-        public static readonly BindableProperty SelectedCommandProperty =
-            BindableProperty.Create(nameof(SelectedCommand), typeof(ICommand), typeof(AutoCompleteView));
+        public static readonly BindableProperty SelectionChangedCommandParameterProperty =
+            BindableProperty.Create(nameof(SelectionChangedCommandParameter), typeof(ICommand), typeof(AutoCompleteView));
 
-        /// <summary>
-        ///     The selected item property.
-        /// </summary>
         public static readonly BindableProperty SelectedItemProperty =
             BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(AutoCompleteView));
 
-        /// <summary>
-        ///     The suggestion background color property.
-        /// </summary>
-        public static readonly BindableProperty ListBackgroundColorProperty =
-            BindableProperty.Create(nameof(ListBackgroundColor), typeof(Color), typeof(AutoCompleteView),
-                Color.Red, propertyChanged: ListBackgroundColorChanged);
-
-        /// <summary>
-        ///     The suggestion item data template property.
-        /// </summary>
         public static readonly BindableProperty ItemDataTemplateProperty =
-            BindableProperty.Create(nameof(ItemDataTemplate), typeof(DataTemplate), typeof(AutoCompleteView),
-                null, propertyChanged: SuggestionItemDataTemplateChanged);
+            BindableProperty.Create(nameof(ItemDataTemplate), typeof(DataTemplate), typeof(AutoCompleteView));
 
-        /// <summary>
-        ///     The suggestions property.
-        /// </summary>
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(AutoCompleteView), null,
-                propertyChanged: ItemsSourceChanged);
+            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(AutoCompleteView), null);
 
         private readonly TapGestureRecognizer _backgroundTap;
 
         private readonly Frame _frameList;
-        private readonly ListView _lstSuggestions;
+        private readonly CollectionView _collection;
 
         private CancellationTokenSource _cts;
+
+        public event EventHandler<EventArgs> BackgroundClicked;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AutoCompleteView" /> class.
         /// </summary>
         public AutoCompleteView()
         {
-            _lstSuggestions = new ListView
+            _collection = new CollectionView
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Start,
-                SeparatorVisibility = SeparatorVisibility.None,
-                HasUnevenRows = true
+                SelectionMode = SelectionMode.Single,
+                BackgroundColor = Color.Transparent
             };
+
+            _collection.SetBinding(ItemsView.ItemTemplateProperty,
+                new Binding(nameof(ItemDataTemplate)) { Source = this, Mode = BindingMode.OneWay });
+
+            _collection.SetBinding(SelectableItemsView.SelectionChangedCommandProperty,
+                new Binding(nameof(SelectionChangedCommand)) { Source = this, Mode = BindingMode.OneWay });
+
+            _collection.SetBinding(SelectableItemsView.SelectionChangedCommandParameterProperty,
+                new Binding(nameof(SelectionChangedCommandParameter)) { Source = this, Mode = BindingMode.OneWay });
 
             _frameList = new Frame
             {
@@ -98,101 +85,72 @@ namespace Global.InputForms
                 HasShadow = false,
                 IsClippedToBounds = true,
                 BackgroundColor = Color.Transparent,
-                Content = _lstSuggestions
+                Content = _collection
             };
 
             _backgroundTap = new TapGestureRecognizer();
             _backgroundTap.Tapped += BackGroundTapped;
             _frameList.GestureRecognizers.Add(_backgroundTap);
 
-            TextChanged += (sender, e) => { TextChangedHandler(e.NewTextValue); };
+            TextChanged += (sender, e) => { _ = TextChangedHandler(e.NewTextValue); };
 
-            _lstSuggestions.ItemSelected += (s, e) =>
-            {
-                EntryText = e.SelectedItem.ToString();
-                ShowHideListbox(false);
-                OnSelectedItemChanged(e.SelectedItem);
-            };
-            _lstSuggestions.ItemTapped += _lstSuggestions_ItemTapped;
+            _collection.SelectionChanged += SelectionItemChanged;
 
-            ShowHideListbox(false);
-            _lstSuggestions.ItemsSource = new List<object>();
+            ShowCollection(false);
+            _collection.ItemsSource = new List<object>();
 
-            RowDefinitions.Add(new RowDefinition {Height = new GridLength(1, GridUnitType.Star)});
+            RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             Children.Add(_frameList, 1, 4, 3, 4);
+        }
+
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged
+        {
+            add => _collection.SelectionChanged += value;
+            remove => _collection.SelectionChanged -= value;
+        }
+
+        private void SelectionItemChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedItem = e.CurrentSelection.FirstOrDefault();
+            EntryText = SelectedItem.ToString();
+            ShowCollection(false);
         }
 
         public Func<string, IEnumerable<object>, IEnumerable<object>> SortingAlgorithm
         {
-            get => (Func<string, IEnumerable<object>, IEnumerable<object>>) GetValue(SortingAlgorithmProperty);
+            get => (Func<string, IEnumerable<object>, IEnumerable<object>>)GetValue(SortingAlgorithmProperty);
             set => SetValue(SortingAlgorithmProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether [execute on sugestion click].
-        /// </summary>
-        /// <value><c>true</c> if [execute on sugestion click]; otherwise, <c>false</c>.</value>
-        public bool ExecuteOnSuggestionClick
+        public ICommand SelectionChangedCommand
         {
-            get => (bool) GetValue(ExecuteOnItemClickProperty);
-            set => SetValue(ExecuteOnItemClickProperty, value);
+            get => (ICommand)GetValue(SelectionChangedCommandProperty);
+            set => SetValue(SelectionChangedCommandProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets the selected command.
-        /// </summary>
-        /// <value>The selected command.</value>
-        public ICommand SelectedCommand
+        public object SelectionChangedCommandParameter
         {
-            get => (ICommand) GetValue(SelectedCommandProperty);
-            set => SetValue(SelectedCommandProperty, value);
+            get => GetValue(SelectionChangedCommandParameterProperty);
+            set => SetValue(SelectionChangedCommandParameterProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets the selected item.
-        /// </summary>
-        /// <value>The selected item.</value>
         public object SelectedItem
         {
             get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets the color of the sugestion background.
-        /// </summary>
-        /// <value>The color of the sugestion background.</value>
-        public Color ListBackgroundColor
-        {
-            get => (Color) GetValue(ListBackgroundColorProperty);
-            set => SetValue(ListBackgroundColorProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the suggestion item data template.
-        /// </summary>
-        /// <value>The sugestion item data template.</value>
         public DataTemplate ItemDataTemplate
         {
-            get => (DataTemplate) GetValue(ItemDataTemplateProperty);
+            get => (DataTemplate)GetValue(ItemDataTemplateProperty);
             set => SetValue(ItemDataTemplateProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets the Suggestions.
-        /// </summary>
-        /// <value>The Suggestions.</value>
         public IEnumerable ItemsSource
         {
-            get => (IEnumerable) GetValue(ItemsSourceProperty);
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
-        }
-
-        public event EventHandler<ItemTappedEventArgs> ItemTapped;
-
-        private void _lstSuggestions_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            ItemTapped?.Invoke(this, e);
         }
 
         protected override void OnChildAdded(Element child)
@@ -200,55 +158,6 @@ namespace Global.InputForms
             base.OnChildAdded(child);
             if (child == _frameList)
                 SetRow(child, 3);
-        }
-
-        /// <summary>
-        ///     Occurs when [selected item changed].
-        /// </summary>
-        public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
-
-        public event EventHandler<EventArgs> BackgroundClicked;
-
-        private void BackGroundTapped(object sender, EventArgs e)
-        {
-            BackgroundClicked?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        ///     Suggestions the background color changed.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        private static void ListBackgroundColorChanged(BindableObject obj, object oldValue, object newValue)
-        {
-            if (obj is AutoCompleteView autoCompleteView)
-                autoCompleteView._lstSuggestions.BackgroundColor = (Color) newValue;
-        }
-
-        /// <summary>
-        ///     Suggestions the item data template changed.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldShowSearchValue">The old show search value.</param>
-        /// <param name="newShowSearchValue">The new show search value.</param>
-        private static void SuggestionItemDataTemplateChanged(BindableObject obj, object oldShowSearchValue,
-            object newShowSearchValue)
-        {
-            if (obj is AutoCompleteView autoCompleteView)
-                autoCompleteView._lstSuggestions.ItemTemplate = (DataTemplate) newShowSearchValue;
-        }
-
-        /// <summary>
-        ///     Suggestions the item data template changed.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldValue">The old show search value.</param>
-        /// <param name="newValue">The new show search value.</param>
-        private static void ItemsSourceChanged(BindableObject obj, object oldValue, object newValue)
-        {
-            if (obj is AutoCompleteView autoCompleteView)
-                autoCompleteView.ItemsSource = (IEnumerable) newValue;
         }
 
         private async Task TextChangedHandler(string text) // async void only for event handlers
@@ -274,9 +183,9 @@ namespace Global.InputForms
                             filteredSuggestions = SortingAlgorithm(text, ItemsSource.Cast<object>()).ToList();
                             Device.BeginInvokeOnMainThread(() =>
                             {
-                                _lstSuggestions.ItemsSource = filteredSuggestions;
+                                _collection.ItemsSource = filteredSuggestions;
 
-                                ShowHideListbox(filteredSuggestions.Any());
+                                ShowCollection(filteredSuggestions.Any());
 
                                 if (filteredSuggestions.Any() && _frameList.GestureRecognizers.Contains(_backgroundTap))
                                 {
@@ -284,7 +193,7 @@ namespace Global.InputForms
                                     _frameList.GestureRecognizers.Remove(_backgroundTap);
                                 }
                                 else if (!filteredSuggestions.Any() &&
-                                         !_frameList.GestureRecognizers.Contains(_backgroundTap))
+                                            !_frameList.GestureRecognizers.Contains(_backgroundTap))
                                 {
                                     _backgroundTap.Tapped += BackGroundTapped;
                                     _frameList.GestureRecognizers.Add(_backgroundTap);
@@ -295,7 +204,7 @@ namespace Global.InputForms
                         {
                             Device.BeginInvokeOnMainThread(() =>
                             {
-                                _lstSuggestions.ItemsSource = filteredSuggestions;
+                                _collection.ItemsSource = filteredSuggestions;
                             });
                         }
                     }, _cts.Token);
@@ -306,27 +215,14 @@ namespace Global.InputForms
             }
         }
 
-        /// <summary>
-        ///     Called when [selected item changed].
-        /// </summary>
-        /// <param name="selectedItem">The selected item.</param>
-        private void OnSelectedItemChanged(object selectedItem)
+        private void ShowCollection(bool show)
         {
-            SelectedItem = selectedItem;
-
-            if (SelectedCommand != null)
-                SelectedCommand.Execute(selectedItem);
-
-            SelectedItemChanged?.Invoke(this, new SelectedItemChangedEventArgs(selectedItem));
+            _collection.IsVisible = show;
         }
 
-        /// <summary>
-        ///     <paramref name="show" />/ listbox.
-        /// </summary>
-        /// <param name="show">if set to <c>true</c> [show].</param>
-        private void ShowHideListbox(bool show)
+        private void BackGroundTapped(object sender, EventArgs e)
         {
-            _lstSuggestions.IsVisible = show;
+            BackgroundClicked?.Invoke(sender, e);
         }
     }
 
