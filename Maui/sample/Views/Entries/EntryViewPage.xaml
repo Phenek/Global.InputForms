@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:valid="clr-namespace:Sample.Behaviors"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms.Maui"
+             x:Class="Sample.Views.EntryViewPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="WhiteSmoke">
+            <StackLayout
+                Padding="40,10,40,10"
+                Spacing="10"
+                HeightRequest="900"
+                HorizontalOptions="CenterAndExpand">
+
+                <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                <Label Text="{Binding EntryText}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
+
+                <!-- Besieged Entry with Surrounded Info -->
+
+                <global:EntryView StyleClass="BesiegedEntry"
+                                  ReturnType="Send"
+                                  LabelText="Besieged Entry"
+                                  EntryText="{Binding EntryText, Mode=TwoWay}">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Besieged Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Besieged Entry with Overlaped Label with Surrounded Info -->
+
+                <global:EntryView StyleClass="BesiegedEntryOverlaLabel"
+                                  ReturnType="Send"
+                                  LabelText="Besieged Entry">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Besieged Entry with Overlaped Label with Surrounded Info" FontSize="Small"
+                       TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+
+                <!-- Rounded Entry with Surrounded Info -->
+                <global:EntryView StyleClass="RoundedEntry"
+                                  ReturnType="Send"
+                                  LabelText="Rounded Entry">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Rounded Entry with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Line Entry with Line Info -->
+                <global:EntryView StyleClass="LineEntry"
+                                  ReturnType="Send"
+                                  LabelText="Line Entry">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Line Entry with Line Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+               <!-- Masked Entry Test with Surrounded Info -->
+                <global:EntryView EntryBackgroundColor="#88FFFFFF" x:Name="_entry"
+                                  InfoViewType="Line"
+                                  Mask="XXXX - XXXX - XXXX - XXXX - XXXX"
+                                  EntryText="BlaaBlaaBlaa"
+                                  LineColor="Purple"
+                                  ReturnType="Send"
+                                  LabelText="Iban Bank">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <Label Text="Masked Entry Test with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <Entry />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

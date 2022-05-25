@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<global:ButtonContent xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms.Maui"
+                      x:Class="Sample.Controls.ButtonInputs"
+                      BackgroundColor="White"
+                      HighlightBackgroundColor="Salmon"
+                      HeightRequest="45"
+                      CornerRadius="0"
+                      MinimumHeightRequest="45">
+
+    <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
+        <Label x:Name="_title" TextColor="Black"
+               VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+               FontSize="Medium"
+               HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+        <Image Source="ChevronRight" Aspect="AspectFit"
+               HeightRequest="40" HorizontalOptions="End"
+               VerticalOptions="FillAndExpand" />
+    </StackLayout>
+
+</global:ButtonContent>

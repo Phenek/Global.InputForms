@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms.Maui"
+             x:Class="Sample.Views.PickerViewPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
+    <ContentPage.Content>
+
+        <ScrollView BackgroundColor="WhiteSmoke">
+            <StackLayout
+                Padding="40,10,40,10"
+                Spacing="10"
+                HeightRequest="900"
+                HorizontalOptions="CenterAndExpand">
+
+                <Label Text="Binding Value" TextColor="{StaticResource PrimaryColor}" FontSize="30" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                
+                <Label Text="{Binding SelectedItem}" FontSize="20" FontAttributes="Bold"  HorizontalOptions="Center"/>
+
+
+                <!-- Besieged DatePicker with Surrounded Info -->
+                <global:PickerView StyleClass="BesiegedEntry"
+                                   LabelText="Besieged DatePicker"
+                                   ItemsSource="{Binding Languages}"
+                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+
+                <Label Text="Besieged DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Besieged DatePicker with Overlaped Label with Surrounded Info -->
+
+                <global:PickerView StyleClass="BesiegedEntryOverlaLabel"
+                                   LabelText="Besieged DatePicker"
+                                   ItemsSource="{Binding Languages}" />
+
+                <Label Text="Besieged DatePicker with Overlaped Label with Surrounded Info" FontSize="Small"
+                       TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+
+                <!-- Rounded DatePicker with Surrounded Info -->
+                <global:PickerView StyleClass="RoundedEntry"
+                                   LabelText="Rounded DatePicker"
+                                   ItemsSource="{Binding Languages}" />
+
+                <Label Text="Rounded DatePicker with Surrounded Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                <!-- Line DatePicker with Line Info -->
+                <global:PickerView StyleClass="LineEntry"
+                                   LabelText="Line DatePicker"
+                                   ItemsSource="{Binding Languages}" />
+
+                <Label Text="Line DatePicker with Line Info" FontSize="Small" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,5" />
+
+                                <!-- Line DatePicker with Line Info -->
+                <Picker 
+                        ItemsSource="{Binding Languages}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

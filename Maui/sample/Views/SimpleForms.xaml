@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms.Maui"
+             x:Class="Sample.Views.SimpleForms"
+             xmlns:valid="clr-namespace:Sample.Behaviors"
+             xmlns:vm="clr-namespace:Sample.ViewModels"
+             xmlns:service="clr-namespace:Sample.Services"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="LightBlue" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid x:Name="_gridLayout" RowSpacing="10" Padding="10, 30, 10, 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <global:EntryView Grid.Column="0" Grid.Row="0"
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  CornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.Lastname, Mode=TwoWay}"
+                                  LabelText="{service:Translate Form.FirstName}"
+                                  x:Name="_firstname">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+                <global:EntryView Grid.Column="1" Grid.Row="0"
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  CornerRadius="15"
+                                  IsReadOnly="true"
+                                  EntryPlaceholder="test"
+                                  BorderColor="Red"
+                                  EntryTextColor="Red"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.Lastname, Mode=TwoWay}"
+                                  LabelText="{service:Translate Form.LastName}"
+                                  x:Name="_lastname">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <global:FrameInfo Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                    <global:RadioGroup x:Name="_radioGender"
+                                       ItemsSource="{Binding Genders}"
+                                       Orientation="Horizontal"
+                                       Spacing="40"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="CenterAndExpand"
+                                       SelectedItem="{Binding ItemSelected}"
+                                       CheckTemplate="{StaticResource IconRadioImage}" />
+                    <global:FrameInfo.Behaviors>
+                        <valid:RadioGroupValidatorBehavior />
+                    </global:FrameInfo.Behaviors>
+                </global:FrameInfo>
+
+                <global:EntryView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  CornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.Email, Mode=TwoWay}"
+                                  x:Name="_email" LabelText="{service:Translate Form.Email}">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                        <valid:EmailValidatorBehavior />
+                        <valid:EmailCompareValidationBehavior
+                            BindingContext="{x:Reference _emailConfirm}"
+                            CompareToEntry="{Binding Source={x:Reference _emailConfirm}}" />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <global:EntryView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  CornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  EntryText="{Binding Form.EmailConfirm, Mode=TwoWay}"
+                                  LabelText="{service:Translate Form.EmailConfirm}"
+                                  x:Name="_emailConfirm">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                        <valid:EmailValidatorBehavior />
+                        <valid:EmailCompareValidationBehavior
+                            BindingContext="{x:Reference _email}"
+                            CompareToEntry="{Binding Source={x:Reference _email}}" />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <global:DatePickerView Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
+                                       Date="{Binding Form.BirthDate, Mode=TwoWay}"
+                                       x:Name="_birthDate"
+                                       CornerRadius="15"
+                                       InfoViewType="Surrounded"
+                                       EntryBackgroundColor="#88FFFFFF"
+                                       LabelText="{service:Translate Form.BirthDate}">
+                    <global:DatePickerView.Format>dd/MM/yyyy</global:DatePickerView.Format>
+                    <global:DatePickerView.Behaviors>
+                        <valid:DateMajorValidationBehavior />
+                    </global:DatePickerView.Behaviors>
+                </global:DatePickerView>
+
+                <global:EntryView Grid.Column="0" Grid.Row="5"
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  CornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  IsPassword="true"
+                                  EntryText="{Binding Form.Password, Mode=TwoWay}"
+                                  LabelText="{service:Translate Form.Password}"
+                                  x:Name="_password">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                        <valid:EmailCompareValidationBehavior
+                            BindingContext="{x:Reference _passwordConfirm}"
+                            CompareToEntry="{Binding Source={x:Reference _passwordConfirm}}" />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <global:EntryView Grid.Column="1" Grid.Row="5"
+                                  EntryBackgroundColor="#88FFFFFF"
+                                  CornerRadius="15"
+                                  InfoViewType="Surrounded"
+                                  IsPassword="true"
+                                  EntryText="{Binding Form.Password, Mode=TwoWay}"
+                                  LabelText="{service:Translate Form.Password}"
+                                  x:Name="_passwordConfirm">
+                    <global:EntryView.Behaviors>
+                        <valid:EmptyValidatorBehavior />
+                        <valid:EmailCompareValidationBehavior
+                            BindingContext="{x:Reference _password}"
+                            CompareToEntry="{Binding Source={x:Reference _password}}" />
+                    </global:EntryView.Behaviors>
+                </global:EntryView>
+
+                <global:FrameInfo Grid.Column="0" Grid.Row="6" Grid.RowSpan="3">
+                    <global:CheckGroup x:Name="_checkStore" Spacing="20"
+                                       ItemsSource="{Binding Languages}"
+                                       CheckTemplate="{StaticResource IconCheckImage}" />
+                    <global:FrameInfo.Behaviors>
+                        <valid:CheckGroupValidatorBehavior />
+                    </global:FrameInfo.Behaviors>
+                </global:FrameInfo>
+
+                <global:RateGroup x:Name="_rateEnglish" Grid.Row="6" Grid.Column="1"
+                                  DefaultIndex="0"
+                                  ItemsSource="{Binding Rates}"
+                                  IsVisible="false"
+                                  CheckTemplate="{StaticResource IconRateImage}" />
+                <global:RateGroup x:Name="_rateSpanish" Grid.Row="7" Grid.Column="1"
+                                  DefaultIndex="0"
+                                  ItemsSource="{Binding Rates}"
+                                  IsVisible="false"
+                                  CheckTemplate="{StaticResource IconRateImage}" />
+                <global:RateGroup x:Name="_rateRussian" Grid.Row="8" Grid.Column="1"
+                                  DefaultIndex="0"
+                                  ItemsSource="{Binding Rates}"
+                                  IsVisible="false"
+                                  CheckTemplate="{StaticResource IconRateImage}" />
+                <StackLayout Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="9"
+                             Orientation="Vertical"
+                             HorizontalOptions="CenterAndExpand">
+                    <global:ButtonContent
+                        Margin="20"
+                        Clicked="_SubmitClicked"
+                        IsBusy="{Binding IsBusy, Mode=OneWay}"
+                        Text="Sign In"
+                        BorderWidth="2"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        WidthRequest="250"
+                        BackgroundColor="Teal"
+                        BorderColor="White"
+                        TextColor="White"
+                        HighlightBackgroundColor="White"
+                        HighlightBorderColor="White"
+                        HighlightTextColor="Teal" />
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

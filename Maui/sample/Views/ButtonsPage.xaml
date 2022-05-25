@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:valid="clr-namespace:Sample.Behaviors"
+             xmlns:global="clr-namespace:Global.InputForms;assembly=Global.InputForms.Maui"
+             x:Class="Sample.Views.ButtonsPage"
+             BackgroundColor="{StaticResource LightBackgroundColor}">
+    <ContentPage.Content>
+        <!-- xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" -->
+        <ScrollView >
+            <StackLayout
+                x:Name="_stack"
+                Spacing="10"
+                Padding="30"
+                VerticalOptions="Start"
+                HorizontalOptions="CenterAndExpand">
+
+                <!-- Simple Busy Button without content -->
+                <global:ButtonContent
+                    StyleClass="ButtonGreen"
+                    Clicked="SubmitClicked"
+                    IsBusy="{Binding IsBusy, Mode=OneWay}"
+                    Text="Sign In" />
+
+                <global:ButtonContent
+                    StyleClass="ButtonRed"
+                    Clicked="SubmitClicked"
+                    IsBusy="{Binding IsBusy, Mode=OneWay}"
+                    Text="Sign In"/>
+
+                <global:ButtonContent
+                    StyleClass="ButtonBlue"
+                    Clicked="SubmitClicked"
+                    IsBusy="{Binding IsBusy, Mode=OneWay}"
+                    Text="Sign In"/>
+
+                <Label Text="Simple Busy Buttons without content"
+                       FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+                <!-- Simple Button with content -->
+                <global:ButtonContent VerticalOptions="Start" BorderWidth="1"
+                                      Clicked="ParameterClicked" BackgroundColor="White"
+                                      HighlightBackgroundColor="LightGray">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="false" 
+                               BackgroundColor="Maroon"
+                               CornerRadius="25"
+                               HeightRequest="50"
+                               WidthRequest="50" VerticalOptions="Center">
+                            <Image Source="AndroidGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
+                        <Label Text="Parameters"
+                               VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                               FontSize="Medium" FontFamily="Bold"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        <Frame Padding="0" HasShadow="false" CornerRadius="0"
+                               BackgroundColor="Blue"
+                               HeightRequest="40"
+                               WidthRequest="40" VerticalOptions="Center" >
+                             <Image Source="AppleGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
+                    </StackLayout>
+                </global:ButtonContent>
+
+                <global:ButtonContent VerticalOptions="Start" CornerRadius="30" HeightRequest="60"
+                                      BorderWidth="10" BorderColor="Silver"
+                                      Clicked="ParameterClicked" BackgroundColor="White"
+                                      HighlightBackgroundColor="LightGray">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame Padding="0" HasShadow="false"
+                               BackgroundColor="Maroon"
+                               CornerRadius="20"
+                               HeightRequest="40"
+                               WidthRequest="40" VerticalOptions="Center" >
+                            <Image Source="AndroidGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
+                        <Label Text="Parameters"
+                               VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                               FontSize="Medium" FontFamily="Bold"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        <Frame Padding="0" HasShadow="false" CornerRadius="0"
+                               BackgroundColor="Blue"
+                               HeightRequest="40"
+                               WidthRequest="40" VerticalOptions="Center" >
+                             <Image Source="AppleGray" Aspect="AspectFit" VerticalOptions="Center"
+                                       HorizontalOptions="Center" HeightRequest="30" />
+                        </Frame>
+                    </StackLayout>
+                </global:ButtonContent>
+
+                <Label Text="Button with content and Button Border"
+                       FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+                <global:ButtonContent
+                    Clicked="ReadMoreClicked"
+                    BackgroundColor="Transparent"
+                    HighlightBackgroundColor="Gray">
+
+                    <StackLayout Orientation="Vertical">
+                        
+                        <Label x:Name="_descriptionLabel" 
+                            MaxLines="2"
+                            TextColor="Black"
+                            FontSize="Small"
+                            LineBreakMode="TailTruncation" 
+                            Text="You should see 2 lines of text and truncation at the end. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis quam non enim pellentesque, ut placerat purus finibus. Nulla quis tincidunt ante. Ut mauris lectus, aliquam a sagittis vitae, consequat eget elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque convallis nunc nisi, a imperdiet elit efficitur et. Duis in lectus mollis, interdum ipsum et, tincidunt orci. Fusce ipsum metus, imperdiet non lacus vitae, facilisis feugiat magna. Nulla volutpat nisl tortor, a consectetur felis consectetur non. Curabitur in enim vulputate sem volutpat bibendum id nec lorem. Mauris laoreet lacus ac volutpat tempus.">
+                        </Label>
+                        
+                        <Label x:Name="_readBtn"
+                               HorizontalOptions="Center"
+                               TextColor="Blue"
+                               FontSize="Default"
+                               Text="Read more" />
+                    </StackLayout>
+                </global:ButtonContent>
+
+                <Label Text="Simple Button with content" FontSize="Default" TextColor="Gray"
+                       HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />
+
+                <StackLayout VerticalOptions="FillAndExpand" HeightRequest="100">
+                    <!--
+                    <lottie:AnimationView 
+                    x:Name="AnimationView"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    Animation="loader"
+                    Loop="True"
+                    AutoPlay="True"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand" />
+                    -->
+
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
