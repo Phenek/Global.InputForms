@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using static Microsoft.Maui.Controls.Button;
 
 namespace Global.InputForms
 {
     [ContentProperty(nameof(Content))]
-    public class ButtonContent : Grid
+    public class ButtonContent : Border
     {
-        public static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View),
-            typeof(ButtonContent));
+        public static new readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View),
+            typeof(ButtonContent), propertyChanged: ContentChanged);
 
         /// <summary>
         ///     The command property.
@@ -33,22 +34,16 @@ namespace Global.InputForms
                 propertyChanged: ContentLayoutChanged);
 
         /// <summary>
-        ///     The padding button property.
-        /// </summary>
-        public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding),
-            typeof(Thickness), typeof(ButtonContent), new Thickness(0, 0, 0, 0), propertyChanged: BorderChanged);
-
-        /// <summary>
-        ///     The border width property.
-        /// </summary>
-        public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth),
-            typeof(double), typeof(ButtonContent), 0d, propertyChanged: BorderChanged);
-
-        /// <summary>
         ///     The corner radius property.
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
-            typeof(int), typeof(ButtonContent), 0, propertyChanged: CornerRadiusChanged);
+            typeof(CornerRadius), typeof(ButtonContent), new CornerRadius(), propertyChanged: CornerRadiusChanged);
+
+        /// <summary>
+        ///     The Border Width property.
+        /// </summary>
+        public static readonly BindableProperty BorderWidthProperty =
+            BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(ButtonContent), 0d);
 
         /// <summary>
         ///     The image property.
@@ -103,8 +98,8 @@ namespace Global.InputForms
         /// <summary>
         ///     The Background Color Property.
         /// </summary>
-        public new static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(ButtonContent), Colors.White,
+        public new static readonly BindableProperty BackProperty =
+            BindableProperty.Create(nameof(Back), typeof(Brush), typeof(ButtonContent), Brush.White,
                 propertyChanged: BackgroundColorChanged);
 
         /// <summary>
@@ -117,21 +112,21 @@ namespace Global.InputForms
         ///     The Border Color Property.
         /// </summary>
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor),
-            typeof(Color), typeof(ButtonContent), Colors.LightGray, propertyChanged: BorderColorChanged);
+            typeof(Brush), typeof(ButtonContent), Brush.LightGray, propertyChanged: BorderColorChanged);
 
         /// <summary>
         ///     The Highlight Background Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightBackgroundColorProperty =
-            BindableProperty.Create(nameof(HighlightBackgroundColor), typeof(Color), typeof(ButtonContent),
-                Colors.LightGray);
+            BindableProperty.Create(nameof(HighlightBackgroundColor), typeof(Brush), typeof(ButtonContent),
+                Brush.LightGray);
 
         /// <summary>
         ///     The Highlight Border Color Property.
         /// </summary>
         public static readonly BindableProperty HighlightBorderColorProperty =
-            BindableProperty.Create(nameof(HighlightBorderColor), typeof(Color), typeof(ButtonContent),
-                Colors.LightGray);
+            BindableProperty.Create(nameof(HighlightBorderColor), typeof(Brush), typeof(ButtonContent),
+                Brush.LightGray);
 
         /// <summary>
         ///     The Highlight Text Color Property.
@@ -139,50 +134,37 @@ namespace Global.InputForms
         public static readonly BindableProperty HighlightTextColorProperty =
             BindableProperty.Create(nameof(HighlightTextColor), typeof(Color), typeof(ButtonContent), Colors.White);
 
-        /// <summary>
-        ///     The Highlight Image Color Property.
-        /// </summary>
-        public static readonly BindableProperty HighlightImageColorProperty =
-            BindableProperty.Create(nameof(HighlightImageColor), typeof(Color), typeof(ButtonContent));
-
+        private readonly Grid _grid;
         private readonly BlankButton _button;
-        private readonly Frame _frame;
         private readonly ActivityIndicator _loader;
 
         public event EventHandler<bool> BusyChanged;
 
         public ButtonContent()
         {
-            _frame = new Frame
+            this.SetBinding(StrokeThicknessProperty,
+                new Binding(nameof(BorderWidth)) { Source = this, Mode = BindingMode.OneWay });
+
+            _grid = new Grid()
             {
-                Padding = 0,
-                HasShadow = false,
-                CornerRadius = CornerRadius,
-                BackgroundColor = Colors.Transparent,
-                InputTransparent = true,
-                IsEnabled = false,
-                IsClippedToBounds = true
+                ColumnSpacing = 0,
+                ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) } },
+                RowSpacing = 0,
+                RowDefinitions = new RowDefinitionCollection{ new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }}
             };
-            _frame.SetBinding(ContentView.ContentProperty,
-                new Binding(nameof(Content)) {Source = this, Mode = BindingMode.OneWay});
-            _frame.SetBinding(PaddingProperty, new Binding(nameof(Padding)) {Source = this, Mode = BindingMode.OneWay});
 
             _button = new BlankButton
             {
-                //HeightRequest = 0,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = BackgroundColor,
+                BackgroundColor = Colors.Transparent,
                 TextColor = TextColor,
-                BorderColor = BorderColor
+                BorderColor = Colors.Transparent,
+                BorderWidth = 0,
             };
 
             _button.SetBinding(Microsoft.Maui.Controls.Button.CommandProperty,
                 new Binding(nameof(Command)) {Source = this, Mode = BindingMode.OneWay});
             _button.SetBinding(Microsoft.Maui.Controls.Button.CommandParameterProperty,
                 new Binding(nameof(CommandParameter)) {Source = this, Mode = BindingMode.OneWay});
-            _button.SetBinding(Microsoft.Maui.Controls.Button.BorderWidthProperty,
-                new Binding(nameof(BorderWidth)) {Source = this, Mode = BindingMode.OneWay});
             _button.SetBinding(Microsoft.Maui.Controls.Button.ImageSourceProperty,
                 new Binding(nameof(ImageSource)) {Source = this, Mode = BindingMode.OneWay});
             _button.SetBinding(Microsoft.Maui.Controls.Button.FontFamilyProperty,
@@ -196,19 +178,12 @@ namespace Global.InputForms
             _button.SetBinding(Microsoft.Maui.Controls.Button.FontAttributesProperty,
                 new Binding(nameof(FontAttributes)) {Source = this, Mode = BindingMode.OneWay});
 
-            _button.SetBinding(Microsoft.Maui.Controls.Button.PaddingProperty,
-                new Binding(nameof(Padding)) {Source = this, Mode = BindingMode.OneWay});
-
             _button.Pressed += Button_Pressed;
             _button.Released += Button_Released;
+            _button.Clicked += Button_Clicked;
 
-            _button.Clicked += (sender, e) => { Clicked?.Invoke(this, new EventArgs()); };
-            _button.Released += (sender, e) => { Released?.Invoke(this, new EventArgs()); };
-            _button.Pressed += (sender, e) => { Pressed?.Invoke(this, new EventArgs()); };
-
-            Children.Add(_frame); //Todo overload (0, 0)
-            Children.Add(_button); //Todo overload (0, 0)
-
+            _grid.Add(_button); //Todo overload (0, 0)
+            base.Content = _grid;
 
             Loader = _loader = new ActivityIndicator
             {
@@ -223,7 +198,7 @@ namespace Global.InputForms
                 new Binding(nameof(LoaderColor)) { Source = this, Mode = BindingMode.OneWay });
         }
 
-        public View Content
+        public new View Content
         {
             get => (View) GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
@@ -260,17 +235,6 @@ namespace Global.InputForms
         }
 
         /// <summary>
-        ///     Gets or sets the Padding button.
-        /// </summary>
-        /// <value>the padding button.</value>
-        public new Thickness Padding
-        {
-            get => (Thickness) GetValue(PaddingProperty);
-            set => SetValue(PaddingProperty, value);
-        }
-
-
-        /// <summary>
         ///     Gets or sets the Border Width.
         /// </summary>
         /// <value>The Border Width.</value>
@@ -284,9 +248,10 @@ namespace Global.InputForms
         ///     Gets or sets the Corner Radius.
         /// </summary>
         /// <value>The Corner Radius.</value>
-        public int CornerRadius
+        //[System.ComponentModel.TypeConverter(typeof(CornerRadius))]
+        public CornerRadius CornerRadius
         {
-            get => (int) GetValue(CornerRadiusProperty);
+            get => (CornerRadius) GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
 
@@ -375,10 +340,10 @@ namespace Global.InputForms
         ///     Gets or sets background color value.
         /// </summary>
         /// <value>The background color.</value>
-        public new Color BackgroundColor
+        public new Brush Back
         {
-            get => (Color) GetValue(BackgroundColorProperty);
-            set => SetValue(BackgroundColorProperty, value);
+            get => (Brush) GetValue(BackProperty);
+            set => SetValue(BackProperty, value);
         }
 
         /// <summary>
@@ -395,9 +360,9 @@ namespace Global.InputForms
         ///     Gets or sets border color value.
         /// </summary>
         /// <value>The border color.</value>
-        public Color BorderColor
+        public Brush BorderColor
         {
-            get => (Color) GetValue(BorderColorProperty);
+            get => (Brush) GetValue(BorderColorProperty);
             set => SetValue(BorderColorProperty, value);
         }
 
@@ -405,9 +370,9 @@ namespace Global.InputForms
         ///     Gets or sets highlight background color.
         /// </summary>
         /// <value>The highlight background color.</value>
-        public Color HighlightBackgroundColor
+        public Brush HighlightBackgroundColor
         {
-            get => (Color) GetValue(HighlightBackgroundColorProperty);
+            get => (Brush) GetValue(HighlightBackgroundColorProperty);
             set => SetValue(HighlightBackgroundColorProperty, value);
         }
 
@@ -415,9 +380,9 @@ namespace Global.InputForms
         ///     Gets or sets highlight border color.
         /// </summary>
         /// <value>The highlight border color.</value>
-        public Color HighlightBorderColor
+        public Brush HighlightBorderColor
         {
-            get => (Color) GetValue(HighlightBorderColorProperty);
+            get => (Brush) GetValue(HighlightBorderColorProperty);
             set => SetValue(HighlightBorderColorProperty, value);
         }
 
@@ -431,20 +396,32 @@ namespace Global.InputForms
             set => SetValue(HighlightTextColorProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets highlight image color.
-        /// </summary>
-        /// <value>The highlight image color.</value>
-        public Color HighlightImageColor
-        {
-            get => (Color) GetValue(HighlightImageColorProperty);
-            set => SetValue(HighlightImageColorProperty, value);
-        }
-
         //Events
         public event EventHandler Clicked;
         public event EventHandler Pressed;
         public event EventHandler Released;
+
+
+        /// <summary>
+        ///     The Content Layout property changed.
+        /// </summary>
+        /// <param name="bindable">The object.</param>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        private new static void ContentChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is ButtonContent button)) return;
+
+            if (oldValue is View oldContent && button._grid.Children.Contains(oldContent))
+            {
+                button._grid.Children.Remove(oldContent);
+            }
+
+            if (newValue is View newContent)
+            {
+                button._grid.Children.Insert(0, newContent); //Todo overload (0,0)
+            }
+        }
 
         /// <summary>
         ///     The Content Layout property changed.
@@ -457,18 +434,6 @@ namespace Global.InputForms
             if (bindable is ButtonContent button) button._button.ContentLayout = (ButtonContentLayout) newValue;
         }
 
-
-        private static void BorderChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (!(bindable is ButtonContent button)) return;
-            button._frame.Margin = new Thickness(button.BorderWidth);
-
-            var frameCorner = (float) (button.CornerRadius - button.BorderWidth);
-            if (frameCorner > 0)
-                button._frame.CornerRadius = frameCorner;
-            button._button.Padding = button.Padding;
-        }
-
         /// <summary>
         ///     The Corner Radius property changed.
         /// </summary>
@@ -477,13 +442,12 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void CornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is ButtonContent button)) return;
-            var value = (int) newValue;
-            button._button.CornerRadius = value;
-
-            var frameCorner = (float) (button.CornerRadius - button.BorderWidth);
-            if (frameCorner > 0)
-                button._frame.CornerRadius = frameCorner;
+            if (bindable is ButtonContent button)
+            {
+                var roundRectangle = new RoundRectangle();
+                roundRectangle.CornerRadius = button.CornerRadius;
+                button.StrokeShape = roundRectangle;
+            }
         }
 
         /// <summary>
@@ -515,15 +479,15 @@ namespace Global.InputForms
         {
             if (!(bindable is ButtonContent button)) return;
 
-            if (oldValue is View oldLoader && button.Children.Contains(oldLoader))
+            if (oldValue is View oldLoader && button._grid.Children.Contains(oldLoader))
             {
-                button.Children.Remove(oldLoader);
+                button._grid.Children.Remove(oldLoader);
             }
 
             if (newValue is View newLoader)
             {
                 newLoader.IsVisible = button.IsBusy;
-                button.Children.Add(newLoader); //Todo overload (0,0)
+                button._grid.Children.Add(newLoader); //Todo overload (0,0)
             }
         }
 
@@ -535,7 +499,7 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void BackgroundColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is ButtonContent button) button._button.BackgroundColor = (Color) newValue;
+            if (bindable is ButtonContent button) button.SetReleasedColors();
         }
 
         /// <summary>
@@ -557,20 +521,37 @@ namespace Global.InputForms
         /// <param name="newValue">The new value.</param>
         private static void BorderColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is ButtonContent button) button._button.BorderColor = (Color) newValue;
+            if (bindable is ButtonContent button) button.SetReleasedColors();
         }
 
         private void Button_Pressed(object sender, EventArgs e)
         {
-            _button.BackgroundColor = HighlightBackgroundColor;
-            _button.BorderColor = HighlightBorderColor;
-            _button.TextColor = HighlightTextColor;
+            SetPressedColors();
+            Pressed?.Invoke(this, new EventArgs());
         }
 
         private void Button_Released(object sender, EventArgs e)
         {
-            _button.BackgroundColor = BackgroundColor;
-            _button.BorderColor = BorderColor;
+            SetReleasedColors();
+            Released?.Invoke(this, new EventArgs());
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Clicked?.Invoke(this, new EventArgs());
+        }
+
+        private void SetPressedColors()
+        {
+            base.Background = HighlightBackgroundColor;
+            base.Stroke = HighlightBorderColor;
+            _button.TextColor = HighlightTextColor;
+        }
+
+        private void SetReleasedColors()
+        {
+            base.Background = Back;
+            base.Stroke = BorderColor;
             _button.TextColor = TextColor;
         }
     }

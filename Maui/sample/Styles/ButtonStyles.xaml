@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,7 +12,7 @@
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="BorderColor" Value="Teal" />
         <Setter Property="HighlightBorderColor" Value="PaleGreen" />
-        <Setter Property="BackgroundColor" Value="Teal" />
+        <Setter Property="Back" Value="Teal" />
         <Setter Property="HighlightBackgroundColor" Value="PaleGreen" />
         <Setter Property="FontFamily" Value="Bold" />
         <Setter Property="FontSize" Value="Default" />
@@ -25,9 +25,9 @@
         <Setter Property="HeightRequest" Value="50" />
         <Setter Property="CornerRadius" Value="25" />
         <Setter Property="BorderWidth" Value="2" />
-        <Setter Property="BorderColor" Value="Maroon" />
-        <Setter Property="HighlightBorderColor" Value="Salmon" />
-        <Setter Property="BackgroundColor" Value="Maroon" />
+        <Setter Property="BorderColor" Value="Black" />
+        <Setter Property="HighlightBorderColor" Value="Gray" />
+        <Setter Property="Back" Value="Maroon" />
         <Setter Property="HighlightBackgroundColor" Value="Salmon" />
         <Setter Property="FontFamily" Value="Bold" />
         <Setter Property="FontSize" Value="Default" />
@@ -42,7 +42,7 @@
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="BorderColor" Value="Gray" />
         <Setter Property="HighlightBorderColor" Value="LightGray" />
-        <Setter Property="BackgroundColor" Value="Gray" />
+        <Setter Property="Back" Value="Gray" />
         <Setter Property="HighlightBackgroundColor" Value="LightGray" />
         <Setter Property="FontFamily" Value="Bold" />
         <Setter Property="FontSize" Value="Default" />
@@ -59,7 +59,7 @@
         <Setter Property="FontSize" Value="Default" />
         <Setter Property="BorderColor" Value="Navy" />
         <Setter Property="HighlightBorderColor" Value="LightSkyBlue" />
-        <Setter Property="BackgroundColor" Value="Navy" />
+        <Setter Property="Back" Value="Navy" />
         <Setter Property="HighlightBackgroundColor" Value="LightSkyBlue" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="HighlightTextColor" Value="Navy" />

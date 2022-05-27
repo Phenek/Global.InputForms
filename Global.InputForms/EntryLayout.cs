@@ -290,6 +290,10 @@ namespace Global.InputForms
 
         public EntryLayout()
         {
+            #region remove
+            BackgroundColor = Color.LightGray;
+            #endregion
+
             ColumnSpacing = 0;
             ColumnDefinitions = new ColumnDefinitionCollection
             {

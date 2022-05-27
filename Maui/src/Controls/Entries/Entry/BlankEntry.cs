@@ -3,7 +3,7 @@ using Microsoft.Maui.Controls;
 
 namespace Global.InputForms
 {
-    public class BlankEntry : Entry
+    public class BlankEntry : Entry, IBlankEntry
     {
     }
 }

@@ -93,8 +93,6 @@ namespace Global.InputForms
                     {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _picker.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _picker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             //Todo For Xamarin.Forms 4.0
             //_picker.SetBinding(Picker.TitleColorProperty,
             //new Binding(nameof(TitleColor)) { Source = this, Mode = BindingMode.OneWay });
@@ -113,10 +111,10 @@ namespace Global.InputForms
 
             FloatingLabelWithoutAnimation();
 
-            Grid.SetRow(_picker, 1);
+            Grid.SetRow(_picker, 2);
             Grid.SetRowSpan(_picker, 1);
-            Grid.SetColumn(_picker, 0);
-            Grid.SetColumnSpan(_picker, 1);
+            Grid.SetColumn(_picker, 1);
+            Grid.SetColumnSpan(_picker, 3);
             Children.Add(_picker); //Todo overload (2, 3, 1, 2)
         }
 

@@ -38,7 +38,6 @@ namespace Global.InputForms
             _timePicker = new BlankTimePicker
             {
                 BackgroundColor = Colors.Transparent,
-                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             Input = _timePicker;
             _timePicker.SetBinding(Entry.TextProperty,
@@ -67,8 +66,6 @@ namespace Global.InputForms
                     {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _timePicker.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _timePicker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             //_timePicker.SetBinding(BlankTimePicker.FormatProperty,
             //    new Binding(nameof(Format)) { Source = this, Mode = BindingMode.OneWay });
@@ -88,10 +85,10 @@ namespace Global.InputForms
             _timePicker.TextChanged += SendEntryTextChanged;
             _timePicker.TimeSelected += Time_Selected;
 
-            Grid.SetRow(_timePicker, 1);
+            Grid.SetRow(_timePicker, 2);
             Grid.SetRowSpan(_timePicker, 1);
-            Grid.SetColumn(_timePicker, 0);
-            Grid.SetColumnSpan(_timePicker, 1);
+            Grid.SetColumn(_timePicker, 1);
+            Grid.SetColumnSpan(_timePicker, 3);
             Children.Add(_timePicker); //Todo overload (2, 3, 1, 2)
         }
 

@@ -47,6 +47,8 @@
 	  <None Remove="Platforms\Android\Renderers\" />
 	  <None Remove="Platforms\iOS\Extensions\" />
 	  <None Remove="Platforms\iOS\Renderers\" />
+	  <None Remove="Platforms\Android\Handlers\" />
+	  <None Remove="Platforms\iOS\Handlers\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Controls\" />
@@ -58,5 +60,7 @@
 	  <Folder Include="Platforms\Android\Renderers\" />
 	  <Folder Include="Platforms\iOS\Extensions\" />
 	  <Folder Include="Platforms\iOS\Renderers\" />
+	  <Folder Include="Platforms\Android\Handlers\" />
+	  <Folder Include="Platforms\iOS\Handlers\" />
 	</ItemGroup>
 </Project>

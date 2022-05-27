@@ -295,6 +295,12 @@ namespace Global.InputForms
 
         public EntryLayout()
         {
+            #region remove
+            BackgroundColor = Colors.LightGrey;
+            HorizontalOptions = LayoutOptions.FillAndExpand;
+            #endregion
+
+
             ColumnSpacing = 0;
             ColumnDefinitions = new ColumnDefinitionCollection
             {
@@ -315,7 +321,7 @@ namespace Global.InputForms
             _frameEntry = new Frame
             {
                 Padding = 0,
-                HasShadow = false
+                HasShadow = false,
             };
             FrameTapGesture.Tapped += TappedGestures;
             _frameEntry.GestureRecognizers.Add(FrameTapGesture);
@@ -324,8 +330,6 @@ namespace Global.InputForms
                 { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
             _frameEntry.SetBinding(Microsoft.Maui.Controls.Frame.CornerRadiusProperty,
                 new Binding(nameof(CornerRadius)) {Source = this, Mode = BindingMode.OneWay});
-            _frameEntry.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
             _frameEntry.SetBinding(MarginProperty,
                 new Binding(nameof(FrameMargin)) {Source = this, Mode = BindingMode.OneWay});
 
@@ -350,10 +354,6 @@ namespace Global.InputForms
                 BackgroundColor = Colors.Transparent,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
-                MinimumHeightRequest = 0,
-                MinimumWidthRequest = 0,
-                HeightRequest = 0,
-                WidthRequest = 0,
                 InputTransparent = true
             };
             DumboViewTapGesture.Tapped += TappedGestures;
@@ -362,24 +362,24 @@ namespace Global.InputForms
                 new Binding(nameof(IsReadOnly))
                 { Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
 
-            Grid.SetRow(_frameEntry, 0);
-            Grid.SetRowSpan(_frameEntry, 1);
-            Grid.SetColumn(_frameEntry, 0);
-            Grid.SetColumnSpan(_frameEntry, 1);
-            Children.Add(_frameEntry); //Todo overload (1, 2, 1, 2)
-
             _dumboView.SizeChanged += _indigo_SizeChanged;
 
-            Grid.SetRow(_frameEntry, 0);
-            Grid.SetRowSpan(_frameEntry, 4);
-            Grid.SetColumn(_frameEntry, 0);
-            Grid.SetColumnSpan(_frameEntry, 1);
+            Grid.SetRow(_dumboView, 1);
+            Grid.SetRowSpan(_dumboView, 1);
+            Grid.SetColumn(_dumboView, 1);
+            Grid.SetColumnSpan(_dumboView, 1);
+            Children.Add(_dumboView); //Todo overload (1, 2, 1, 2)
+
+            Grid.SetRow(_frameEntry, 1);
+            Grid.SetRowSpan(_frameEntry, 1);
+            Grid.SetColumn(_frameEntry, 1);
+            Grid.SetColumnSpan(_frameEntry, 3);
             Children.Add(_frameEntry); //Todo overload (1, 4, 1, 2)
 
-            Grid.SetRow(_line, 0);
-            Grid.SetRowSpan(_line, 4);
-            Grid.SetColumn(_line, 0);
-            Grid.SetColumnSpan(_line, 1);
+            Grid.SetRow(_line, 1);
+            Grid.SetRowSpan(_line, 1);
+            Grid.SetColumn(_line, 1);
+            Grid.SetColumnSpan(_line, 3);
             Children.Add(_line); //Todo overload (1, 4, 1, 2)
         }
 
@@ -454,10 +454,10 @@ namespace Global.InputForms
             {
                 case EntryLayoutType.Besieged:
 
-                    SetRow((BindableObject)entryLayout._frameEntry, 0);
-                    SetColumn((BindableObject)entryLayout._frameEntry, 1);
+                    SetRow(entryLayout._frameEntry, 0);
+                    SetColumn(entryLayout._frameEntry, 1);
                     SetRowSpan(entryLayout._frameEntry, 2);
-                    SetColumnSpan((BindableObject)entryLayout._frameEntry, 4);
+                    SetColumnSpan(entryLayout._frameEntry, 3);
                     break;
                 case EntryLayoutType.Surrounded:
                     break;
@@ -486,16 +486,18 @@ namespace Global.InputForms
                 else
                     translateY = 0;
 
-                var smoothAnimation = new Animation
+                MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    {
-                        0, 1,
-                        new Animation(f => _infoLabel.TranslationY = f, _infoLabel.TranslationY, translateY,
-                            Easing.Linear)
-                    }
-                };
-                Device.BeginInvokeOnMainThread(() => smoothAnimation.Commit(this, "InfoAnimation", 16, 300,
-                    Easing.Linear, (d, b) => InfoIsVisible = isVisible));
+                    await _infoLabel.TranslateTo(0, - translateY, 300, Easing.Linear);
+                    InfoIsVisible = isVisible;
+                });
+
+                //var smoothAnimation = new Animation {
+                //    {0, 1, new Animation(f => _infoLabel.TranslationY = f, _infoLabel.TranslationY, translateY, Easing.Linear) }
+                //};
+
+                //MainThread.BeginInvokeOnMainThread(() =>
+                //    smoothAnimation.Commit(this, "InfoAnimation", 16, 200, Easing.Linear, (d, b) => InfoIsVisible = isVisible));
             }
             else
             {
@@ -677,6 +679,7 @@ namespace Global.InputForms
                 VerticalTextAlignment = TextAlignment.Center
             };
             entryLayout.LabelTapGesture = new TapGestureRecognizer();
+            entryLayout.LabelTapGesture.Tapped += entryLayout.TappedGestures;
             entryLayout._label.GestureRecognizers.Add(entryLayout.LabelTapGesture);
             entryLayout._label.SetBinding(IsEnabledProperty, new Binding(nameof(IsReadOnly))
                 { Source = entryLayout, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter() });
@@ -707,12 +710,12 @@ namespace Global.InputForms
                 if (!entryLayout.FloatingLabel)
                 {
                     entryLayout._label.SetBinding(Label.FontSizeProperty, new Binding(nameof(LabelFontSize))
-                        {Source = entryLayout, Mode = BindingMode.OneWay});
+                    { Source = entryLayout, Mode = BindingMode.OneWay });
 
                     Grid.SetRow(entryLayout._label, 0);
-                    Grid.SetRowSpan(entryLayout._label, 2);
-                    Grid.SetColumn(entryLayout._label, 0);
-                    Grid.SetColumnSpan(entryLayout._label, 1);
+                    Grid.SetRowSpan(entryLayout._label, 1);
+                    Grid.SetColumn(entryLayout._label, 1);
+                    Grid.SetColumnSpan(entryLayout._label, 3);
                     entryLayout.Children.Add(entryLayout._label); //Todo overload (1, 3, 0, 1)
                 }
                 else
@@ -722,7 +725,7 @@ namespace Global.InputForms
                             entryLayout.LabelFontSize + 10 + entryLayout.LabelMargin.Top +
                             entryLayout.LabelMargin.Bottom, GridUnitType.Absolute);
                     entryLayout._label.SetBinding(Label.FontSizeProperty, new Binding(nameof(EntryFontSize))
-                        {Source = entryLayout, Mode = BindingMode.OneWay});
+                    { Source = entryLayout, Mode = BindingMode.OneWay });
 
                     entryLayout.Unfocused += entryLayout.FloatingLabelUnFocused;
                     entryLayout.Focused += entryLayout.FloatingLabelFocused;
@@ -730,9 +733,9 @@ namespace Global.InputForms
                     entryLayout.FloatingLabelWithoutAnimation();
 
                     Grid.SetRow(entryLayout._label, 1);
-                    Grid.SetRowSpan(entryLayout._label, 1);
-                    Grid.SetColumn(entryLayout._label, 0);
-                    Grid.SetColumnSpan(entryLayout._label, 1);
+                    Grid.SetRowSpan(entryLayout._label, 2);
+                    Grid.SetColumn(entryLayout._label, 2);
+                    Grid.SetColumnSpan(entryLayout._label, 3);
                     entryLayout.Children.Add(entryLayout._label); //Todo overload (2, 3, 1, 2)
                 }
             }
@@ -758,7 +761,7 @@ namespace Global.InputForms
                 smoothAnimation.Add(0, 1,
                     new Animation(f => Input.TranslationY = f, Input.TranslationY, translateY, Easing.Linear));
 
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
                 smoothAnimation.Commit(this, "EntryAnimation", 16, 200, Easing.Linear));
         }
 
@@ -780,7 +783,7 @@ namespace Global.InputForms
                 smoothAnimation.Add(0, 1,
                     new Animation(f => Input.TranslationY = f, Input.TranslationY, 0, Easing.Linear));
 
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
                 smoothAnimation.Commit(this, "EntryAnimation", 16, 200, Easing.Linear));
         }
 
@@ -1166,10 +1169,11 @@ namespace Global.InputForms
                 if (!entryLayout.FloatingInfo)
                     entryLayout._infoLabel.TranslationY = entryLayout.InfoFontSize + entryLayout.InfoMargin.Top + entryLayout.InfoMargin.Bottom;
 
-                entryLayout.Children.Insert(0, entryLayout._infoLabel);
-                SetColumn((BindableObject)entryLayout._infoLabel, 1);
-                SetColumnSpan((BindableObject)entryLayout._infoLabel, 3);
-                SetRow((BindableObject)entryLayout._infoLabel, 1);
+                Grid.SetRow(entryLayout._infoLabel, 2);
+                Grid.SetRowSpan(entryLayout._infoLabel, 1);
+                Grid.SetColumn(entryLayout._infoLabel, 1);
+                Grid.SetColumnSpan(entryLayout._infoLabel, 3);
+                entryLayout.Children.Add(entryLayout._infoLabel);
             }
         }
 

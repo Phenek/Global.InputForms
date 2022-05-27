@@ -102,10 +102,10 @@ namespace Global.InputForms
 
             RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            Grid.SetRow(_frameList, 0);
-            Grid.SetRowSpan(_frameList, 4);
-            Grid.SetColumn(_frameList, 2);
-            Grid.SetColumnSpan(_frameList, 2);
+            Grid.SetRow(_frameList, 1);
+            Grid.SetRowSpan(_frameList, 3);
+            Grid.SetColumn(_frameList, 3);
+            Grid.SetColumnSpan(_frameList, 1);
             Children.Add(_frameList); //Todo overload (1, 4, 3, 4)
         }
 

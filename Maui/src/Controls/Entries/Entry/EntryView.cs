@@ -98,7 +98,8 @@ namespace Global.InputForms
         {
             _entry = new BlankEntry
             {
-                BackgroundColor = Colors.Transparent
+                BackgroundColor = Colors.Transparent,
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             Input = _entry;
             SetBinding(EntryLayout.EntryTextProperty,
@@ -138,26 +139,15 @@ namespace Global.InputForms
                 new Binding(nameof(IsSpellCheckEnabled)) {Source = this, Mode = BindingMode.OneWay});
             _entry.SetBinding(Entry.IsTextPredictionEnabledProperty,
                 new Binding(nameof(IsTextPredictionEnabled)) {Source = this, Mode = BindingMode.OneWay});
-            //Todo For Xamarin.Forms 4.0
-            //_entry.SetBinding(InputView.IsReadOnlyProperty,
-            //new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
+
+            _entry.SetBinding(InputView.IsReadOnlyProperty,
+                new Binding(nameof(IsReadOnly)) { Source = this, Mode = BindingMode.OneWay });
             _entry.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
 
-            _pFrame = new Frame
-            {
-                Padding = 0,
-                HasShadow = false,
-                BackgroundColor = Colors.Transparent,
-                Content = _entry
-            };
-            _pFrame.SetBinding(IsEnabledProperty,
+            _entry.SetBinding(IsEnabledProperty,
                 new Binding(nameof(IsReadOnly))
                     {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
-            _pFrame.SetBinding(InputTransparentProperty,
-                new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _pFrame.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
 
             _entry.Focused += FocusEntry;
@@ -170,11 +160,11 @@ namespace Global.InputForms
             };
             Unfocused += UnfocusedValidate;
 
-            Grid.SetRow(_pFrame, 1);
-            Grid.SetRowSpan(_pFrame, 1);
-            Grid.SetColumn(_pFrame, 0);
-            Grid.SetColumnSpan(_pFrame, 1);
-            Children.Add(_pFrame); //Todo overload (2, 3, 1, 2)
+            Grid.SetRow(_entry, 2);
+            Grid.SetRowSpan(_entry, 1);
+            Grid.SetColumn(_entry, 1);
+            Grid.SetColumnSpan(_entry, 3);
+            Children.Add(_entry); //Todo overload (2, 3, 1, 2)
         }
 
         public Func<string, string> StringParser

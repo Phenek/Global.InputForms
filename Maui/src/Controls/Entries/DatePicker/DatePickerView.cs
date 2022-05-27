@@ -92,8 +92,6 @@ namespace Global.InputForms
                     {Source = this, Mode = BindingMode.OneWay, Converter = new InverseBooleanConverter()});
             _datePicker.SetBinding(InputTransparentProperty,
                 new Binding(nameof(IsReadOnly)) {Source = this, Mode = BindingMode.OneWay});
-            _datePicker.SetBinding(HeightRequestProperty,
-                new Binding(nameof(EntryHeightRequest)) {Source = this, Mode = BindingMode.OneWay});
 
             _datePicker.SetBinding(BlankDatePicker.DoneButtonTextProperty,
                 new Binding(nameof(DoneButtonText)) {Source = this, Mode = BindingMode.OneWay});
@@ -110,10 +108,10 @@ namespace Global.InputForms
 
             FloatingLabelWithoutAnimation();
 
-            Grid.SetRow(_datePicker, 1);
+            Grid.SetRow(_datePicker, 2);
             Grid.SetRowSpan(_datePicker, 1);
-            Grid.SetColumn(_datePicker, 0);
-            Grid.SetColumnSpan(_datePicker, 1);
+            Grid.SetColumn(_datePicker, 1);
+            Grid.SetColumnSpan(_datePicker, 3);
             Children.Add(_datePicker); //Todo overload (2, 3, 1, 2)
         }
 

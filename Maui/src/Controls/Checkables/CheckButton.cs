@@ -145,30 +145,8 @@ namespace Global.InputForms
             set => SetValue(CheckedBorderColorProperty, value);
         }
 
-        /// <summary>
-        ///     The Checked property.
-        /// </summary>
-        BindableProperty Global.InputForms.Interfaces.ICheckable.CheckedProperty => CheckedProperty;
-
-        /// <summary>
-        ///     The Item property.
-        /// </summary>
-        BindableProperty Global.InputForms.Interfaces.ICheckable.ItemProperty => ItemProperty;
-
         public bool DisableCheckOnClick { get; set; }
         public int Index { get; set; }
-
-        event EventHandler<bool> Global.InputForms.Interfaces.ICheckable.CheckedChanged
-        {
-            add => CheckedChanged += value;
-            remove => CheckedChanged += value;
-        }
-
-        event EventHandler<bool> Global.InputForms.Interfaces.ICheckable.Clicked
-        {
-            add => Clicked += value;
-            remove => Clicked += value;
-        }
 
         public bool Checked
         {
@@ -177,24 +155,6 @@ namespace Global.InputForms
             {
                 if (Checked != value) SetValue(CheckedProperty, value);
             }
-        }
-
-        KeyValuePair<string, object> Global.InputForms.Interfaces.ICheckable.Item
-        {
-            get => Item;
-            set => Item = value;
-        }
-
-        string Global.InputForms.Interfaces.ICheckable.Key
-        {
-            get => Key;
-            set => Key = value;
-        }
-
-        object Global.InputForms.Interfaces.ICheckable.Value
-        {
-            get => Value;
-            set => Value = value;
         }
 
         public void SetCheckedColorsStyles()
@@ -206,7 +166,7 @@ namespace Global.InputForms
         }
 
         public event EventHandler<bool> CheckedChanged;
-        private new event EventHandler<bool> Clicked;
+        public new event EventHandler<bool> Clicked;
 
         private static void OnCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
