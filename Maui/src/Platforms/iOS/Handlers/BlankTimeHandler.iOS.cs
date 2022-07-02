@@ -6,7 +6,7 @@ using Foundation;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankTimePickerHandler : EntryHandler
+    public partial class BlankTimePickerHandler : EntryHandler
     {
         BlankTimePicker _virtualView;
         MauiTextField _platformView;
@@ -20,9 +20,10 @@ namespace Global.InputForms.Handlers
 
         protected override MauiTextField CreatePlatformView()
         {
-            var platformView = base.CreatePlatformView();
+            _platformView = base.CreatePlatformView();
+            _virtualView = (BlankTimePicker)VirtualView;
 
-            platformView.BorderStyle = UITextBorderStyle.None;
+            _platformView.BorderStyle = UITextBorderStyle.None;
             _platformView.SpellCheckingType = UITextSpellCheckingType.No;
             _platformView.AutocorrectionType = UITextAutocorrectionType.No;
             _platformView.AutocapitalizationType = UITextAutocapitalizationType.None;
@@ -49,7 +50,7 @@ namespace Global.InputForms.Handlers
             UpdateTime();
 
 
-            return platformView;
+            return _platformView;
         }
 
         protected override void ConnectHandler(MauiTextField platformView)

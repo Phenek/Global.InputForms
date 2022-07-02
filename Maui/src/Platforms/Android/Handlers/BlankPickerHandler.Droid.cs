@@ -4,15 +4,13 @@ using Android.Views;
 using Android.Content;
 using Android.Views.InputMethods;
 using AndroidX.AppCompat.Widget;
-using Google.Android.Material.Button;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Handlers;
-using AView = Android.Views.View;
 using Android.Widget;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankPickerHandler : EntryHandler
+    public partial class BlankPickerHandler : EntryHandler
     {
         BlankPicker _virtualView;
         AppCompatEditText _platformView;

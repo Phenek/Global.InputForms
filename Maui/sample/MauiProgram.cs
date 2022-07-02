@@ -1,5 +1,5 @@
 ﻿using Global.InputForms;
-using Global.InputForms.Handlers;
+//using Global.InputForms.Handlers;
 
 namespace Sample;
 
@@ -16,16 +16,23 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		builder.ConfigureMauiHandlers(collection =>
+		builder.ConfigureMauiHandlers(handlers =>
 		{
-			collection.AddHandler(typeof(BlankButton), typeof(BlankButtonHandler));
-			collection.AddHandler(typeof(BlankEntry), typeof(BlankEntryHandler));
-			collection.AddHandler(typeof(BlankPicker), typeof(BlankPickerHandler));
-			collection.AddHandler(typeof(BlankDatePicker), typeof(BlankDatePickerHandler));
-			collection.AddHandler(typeof(BlankTimePicker), typeof(BlankTimePickerHandler));
+			handlers.AddLibraryHandlers();
 		});
 
 		return builder.Build();
+	}
+
+	public static IMauiHandlersCollection AddLibraryHandlers(this IMauiHandlersCollection handlers)
+	{
+        //handlers.AddHandler(typeof(BlankButton), typeof(BlankButtonHandler));
+        //handlers.AddHandler(typeof(BlankEntry), typeof(BlankEntryHandler));
+        //handlers.AddHandler(typeof(BlankPicker), typeof(BlankPickerHandler));
+        //handlers.AddHandler(typeof(BlankDatePicker), typeof(BlankDatePickerHandler));
+        //handlers.AddHandler(typeof(BlankTimePicker), typeof(BlankTimePickerHandler));
+
+        return handlers;
 	}
 }
 

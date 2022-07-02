@@ -7,7 +7,7 @@ using AView = Android.Views.View;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankEntryHandler : EntryHandler
+    public partial class BlankEntryHandler : EntryHandler
     {
         //public BlankEntryHandler(IPropertyMapper mapper) : base(mapper)
         //{

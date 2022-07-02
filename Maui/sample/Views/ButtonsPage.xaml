@@ -93,6 +93,36 @@
                     </StackLayout>
                 </global:ButtonContent>
 
+                <Border StrokeThickness="10"
+                        Stroke="Silver"
+                        Background="White"
+                        Margin="0"
+                        Padding="0"
+                        HeightRequest="60">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30" />
+                    </Border.StrokeShape>
+                    <Grid HeightRequest="30">
+                        <StackLayout Orientation="Horizontal" HeightRequest="30">
+                            <Frame Padding="0" HasShadow="false"
+                                   BackgroundColor="Maroon"
+                                   CornerRadius="20"
+                                   HeightRequest="40"
+                                   WidthRequest="40" VerticalOptions="Center" >
+                            </Frame>
+                            <Label Text="Parameters"
+                                   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                                   FontSize="Medium" FontFamily="Bold"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            <Frame Padding="0" HasShadow="false" CornerRadius="0"
+                                   BackgroundColor="Blue"
+                                   HeightRequest="40"
+                                   WidthRequest="40" VerticalOptions="Center" >
+                            </Frame>
+                        </StackLayout>
+                    </Grid>
+                </Border>
+
                 <Label Text="Button with content and Button Border"
                        FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
                 <BoxView BackgroundColor="#eee" HeightRequest="1" Margin="0,10" />

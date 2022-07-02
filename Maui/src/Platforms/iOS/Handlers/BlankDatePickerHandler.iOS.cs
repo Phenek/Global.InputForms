@@ -6,7 +6,7 @@ using Foundation;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankDatePickerHandler : EntryHandler
+    public partial class BlankDatePickerHandler : EntryHandler
     {
         BlankDatePicker _virtualView;
         MauiTextField _platformView;

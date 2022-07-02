@@ -4,15 +4,13 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Content;
 using AndroidX.AppCompat.Widget;
-using Google.Android.Material.Button;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Handlers;
 using static Android.App.TimePickerDialog;
-using AView = Android.Views.View;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankTimePickerHandler : EntryHandler
+    public partial class BlankTimePickerHandler : EntryHandler
     {
         BlankTimePicker _virtualView;
         AppCompatEditText _platformView;

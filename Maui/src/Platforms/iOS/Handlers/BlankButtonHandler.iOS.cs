@@ -3,7 +3,7 @@ using Microsoft.Maui.Handlers;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankButtonHandler : ButtonHandler
+    public partial class BlankButtonHandler : ButtonHandler
     {
         //public BlankButtonHandler(IPropertyMapper mapper): base(mapper)
         //{

@@ -488,7 +488,7 @@ namespace Global.InputForms
 
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await _infoLabel.TranslateTo(0, - translateY, 300, Easing.Linear);
+                    await _infoLabel.TranslateTo(0, translateY, 300, Easing.Linear);
                     InfoIsVisible = isVisible;
                 });
 

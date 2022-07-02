@@ -5,7 +5,7 @@ using AView = Android.Views.View;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankButtonHandler : ButtonHandler
+    public partial class BlankButtonHandler : ButtonHandler
     {
         ButtonTouchListener onTouchListener { get; } = new ButtonTouchListener();
 

@@ -4,10 +4,11 @@ using Microsoft.Maui.Platform;
 
 namespace Global.InputForms.Handlers
 {
-    public class BlankEntryHandler : EntryHandler
+    public partial class BlankEntryHandler : EntryHandler
     {
         //public BlankEntryHandler(IPropertyMapper mapper) : base(mapper)
         //{
+        //    Console.WriteLine("test");
         //}
 
         protected override MauiTextField CreatePlatformView()
